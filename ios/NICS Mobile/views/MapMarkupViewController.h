@@ -36,6 +36,7 @@
 //
 
 #import <GoogleMaps/GoogleMaps.h>
+#import "GMUMarkerClustering.h"
 #import <UIKit/UIKit.h>
 #import <objc/runtime.h>
 #import "DataManager.h"
@@ -98,6 +99,7 @@
 @property GMSMarker *myCustomMarker;
 @property UIViewController* previousViewToReturnTo;
 @property ReportInfoWindow* currentReportWindow;
+@property GMUClusterManager *_clusterManager;
 
 - (void)updateWfsLayers;
 
