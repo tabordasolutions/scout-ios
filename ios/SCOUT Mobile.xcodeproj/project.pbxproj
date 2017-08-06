@@ -182,6 +182,7 @@
 		5528E7131F2994A6003EC8F7 /* OverviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5528E7111F2994A6003EC8F7 /* OverviewViewController.m */; };
 		5528E7141F2994A6003EC8F7 /* OverviewViewControllerTablet.m in Sources */ = {isa = PBXBuildFile; fileRef = 5528E7121F2994A6003EC8F7 /* OverviewViewControllerTablet.m */; };
 		5528E7161F299934003EC8F7 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5528E7151F299934003EC8F7 /* Settings.bundle */; };
+		5589E9C21F2F90D0003EA98F /* Markup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5589E9C11F2F90D0003EA98F /* Markup.swift */; };
 		55B249751F29A1220006DDEB /* GMUGridBasedClusterAlgorithm.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B2493A1F29A1220006DDEB /* GMUGridBasedClusterAlgorithm.m */; };
 		55B249761F29A1220006DDEB /* GMUNonHierarchicalDistanceBasedAlgorithm.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B2493C1F29A1220006DDEB /* GMUNonHierarchicalDistanceBasedAlgorithm.m */; };
 		55B249771F29A1220006DDEB /* GMUSimpleClusterAlgorithm.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B2493E1F29A1220006DDEB /* GMUSimpleClusterAlgorithm.m */; };
@@ -548,6 +549,8 @@
 		5528E7121F2994A6003EC8F7 /* OverviewViewControllerTablet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OverviewViewControllerTablet.m; sourceTree = "<group>"; };
 		5528E7151F299934003EC8F7 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		5528E7171F299DEB003EC8F7 /* libGoogle-Maps-iOS-Utils.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libGoogle-Maps-iOS-Utils.a"; path = "../../../Library/Developer/Xcode/DerivedData/NICS_Mobile-dzlbwtkvvfulvbayhtnfihfqpdyz/Build/Products/Debug-iphonesimulator/Google-Maps-iOS-Utils/libGoogle-Maps-iOS-Utils.a"; sourceTree = "<group>"; };
+		5589E9C01F2F90CF003EA98F /* SCOUT Mobile-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SCOUT Mobile-Bridging-Header.h"; sourceTree = "<group>"; };
+		5589E9C11F2F90D0003EA98F /* Markup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Markup.swift; sourceTree = "<group>"; };
 		55B249381F29A1220006DDEB /* GMUClusterAlgorithm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GMUClusterAlgorithm.h; sourceTree = "<group>"; };
 		55B249391F29A1220006DDEB /* GMUGridBasedClusterAlgorithm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GMUGridBasedClusterAlgorithm.h; sourceTree = "<group>"; };
 		55B2493A1F29A1220006DDEB /* GMUGridBasedClusterAlgorithm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GMUGridBasedClusterAlgorithm.m; sourceTree = "<group>"; };
@@ -830,6 +833,8 @@
 				3A3C9DE818DB441200EEBA17 /* schemas */,
 				3A141AAA18DB34AC00466AD3 /* Supporting Files */,
 				3A3C9DED18DB441200EEBA17 /* views */,
+				5589E9C11F2F90D0003EA98F /* Markup.swift */,
+				5589E9C01F2F90CF003EA98F /* SCOUT Mobile-Bridging-Header.h */,
 			);
 			path = "NICS Mobile";
 			sourceTree = "<group>";
@@ -1330,6 +1335,7 @@
 				TargetAttributes = {
 					3A141A9F18DB34AC00466AD3 = {
 						DevelopmentTeam = MQTKTB2NN8;
+						LastSwiftMigration = 0830;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -1523,6 +1529,7 @@
 				3A70105E18E09F8900C3DC42 /* DamageReportListViewController.m in Sources */,
 				0131FD481C10945A0001349E /* MarkupReportSymbol.m in Sources */,
 				55B249881F29A1220006DDEB /* GQTPointQuadTree.m in Sources */,
+				5589E9C21F2F90D0003EA98F /* Markup.swift in Sources */,
 				3A3C9E5318DB441300EEBA17 /* UIImage+Resize.m in Sources */,
 				3A3C9E4618DB441300EEBA17 /* IncidentPayload.m in Sources */,
 				01661BBF1BA8B75100CE6453 /* OpenAMAuthenticationData.m in Sources */,
@@ -1799,6 +1806,7 @@
 			baseConfigurationReference = 4EF64564FB802AC6849C40A6 /* Pods-SCOUT Mobile.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = MQTKTB2NN8;
@@ -1811,6 +1819,7 @@
 				GCC_PREFIX_HEADER = "NICS Mobile/SCOUT Mobile-Prefix.pch";
 				INFOPLIST_FILE = "NICS Mobile/SCOUT Mobile-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/NICS",
 					Mobile,
@@ -1852,6 +1861,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.TabordaSolutions.SCOUT;
 				PRODUCT_NAME = "SCOUT Mobile";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "NICS Mobile/SCOUT Mobile-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 arm64 armv7s";
 				WRAPPER_EXTENSION = app;
@@ -1863,6 +1875,7 @@
 			baseConfigurationReference = 4DD3F7A7023252D76B033278 /* Pods-SCOUT Mobile.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = MQTKTB2NN8;
@@ -1875,6 +1888,7 @@
 				GCC_PREFIX_HEADER = "NICS Mobile/SCOUT Mobile-Prefix.pch";
 				INFOPLIST_FILE = "NICS Mobile/SCOUT Mobile-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/NICS",
 					Mobile,
@@ -1916,6 +1930,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.TabordaSolutions.SCOUT;
 				PRODUCT_NAME = "SCOUT Mobile";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "NICS Mobile/SCOUT Mobile-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 arm64 armv7s";
 				WRAPPER_EXTENSION = app;
@@ -1925,6 +1941,7 @@
 		3A141AD018DB34AD00466AD3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1952,6 +1969,7 @@
 		3A141AD118DB34AD00466AD3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (

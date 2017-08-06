@@ -32,7 +32,7 @@
 //
 
 #import "MarkupFeature.h"
-
+#import <CoreLocation/CoreLocation.h>
 @implementation MarkupFeature
 
 -(NSMutableDictionary *) toSqlMapping {
