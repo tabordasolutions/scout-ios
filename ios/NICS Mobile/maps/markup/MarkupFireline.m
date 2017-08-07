@@ -208,30 +208,4 @@
         _groundOverlay.map = nil;
     }
 }
-
--(PolyLineBezierPath *)addDozerLine:(PolyLineBezierPath *)path StartPoint:(CGPoint)startPoint {
-    CGPoint start = startPoint;
-    
-    //// Bezier Drawing
-    UIBezierPath* bezierPath = [UIBezierPath bezierPath];
-    [bezierPath moveToPoint: CGPointMake(start.x - 4, start.y - 4)];
-    [bezierPath addLineToPoint: CGPointMake(start.x + 4, start.y + 4)];
-    [UIColor.blackColor setStroke];
-    bezierPath.lineWidth = 1;
-    [bezierPath stroke];
-    
-    
-    //// Bezier 2 Drawing
-    UIBezierPath* bezier2Path = [UIBezierPath bezierPath];
-    [bezier2Path moveToPoint: CGPointMake(start.x - 4, start.y + 4)];
-    [bezier2Path addLineToPoint: CGPointMake(start.x + 4, start.y - 4)];
-    [UIColor.blackColor setStroke];
-    bezier2Path.lineWidth = 1;
-    [bezier2Path stroke];
-    
-    [path appendPath:bezierPath];
-    [path appendPath:bezier2Path];
-    return path;
-}
-
 @end
