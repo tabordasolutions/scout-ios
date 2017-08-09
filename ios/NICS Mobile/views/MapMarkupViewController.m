@@ -358,23 +358,22 @@ bool markupProcessing = false;
             }
             
         } else if(currentType == segment) {
-//            if(feature.dashStyle == nil) {  //line segment
-//                MarkupSegment *segment = [[MarkupSegment alloc] initWithMap:_mapView feature:feature];
-//                if([feature.featureId isEqualToString: @"draft"]){
-//                    [_markupDraftShapes addObject:segment];
-//                }else{
-//                    [_markupShapes setValue:segment forKey:feature.featureId];
-//                }
-//            } else {    //fireline, should figure out which fire line is being drawn and change the graphic
+            if(feature.dashStyle == nil) {  //line segment
+                MarkupSegment *segment = [[MarkupSegment alloc] initWithMap:_mapView feature:feature];
+                if([feature.featureId isEqualToString: @"draft"]){
+                    [_markupDraftShapes addObject:segment];
+                }else{
+                    [_markupShapes setValue:segment forKey:feature.featureId];
+                }
+            } else {    //fireline, should figure out which fire line is being drawn and change the graphic
             
-                // WARNING: Firelines removed due to client request
-//                MarkupFireline *fireline = [[MarkupFireline alloc] initWithMap:_mapView feature:feature];
-//                if([feature.featureId isEqualToString: @"draft"]){
-//                    [_markupDraftShapes addObject:fireline];
-//                }else{
-//                    [_markupShapes setValue:fireline forKey:feature.featureId];
-//                }
-            //}
+                MarkupFireline *fireline = [[MarkupFireline alloc] initWithMap:_mapView feature:feature];
+                if([feature.featureId isEqualToString: @"draft"]){
+                    [_markupDraftShapes addObject:fireline];
+                }else{
+                    [_markupShapes setValue:fireline forKey:feature.featureId];
+                }
+            }
             
         } else if(currentType == rectangle || currentType == polygon) {
             MarkupPolygon *polygon = [[MarkupPolygon alloc] initWithMap:_mapView feature:feature];

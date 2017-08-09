@@ -1,11 +1,15 @@
 PODS:
   - CocoaSecurity (1.2.4)
   - CollapseClick (1.0.1)
-  - FMDB (2.6.2):
-    - FMDB/standard (= 2.6.2)
-  - FMDB/standard (2.6.2)
-  - GoogleMaps (1.13.2)
-  - JSONModel (HEAD based on 1.2.0)
+  - FMDB (2.7.2):
+    - FMDB/standard (= 2.7.2)
+  - FMDB/standard (2.7.2)
+  - GoogleMaps (2.2.0):
+    - GoogleMaps/Maps (= 2.2.0)
+  - GoogleMaps/Base (2.2.0)
+  - GoogleMaps/Maps (2.2.0):
+    - GoogleMaps/Base
+  - JSONModel (1.7.0)
   - SecureNSUserDefaults (1.0.1):
     - CocoaSecurity (~> 1.2.4)
   - SWRevealViewController (2.0.2)
@@ -14,7 +18,7 @@ DEPENDENCIES:
   - CollapseClick (from `https://github.com/bennyguitar/CollapseClick.git`)
   - FMDB
   - GoogleMaps
-  - JSONModel (HEAD)
+  - JSONModel
   - SecureNSUserDefaults (~> 1.0.0)
   - SWRevealViewController (~> 2.0.2)
 
@@ -30,10 +34,12 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   CocoaSecurity: d288a6f87e0f363823d2cb83e753814a6944f71a
   CollapseClick: 9eec7952e091ce0c03848577cfbcb2ec45414dde
-  FMDB: 854a0341b4726e53276f2a8996f06f1b80f9259a
-  GoogleMaps: b20a103ff307f58392e603cf142e59d7e30374c1
-  JSONModel: 12523685c4b623553ccf844bbbf7007624317b2c
+  FMDB: 6198a90e7b6900cfc046e6bc0ef6ebb7be9236aa
+  GoogleMaps: 104c418d61ab8a05dff06ed0784c25ea9d37da45
+  JSONModel: 840bc0fcffb24b8454d2c026bf26fea454b8e98d
   SecureNSUserDefaults: 8a07fc6a6fde31c7f8fa6ead73d3c9c3706a6364
   SWRevealViewController: ada01e8de5fbe7c27295b3759916b8af8dd89196
 
-COCOAPODS: 0.39.0
+PODFILE CHECKSUM: c4d0ec35421b21011b8bbda2b8ad157bf2a4eb58
+
+COCOAPODS: 1.1.1

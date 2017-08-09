@@ -32,6 +32,7 @@
 //
 
 #import "MarkupFireline.h"
+#import "SCOUT_Mobile-Swift.h"
 
 @implementation MarkupFireline
 
@@ -72,7 +73,7 @@
         CGPoint sw = [view.projection pointForCoordinate:modSW];
         CGPoint ne = [view.projection pointForCoordinate:modNE];
         
-        UIBezierPath *path = [UIBezierPath bezierPath];
+        PolyLineBezierPath *path = [PolyLineBezierPath bezierPath];
     
         int size = self.points.count * 2;
         float floatPoints[size];
@@ -89,7 +90,32 @@
             if(i == 0) {
                 [path moveToPoint:CGPointMake(floatPoints[0], floatPoints[1])];
             } else {
-                [path addLineToPoint:CGPointMake(floatPoints[i * 2], floatPoints[(i * 2) + 1])];
+                if ([feature.dashStyle isEqualToString:@"completed-dozer-line"] == true) {
+                    
+                    if (i % 6 == 0) {
+                        CGPoint start = CGPointMake(floatPoints[i * 2], floatPoints[(i * 2) + 1]);
+                        NSInteger lineLength = 4;
+                        
+                        [path moveToPoint: CGPointMake(start.x - lineLength, start.y - lineLength)];
+                        [path addLineToPoint: CGPointMake(start.x + lineLength, start.y + lineLength)];
+                        [UIColor.blackColor setStroke];
+                        path.lineWidth = 1;
+                        [path stroke];
+                        
+                        [path moveToPoint: CGPointMake(start.x - lineLength, start.y + lineLength)];
+                        [path addLineToPoint: CGPointMake(start.x + lineLength, start.y - lineLength)];
+                        [UIColor.blackColor setStroke];
+                        path.lineWidth = 1;
+                        [path stroke];
+                    } else {
+                        [UIColor.clearColor setStroke];
+                        [path stroke];
+                    }
+
+                } else {
+                    [path addLineToPoint:CGPointMake(floatPoints[i * 2], floatPoints[(i * 2) + 1])];
+                }
+                
             }
         }
         
@@ -118,7 +144,7 @@
     return self;
 }
 
-- (UIImage *)generateImageFromPath:(UIBezierPath *)path Size:(CGSize)size Color:textColor dashStyle:(NSString *)dashStyle
+- (UIImage *)generateImageFromPath:(PolyLineBezierPath *)path Size:(CGSize)size Color:textColor dashStyle:(NSString *)dashStyle
 {
     UIGraphicsBeginImageContextWithOptions(size, NO, 0.0f);
     CGContextRef context = UIGraphicsGetCurrentContext();
@@ -126,22 +152,24 @@
     [path setLineJoinStyle:kCGLineJoinRound];
     [[Utils colorWithHexString:@"black"] set];
     [path setLineWidth:2.0];
+    
+    NSLog(@"%@", dashStyle);
         
-    if([dashStyle isEqualToString:@"plannedFireline"]) {
+    if([dashStyle isEqualToString:@"primary-fire-line"]) {
+        // squares should be more rectangular, but is very close
         [path setLineCapStyle:kCGLineCapSquare];
         [path setLineWidth:3.0];
         CGFloat dashes[] = {0, 8};
         [path setLineDash:dashes count:2 phase:0];
+        
     } else if([dashStyle isEqualToString:@"secondary-fire-line"]) {
+        // Looks good, maybe a bit more bold
         [path setLineCapStyle:kCGLineCapRound];
         CGFloat dashes[] = {0, 8};
         [path setLineDash:dashes count:2 phase:0];
-    } else if([dashStyle isEqualToString:@"fireSpreadPrediction"]) {
-        [[UIColor colorWithRed:0.964844f green:0.578125f blue:0.117188f alpha:1.0f] set];
-    } else if([dashStyle isEqualToString:@"completed-dozer-line"]) {
         
-    } else if([dashStyle isEqualToString:@"proposedDozer"]) {
-    
+    } else if([dashStyle isEqualToString:@"proposed-dozer-line"]) {
+        // should be X dot X dot X
         
     } else if([dashStyle isEqualToString:@"fire-edge-line"]) {
         [[UIColor redColor] set];
@@ -152,6 +180,9 @@
         CGFloat dashes[] = {1, 8};
         [path applyTransform:CGAffineTransformMakeTranslation(2, 2)];
         [path setLineDash:dashes count:2 phase:0];
+        
+    } else if ([dashStyle isEqualToString:@"action-point"]) {
+        // this needs to be a yellow fill line with black border and round caps
         
     } else if([dashStyle isEqualToString:@"map"]) {
         [[Utils colorWithHexString:@"black"] set];
@@ -177,5 +208,4 @@
         _groundOverlay.map = nil;
     }
 }
-
 @end

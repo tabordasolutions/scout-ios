@@ -59,7 +59,7 @@
 #import "ActiveWfsLayerManager.h"
 #import "openAmAuth.h"
 #import "MultipartPostQueue.h"
-#import "WfsXmlParser.h";
+#import "WfsXmlParser.h"
 
 #import "DataManager.h"
 
