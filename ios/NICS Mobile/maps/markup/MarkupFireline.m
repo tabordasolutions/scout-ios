@@ -176,9 +176,9 @@
         [path setLineWidth:2.0];
         [path stroke];
         
-        [path setLineWidth:6.0];
+        [path setLineWidth:7.0];
         CGFloat dashes[] = {1, 8};
-        [path applyTransform:CGAffineTransformMakeTranslation(2, 2)];
+        [path applyTransform:CGAffineTransformMakeTranslation(3, 0)];
         [path setLineDash:dashes count:2 phase:0];
         
     } else if ([dashStyle isEqualToString:@"action-point"]) {
