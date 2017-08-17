@@ -115,7 +115,7 @@
 //2: big 'X'
 //3: dots
 //path: the path which the advanced styling is added to
-+ (void)addAdvancedStyling:(float[])points pathPtLen:(float)pointLen path:(PolyLineBezierPath *)path markupStyle:(int)style markupSpacing:(float)spacing markupOfs:(float)ofs
++ (void)addAdvancedStyling:(float[])points pathPtLen:(float)pointLen path:(UIBezierPath *)path markupStyle:(int)style markupSpacing:(float)spacing markupOfs:(float)ofs
 {
     //this is the index of the current point in the path
     int curPt = 0;
@@ -340,21 +340,24 @@
          [path addArcWithCenter:end radius:1.5 startAngle:0 endAngle:360 clockwise:YES];
          }*/
         
-        PolyLineBezierPath *path = [PolyLineBezierPath bezierPath];
+        UIBezierPath *path = [UIBezierPath bezierPath];
         
         
         //Whether or not we add the line itself to the path
         bool fillLine = false;
         
         NSString *dashStyle = feature.dashStyle;
+        UIColor *featureColor = [UIColor blackColor];
         
         if([dashStyle isEqualToString:@"primary-fire-line"])
         {
             fillLine = true;
+            path = [self primaryFireLine:path];
         }
         else if([dashStyle isEqualToString:@"secondary-fire-line"])
         {
             fillLine = true;
+            path = [self secondaryFireLine:path];
         }
         else if([dashStyle isEqualToString:@"proposed-dozer-line"])
         {
@@ -367,22 +370,27 @@
             
             [MarkupFireline addAdvancedStyling:floatPoints pathPtLen:size path:path markupStyle:2 markupSpacing:20.0f markupOfs:0.0f];
             [MarkupFireline addAdvancedStyling:floatPoints pathPtLen:size path:path markupStyle:3 markupSpacing:20.0f markupOfs:10.0f];
+            path = [self proposedDozerLine:path];
         }
         else if([dashStyle isEqualToString:@"completed-dozer-line"])
         {
             //x x x x
             [MarkupFireline addAdvancedStyling:floatPoints pathPtLen:size path:path markupStyle:1 markupSpacing:13.0f markupOfs:0.0f];
+            path = [self completedDozerLine:path];
         }
         else if([dashStyle isEqualToString:@"fire-edge-line"])
         {
             //barb barb barb
             fillLine = true;
             [MarkupFireline addAdvancedStyling:floatPoints pathPtLen:size path:path markupStyle:0 markupSpacing:10.0f markupOfs:0.0f];
+            path = [self fireEdgeLine:path];
+            featureColor = [UIColor redColor];
         }
         else if ([dashStyle isEqualToString:@"action-point"])
         {
             // this needs to be a yellow fill line with black border and round caps
             fillLine = true;
+            path = [self actionPoint:path];
             
         }
         else if([dashStyle isEqualToString:@"map"])
@@ -414,7 +422,7 @@
         
         if(width > 0 && height > 0 && width < 2048 && height < 2048)
         {
-            UIImage *image = [self generateImageFromPath:path Size:CGSizeMake(width, height) Color:feature.strokeColor dashStyle:feature.dashStyle];
+            UIImage *image = [self generateImageFromPath:path Size:CGSizeMake(width, height) Color:featureColor dashStyle:feature.dashStyle];
             
             _groundOverlay = [GMSGroundOverlay groundOverlayWithBounds:lineBounds icon:image];
             _groundOverlay.anchor = CGPointMake(0.5, 0.5);
@@ -424,75 +432,78 @@
     return self;
 }
 
-- (UIImage *)generateImageFromPath:(PolyLineBezierPath *)path Size:(CGSize)size Color:textColor dashStyle:(NSString *)dashStyle
+-(UIBezierPath *)primaryFireLine:(UIBezierPath *)path
+{
+    UIBezierPath *newPath = path.copy;
+    
+    // squares should be more rectangular, but is very close
+    [newPath setLineCapStyle:kCGLineCapSquare];
+    [newPath setLineWidth:3.0];
+    CGFloat dashes[] = {0, 8};
+    [newPath setLineDash:dashes count:2 phase:0];
+    return newPath;
+}
+
+-(UIBezierPath *)completedDozerLine:(UIBezierPath *)path
+{
+    UIBezierPath *newPath = path.copy;
+    
+    [newPath setLineCapStyle: kCGLineCapRound];
+    [newPath setLineWidth:3.0];
+    return newPath;
+}
+
+-(UIBezierPath *)secondaryFireLine:(UIBezierPath *)path
+{
+    UIBezierPath *newPath = path.copy;
+    
+    [newPath setLineCapStyle:kCGLineCapRound];
+    CGFloat dashes[] = {0, 8};
+    [newPath setLineDash:dashes count:2 phase:0];
+    return newPath;
+}
+
+-(UIBezierPath *)proposedDozerLine:(UIBezierPath *)path
+{
+    UIBezierPath *newPath = path.copy;
+    
+    [newPath setLineCapStyle: kCGLineCapRound];
+    [newPath setLineWidth:3.0];
+    return newPath;
+}
+
+-(UIBezierPath *)fireEdgeLine:(UIBezierPath *)path
+{
+    UIBezierPath *newPath = path.copy;
+    [[UIColor redColor] set];
+    [newPath setLineWidth:2.0];
+    return newPath;
+}
+
+-(UIBezierPath *)actionPoint:(UIBezierPath *)path
+{
+    UIBezierPath *newPath = path.copy;
+    // this needs to be a yellow fill line with black border and round caps
+
+    return newPath;
+}
+
+-(UIBezierPath *)mapLine:(UIBezierPath *)path
+{
+    UIBezierPath *newPath = path.copy;
+    [newPath setLineWidth:4.0];
+    [newPath stroke];
+    
+    [[UIColor colorWithRed:0.964844f green:0.578125f blue:0.117188f alpha:1.0f] set];
+    [newPath setLineWidth:2.0];
+    return newPath;
+}
+
+- (UIImage *)generateImageFromPath:(UIBezierPath *)path Size:(CGSize)size Color:(UIColor *)featureColor dashStyle:(NSString *)dashStyle
 {
     UIGraphicsBeginImageContextWithOptions(size, NO, 0.0f);
     CGContextRef context = UIGraphicsGetCurrentContext();
-    
-    [path setLineJoinStyle:kCGLineJoinRound];
-    [[Utils colorWithHexString:@"black"] set];
-    [path setLineWidth:2.0];
-    
-    NSLog(@"%@", dashStyle);
-    
-    if([dashStyle isEqualToString:@"primary-fire-line"])
-    {
-        // squares should be more rectangular, but is very close
-        [path setLineCapStyle:kCGLineCapSquare];
-        [path setLineWidth:3.0];
-        CGFloat dashes[] = {0, 8};
-        [path setLineDash:dashes count:2 phase:0];
-        
-    }
-    else if([dashStyle isEqualToString:@"secondary-fire-line"])
-    {
-        // Looks good, maybe a bit more bold
-        [path setLineCapStyle:kCGLineCapRound];
-        CGFloat dashes[] = {0, 8};
-        [path setLineDash:dashes count:2 phase:0];
-        
-    }
-    else if([dashStyle isEqualToString:@"proposed-dozer-line"])
-    {
-        //X dot X dot X
-        [path setLineCapStyle: kCGLineCapRound];
-        [path setLineWidth:3.0];
-        
-    }
-    else if([dashStyle isEqualToString:@"completed-dozer-line"])
-    {
-        // x x x
-        [path setLineCapStyle: kCGLineCapRound];
-        [path setLineWidth:3.0];
-        
-    }
-    
-    else if([dashStyle isEqualToString:@"fire-edge-line"])
-    {
-        [[UIColor redColor] set];
-        [path setLineWidth:2.0];
-        //[path stroke];
-        
-        //[path setLineWidth:7.0];
-        //CGFloat dashes[] = {1, 8};
-        //[path applyTransform:CGAffineTransformMakeTranslation(3, 0)];
-        //[path setLineDash:dashes count:2 phase:0];
-        
-    }
-    else if ([dashStyle isEqualToString:@"action-point"])
-    {
-        // this needs to be a yellow fill line with black border and round caps
-        
-    }
-    else if([dashStyle isEqualToString:@"map"])
-    {
-        [[Utils colorWithHexString:@"black"] set];
-        [path setLineWidth:4.0];
-        [path stroke];
-        
-        [[UIColor colorWithRed:0.964844f green:0.578125f blue:0.117188f alpha:1.0f] set];
-        [path setLineWidth:2.0];
-    }
+    [featureColor set];
     
     [path stroke];
     CGContextAddPath(context, path.CGPath);
