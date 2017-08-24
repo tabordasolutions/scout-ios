@@ -57,5 +57,6 @@
 - (NSMutableArray *) selectAllRowsAndOrderedBy: (NSArray *)columns isDescending: (BOOL) isDescending;
 - (NSMutableArray *) selectRowsByKey: (NSString *)key value: (id)value  orderedBy: (NSArray *)columns isDescending: (BOOL) isDescending;
 - (NSMutableArray *) selectRowsByKeyDictionary: (NSDictionary *)keyDictionary orderedBy: (NSArray *)columns isDescending: (BOOL) isDescending;
+- (NSMutableArray *) selectFirelines: (NSNumber *) collabroomId;
 
 @end

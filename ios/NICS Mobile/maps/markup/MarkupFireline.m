@@ -432,13 +432,21 @@
     return self;
 }
 
+-(void) drawImageFromMasterPath:(UIBezierPath *)path Size:(CGSize)size FeatureColor:(UIColor *)color DashStyle:(NSString *)dashStyle LineBounds:(GMSCoordinateBounds *)bounds
+{
+    UIImage *image = [self generateImageFromPath:path Size:size Color:color dashStyle:dashStyle];
+    _groundOverlay = [GMSGroundOverlay groundOverlayWithBounds:bounds icon:image];
+    _groundOverlay.anchor = CGPointMake(0.5, 0.5);
+    _groundOverlay.map = self.mapView;
+}
+
 -(UIBezierPath *)primaryFireLine:(UIBezierPath *)path
 {
     UIBezierPath *newPath = path.copy;
     
     // squares should be more rectangular, but is very close
     [newPath setLineCapStyle:kCGLineCapSquare];
-    [newPath setLineWidth:3.0];
+    [newPath setLineWidth:2.0];
     CGFloat dashes[] = {0, 8};
     [newPath setLineDash:dashes count:2 phase:0];
     return newPath;
@@ -449,7 +457,7 @@
     UIBezierPath *newPath = path.copy;
     
     [newPath setLineCapStyle: kCGLineCapRound];
-    [newPath setLineWidth:3.0];
+    [newPath setLineWidth:2.0];
     return newPath;
 }
 
@@ -468,7 +476,7 @@
     UIBezierPath *newPath = path.copy;
     
     [newPath setLineCapStyle: kCGLineCapRound];
-    [newPath setLineWidth:3.0];
+    [newPath setLineWidth:2.0];
     return newPath;
 }
 

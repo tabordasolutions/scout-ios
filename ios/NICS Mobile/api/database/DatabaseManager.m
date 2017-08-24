@@ -382,6 +382,10 @@
     return [_markupSendTable getMarkupFeaturesForCollabroomId:collabroomId since:timestamp];
 }
 
+-(NSMutableArray<MarkupFeature> *)getAllFirelinesForCollabRoomId: (NSNumber *) collabRoomId since: (NSNumber *) timestamp {
+    return [_markupReceiveTable getFirelinesForCollabRoomId:collabRoomId since:timestamp];
+}
+
 -(void) removeAllFeaturesInCollabroom:(NSNumber*)collabRoomId{
     [_markupReceiveTable removeAllFeaturesInCollabroom: collabRoomId];
 }
