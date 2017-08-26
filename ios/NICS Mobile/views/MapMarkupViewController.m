@@ -507,14 +507,9 @@ int mapZoomLevel = 6;
     dispatch_async(dispatch_get_main_queue(), ^{
         [_mapView clear];
     });
-    
-//    for(MarkupFeature* feature in [_dataManager getAllMarkupFeaturesFromStoreAndForwardForCollabroomId: [_dataManager getSelectedCollabroomId]]){
-//        [self addFeatureToMap:feature];
-//    }
-//    for(MarkupFeature* feature in [_dataManager getAllMarkupFeaturesForCollabroomId:[_dataManager getSelectedCollabroomId]]){
-//        [self addFeatureToMap:feature];
-//    }
-    
+    for(MarkupFeature* feature in [_dataManager getAllNonFirelinesForCollabRoomId:[_dataManager getSelectedCollabroomId]]){
+        [self addFeatureToMap:feature];
+    }
     
     for (MarkupFeature * feature in [_dataManager getAllFirelinesForCollabRoomId:[_dataManager getSelectedCollabroomId]]) {
         [self addFeatureToMap:feature];

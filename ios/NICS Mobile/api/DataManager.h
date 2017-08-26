@@ -219,6 +219,7 @@
 - (NSMutableArray<MarkupFeature> *)getAllMarkupFeaturesForCollabroomId: (NSNumber *)collabroomId;
 - (NSMutableArray<MarkupFeature> *)getAllMarkupFeaturesForCollabroomId: (NSNumber *)collabroomId since: (NSNumber *) timestamp;
 - (NSMutableArray<MarkupFeature> *)getAllFirelinesForCollabRoomId: (NSNumber *) collabRoomId;
+- (NSMutableArray<MarkupFeature> *)getAllNonFirelinesForCollabRoomId: (NSNumber *) collabRoomId;
 - (NSMutableArray<MarkupFeature> *)getAllMarkupFeaturesFromStoreAndForward;
 - (NSMutableArray<MarkupFeature> *)getAllMarkupFeaturesFromStoreAndForwardForCollabroomId:(NSNumber *)collabroomId;
 

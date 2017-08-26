@@ -292,8 +292,27 @@
     return results;
 }
 
-- (NSMutableArray *) selectFirelines: (NSNumber *) collabroomId{
+- (NSMutableArray *) selectFirelines: (NSNumber *) collabroomId
+{
     NSString *query = [NSString stringWithFormat:@"select * from %@ where dashStyle IS NOT NULL AND collabRoomId = %@  AND dashStyle != ''", _tableName, collabroomId];
+    
+    NSMutableArray *results = [NSMutableArray array];
+    
+    NSLog(@"Documents Directory: %@", [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject]);
+    
+    [_databaseQueue inTransaction:^(FMDatabase *db, BOOL *rollback) {
+        FMResultSet* rs = [db executeQuery:query];
+        while ([rs next]) {
+            [results addObject:[rs resultDictionary]];
+        }
+    }];
+    
+    return results;
+}
+
+- (NSMutableArray *) selectAllNonFirelines: (NSNumber *) collabroomId
+{
+    NSString *query = [NSString stringWithFormat:@"select * from %@ where collabRoomId == %@ AND dashStyle == '' OR dashStyle IS NULL", _tableName, collabroomId];
     
     NSMutableArray *results = [NSMutableArray array];
     

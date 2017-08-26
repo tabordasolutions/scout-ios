@@ -50,5 +50,6 @@
 - (NSNumber *) getLastMarkupFeatureTimestampForCollabroomId: (NSNumber *)collabroomId;
 - (NSMutableArray<MarkupFeature> *) getMarkupFeaturesForCollabroomId: (NSNumber *)collabroomId since: (NSNumber *)timestamp;
 - (NSMutableArray<MarkupFeature> *) getFirelinesForCollabRoomId: (NSNumber *)collabroomId since: (NSNumber *) timestamp;
+- (NSMutableArray<MarkupFeature> *) getAllNonFirelinesForCollabRoomId: (NSNumber *)collabroomId since: (NSNumber *) timestamp;
 - (NSMutableArray<MarkupFeature> *) getAllMarkupFeatures;
 @end
