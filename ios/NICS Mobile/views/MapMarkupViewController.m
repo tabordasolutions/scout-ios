@@ -336,6 +336,22 @@ int mapZoomLevel = 6;
     }
 }
 
+-(void)addFirelinesToMap:(NSArray *) features
+{
+    
+    MarkupFireline *fireline = [[MarkupFireline alloc] initWithMap:_mapView features:features];
+    
+    // Apparently this just updates a dictionary? 
+    for (MarkupFeature * feature in features)
+    {
+        if([feature.featureId isEqualToString: @"draft"]){
+            [_markupDraftShapes addObject:fireline];
+        }else{
+            [_markupShapes setValue:fireline forKey:feature.featureId];
+        }
+    }
+}
+
 -(void)addFeatureToMap:(MarkupFeature*) feature {
     
 //    [_markupFeatures setValue:feature forKey:feature.featureId];
@@ -366,16 +382,7 @@ int mapZoomLevel = 6;
                 }else{
                     [_markupShapes setValue:segment forKey:feature.featureId];
                 }
-            } else {    //fireline, should figure out which fire line is being drawn and change the graphic
-            
-                MarkupFireline *fireline = [[MarkupFireline alloc] initWithMap:_mapView feature:feature];
-                if([feature.featureId isEqualToString: @"draft"]){
-                    [_markupDraftShapes addObject:fireline];
-                }else{
-                    [_markupShapes setValue:fireline forKey:feature.featureId];
-                }
             }
-            
         } else if(currentType == rectangle || currentType == polygon) {
             MarkupPolygon *polygon = [[MarkupPolygon alloc] initWithMap:_mapView feature:feature];
             if([feature.featureId isEqualToString: @"draft"]){
@@ -507,13 +514,12 @@ int mapZoomLevel = 6;
     dispatch_async(dispatch_get_main_queue(), ^{
         [_mapView clear];
     });
+    
     for(MarkupFeature* feature in [_dataManager getAllNonFirelinesForCollabRoomId:[_dataManager getSelectedCollabroomId]]){
         [self addFeatureToMap:feature];
     }
     
-    for (MarkupFeature * feature in [_dataManager getAllFirelinesForCollabRoomId:[_dataManager getSelectedCollabroomId]]) {
-        [self addFeatureToMap:feature];
-    }
+    [self addFirelinesToMap:[_dataManager getAllFirelinesForCollabRoomId:[_dataManager getSelectedCollabroomId]]];
     
     if([_dataManager getTrackingLayerEnabled:NSLocalizedString(@"SCOUT General Messages",nil)]){
         [self addAllGeneralMessageSymbolsToMap];

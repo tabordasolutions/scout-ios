@@ -86,7 +86,7 @@
 {
     //If pt is the first point in pts, return the tangent of the point
     if(pt == 0)
-    return [MarkupFireline getTangentForPoint:pt pathPoints:points pathPtLen:pointLen];
+        return [MarkupFireline getTangentForPoint:pt pathPoints:points pathPtLen:pointLen];
     
     
     //Get the tangent of the current point
@@ -225,7 +225,7 @@
         switch(style)
         {
                 //Uncontrolled fireline barbs
-                case 0:
+            case 0:
             {
                 float gap = 1.0f;
                 float barbLength = 10.0f;
@@ -236,7 +236,7 @@
                 break;
             }
                 //Small X
-                case 1:
+            case 1:
             {
                 float lineLength = 4.0f;
                 [path moveToPoint: CGPointApplyAffineTransform(CGPointMake(-lineLength, -lineLength), trans)];
@@ -246,7 +246,7 @@
                 break;
             }
                 //Big X:
-                case 2:
+            case 2:
             {
                 float lineLength = 5.0f;
                 [path moveToPoint: CGPointApplyAffineTransform(CGPointMake(-lineLength, -lineLength), trans)];
@@ -256,7 +256,7 @@
                 break;
             }
                 //Dot
-                case 3:
+            case 3:
             {
                 [path moveToPoint: CGPointApplyAffineTransform(CGPointMake(0,0), trans)];
                 //Lining by a very small amount to make a dot
@@ -278,163 +278,200 @@
 }
 
 
-- (id)initWithMap:(GMSMapView *)view feature:(MarkupFeature *)feature
+- (id)initWithMap:(GMSMapView *)view features:(NSArray *)features
 {
-    self = [super initWithMap:view feature:feature];
-    
-    if(self)
-    {
-        self.points = [feature getCLPointsArray];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        __block UIBezierPath *path = [UIBezierPath bezierPath];
+        __block GMSCoordinateBounds *lineBounds = [GMSCoordinateBounds new];
         
-        GMSCoordinateBounds *lineBounds = [GMSCoordinateBounds new];
-        GMSMutablePath *coordinatePath = [GMSMutablePath path];
-        
-        NSMutableArray *coordinates = [NSMutableArray new];
-        CLLocation *location;
-        CLLocationCoordinate2D markerLocation;
-        
-        for(id point in self.points)
-        {
-            [point getValue:&markerLocation];
+        for (MarkupFeature *feature in features) {
             
-            location = [[CLLocation alloc] initWithLatitude:markerLocation.latitude longitude:markerLocation.longitude];
-            lineBounds = [lineBounds includingCoordinate:markerLocation];
             
-            [coordinates addObject:location];
-            [coordinatePath addCoordinate:location.coordinate];
-        }
-        self.path = coordinatePath;
-        
-        CLLocationCoordinate2D modSW = CLLocationCoordinate2DMake(lineBounds.southWest.latitude - 0.01, lineBounds.southWest.longitude - 0.01);
-        CLLocationCoordinate2D modNE = CLLocationCoordinate2DMake(lineBounds.northEast.latitude + 0.01,  lineBounds.northEast.longitude + 0.01);
-        
-        lineBounds = [lineBounds includingCoordinate:modSW];
-        lineBounds = [lineBounds includingCoordinate:modNE];
-        
-        CGPoint sw = [view.projection pointForCoordinate:modSW];
-        CGPoint ne = [view.projection pointForCoordinate:modNE];
-        
-        
-        //PolyLineBezierPath *path = [PolyLineBezierPath bezierPath];
-        
-        int size = (int) self.points.count * 2;
-        float floatPoints[size];
-        memset(floatPoints, 0, size * sizeof(int));
-        
-        for(int i = 0; i < coordinates.count; i++)
-        {
-            CLLocation *location = [coordinates objectAtIndex:i];
-            CGPoint pt = [view.projection pointForCoordinate:location.coordinate];
-            floatPoints[(i * 2)] = pt.x - sw.x;
-            floatPoints[(i * 2) + 1] = pt.y - ne.y;
-        }
-        
-        //Luis disabled this. I'm not sure what this does...
-        /*if([feature.dashStyle isEqualToString:@"map"]) {
-         CGPoint start = CGPointMake(floatPoints[0], floatPoints[1]);
-         CGPoint end = CGPointMake(floatPoints[size - 2], floatPoints[size - 1]);
-         [path moveToPoint:start];
-         [path addArcWithCenter:start radius:1.5 startAngle:0 endAngle:360 clockwise:YES];
-         
-         [path moveToPoint:end];
-         [path addArcWithCenter:end radius:1.5 startAngle:0 endAngle:360 clockwise:YES];
-         }*/
-        
-        UIBezierPath *path = [UIBezierPath bezierPath];
-        
-        
-        //Whether or not we add the line itself to the path
-        bool fillLine = false;
-        
-        NSString *dashStyle = feature.dashStyle;
-        UIColor *featureColor = [UIColor blackColor];
-        
-        if([dashStyle isEqualToString:@"primary-fire-line"])
-        {
-            fillLine = true;
-            path = [self primaryFireLine:path];
-        }
-        else if([dashStyle isEqualToString:@"secondary-fire-line"])
-        {
-            fillLine = true;
-            path = [self secondaryFireLine:path];
-        }
-        else if([dashStyle isEqualToString:@"proposed-dozer-line"])
-        {
-            //X dot X dot
-            //markupStyle values:
-            //0: uncontrolled fireline barbs
-            //1: 'x'
-            //2: 'X'
-            //3: dots
+            __block  MarkupFireline *self = [super initWithMap:view feature:feature];
             
-            [MarkupFireline addAdvancedStyling:floatPoints pathPtLen:size path:path markupStyle:2 markupSpacing:20.0f markupOfs:0.0f];
-            [MarkupFireline addAdvancedStyling:floatPoints pathPtLen:size path:path markupStyle:3 markupSpacing:20.0f markupOfs:10.0f];
-            path = [self proposedDozerLine:path];
-        }
-        else if([dashStyle isEqualToString:@"completed-dozer-line"])
-        {
-            //x x x x
-            [MarkupFireline addAdvancedStyling:floatPoints pathPtLen:size path:path markupStyle:1 markupSpacing:13.0f markupOfs:0.0f];
-            path = [self completedDozerLine:path];
-        }
-        else if([dashStyle isEqualToString:@"fire-edge-line"])
-        {
-            //barb barb barb
-            fillLine = true;
-            [MarkupFireline addAdvancedStyling:floatPoints pathPtLen:size path:path markupStyle:0 markupSpacing:10.0f markupOfs:0.0f];
-            path = [self fireEdgeLine:path];
-            featureColor = [UIColor redColor];
-        }
-        else if ([dashStyle isEqualToString:@"action-point"])
-        {
-            // this needs to be a yellow fill line with black border and round caps
-            fillLine = true;
-            path = [self actionPoint:path];
-            
-        }
-        else if([dashStyle isEqualToString:@"map"])
-        {
-            fillLine = true;
-        }
-        
-        
-        //If fillLine is set, we the line itself to the path
-        if(fillLine == true)
-        {
-            for(int i = 0; i < coordinates.count; i++)
+            if(self)
             {
-                if(i == 0)
+                self.points = [feature getCLPointsArray];
+                
+                GMSMutablePath *coordinatePath = [GMSMutablePath path];
+                
+                NSMutableArray *coordinates = [NSMutableArray new];
+                CLLocation *location;
+                CLLocationCoordinate2D markerLocation;
+                
+                for(id point in self.points)
                 {
-                    [path moveToPoint:CGPointMake(floatPoints[0], floatPoints[1])];
+                    [point getValue:&markerLocation];
+                    
+                    location = [[CLLocation alloc] initWithLatitude:markerLocation.latitude longitude:markerLocation.longitude];
+                    lineBounds = [lineBounds includingCoordinate:markerLocation];
+                    
+                    [coordinates addObject:location];
+                    [coordinatePath addCoordinate:location.coordinate];
                 }
-                else
+                self.path = coordinatePath;
+                
+                CLLocationCoordinate2D modSW = CLLocationCoordinate2DMake(lineBounds.southWest.latitude - 0.01, lineBounds.southWest.longitude - 0.01);
+                CLLocationCoordinate2D modNE = CLLocationCoordinate2DMake(lineBounds.northEast.latitude + 0.01,  lineBounds.northEast.longitude + 0.01);
+                
+                lineBounds = [lineBounds includingCoordinate:modSW];
+                lineBounds = [lineBounds includingCoordinate:modNE];
+                
+                CGPoint sw = [view.projection pointForCoordinate:modSW];
+                CGPoint ne = [view.projection pointForCoordinate:modNE];
+                
+                
+                //PolyLineBezierPath *path = [PolyLineBezierPath bezierPath];
+                
+                int size = (int) self.points.count * 2;
+                float floatPoints[size];
+                memset(floatPoints, 0, size * sizeof(int));
+                
+                for(int i = 0; i < coordinates.count; i++)
                 {
-                    [path addLineToPoint:CGPointMake(floatPoints[i * 2], floatPoints[(i * 2) + 1])];
+                    CLLocation *location = [coordinates objectAtIndex:i];
+                    CGPoint pt = [view.projection pointForCoordinate:location.coordinate];
+                    
+                    
+                    GMSCoordinateBounds *visibleBounds = [[GMSCoordinateBounds alloc] initWithRegion:view.projection.visibleRegion];
+                    if ([visibleBounds containsCoordinate:location.coordinate] == false)
+                    {
+                        break;
+                    }
+                    
+                    floatPoints[(i * 2)] = pt.x - sw.x;
+                    floatPoints[(i * 2) + 1] = pt.y - ne.y;
                 }
+                
+                //Luis disabled this. I'm not sure what this does...
+                /*if([feature.dashStyle isEqualToString:@"map"]) {
+                 CGPoint start = CGPointMake(floatPoints[0], floatPoints[1]);
+                 CGPoint end = CGPointMake(floatPoints[size - 2], floatPoints[size - 1]);
+                 [path moveToPoint:start];
+                 [path addArcWithCenter:start radius:1.5 startAngle:0 endAngle:360 clockwise:YES];
+                 
+                 [path moveToPoint:end];
+                 [path addArcWithCenter:end radius:1.5 startAngle:0 endAngle:360 clockwise:YES];
+                 }*/
+                
+                
+                
+                //Whether or not we add the line itself to the path
+                bool fillLine = false;
+                
+                NSString *dashStyle = feature.dashStyle;
+                UIColor *featureColor = [UIColor blackColor];
+                
+                if([dashStyle isEqualToString:@"primary-fire-line"])
+                {
+                    fillLine = true;
+                    path = [self primaryFireLine:path];
+                    [[UIColor redColor] setStroke];
+                }
+                else if([dashStyle isEqualToString:@"secondary-fire-line"])
+                {
+                    fillLine = true;
+                    path = [self secondaryFireLine:path];
+                }
+                else if([dashStyle isEqualToString:@"proposed-dozer-line"])
+                {
+                    //X dot X dot
+                    //markupStyle values:
+                    //0: uncontrolled fireline barbs
+                    //1: 'x'
+                    //2: 'X'
+                    //3: dots
+                    
+                    [MarkupFireline addAdvancedStyling:floatPoints pathPtLen:size path:path markupStyle:2 markupSpacing:20.0f markupOfs:0.0f];
+                    [MarkupFireline addAdvancedStyling:floatPoints pathPtLen:size path:path markupStyle:3 markupSpacing:20.0f markupOfs:10.0f];
+                    path = [self proposedDozerLine:path];
+                }
+                else if([dashStyle isEqualToString:@"completed-dozer-line"])
+                {
+                    //x x x x
+                    [MarkupFireline addAdvancedStyling:floatPoints pathPtLen:size path:path markupStyle:1 markupSpacing:13.0f markupOfs:0.0f];
+                    path = [self completedDozerLine:path];
+                }
+                else if([dashStyle isEqualToString:@"fire-edge-line"])
+                {
+                    //barb barb barb
+                    fillLine = true;
+                    [MarkupFireline addAdvancedStyling:floatPoints pathPtLen:size path:path markupStyle:0 markupSpacing:10.0f markupOfs:0.0f];
+                    path = [self fireEdgeLine:path];
+                    //      featureColor = [UIColor redColor];
+                }
+                else if ([dashStyle isEqualToString:@"action-point"])
+                {
+                    // this needs to be a yellow fill line with black border and round caps
+                    fillLine = true;
+                    path = [self actionPoint:path];
+                    
+                }
+                else if([dashStyle isEqualToString:@"map"])
+                {
+                    fillLine = true;
+                }
+                
+                
+                //If fillLine is set, we the line itself to the path
+                if(fillLine == true)
+                {
+                    for(int i = 0; i < coordinates.count; i++)
+                    {
+                        if(i == 0)
+                        {
+                            [path moveToPoint:CGPointMake(floatPoints[0], floatPoints[1])];
+                        }
+                        else
+                        {
+                            [path addLineToPoint:CGPointMake(floatPoints[i * 2], floatPoints[(i * 2) + 1])];
+                        }
+                    }
+                }
+                
+                //                        float width = ne.x - sw.x;
+                //                        float height = sw.y - ne.y;
+                //
+                //                        if(width > 0 && height > 0 && width < 2048 && height < 2048)
+                //                        {
+                //                            UIImage *image = [self generateImageFromPath:path Size:CGSizeMake(width, height)];
+                //
+                //                            _groundOverlay = [GMSGroundOverlay groundOverlayWithBounds:lineBounds icon:image];
+                //                            _groundOverlay.anchor = CGPointMake(0.5, 0.5);
+                //                            _groundOverlay.map = self.mapView;
+                //                        }
+                
+                
             }
-        }
-        
-        
-        
-        float width = ne.x - sw.x;
-        float height = sw.y - ne.y;
-        
-        if(width > 0 && height > 0 && width < 2048 && height < 2048)
-        {
-            UIImage *image = [self generateImageFromPath:path Size:CGSizeMake(width, height) Color:featureColor dashStyle:feature.dashStyle];
             
-            _groundOverlay = [GMSGroundOverlay groundOverlayWithBounds:lineBounds icon:image];
-            _groundOverlay.anchor = CGPointMake(0.5, 0.5);
-            _groundOverlay.map = self.mapView;
         }
-    }
+        [self drawImageFromMasterPath:path Size:view.bounds.size LineBounds:[[GMSCoordinateBounds alloc] initWithRegion:view.projection.visibleRegion]];
+        
+    });
+    
     return self;
 }
 
--(void) drawImageFromMasterPath:(UIBezierPath *)path Size:(CGSize)size FeatureColor:(UIColor *)color DashStyle:(NSString *)dashStyle LineBounds:(GMSCoordinateBounds *)bounds
+double getDistanceMetresBetweenLocationCoordinates(
+                                                   CLLocationCoordinate2D coord1,
+                                                   CLLocationCoordinate2D coord2)
 {
-    UIImage *image = [self generateImageFromPath:path Size:size Color:color dashStyle:dashStyle];
+    CLLocation* location1 =
+    [[CLLocation alloc]
+     initWithLatitude: coord1.latitude
+     longitude: coord1.longitude];
+    CLLocation* location2 =
+    [[CLLocation alloc]
+     initWithLatitude: coord2.latitude
+     longitude: coord2.longitude];
+    
+    return [location1 distanceFromLocation: location2];
+}
+
+-(void) drawImageFromMasterPath:(UIBezierPath *)path Size:(CGSize)size LineBounds:(GMSCoordinateBounds *)bounds
+{
+    
+    UIImage *image = [self generateImageFromPath:path Size:size];
     _groundOverlay = [GMSGroundOverlay groundOverlayWithBounds:bounds icon:image];
     _groundOverlay.anchor = CGPointMake(0.5, 0.5);
     _groundOverlay.map = self.mapView;
@@ -492,7 +529,7 @@
 {
     UIBezierPath *newPath = path.copy;
     // this needs to be a yellow fill line with black border and round caps
-
+    
     return newPath;
 }
 
@@ -507,11 +544,10 @@
     return newPath;
 }
 
-- (UIImage *)generateImageFromPath:(UIBezierPath *)path Size:(CGSize)size Color:(UIColor *)featureColor dashStyle:(NSString *)dashStyle
+- (UIImage *)generateImageFromPath:(UIBezierPath *)path Size:(CGSize)size
 {
     UIGraphicsBeginImageContextWithOptions(size, NO, 0.0f);
     CGContextRef context = UIGraphicsGetCurrentContext();
-    [featureColor set];
     
     [path stroke];
     CGContextAddPath(context, path.CGPath);
