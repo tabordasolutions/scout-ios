@@ -47,6 +47,7 @@ static NSNumber* selectedIndex;
 //MapMarkupViewController *FullscreenMap = nil;
 //UIPopoverController *myPopOver = nil;
 bool markupProcessing = false;
+int mapZoomLevel = 6;
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -119,16 +120,16 @@ bool markupProcessing = false;
     
     if(_zoomingToReport){
         [_mapView animateToLocation: _positionToZoomTo];
-        [_mapView animateToZoom:10];
+        [_mapView animateToZoom:mapZoomLevel];
         _zoomingToReport = false;
     }else{
         if ([_dataManager.locationManager location].coordinate.latitude > 0.0 && [_dataManager.locationManager location].coordinate.longitude > 0.0) {
             [_mapView animateToLocation:[_dataManager.locationManager location].coordinate];
-            [_mapView animateToZoom:10];
+            [_mapView animateToZoom:mapZoomLevel];
 
         } else {
             [_mapView animateToLocation:CLLocationCoordinate2DMake(36.7468, -119.7726)];
-            [_mapView animateToZoom:6];
+            [_mapView animateToZoom:mapZoomLevel];
 
         }
         
@@ -335,6 +336,22 @@ bool markupProcessing = false;
     }
 }
 
+-(void)addFirelinesToMap:(NSArray *) features
+{
+    
+    MarkupFireline *fireline = [[MarkupFireline alloc] initWithMap:_mapView features:features];
+    
+    // Apparently this just updates a dictionary? 
+    for (MarkupFeature * feature in features)
+    {
+        if([feature.featureId isEqualToString: @"draft"]){
+            [_markupDraftShapes addObject:fireline];
+        }else{
+            [_markupShapes setValue:fireline forKey:feature.featureId];
+        }
+    }
+}
+
 -(void)addFeatureToMap:(MarkupFeature*) feature {
     
 //    [_markupFeatures setValue:feature forKey:feature.featureId];
@@ -365,16 +382,7 @@ bool markupProcessing = false;
                 }else{
                     [_markupShapes setValue:segment forKey:feature.featureId];
                 }
-            } else {    //fireline, should figure out which fire line is being drawn and change the graphic
-            
-                MarkupFireline *fireline = [[MarkupFireline alloc] initWithMap:_mapView feature:feature];
-                if([feature.featureId isEqualToString: @"draft"]){
-                    [_markupDraftShapes addObject:fireline];
-                }else{
-                    [_markupShapes setValue:fireline forKey:feature.featureId];
-                }
             }
-            
         } else if(currentType == rectangle || currentType == polygon) {
             MarkupPolygon *polygon = [[MarkupPolygon alloc] initWithMap:_mapView feature:feature];
             if([feature.featureId isEqualToString: @"draft"]){
@@ -475,6 +483,9 @@ bool markupProcessing = false;
                     MarkupMessage *message = [[MarkupMessage alloc] initWithString:jsonString error:&error];
                 
                     for(MarkupFeature* feature in message.features){
+                        if (feature.dashStyle != nil){
+                            break;
+                        }
                         [self addFeatureToMap:feature];
                     }
                     for(NSString* featureId in message.deletedFeature){
@@ -504,12 +515,11 @@ bool markupProcessing = false;
         [_mapView clear];
     });
     
-    for(MarkupFeature* feature in [_dataManager getAllMarkupFeaturesFromStoreAndForwardForCollabroomId: [_dataManager getSelectedCollabroomId]]){
+    for(MarkupFeature* feature in [_dataManager getAllNonFirelinesForCollabRoomId:[_dataManager getSelectedCollabroomId]]){
         [self addFeatureToMap:feature];
     }
-    for(MarkupFeature* feature in [_dataManager getAllMarkupFeaturesForCollabroomId:[_dataManager getSelectedCollabroomId]]){
-        [self addFeatureToMap:feature];
-    }
+    
+    [self addFirelinesToMap:[_dataManager getAllFirelinesForCollabRoomId:[_dataManager getSelectedCollabroomId]]];
     
     if([_dataManager getTrackingLayerEnabled:NSLocalizedString(@"SCOUT General Messages",nil)]){
         [self addAllGeneralMessageSymbolsToMap];
@@ -788,7 +798,7 @@ bool markupProcessing = false;
         [[shape.points objectAtIndex:0] getValue:&positionCoordinate];
         
         [_mapView animateToLocation:positionCoordinate];
-        [_mapView animateToZoom:16];
+        [_mapView animateToZoom:mapZoomLevel];
     }
 
     _mapView.selectedMarker = nil;
@@ -1041,7 +1051,7 @@ bool markupProcessing = false;
     
     
     [_mapView animateToLocation:positionCoordinate];
-    [_mapView animateToZoom:10];
+    [_mapView animateToZoom:mapZoomLevel];
 
 
 _mapView.selectedMarker = nil;

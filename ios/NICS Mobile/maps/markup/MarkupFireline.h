@@ -41,5 +41,6 @@
 @property GMSGroundOverlay *groundOverlay;
 @property UIImage *markerImage;
 @property NSString *imagePath;
+- (id)initWithMap:(GMSMapView *)view features:(NSArray *)features;
 
 @end

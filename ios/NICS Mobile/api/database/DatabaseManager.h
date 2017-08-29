@@ -179,6 +179,8 @@
 - (BOOL)addMarkupFeatureToStoreAndForward:(MarkupFeature *) payload;
 
 - (NSMutableArray<MarkupFeature> *)getAllMarkupFeaturesForCollabroomId: (NSNumber *)collabroomId since: (NSNumber *) timestamp;
+- (NSMutableArray<MarkupFeature> *)getAllFirelinesForCollabRoomId: (NSNumber *) collabRoomId since: (NSNumber *) timestamp;
+- (NSMutableArray<MarkupFeature> *)getAllNonFirelinesForCollabRoomId: (NSNumber *)collabroomId since: (NSNumber *) timestamp;
 - (NSMutableArray<MarkupFeature> *)getAllMarkupFeaturesFromStoreAndForward;
 - (NSMutableArray<MarkupFeature> *)getAllMarkupFeaturesFromStoreAndForwardForCollabroomId: (NSNumber *)collabroomId since: (NSNumber *) timestamp;
 - (void)deleteMarkupFeatureFromStoreAndForward:(MarkupFeature *) feature;

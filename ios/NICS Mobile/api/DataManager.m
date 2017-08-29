@@ -770,6 +770,15 @@ long long lastMdtSync = 0;
     return [_databaseManager getAllMarkupFeaturesForCollabroomId:collabroomId since:@0];
 }
 
+- (NSMutableArray<MarkupFeature> *)getAllFirelinesForCollabRoomId: (NSNumber *) collabRoomId {
+    return [_databaseManager getAllFirelinesForCollabRoomId:collabRoomId since:@0];
+}
+
+- (NSMutableArray<MarkupFeature> *)getAllNonFirelinesForCollabRoomId: (NSNumber *) collabRoomId
+{
+    return [_databaseManager getAllNonFirelinesForCollabRoomId:collabRoomId since:@0];
+}
+
 - (NSMutableArray<MarkupFeature> *)getAllMarkupFeaturesForCollabroomId: (NSNumber *)collabroomId since: (NSNumber *)timestamp {
     return [_databaseManager getAllMarkupFeaturesForCollabroomId:collabroomId since:timestamp];
 }

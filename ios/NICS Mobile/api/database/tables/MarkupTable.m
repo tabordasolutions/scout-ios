@@ -134,6 +134,39 @@ static NSDictionary * tableColumnsDictionary;
     return (NSMutableArray<MarkupFeature>*) parsedResults;
 }
 
+- (NSMutableArray<MarkupFeature> *) getFirelinesForCollabRoomId: (NSNumber *)collabroomId since: (NSNumber *) timestamp{
+    NSMutableArray *results = [self selectFirelines:collabroomId];
+    
+    NSMutableArray *parsedResults = [NSMutableArray new];
+    
+    NSError *error;
+    
+    for(NSDictionary *result in results) {
+        MarkupFeature* feature = [[MarkupFeature alloc] initWithString:[result objectForKey:@"json"] error:&error];
+        [feature setId:[result objectForKey:@"id"]];
+        [parsedResults addObject:feature];
+    }
+    
+    return (NSMutableArray<MarkupFeature>*) parsedResults;
+}
+
+- (NSMutableArray<MarkupFeature> *) getAllNonFirelinesForCollabRoomId: (NSNumber *)collabroomId since: (NSNumber *) timestamp
+{
+    NSMutableArray *results = [self selectAllNonFirelines:collabroomId];
+    
+    NSMutableArray *parsedResults = [NSMutableArray new];
+    
+    NSError *error;
+    
+    for(NSDictionary *result in results) {
+        MarkupFeature* feature = [[MarkupFeature alloc] initWithString:[result objectForKey:@"json"] error:&error];
+        [feature setId:[result objectForKey:@"id"]];
+        [parsedResults addObject:feature];
+    }
+    
+    return (NSMutableArray<MarkupFeature>*) parsedResults;
+}
+
 - (NSMutableArray<MarkupFeature> *) getAllMarkupFeatures {
     NSMutableArray *results = [self selectAllRowsAndOrderedBy:[NSArray arrayWithObject:@"seqtime"] isDescending:YES];
     
