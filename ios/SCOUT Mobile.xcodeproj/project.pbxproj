@@ -1336,7 +1336,7 @@
 				ORGANIZATIONNAME = "MIT Lincoln Labs";
 				TargetAttributes = {
 					3A141A9F18DB34AC00466AD3 = {
-						DevelopmentTeam = MQTKTB2NN8;
+						DevelopmentTeam = NZYGQGZG6M;
 						LastSwiftMigration = 0830;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -1811,7 +1811,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = MQTKTB2NN8;
+				DEVELOPMENT_TEAM = NZYGQGZG6M;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1880,7 +1880,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = MQTKTB2NN8;
+				DEVELOPMENT_TEAM = NZYGQGZG6M;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

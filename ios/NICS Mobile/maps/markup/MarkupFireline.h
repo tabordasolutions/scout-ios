@@ -35,12 +35,11 @@
 //
 
 #import "MarkupBaseShape.h"
-
+@class MapMarkupViewController;
 @interface MarkupFireline: MarkupBaseShape
 
 @property GMSGroundOverlay *groundOverlay;
 @property UIImage *markerImage;
 @property NSString *imagePath;
-- (id)initWithMap:(GMSMapView *)view features:(NSArray *)features;
-
+- (id)initWithMap:(GMSMapView *)view features:(NSArray *)features parentViewController:(MapMarkupViewController*)viewController;
 @end

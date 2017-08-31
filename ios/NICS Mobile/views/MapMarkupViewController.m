@@ -78,6 +78,7 @@ int mapZoomLevel = 6;
     _mapView.mapType = _dataManager.CurrentMapType;
     _mapView.trafficEnabled = _dataManager.TrafficDisplay;
     _mapView.indoorEnabled = _dataManager.IndoorDisplay;
+
     _currentZoomLevel = 8.0;
     
     [self addMarkupUpdateFromServer:nil];
@@ -315,6 +316,7 @@ int mapZoomLevel = 6;
     [super viewWillDisappear:animated];
 }
 
+
 - (void)mapView:(GMSMapView *)mapView idleAtCameraPosition:(GMSCameraPosition *)position {
     if(_previousZoomLevel != position.zoom) {
         if(position.bearing != 0) {
@@ -323,6 +325,7 @@ int mapZoomLevel = 6;
             [_mapView moveCamera:update];
         }
     }
+    [self redrawLocalMapFeatures];
     _previousZoomLevel = position.zoom;
 }
 
@@ -332,14 +335,13 @@ int mapZoomLevel = 6;
         
         [self refreshView];
         _currentZoomLevel = roundf(position.zoom);
-        NSLog(@"\t\tDID ZOOM position:%f\n\t\tCurrent Zoom Level:%f", position.zoom, _currentZoomLevel);
     }
 }
 
 -(void)addFirelinesToMap:(NSArray *) features
 {
     
-    MarkupFireline *fireline = [[MarkupFireline alloc] initWithMap:_mapView features:features];
+    MarkupFireline *fireline = [[MarkupFireline alloc] initWithMap:_mapView features:features parentViewController:self];
     
     // Apparently this just updates a dictionary? 
     for (MarkupFeature * feature in features)
@@ -1129,6 +1131,21 @@ _mapView.selectedMarker = nil;
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
     UIViewController *vc = [mainStoryboard instantiateViewControllerWithIdentifier:@"MapSettingsViewControllerID"];
     [self.navigationController pushViewController:vc animated:YES];
+}
+
+-(void)startCollabLoadingSpinner{
+    dispatch_async(dispatch_get_main_queue(), ^(void) {
+        _mapMarkupLoadingIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
+        [_mapMarkupLoadingIndicator startAnimating];
+    });
+    
+}
+
+-(void)stopCollabLoadingSpinner{
+    dispatch_async(dispatch_get_main_queue(), ^(void) {
+        [_mapMarkupLoadingIndicator stopAnimating];
+    });
+    
 }
 
 @end

@@ -61,6 +61,7 @@
 @property IBOutlet GMSMapView *mapView;
 @property IBOutlet UITableView *tableView;
 @property IBOutlet UIView *shapeButtonView;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *mapMarkupLoadingIndicator;
 //@property IBOutlet MarkupCoordinateView *coordinateView;
 @property MapEditView *mapEditView;
 @property (weak, nonatomic) IBOutlet UIView *MapEditCanvas;
@@ -105,7 +106,7 @@
 
 //- (void)setPopoverButtons;
 - (void)addFeatureToMap:(MarkupFeature*) feature;
-- (void)addMarkupUpdateFromServer;
+//- (void)addMarkupUpdateFromServer;
 - (void)reloadTableView;
 - (GMSMarker*)getCustomMarker;
 -(void)setUiViewControllerToReturnTo:(UIViewController*) controller;
@@ -113,5 +114,6 @@
 
 -(void) setCustomSymbol:(NSString*)imageName;
 -(void) hideCustomMarker;
-
+-(void)startCollabLoadingSpinner;
+-(void)stopCollabLoadingSpinner;
 @end

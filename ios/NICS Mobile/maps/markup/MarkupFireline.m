@@ -30,10 +30,9 @@
 //  nics_iOS
 //
 //
-
+#import "MapMarkupViewController.h"
 #import "MarkupFireline.h"
 #import "SCOUT_Mobile-Swift.h"
-
 
 @implementation MarkupFireline
 
@@ -278,9 +277,11 @@
 }
 
 
-- (id)initWithMap:(GMSMapView *)view features:(NSArray *)features
+- (id)initWithMap:(GMSMapView *)view features:(NSArray *)features parentViewController:(MapMarkupViewController *)viewController
 {
     dispatch_async(dispatch_get_main_queue(), ^{
+        [viewController startCollabLoadingSpinner];
+
         //Starting the image contex with a specified size
         UIGraphicsBeginImageContextWithOptions(view.bounds.size, NO, 0.0f);
         
@@ -465,9 +466,9 @@
         _groundOverlay = [GMSGroundOverlay groundOverlayWithBounds:[[GMSCoordinateBounds alloc] initWithRegion:view.projection.visibleRegion] icon:image];
         _groundOverlay.anchor = CGPointMake(0.5, 0.5);
         _groundOverlay.map = self.mapView;
+        [viewController stopCollabLoadingSpinner];
         
     });
-    
     return self;
 }
 
