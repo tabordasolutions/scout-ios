@@ -29,39 +29,21 @@
  *
  */
 //
-//  MarkupFireline.h
+//  MarkupFirelineFeatures.h
 //  nics_iOS
 //
 //
 
-#import "MarkupBaseShape.h"
-@class MapMarkupViewController;
-@interface MarkupFireline: MarkupBaseShape
+#import "MarkupFireline.h"
 
-/*
-@property GMSGroundOverlay *groundOverlay;
-@property UIImage *markerImage;
-@property NSString *imagePath;
-*/
+//This class just holds a list of formatted MarkupFireline objects for rendering
+@interface MarkupFirelineFeatures: NSObject
 
+//Array of MarkupFireline objects
+@property NSArray* firelineFeatures;
 
-//The calculated bounding box for this fireline feature
-@property CLLocationCoordinate2D boundsSW;
-@property CLLocationCoordinate2D boundsNE;
+//Transforms the feature data to MarkupFireline objects
+- (id)initWithFeatures:(NSArray *)features;
 
-//The list of LatLng points that make up this feature
-@property CLLocationCoordinate2D *featurePoints;
-@property int featurePointsCount;
-
-//The style of this feature
-@property NSString *dashStyle;
-
-
-- (id) initWithPoints:(CLLocationCoordinate2D*)points OfLength:(int)pointCount AndDashStyle:(NSString*)dashStyle;
-
-//- (id)initWithMap:(GMSMapView *)view features:(NSArray *)features parentViewController:(MapMarkupViewController*)viewController;
-
-+ (void)addAdvancedStyling:(float[])points pathPtLen:(float)pointLen path:(UIBezierPath *)path markupStyle:(int)style markupSpacing:(float)spacing markupOfs:(float)ofs;
-+ (void) addLine:(float[])points pathPtLen:(float)pointLen ToPath:(UIBezierPath *)path;
 
 @end

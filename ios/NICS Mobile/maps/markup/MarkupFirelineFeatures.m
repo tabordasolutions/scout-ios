@@ -29,39 +29,48 @@
  *
  */
 //
-//  MarkupFireline.h
+//  MarkupFirelineFeatures.m
 //  nics_iOS
 //
 //
 
-#import "MarkupBaseShape.h"
-@class MapMarkupViewController;
-@interface MarkupFireline: MarkupBaseShape
+#import "MarkupFirelineFeatures.h"
 
-/*
-@property GMSGroundOverlay *groundOverlay;
-@property UIImage *markerImage;
-@property NSString *imagePath;
-*/
+@implementation MarkupFirelineFeatures
 
+- (id) initWithFeatures:(NSArray*)features
+{
+	NSLog(@"Feature being created\n");
+	self = [super init];
+	
+	NSMutableArray *featureList = [[NSMutableArray alloc] init];
+	
+	//Calculating the LatLng points of the feature
+	for(MarkupFeature* feature in features)
+	{
+		NSMutableArray *points = [feature getCLPointsArray];
+		CLLocationCoordinate2D markerLocation;
+		
+		CLLocationCoordinate2D latLngPoints[points.count];
+		
+		for(int i = 0; i < points.count; i++)
+		{
+			id pointLatLng = points[i];
+			[pointLatLng getValue:&markerLocation];
+			
+			latLngPoints[i] = CLLocationCoordinate2DMake(markerLocation.latitude, markerLocation.longitude);
+		}
+		
+		[featureList addObject:[[MarkupFireline alloc] initWithPoints:latLngPoints OfLength:(int)points.count AndDashStyle:feature.dashStyle]];
+	}
+	
+	
+	_firelineFeatures = featureList;
+	
+	NSLog(@"Feature finished being created\n");
 
-//The calculated bounding box for this fireline feature
-@property CLLocationCoordinate2D boundsSW;
-@property CLLocationCoordinate2D boundsNE;
+	return self;
+}
 
-//The list of LatLng points that make up this feature
-@property CLLocationCoordinate2D *featurePoints;
-@property int featurePointsCount;
-
-//The style of this feature
-@property NSString *dashStyle;
-
-
-- (id) initWithPoints:(CLLocationCoordinate2D*)points OfLength:(int)pointCount AndDashStyle:(NSString*)dashStyle;
-
-//- (id)initWithMap:(GMSMapView *)view features:(NSArray *)features parentViewController:(MapMarkupViewController*)viewController;
-
-+ (void)addAdvancedStyling:(float[])points pathPtLen:(float)pointLen path:(UIBezierPath *)path markupStyle:(int)style markupSpacing:(float)spacing markupOfs:(float)ofs;
-+ (void) addLine:(float[])points pathPtLen:(float)pointLen ToPath:(UIBezierPath *)path;
 
 @end

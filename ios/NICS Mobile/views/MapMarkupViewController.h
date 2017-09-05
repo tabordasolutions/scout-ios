@@ -41,7 +41,7 @@
 #import <objc/runtime.h>
 #import "DataManager.h"
 #import "MarkupBaseShape.h"
-#import "MarkupFireline.h"
+#import "MarkupFirelineFeatures.h"
 #import "MarkupPolygon.h"
 #import "MarkupSegment.h"
 #import "MarkupSymbol.h"
@@ -53,6 +53,7 @@
 #import "ReportInfoWindow.h"
 #import "SimpleReportDetailViewController.h"
 #import "DamageReportDetailViewController.h"
+#import "MarkupTileLayer.h"
 @class MapEditView;
 
 @interface MapMarkupViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate, /*MarkupCoordinateViewDelegate,*/ GMSMapViewDelegate, CLLocationManagerDelegate>
@@ -101,6 +102,10 @@
 @property UIViewController* previousViewToReturnTo;
 @property ReportInfoWindow* currentReportWindow;
 @property GMUClusterManager *_clusterManager;
+
+
+//Luis tile layer test
+@property MarkupTileLayer *tileLayer;
 
 - (void)updateWfsLayers;
 

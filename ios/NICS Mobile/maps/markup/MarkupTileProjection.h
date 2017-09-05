@@ -29,39 +29,48 @@
  *
  */
 //
-//  MarkupFireline.h
-//  nics_iOS
+//  MarkupTileProjection.h
+//  SCOUT
 //
 //
 
-#import "MarkupBaseShape.h"
-@class MapMarkupViewController;
-@interface MarkupFireline: MarkupBaseShape
+#import <GoogleMaps/GoogleMaps.h>
 
-/*
-@property GMSGroundOverlay *groundOverlay;
-@property UIImage *markerImage;
-@property NSString *imagePath;
-*/
+@interface MarkupTileProjection : NSObject
 
+@property int x;
+@property int y;
+@property int zoom;
+@property int TILE_SIZE;
 
-//The calculated bounding box for this fireline feature
-@property CLLocationCoordinate2D boundsSW;
-@property CLLocationCoordinate2D boundsNE;
+@property CGPoint pixelOrigin_;
+@property double pixelsPerLonDegree_;
+@property double pixelsPerLonRadian_;
 
-//The list of LatLng points that make up this feature
-@property CLLocationCoordinate2D *featurePoints;
-@property int featurePointsCount;
+-(id) initWithTileSize:(int)size x:(int)x y:(int)y zoom:(int)zoom;
 
-//The style of this feature
-@property NSString *dashStyle;
+/** Get the dimensions of the Tile in LatLng coordinates */
+-(GMSCoordinateBounds *) getTileBounds;
 
+/**
+ * Calculate the pixel coordinates inside a tile, relative to the left upper
+ * corner (origin) of the tile.
+ */
+-(CGPoint) latLngToPoint:(CLLocationCoordinate2D)latLng;
+-(CGPoint) pixelToWorldCoordinates:(CGPoint)pixelCoord;
 
-- (id) initWithPoints:(CLLocationCoordinate2D*)points OfLength:(int)pointCount AndDashStyle:(NSString*)dashStyle;
+/**
+ * Transform the world coordinates into pixel-coordinates relative to the
+ * whole tile-area. (i.e. the coordinate system that spans all tiles.)
+ */
 
-//- (id)initWithMap:(GMSMapView *)view features:(NSArray *)features parentViewController:(MapMarkupViewController*)viewController;
+-(CGPoint) worldToPixelCoordinates:(CGPoint) worldCoord;
+-(CLLocationCoordinate2D) worldCoordToLatLng:(CGPoint) worldCoord;
 
-+ (void)addAdvancedStyling:(float[])points pathPtLen:(float)pointLen path:(UIBezierPath *)path markupStyle:(int)style markupSpacing:(float)spacing markupOfs:(float)ofs;
-+ (void) addLine:(float[])points pathPtLen:(float)pointLen ToPath:(UIBezierPath *)path;
+/**
+ * Get the coordinates in a system describing the whole globe in a
+ * coordinate range from 0 to TILE_SIZE (type double).
+ */
+-(CGPoint) latLngToWorldCoordinates:(CLLocationCoordinate2D)latLng;
 
 @end

@@ -26,7 +26,7 @@
  |~^~|OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  |~^~|OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\*/
 //
-//  MarkupSymbol.m
+//  MarkupFireline.m
 //  nics_iOS
 //
 //
@@ -277,7 +277,23 @@
 }
 
 
-- (id)initWithMap:(GMSMapView *)view features:(NSArray *)features parentViewController:(MapMarkupViewController *)viewController
+- (id) initWithPoints:(CLLocationCoordinate2D*)points OfLength:(int)pointCount AndDashStyle:(NSString*)dashStyle
+{
+	NSLog(@"Fireline being created\n");
+
+	self = [super init];
+	
+	_featurePoints = points;
+	_featurePointsCount = pointCount;
+	_dashStyle = dashStyle;
+	
+	//TODO: calculate the bounding box for this fireline
+	NSLog(@"Fireline finished being created\n");
+
+	return self;
+}
+
+/*- (id)initWithMap:(GMSMapView *)view features:(NSArray *)features parentViewController:(MapMarkupViewController *)viewController
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         [viewController startCollabLoadingSpinner];
@@ -470,7 +486,7 @@
         
     });
     return self;
-}
+}*/
 
 double getDistanceMetresBetweenLocationCoordinates(
                                                    CLLocationCoordinate2D coord1,
@@ -508,9 +524,9 @@ double getDistanceMetresBetweenLocationCoordinates(
     }
 }
 
-- (void)removeFromMap {
+/*- (void)removeFromMap {
     if(_groundOverlay != nil) {
         _groundOverlay.map = nil;
     }
-}
+}*/
 @end

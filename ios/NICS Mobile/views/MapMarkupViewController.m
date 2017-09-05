@@ -133,7 +133,7 @@ int mapZoomLevel = 6;
             [_mapView animateToZoom:mapZoomLevel];
 
         }
-        
+
 
     }
     _mapView.delegate = self;
@@ -325,7 +325,8 @@ int mapZoomLevel = 6;
             [_mapView moveCamera:update];
         }
     }
-    [self redrawLocalMapFeatures];
+	//Disabled for tileOverlay drawing, this caused the tiles to disappear and reappear when a user stopped panning the map view
+    //[self redrawLocalMapFeatures];
     _previousZoomLevel = position.zoom;
 }
 
@@ -340,18 +341,43 @@ int mapZoomLevel = 6;
 
 -(void)addFirelinesToMap:(NSArray *) features
 {
-    
-    MarkupFireline *fireline = [[MarkupFireline alloc] initWithMap:_mapView features:features parentViewController:self];
-    
-    // Apparently this just updates a dictionary? 
+	NSLog(@"About to create firelinefeatures\n");
+	//Storing fireline features in this MarkupFireline object
+	MarkupFirelineFeatures *firelineFeatures = [[MarkupFirelineFeatures alloc] initWithFeatures:features];
+	
+	//Setting MarkupTileLayer's fireline features to this new object
+	if(_tileLayer != NULL)
+	{
+		_tileLayer.firelinesMarkup = firelineFeatures;
+		
+		//Tell tileLayer to redraw tiles
+		[_tileLayer clearTileCache];
+	}
+	NSLog(@"Firelinefeaturs created\n");
+	
+	//This dictionary stuff cause a crash, clearly markupShapes is expecting a specific type of feature....
+    // Apparently this just updates a dictionary?
+	/*for(int i = 0; i < features.count; i++)
+	{
+		MarkupFeature* feature = features[i];
+		if([feature.featureId isEqualToString: @"draft"])
+		{
+			
+		}
+	}*/
+	
+	//LUIS FIXME: the current structure I came up with isn't going to work, I need something that integrates with the way features are stored and handled in the database
+	// such that any individual fireline can be removed from the map
+	// I'm not too sure what's going on in the memory management side of things, but it's back to the drawing board for coming up with a different architecture
     for (MarkupFeature * feature in features)
     {
         if([feature.featureId isEqualToString: @"draft"]){
-            [_markupDraftShapes addObject:fireline];
+            [_markupDraftShapes addObject:feature];
         }else{
-            [_markupShapes setValue:fireline forKey:feature.featureId];
+            [_markupShapes setValue:feature forKey:feature.featureId];
         }
     }
+	NSLog(@"Firelinefeaturs dictionary updated\n");
 }
 
 -(void)addFeatureToMap:(MarkupFeature*) feature {
@@ -515,12 +541,36 @@ int mapZoomLevel = 6;
     
     dispatch_async(dispatch_get_main_queue(), ^{
         [_mapView clear];
+	    
+		//Luis tile test
+	    if(_tileLayer == NULL)
+	    {
+		    NSLog(@"tile layer is null\n");
+			_tileLayer = [[MarkupTileLayer alloc] init];
+			_tileLayer.tileSize = 512;
+			_tileLayer.map = _mapView;
+		    	//Not necessary: defaults to true
+			//[_tileLayer setFadeIn:true];
+	    }
+	    else
+	    {
+		    NSLog(@"tile layer is NOT null, calling refresh\n");
+		    
+		    //TODO: call this whenever the firelines change / are updated (this tells GMSDK to redraw tiles that may already be drawn)
+		    //[_tileLayer clearTileCache];
+		    
+		    //This call appears to be required after calling [_mapView clear]
+		    _tileLayer.map = _mapView;
+	    }
+	    
     });
     
     for(MarkupFeature* feature in [_dataManager getAllNonFirelinesForCollabRoomId:[_dataManager getSelectedCollabroomId]]){
         [self addFeatureToMap:feature];
     }
-    
+	
+	
+	
     [self addFirelinesToMap:[_dataManager getAllFirelinesForCollabRoomId:[_dataManager getSelectedCollabroomId]]];
     
     if([_dataManager getTrackingLayerEnabled:NSLocalizedString(@"SCOUT General Messages",nil)]){
