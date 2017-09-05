@@ -29,28 +29,26 @@
  *
  */
 //
-//  MarkupFireline.h
-//  nics_iOS
+//  MarkupTileLayer.m
+//  SCOUT
 //
 //
 
-#import "MarkupBaseShape.h"
-@class MapMarkupViewController;
-@interface MarkupFireline: MarkupBaseShape
+#import <GoogleMaps/GoogleMaps.h>
+#import "UIImage+Resize.h"
+#import "MarkupFeature.h"
+#import "MarkupFireline.h"
+#import "MarkupTileProjection.h"
+#import "MarkupFirelineFeatures.h"
+#import "Enums.h"
+#import "Utils.h"
 
+@interface MarkupTileLayer : GMSTileLayer
 
-//The calculated bounding box for this fireline feature
-@property CLLocationCoordinate2D boundsSW;
-@property CLLocationCoordinate2D boundsNE;
+@property NSMutableArray *threadNames;
 
-//The list of LatLng points that make up this feature
-//@property CLLocationCoordinate2D *featurePoints;
-@property NSArray *featurePoints;
+@property MarkupFirelineFeatures *firelinesMarkup;
 
-
-- (id) initWithPoints:(NSArray*)points AndFeature:(MarkupFeature*)feature;
-
-+ (void)addAdvancedStyling:(float[])points pathPtLen:(float)pointLen path:(UIBezierPath *)path markupStyle:(int)style markupSpacing:(float)spacing markupOfs:(float)ofs;
-+ (void) addLine:(float[])points pathPtLen:(float)pointLen ToPath:(UIBezierPath *)path;
+-(void) drawFirelineFeature:(MarkupFireline *)fireline withProjection:(MarkupTileProjection *)proj;
 
 @end

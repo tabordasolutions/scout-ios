@@ -29,28 +29,49 @@
  *
  */
 //
-//  MarkupFireline.h
+//  MarkupFirelineFeatures.m
 //  nics_iOS
 //
 //
 
-#import "MarkupBaseShape.h"
-@class MapMarkupViewController;
-@interface MarkupFireline: MarkupBaseShape
+#import "MarkupFirelineFeatures.h"
 
+@implementation MarkupFirelineFeatures
 
-//The calculated bounding box for this fireline feature
-@property CLLocationCoordinate2D boundsSW;
-@property CLLocationCoordinate2D boundsNE;
+- (id) initWithFeatures:(NSArray*)features
+{
+	NSLog(@"Feature being created\n");
+	self = [super init];
+	
+	NSMutableArray *featureList = [[NSMutableArray alloc] init];
+	
+	//Calculating the LatLng points of the feature
+	for(MarkupFeature* feature in features)
+	{
+		NSMutableArray *points = [feature getCLPointsArray];
+		CLLocationCoordinate2D markerLocation;
+		
+		NSMutableArray *latLngPoints = [[NSMutableArray alloc] init];
+		
+		for(int i = 0; i < points.count; i++)
+		{
+			id pointLatLng = points[i];
+			[pointLatLng getValue:&markerLocation];
+			
+			CLLocationCoordinate2D coord = CLLocationCoordinate2DMake(markerLocation.latitude, markerLocation.longitude);
+			[latLngPoints addObject:[NSValue valueWithBytes:&coord objCType:@encode(CLLocationCoordinate2D)]];
+		}
+		
+		[featureList addObject:[[MarkupFireline alloc] initWithPoints:latLngPoints AndFeature:feature]];
+	}
+	
+	
+	_firelineFeatures = featureList;
+	
+	NSLog(@"Feature finished being created\n");
 
-//The list of LatLng points that make up this feature
-//@property CLLocationCoordinate2D *featurePoints;
-@property NSArray *featurePoints;
+	return self;
+}
 
-
-- (id) initWithPoints:(NSArray*)points AndFeature:(MarkupFeature*)feature;
-
-+ (void)addAdvancedStyling:(float[])points pathPtLen:(float)pointLen path:(UIBezierPath *)path markupStyle:(int)style markupSpacing:(float)spacing markupOfs:(float)ofs;
-+ (void) addLine:(float[])points pathPtLen:(float)pointLen ToPath:(UIBezierPath *)path;
 
 @end

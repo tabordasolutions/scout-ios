@@ -78,6 +78,7 @@ int mapZoomLevel = 6;
     _mapView.mapType = _dataManager.CurrentMapType;
     _mapView.trafficEnabled = _dataManager.TrafficDisplay;
     _mapView.indoorEnabled = _dataManager.IndoorDisplay;
+
     _currentZoomLevel = 8.0;
     
     [self addMarkupUpdateFromServer:nil];
@@ -132,7 +133,7 @@ int mapZoomLevel = 6;
             [_mapView animateToZoom:mapZoomLevel];
 
         }
-        
+
 
     }
     _mapView.delegate = self;
@@ -315,6 +316,7 @@ int mapZoomLevel = 6;
     [super viewWillDisappear:animated];
 }
 
+
 - (void)mapView:(GMSMapView *)mapView idleAtCameraPosition:(GMSCameraPosition *)position {
     if(_previousZoomLevel != position.zoom) {
         if(position.bearing != 0) {
@@ -323,6 +325,8 @@ int mapZoomLevel = 6;
             [_mapView moveCamera:update];
         }
     }
+	//Disabled for tileOverlay drawing, this caused the tiles to disappear and reappear when a user stopped panning the map view
+    //[self redrawLocalMapFeatures];
     _previousZoomLevel = position.zoom;
 }
 
@@ -332,24 +336,36 @@ int mapZoomLevel = 6;
         
         [self refreshView];
         _currentZoomLevel = roundf(position.zoom);
-        NSLog(@"\t\tDID ZOOM position:%f\n\t\tCurrent Zoom Level:%f", position.zoom, _currentZoomLevel);
     }
 }
 
 -(void)addFirelinesToMap:(NSArray *) features
 {
-    
-    MarkupFireline *fireline = [[MarkupFireline alloc] initWithMap:_mapView features:features];
-    
-    // Apparently this just updates a dictionary? 
-    for (MarkupFeature * feature in features)
-    {
-        if([feature.featureId isEqualToString: @"draft"]){
-            [_markupDraftShapes addObject:fireline];
-        }else{
-            [_markupShapes setValue:fireline forKey:feature.featureId];
-        }
-    }
+	NSLog(@"About to create firelinefeatures\n");
+	//Storing fireline features in this MarkupFireline object
+	MarkupFirelineFeatures *firelineFeatures = [[MarkupFirelineFeatures alloc] initWithFeatures:features];
+	
+	//Setting MarkupTileLayer's fireline features to this new object
+	if(_tileLayer != NULL)
+	{
+		_tileLayer.firelinesMarkup = firelineFeatures;
+		
+		//Tell tileLayer to redraw tiles
+		dispatch_async(dispatch_get_main_queue(), ^{
+			[_tileLayer clearTileCache];
+		});
+	}
+	
+	NSLog(@"Firelinefeaturs created\n");
+	for(MarkupBaseShape *feature in firelineFeatures.firelineFeatures)
+	{
+		if([feature.featureId isEqualToString: @"draft"]){
+			[_markupDraftShapes addObject:feature];
+		}else{
+			[_markupShapes setValue:feature forKey:feature.feature.featureId];
+		}
+	}
+	NSLog(@"Firelinefeaturs dictionary updated\n");
 }
 
 -(void)addFeatureToMap:(MarkupFeature*) feature {
@@ -513,12 +529,33 @@ int mapZoomLevel = 6;
     
     dispatch_async(dispatch_get_main_queue(), ^{
         [_mapView clear];
+	    
+		//Luis tile test
+	    if(_tileLayer == NULL)
+	    {
+		    NSLog(@"tile layer is null\n");
+			_tileLayer = [[MarkupTileLayer alloc] init];
+			_tileLayer.tileSize = 512;
+			_tileLayer.map = _mapView;
+		    	//Not necessary: defaults to true
+			//[_tileLayer setFadeIn:true];
+	    }
+	    else
+	    {
+		    NSLog(@"tile layer is NOT null, calling refresh\n");
+		    
+		    //This call appears to be required after calling [_mapView clear]
+		    _tileLayer.map = _mapView;
+	    }
+	    
     });
     
     for(MarkupFeature* feature in [_dataManager getAllNonFirelinesForCollabRoomId:[_dataManager getSelectedCollabroomId]]){
         [self addFeatureToMap:feature];
     }
-    
+	
+	
+	
     [self addFirelinesToMap:[_dataManager getAllFirelinesForCollabRoomId:[_dataManager getSelectedCollabroomId]]];
     
     if([_dataManager getTrackingLayerEnabled:NSLocalizedString(@"SCOUT General Messages",nil)]){
@@ -1129,6 +1166,21 @@ _mapView.selectedMarker = nil;
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
     UIViewController *vc = [mainStoryboard instantiateViewControllerWithIdentifier:@"MapSettingsViewControllerID"];
     [self.navigationController pushViewController:vc animated:YES];
+}
+
+-(void)startCollabLoadingSpinner{
+    dispatch_async(dispatch_get_main_queue(), ^(void) {
+        _mapMarkupLoadingIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
+        [_mapMarkupLoadingIndicator startAnimating];
+    });
+    
+}
+
+-(void)stopCollabLoadingSpinner{
+    dispatch_async(dispatch_get_main_queue(), ^(void) {
+        [_mapMarkupLoadingIndicator stopAnimating];
+    });
+    
 }
 
 @end

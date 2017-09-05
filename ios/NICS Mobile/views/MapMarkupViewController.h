@@ -41,7 +41,7 @@
 #import <objc/runtime.h>
 #import "DataManager.h"
 #import "MarkupBaseShape.h"
-#import "MarkupFireline.h"
+#import "MarkupFirelineFeatures.h"
 #import "MarkupPolygon.h"
 #import "MarkupSegment.h"
 #import "MarkupSymbol.h"
@@ -53,6 +53,7 @@
 #import "ReportInfoWindow.h"
 #import "SimpleReportDetailViewController.h"
 #import "DamageReportDetailViewController.h"
+#import "MarkupTileLayer.h"
 @class MapEditView;
 
 @interface MapMarkupViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate, /*MarkupCoordinateViewDelegate,*/ GMSMapViewDelegate, CLLocationManagerDelegate>
@@ -61,6 +62,7 @@
 @property IBOutlet GMSMapView *mapView;
 @property IBOutlet UITableView *tableView;
 @property IBOutlet UIView *shapeButtonView;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *mapMarkupLoadingIndicator;
 //@property IBOutlet MarkupCoordinateView *coordinateView;
 @property MapEditView *mapEditView;
 @property (weak, nonatomic) IBOutlet UIView *MapEditCanvas;
@@ -101,11 +103,15 @@
 @property ReportInfoWindow* currentReportWindow;
 @property GMUClusterManager *_clusterManager;
 
+
+//Luis tile layer test
+@property MarkupTileLayer *tileLayer;
+
 - (void)updateWfsLayers;
 
 //- (void)setPopoverButtons;
 - (void)addFeatureToMap:(MarkupFeature*) feature;
-- (void)addMarkupUpdateFromServer;
+//- (void)addMarkupUpdateFromServer;
 - (void)reloadTableView;
 - (GMSMarker*)getCustomMarker;
 -(void)setUiViewControllerToReturnTo:(UIViewController*) controller;
@@ -113,5 +119,6 @@
 
 -(void) setCustomSymbol:(NSString*)imageName;
 -(void) hideCustomMarker;
-
+-(void)startCollabLoadingSpinner;
+-(void)stopCollabLoadingSpinner;
 @end

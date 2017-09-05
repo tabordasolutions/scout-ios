@@ -178,6 +178,9 @@
 		3A70106D18E0C40900C3DC42 /* DamageInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A70106C18E0C40900C3DC42 /* DamageInformation.m */; };
 		3A70106F18E0C82100C3DC42 /* damagereport_schema.json in Resources */ = {isa = PBXBuildFile; fileRef = 3A70106E18E0C82100C3DC42 /* damagereport_schema.json */; };
 		3AFDD1B31953248F0034CD81 /* FormDamageInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AFDD1B11953248F0034CD81 /* FormDamageInformation.m */; };
+		552440211F5F3C3500523447 /* MarkupFirelineFeatures.m in Sources */ = {isa = PBXBuildFile; fileRef = 5524401E1F5F3C3500523447 /* MarkupFirelineFeatures.m */; };
+		552440221F5F3C3500523447 /* MarkupTileProjection.m in Sources */ = {isa = PBXBuildFile; fileRef = 552440201F5F3C3500523447 /* MarkupTileProjection.m */; };
+		552440251F5F3C6C00523447 /* MarkupTileLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 552440241F5F3C6C00523447 /* MarkupTileLayer.m */; };
 		5528E7101F299473003EC8F7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5528E70F1F299473003EC8F7 /* AppDelegate.m */; };
 		5528E7131F2994A6003EC8F7 /* OverviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5528E7111F2994A6003EC8F7 /* OverviewViewController.m */; };
 		5528E7141F2994A6003EC8F7 /* OverviewViewControllerTablet.m in Sources */ = {isa = PBXBuildFile; fileRef = 5528E7121F2994A6003EC8F7 /* OverviewViewControllerTablet.m */; };
@@ -544,6 +547,12 @@
 		3AFDD1B11953248F0034CD81 /* FormDamageInformation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FormDamageInformation.m; sourceTree = "<group>"; };
 		4DD3F7A7023252D76B033278 /* Pods-SCOUT Mobile.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SCOUT Mobile.release.xcconfig"; path = "Pods/Target Support Files/Pods-SCOUT Mobile/Pods-SCOUT Mobile.release.xcconfig"; sourceTree = "<group>"; };
 		4EF64564FB802AC6849C40A6 /* Pods-SCOUT Mobile.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SCOUT Mobile.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SCOUT Mobile/Pods-SCOUT Mobile.debug.xcconfig"; sourceTree = "<group>"; };
+		5524401D1F5F3C3500523447 /* MarkupFirelineFeatures.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarkupFirelineFeatures.h; sourceTree = "<group>"; };
+		5524401E1F5F3C3500523447 /* MarkupFirelineFeatures.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MarkupFirelineFeatures.m; sourceTree = "<group>"; };
+		5524401F1F5F3C3500523447 /* MarkupTileProjection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarkupTileProjection.h; sourceTree = "<group>"; };
+		552440201F5F3C3500523447 /* MarkupTileProjection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MarkupTileProjection.m; sourceTree = "<group>"; };
+		552440231F5F3C6C00523447 /* MarkupTileLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MarkupTileLayer.h; path = ../../views/MarkupTileLayer.h; sourceTree = "<group>"; };
+		552440241F5F3C6C00523447 /* MarkupTileLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MarkupTileLayer.m; path = ../../views/MarkupTileLayer.m; sourceTree = "<group>"; };
 		5528E70F1F299473003EC8F7 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		5528E7111F2994A6003EC8F7 /* OverviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OverviewViewController.m; sourceTree = "<group>"; };
 		5528E7121F2994A6003EC8F7 /* OverviewViewControllerTablet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OverviewViewControllerTablet.m; sourceTree = "<group>"; };
@@ -1094,6 +1103,12 @@
 		3A3C9DDF18DB441200EEBA17 /* markup */ = {
 			isa = PBXGroup;
 			children = (
+				552440231F5F3C6C00523447 /* MarkupTileLayer.h */,
+				552440241F5F3C6C00523447 /* MarkupTileLayer.m */,
+				5524401D1F5F3C3500523447 /* MarkupFirelineFeatures.h */,
+				5524401E1F5F3C3500523447 /* MarkupFirelineFeatures.m */,
+				5524401F1F5F3C3500523447 /* MarkupTileProjection.h */,
+				552440201F5F3C3500523447 /* MarkupTileProjection.m */,
 				3A3C9DE018DB441200EEBA17 /* MarkupBaseShape.h */,
 				3A3C9DE118DB441200EEBA17 /* MarkupBaseShape.m */,
 				3A09895918E4653A00CC9F25 /* MarkupFireline.h */,
@@ -1336,7 +1351,7 @@
 				ORGANIZATIONNAME = "MIT Lincoln Labs";
 				TargetAttributes = {
 					3A141A9F18DB34AC00466AD3 = {
-						DevelopmentTeam = MQTKTB2NN8;
+						DevelopmentTeam = NZYGQGZG6M;
 						LastSwiftMigration = 0830;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -1436,7 +1451,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		90A25395613B515F6166EFDF /* [CP] Embed Pods Frameworks */ = {
@@ -1528,6 +1543,7 @@
 				01C8BE7F1BFE404400FF99B0 /* Constants.m in Sources */,
 				55B249871F29A1220006DDEB /* GMUStyle.m in Sources */,
 				3A3C9E5418DB441300EEBA17 /* Utils.m in Sources */,
+				552440211F5F3C3500523447 /* MarkupFirelineFeatures.m in Sources */,
 				3A70105E18E09F8900C3DC42 /* DamageReportListViewController.m in Sources */,
 				0131FD481C10945A0001349E /* MarkupReportSymbol.m in Sources */,
 				55B249881F29A1220006DDEB /* GQTPointQuadTree.m in Sources */,
@@ -1537,6 +1553,7 @@
 				01661BBF1BA8B75100CE6453 /* OpenAMAuthenticationData.m in Sources */,
 				3A3C9E5618DB441300EEBA17 /* MarkupPolygon.m in Sources */,
 				55B2497D1F29A1220006DDEB /* GMUGeoJSONParser.m in Sources */,
+				552440251F5F3C6C00523447 /* MarkupTileLayer.m in Sources */,
 				3A3C9E6918DB441300EEBA17 /* FormWidget.m in Sources */,
 				55B249841F29A1220006DDEB /* GMUPlacemark.m in Sources */,
 				3A3C9E5F18DB441300EEBA17 /* CustomTextField.m in Sources */,
@@ -1615,6 +1632,7 @@
 				3A3C9E4718DB441300EEBA17 /* LoginPayload.m in Sources */,
 				3A3C9E6C18DB441300EEBA17 /* MapMarkupViewController.m in Sources */,
 				01AB5DE81AD44B1600A879B0 /* ChatViewBasicController.m in Sources */,
+				552440221F5F3C3500523447 /* MarkupTileProjection.m in Sources */,
 				015DE5641AC5C6D300954D65 /* DamageInformationObject.m in Sources */,
 				3A3C9E5E18DB441300EEBA17 /* ColorPickerImageView.m in Sources */,
 				3A3C9E6A18DB441300EEBA17 /* GARViewController.m in Sources */,
@@ -1811,7 +1829,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = MQTKTB2NN8;
+				DEVELOPMENT_TEAM = NZYGQGZG6M;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1880,7 +1898,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = MQTKTB2NN8;
+				DEVELOPMENT_TEAM = NZYGQGZG6M;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
