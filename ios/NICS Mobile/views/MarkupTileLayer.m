@@ -246,6 +246,7 @@
 		
 		for (MarkupFireline *feature in _firelinesMarkup.firelineFeatures)
 		{
+			if(! feature.removedFromMap)
 			[self drawFirelineFeature:feature withProjection:tileProj];
 		}
 	}

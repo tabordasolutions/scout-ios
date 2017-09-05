@@ -61,7 +61,7 @@
 			latLngPoints[i] = CLLocationCoordinate2DMake(markerLocation.latitude, markerLocation.longitude);
 		}
 		
-		[featureList addObject:[[MarkupFireline alloc] initWithPoints:latLngPoints OfLength:(int)points.count AndDashStyle:feature.dashStyle]];
+		[featureList addObject:[[MarkupFireline alloc] initWithPoints:latLngPoints OfLength:(int)points.count AndDashStyle:feature.dashStyle AndFeatureId:feature.featureId]];
 	}
 	
 	

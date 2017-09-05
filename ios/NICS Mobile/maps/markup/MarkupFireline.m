@@ -277,7 +277,7 @@
 }
 
 
-- (id) initWithPoints:(CLLocationCoordinate2D*)points OfLength:(int)pointCount AndDashStyle:(NSString*)dashStyle
+- (id) initWithPoints:(CLLocationCoordinate2D*)points OfLength:(int)pointCount AndDashStyle:(NSString*)dashStyle AndFeatureId:(NSString *)featureId
 {
 	NSLog(@"Fireline being created\n");
 
@@ -286,6 +286,9 @@
 	_featurePoints = points;
 	_featurePointsCount = pointCount;
 	_dashStyle = dashStyle;
+	_removedFromMap = false;
+	[super setFeatureId:featureId];
+	//_featureId = featureID;
 	
 	//TODO: calculate the bounding box for this fireline
 	NSLog(@"Fireline finished being created\n");
@@ -524,9 +527,10 @@ double getDistanceMetresBetweenLocationCoordinates(
     }
 }
 
-/*- (void)removeFromMap {
-    if(_groundOverlay != nil) {
+- (void)removeFromMap {
+	_removedFromMap = true;
+    /*if(_groundOverlay != nil) {
         _groundOverlay.map = nil;
-    }
-}*/
+    }*/
+}
 @end

@@ -369,14 +369,23 @@ int mapZoomLevel = 6;
 	//LUIS FIXME: the current structure I came up with isn't going to work, I need something that integrates with the way features are stored and handled in the database
 	// such that any individual fireline can be removed from the map
 	// I'm not too sure what's going on in the memory management side of things, but it's back to the drawing board for coming up with a different architecture
-    for (MarkupFeature * feature in features)
-    {
-        if([feature.featureId isEqualToString: @"draft"]){
-            [_markupDraftShapes addObject:feature];
-        }else{
-            [_markupShapes setValue:feature forKey:feature.featureId];
-        }
-    }
+
+	for(MarkupBaseShape *feature in firelineFeatures.firelineFeatures)
+	{
+		if([feature.featureId isEqualToString: @"draft"]){
+			[_markupDraftShapes addObject:feature];
+		}else{
+			[_markupShapes setValue:feature forKey:feature.featureId];
+		}
+	}
+	/*for (MarkupFeature * feature in features)
+	{
+		if([feature.featureId isEqualToString: @"draft"]){
+			[_markupDraftShapes addObject:feature];
+		}else{
+			[_markupShapes setValue:feature forKey:feature.featureId];
+		}
+    	}*/
 	NSLog(@"Firelinefeaturs dictionary updated\n");
 }
 

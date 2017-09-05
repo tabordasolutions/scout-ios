@@ -56,8 +56,10 @@
 //The style of this feature
 @property NSString *dashStyle;
 
+//Has this markup been deleted from the map?
+@property bool removedFromMap;
 
-- (id) initWithPoints:(CLLocationCoordinate2D*)points OfLength:(int)pointCount AndDashStyle:(NSString*)dashStyle;
+- (id) initWithPoints:(CLLocationCoordinate2D*)points OfLength:(int)pointCount AndDashStyle:(NSString*)dashStyle AndFeatureId:(NSString*)featureId;
 
 //- (id)initWithMap:(GMSMapView *)view features:(NSArray *)features parentViewController:(MapMarkupViewController*)viewController;
 
