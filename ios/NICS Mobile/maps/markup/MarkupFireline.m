@@ -42,38 +42,38 @@
 //pointLen: length of "points" array
 + (CGVector)getTangentForPoint:(int)pt pathPoints:(float[])points pathPtLen:(float)pointLen
 {
-    //if(pt == 0 && pts.length() < 2)
-    //	This should never happen, this is an error
-    
-    float deltaX = 0.0f;
-    float deltaY = 0.0f;
-    
-    //If pt is the first point in pts
-    if(pt == 0)
-    {
-        //Calculate the tangent using the point after it
-        deltaX = points[2*(pt + 1)] - points[2*(pt)];
-        deltaY = points[2*(pt + 1) + 1] - points[2*(pt) + 1];
-    }
-    //If pt is the last point in pts
-    else if(pt == (pointLen/2) - 1)
-    {
-        //Calculate the tangent using the point before it
-        deltaX = points[2*(pt)] - points[2*(pt - 1)];
-        deltaY = points[2*(pt) + 1] - points[2*(pt - 1) + 1];
-    }
-    else
-    {
-        //Calculate the tangent using the point before it and after it
-        deltaX = points[2*(pt + 1)] - points[2*(pt - 1)];
-        deltaY = points[2*(pt + 1) + 1] - points[2*(pt - 1) + 1];
-    }
-    
-    //Calculate the tangent:
-    //1) Get the length of the vector
-    float vlen = sqrtf( (deltaX * deltaX) + (deltaY * deltaY) );
-    //2) Normalize the vector
-    return CGVectorMake( deltaX / vlen, deltaY / vlen);
+	//if(pt == 0 && pts.length() < 2)
+	//	This should never happen, this is an error
+	
+	float deltaX = 0.0f;
+	float deltaY = 0.0f;
+	
+	//If pt is the first point in pts
+	if(pt == 0)
+	{
+		//Calculate the tangent using the point after it
+		deltaX = points[2*(pt + 1)] - points[2*(pt)];
+		deltaY = points[2*(pt + 1) + 1] - points[2*(pt) + 1];
+	}
+	//If pt is the last point in pts
+	else if(pt == (pointLen/2) - 1)
+	{
+		//Calculate the tangent using the point before it
+		deltaX = points[2*(pt)] - points[2*(pt - 1)];
+		deltaY = points[2*(pt) + 1] - points[2*(pt - 1) + 1];
+	}
+	else
+	{
+		//Calculate the tangent using the point before it and after it
+		deltaX = points[2*(pt + 1)] - points[2*(pt - 1)];
+		deltaY = points[2*(pt + 1) + 1] - points[2*(pt - 1) + 1];
+	}
+	
+	//Calculate the tangent:
+	//1) Get the length of the vector
+	float vlen = sqrtf( (deltaX * deltaX) + (deltaY * deltaY) );
+	//2) Normalize the vector
+	return CGVectorMake( deltaX / vlen, deltaY / vlen);
 }
 
 //Returns a linearly interpolated tangent of the point in "points" at index "pt" and the index before it
@@ -83,26 +83,26 @@
 //pointLen: length of "points" array
 + (CGVector)lerpTangentForPoint:(int)pt lerpFactor:(float)t pathPoints:(float[])points pathPtLen:(float)pointLen
 {
-    //If pt is the first point in pts, return the tangent of the point
-    if(pt == 0)
-        return [MarkupFireline getTangentForPoint:pt pathPoints:points pathPtLen:pointLen];
-    
-    
-    //Get the tangent of the current point
-    CGVector curTan = [MarkupFireline getTangentForPoint:pt pathPoints:points pathPtLen:pointLen];
-    
-    //Get the tangent of the previous point
-    CGVector prevTan = [MarkupFireline getTangentForPoint:(pt-2) pathPoints:points pathPtLen:pointLen];
-    
-    //Calculate the interpolated tangent
-    float deltaX = prevTan.dx + t * (curTan.dx - prevTan.dx);
-    float deltaY = prevTan.dy + t * (curTan.dy - prevTan.dy);
-    
-    //Calculate the length of the vector
-    float vlen = sqrtf( (deltaX * deltaX) + (deltaY * deltaY) );
-    
-    
-    return CGVectorMake( deltaX / vlen, deltaY / vlen);
+	//If pt is the first point in pts, return the tangent of the point
+	if(pt == 0)
+		return [MarkupFireline getTangentForPoint:pt pathPoints:points pathPtLen:pointLen];
+	
+	
+	//Get the tangent of the current point
+	CGVector curTan = [MarkupFireline getTangentForPoint:pt pathPoints:points pathPtLen:pointLen];
+	
+	//Get the tangent of the previous point
+	CGVector prevTan = [MarkupFireline getTangentForPoint:(pt-2) pathPoints:points pathPtLen:pointLen];
+	
+	//Calculate the interpolated tangent
+	float deltaX = prevTan.dx + t * (curTan.dx - prevTan.dx);
+	float deltaY = prevTan.dy + t * (curTan.dy - prevTan.dy);
+	
+	//Calculate the length of the vector
+	float vlen = sqrtf( (deltaX * deltaX) + (deltaY * deltaY) );
+	
+	
+	return CGVectorMake( deltaX / vlen, deltaY / vlen);
 }
 
 //Accepts a fireline feature, and adds advanced styling to the passed in PolyLineBezierPath
@@ -116,195 +116,279 @@
 //path: the path which the advanced styling is added to
 + (void)addAdvancedStyling:(float[])points pathPtLen:(float)pointLen path:(UIBezierPath *)path markupStyle:(int)style markupSpacing:(float)spacing markupOfs:(float)ofs
 {
-    //this is the index of the current point in the path
-    int curPt = 0;
-    
-    //The number of points in the path
-    int pathLen = pointLen / 2.0f;
-    
-    //The physical distance we need to travel before drawing the next markup
-    float distToNext = ofs;
-    
-    //The last distance we traveled on a previous iteration (for multiple markups between points spaced far apart)
-    float lastDist = 0.0f;
-    
-    
-    //While we are not at the end of the path
-    while(curPt < pathLen)
-    {
-        //How much distance between curPt and (curPt - 1) is left to travel
-        float distLeft = 0.0f;
-        
-        
-        //Only used if not on first point
-        //X-distance between curPt and curPt - 1
-        float deltaX = 0.0f;
-        //Y-distance between curPt and curPt - 1
-        float deltaY = 0.0f;
-        //Physical distance between curPt and curPt - 1
-        float deltaLen = 0.0f;
-        
-        //If we are not on the first point
-        if(curPt > 0)
-        {
-            //Get distance we have left to walk
-            //this is total distance, minus how much we have already walked (lastDist)
-            
-            deltaX = points[2 * curPt] - points[2 * (curPt - 1)];
-            deltaY = points[(2 * curPt) + 1] - points[(2 * (curPt - 1)) + 1];
-            
-            deltaLen = sqrtf( (deltaX * deltaX) + (deltaY * deltaY) );
-            
-            //Getting the vector length of (deltaX,deltaY), and subtracting lastDist
-            distLeft = deltaLen - lastDist;
-        }
-        
-        //If there is not enough room for the next markup
-        if(distToNext > distLeft)
-        {
-            //Advance to the next point
-            curPt++;
-            distToNext -= distLeft;
-            lastDist = 0;
-            continue;
-        }
-        
-        
-        //======================================================================
-        //			Calculating markup position and rotation
-        //======================================================================
-        
-        
-        float centerX = points[2 * curPt]; //distLeft + distToNext * (normal between previous point and current point)
-        float centerY = points[2 * curPt + 1];
-        
-        //If we have a previous point, get normal direction
-        if(curPt > 0)
-        {
-            //Normalize the deltaX and deltaY:
-            deltaX /= deltaLen;
-            deltaY /= deltaLen;
-            
-            //Offset center position by (distToNext - distLeft) in the tangent direction
-            centerX += (distToNext - distLeft) * deltaX;
-            centerY += (distToNext - distLeft) * deltaY;
-        }
-        
-        //Making the translation vector for the markup
-        CGVector transPos = CGVectorMake(centerX, centerY);
-        
-        //Calculate the linear interpolation factor (how far we are between (curPt - 1) and curPt (0 <= t <= 1))
-        float t = 0.0f;
-        //If we are on the first point:
-        if(curPt == 0)
-        {
-            t = 0;
-        }
-        else
-        {
-            t = (lastDist + distToNext) / deltaLen;
-        }
-        
-        
-        //Get the lerped tangent of the markup
-        CGVector transTan = [MarkupFireline lerpTangentForPoint:curPt lerpFactor:t pathPoints:points pathPtLen:pointLen];
-        
-        //Calculate the normal vector from the tangent vector (rotates transTan
-        CGVector transNor = CGVectorMake(-transTan.dy,transTan.dx);
-        
-        
-        //Create transformation matrix using the position, tangent and transform
-        CGAffineTransform trans = CGAffineTransformMake( transNor.dx,transNor.dy,transTan.dx,transTan.dy,transPos.dx,transPos.dy);
-        
-        
-        //======================================================================
-        //			Drawing the markup
-        //======================================================================
-        
-        switch(style)
-        {
-                //Uncontrolled fireline barbs
-            case 0:
-            {
-                float gap = 1.0f;
-                float barbLength = 10.0f;
-                
-                [path moveToPoint: CGPointApplyAffineTransform(CGPointMake(-gap,0), trans)];
-                [path addLineToPoint: CGPointApplyAffineTransform(CGPointMake(-gap - barbLength, 0), trans)];
-                
-                break;
-            }
-                //Small X
-            case 1:
-            {
-                float lineLength = 4.0f;
-                [path moveToPoint: CGPointApplyAffineTransform(CGPointMake(-lineLength, -lineLength), trans)];
-                [path addLineToPoint: CGPointApplyAffineTransform(CGPointMake(lineLength, lineLength), trans)];
-                [path moveToPoint: CGPointApplyAffineTransform(CGPointMake(-lineLength, lineLength), trans)];
-                [path addLineToPoint: CGPointApplyAffineTransform(CGPointMake(lineLength, -lineLength), trans)];
-                break;
-            }
-                //Big X:
-            case 2:
-            {
-                float lineLength = 5.0f;
-                [path moveToPoint: CGPointApplyAffineTransform(CGPointMake(-lineLength, -lineLength), trans)];
-                [path addLineToPoint: CGPointApplyAffineTransform(CGPointMake(lineLength, lineLength), trans)];
-                [path moveToPoint: CGPointApplyAffineTransform(CGPointMake(-lineLength, lineLength), trans)];
-                [path addLineToPoint: CGPointApplyAffineTransform(CGPointMake(lineLength, -lineLength), trans)];
-                break;
-            }
-                //Dot
-            case 3:
-            {
-                [path moveToPoint: CGPointApplyAffineTransform(CGPointMake(0,0), trans)];
-                //Lining by a very small amount to make a dot
-                [path addLineToPoint: CGPointApplyAffineTransform(CGPointMake(0,0.1), trans)];
-                break;
-            }
-                //No advanced styling?
-            default:
-                return;
-        }
-        
-        
-        //======================================================================
-        //======================================================================
-        
-        lastDist += distToNext;
-        distToNext = spacing;
-    }
+	//this is the index of the current point in the path
+	int curPt = 0;
+	
+	//The number of points in the path
+	int pathLen = pointLen / 2.0f;
+	
+	//The physical distance we need to travel before drawing the next markup
+	float distToNext = ofs;
+	
+	//The last distance we traveled on a previous iteration (for multiple markups between points spaced far apart)
+	float lastDist = 0.0f;
+	
+	
+	//While we are not at the end of the path
+	while(curPt < pathLen)
+	{
+		//How much distance between curPt and (curPt - 1) is left to travel
+		float distLeft = 0.0f;
+		
+		
+		//Only used if not on first point
+		//X-distance between curPt and curPt - 1
+		float deltaX = 0.0f;
+		//Y-distance between curPt and curPt - 1
+		float deltaY = 0.0f;
+		//Physical distance between curPt and curPt - 1
+		float deltaLen = 0.0f;
+		
+		//If we are not on the first point
+		if(curPt > 0)
+		{
+			//Get distance we have left to walk
+			//this is total distance, minus how much we have already walked (lastDist)
+			
+			deltaX = points[2 * curPt] - points[2 * (curPt - 1)];
+			deltaY = points[(2 * curPt) + 1] - points[(2 * (curPt - 1)) + 1];
+			
+			deltaLen = sqrtf( (deltaX * deltaX) + (deltaY * deltaY) );
+			
+			//Getting the vector length of (deltaX,deltaY), and subtracting lastDist
+			distLeft = deltaLen - lastDist;
+		}
+		
+		//If there is not enough room for the next markup
+		if(distToNext > distLeft)
+		{
+			//Advance to the next point
+			curPt++;
+			distToNext -= distLeft;
+			lastDist = 0;
+			continue;
+		}
+		
+		
+		//======================================================================
+		//			Calculating markup position and rotation
+		//======================================================================
+		
+		
+		float centerX = points[2 * curPt]; //distLeft + distToNext * (normal between previous point and current point)
+		float centerY = points[2 * curPt + 1];
+		
+		//If we have a previous point, get normal direction
+		if(curPt > 0)
+		{
+			//Normalize the deltaX and deltaY:
+			deltaX /= deltaLen;
+			deltaY /= deltaLen;
+			
+			//Offset center position by (distToNext - distLeft) in the tangent direction
+			centerX += (distToNext - distLeft) * deltaX;
+			centerY += (distToNext - distLeft) * deltaY;
+		}
+		
+		//Making the translation vector for the markup
+		CGVector transPos = CGVectorMake(centerX, centerY);
+		
+		//Calculate the linear interpolation factor (how far we are between (curPt - 1) and curPt (0 <= t <= 1))
+		float t = 0.0f;
+		//If we are on the first point:
+		if(curPt == 0)
+		{
+			t = 0;
+		}
+		else
+		{
+			t = (lastDist + distToNext) / deltaLen;
+		}
+		
+		
+		//Get the lerped tangent of the markup
+		CGVector transTan = [MarkupFireline lerpTangentForPoint:curPt lerpFactor:t pathPoints:points pathPtLen:pointLen];
+		
+		//Calculate the normal vector from the tangent vector (rotates transTan
+		CGVector transNor = CGVectorMake(-transTan.dy,transTan.dx);
+		
+		
+		//Create transformation matrix using the position, tangent and transform
+		CGAffineTransform trans = CGAffineTransformMake( transNor.dx,transNor.dy,transTan.dx,transTan.dy,transPos.dx,transPos.dy);
+		
+		
+		//======================================================================
+		//			Drawing the markup
+		//======================================================================
+		
+		switch(style)
+		{
+				//Uncontrolled fireline barbs
+			case 0:
+			{
+				float gap = 1.0f;
+				float barbLength = 10.0f;
+				
+				[path moveToPoint: CGPointApplyAffineTransform(CGPointMake(-gap,0), trans)];
+				[path addLineToPoint: CGPointApplyAffineTransform(CGPointMake(-gap - barbLength, 0), trans)];
+				
+				break;
+			}
+				//Small X
+			case 1:
+			{
+				float lineLength = 4.0f;
+				[path moveToPoint: CGPointApplyAffineTransform(CGPointMake(-lineLength, -lineLength), trans)];
+				[path addLineToPoint: CGPointApplyAffineTransform(CGPointMake(lineLength, lineLength), trans)];
+				[path moveToPoint: CGPointApplyAffineTransform(CGPointMake(-lineLength, lineLength), trans)];
+				[path addLineToPoint: CGPointApplyAffineTransform(CGPointMake(lineLength, -lineLength), trans)];
+				break;
+			}
+				//Big X:
+			case 2:
+			{
+				float lineLength = 5.0f;
+				[path moveToPoint: CGPointApplyAffineTransform(CGPointMake(-lineLength, -lineLength), trans)];
+				[path addLineToPoint: CGPointApplyAffineTransform(CGPointMake(lineLength, lineLength), trans)];
+				[path moveToPoint: CGPointApplyAffineTransform(CGPointMake(-lineLength, lineLength), trans)];
+				[path addLineToPoint: CGPointApplyAffineTransform(CGPointMake(lineLength, -lineLength), trans)];
+				break;
+			}
+				//Dot
+			case 3:
+			{
+				[path moveToPoint: CGPointApplyAffineTransform(CGPointMake(0,0), trans)];
+				//Lining by a very small amount to make a dot
+				[path addLineToPoint: CGPointApplyAffineTransform(CGPointMake(0,0.1), trans)];
+				break;
+			}
+				//No advanced styling?
+			default:
+				return;
+		}
+		
+		
+		//======================================================================
+		//======================================================================
+		
+		lastDist += distToNext;
+		distToNext = spacing;
+	}
 }
 
 
 - (id) initWithPoints:(NSArray*)points AndFeature:(MarkupFeature*)feature
 {
 	NSLog(@"Fireline being created\n");
-
+	
 	self = [super initWithMap:nil feature:feature];
 	
 	_featurePoints = points;
 	
 	//TODO: calculate the bounding box for this fireline
+	[self calculateBBox];
+	
 	NSLog(@"Fireline finished being created\n");
-
+	
 	return self;
 }
 
-double getDistanceMetresBetweenLocationCoordinates(
-                                                   CLLocationCoordinate2D coord1,
-                                                   CLLocationCoordinate2D coord2)
+// Calculates an enclosing bounding box using the array _featurePoints and stores the results in self.boundsNE and self.boundsSW
+- (void) calculateBBox
 {
-    CLLocation* location1 =
-    [[CLLocation alloc]
-     initWithLatitude: coord1.latitude
-     longitude: coord1.longitude];
-    CLLocation* location2 =
-    [[CLLocation alloc]
-     initWithLatitude: coord2.latitude
-     longitude: coord2.longitude];
-    
-    return [location1 distanceFromLocation: location2];
+	if(_featurePoints == nil)
+		return;
+	//Creating a bounding box
+	//Google's LatLngBounds class won't work for us because consecutive points MUST contain the area between them,
+	// and LatLngBounds handles only a discrete set of points
+	
+	CLLocationCoordinate2D curPoint;
+	[_featurePoints[0] getValue:&curPoint];
+	
+	//We will iteratively increase the size of the bounding box, starting at the first point
+	CLLocationCoordinate2D bboxMins = CLLocationCoordinate2DMake(curPoint.latitude, curPoint.longitude);
+	CLLocationCoordinate2D bboxMaxs = CLLocationCoordinate2DMake(curPoint.latitude, curPoint.longitude);
+	
+	//Keeps track of how many antimeridians (180 degrees) we have crossed
+	//negative means we crossed to the left
+	//positive means we crossed to the right
+	int antimeridiansCrossed = 0;
+	
+	//The longitude of the previous point
+	double lastLong = curPoint.longitude;
+	double curLong = curPoint.longitude;
+	
+	
+	for (int i = 0; i < [_featurePoints count]; i++) {
+		
+		[_featurePoints[i] getValue:&curPoint];
+		
+		//Updating the bounding box
+		
+		//============ Latitude =============
+		
+		if(curPoint.latitude < bboxMins.latitude)
+			bboxMins.latitude = curPoint.latitude;
+		if(curPoint.latitude > bboxMaxs.latitude)
+			bboxMaxs.latitude = curPoint.latitude;
+		
+		
+		//============ Longitude ============
+		
+		//Check if we have crossed an antimeridian:
+		antimeridiansCrossed += [self deltaAntimeridians:lastLong toLong:curPoint.longitude];
+		
+		//Offset the longitudes by the amount of antimeridians we have crossed
+		//This will be the absolute longitude of the point, relative to the first point in the line
+		curLong = curPoint.longitude + (antimeridiansCrossed * 360.0f);
+		
+		if(curLong < bboxMins.longitude)
+			bboxMins.longitude = curLong;
+		if(curLong > bboxMaxs.longitude)
+			bboxMaxs.longitude = curLong;
+		
+		lastLong = curLong;
+		
+		//======================================
+	}
+	
+	//Setting the calculated bbox values
+	_boundsSW = bboxMins;
+	_boundsNE = bboxMaxs;
+}
+
+
+//Returns how many antimeridians we crossed from longitude lng1 to longitude lng2 along the shortest path (<= 180 degrees)
+//Along the shortest path implies this can only return -1, 0, or 1
+-(int) deltaAntimeridians:(double) lng1 toLong:(double)lng2 {
+	//If the distance between a and b < 180, the shortest path from a to b does not cross the antimeridian
+	if(fabs(lng1 - lng2) <= 180)
+	{
+		return 0;
+	}
+	//Otherwise, the shortest path from a to b does cross the antimeridian
+	
+	//If lng1 > 0, and we crossed the antimeridian in the positive direction ( to the right from + to - )
+	if(lng1 >= 0)
+		return 1;
+	//else, we crossed the antimeridian in the negative direction ( to the left from - to + )
+	return -1;
+}
+
+double getDistanceMetresBetweenLocationCoordinates(
+										 CLLocationCoordinate2D coord1,
+										 CLLocationCoordinate2D coord2)
+{
+	CLLocation* location1 =
+	[[CLLocation alloc]
+	 initWithLatitude: coord1.latitude
+	 longitude: coord1.longitude];
+	CLLocation* location2 =
+	[[CLLocation alloc]
+	 initWithLatitude: coord2.latitude
+	 longitude: coord2.longitude];
+	
+	return [location1 distanceFromLocation: location2];
 }
 
 
@@ -314,17 +398,17 @@ double getDistanceMetresBetweenLocationCoordinates(
 //path: the path which the strokes fireline is added to
 + (void) addLine:(float[])points pathPtLen:(float)pointLen ToPath:(UIBezierPath *)path
 {
-    for(int i = 0; i < pointLen; i+=2)
-    {
-        if(i == 0)
-        {
-            [path moveToPoint:CGPointMake(points[0], points[1])];
-        }
-        else
-        {
-            [path addLineToPoint:CGPointMake(points[i], points[i + 1])];
-        }
-    }
+	for(int i = 0; i < pointLen; i+=2)
+	{
+		if(i == 0)
+		{
+			[path moveToPoint:CGPointMake(points[0], points[1])];
+		}
+		else
+		{
+			[path addLineToPoint:CGPointMake(points[i], points[i + 1])];
+		}
+	}
 }
 
 - (void)removeFromMap {

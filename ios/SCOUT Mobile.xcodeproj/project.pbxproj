@@ -551,8 +551,8 @@
 		5524401E1F5F3C3500523447 /* MarkupFirelineFeatures.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MarkupFirelineFeatures.m; sourceTree = "<group>"; };
 		5524401F1F5F3C3500523447 /* MarkupTileProjection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarkupTileProjection.h; sourceTree = "<group>"; };
 		552440201F5F3C3500523447 /* MarkupTileProjection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MarkupTileProjection.m; sourceTree = "<group>"; };
-		552440231F5F3C6C00523447 /* MarkupTileLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarkupTileLayer.h; sourceTree = "<group>"; };
-		552440241F5F3C6C00523447 /* MarkupTileLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MarkupTileLayer.m; sourceTree = "<group>"; };
+		552440231F5F3C6C00523447 /* MarkupTileLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MarkupTileLayer.h; path = ../../views/MarkupTileLayer.h; sourceTree = "<group>"; };
+		552440241F5F3C6C00523447 /* MarkupTileLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MarkupTileLayer.m; path = ../../views/MarkupTileLayer.m; sourceTree = "<group>"; };
 		5528E70F1F299473003EC8F7 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		5528E7111F2994A6003EC8F7 /* OverviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OverviewViewController.m; sourceTree = "<group>"; };
 		5528E7121F2994A6003EC8F7 /* OverviewViewControllerTablet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OverviewViewControllerTablet.m; sourceTree = "<group>"; };
@@ -782,8 +782,6 @@
 		01A8C7421ABB475300B367F0 /* MapMarkup */ = {
 			isa = PBXGroup;
 			children = (
-				552440231F5F3C6C00523447 /* MarkupTileLayer.h */,
-				552440241F5F3C6C00523447 /* MarkupTileLayer.m */,
 				019BAC711C220BD4007067EE /* MapEdit */,
 				0166C6761AE9522900716F1A /* WfsTrackingMenu */,
 				3A3C9E0918DB441200EEBA17 /* MapMarkupViewController.h */,
@@ -1105,6 +1103,8 @@
 		3A3C9DDF18DB441200EEBA17 /* markup */ = {
 			isa = PBXGroup;
 			children = (
+				552440231F5F3C6C00523447 /* MarkupTileLayer.h */,
+				552440241F5F3C6C00523447 /* MarkupTileLayer.m */,
 				5524401D1F5F3C3500523447 /* MarkupFirelineFeatures.h */,
 				5524401E1F5F3C3500523447 /* MarkupFirelineFeatures.m */,
 				5524401F1F5F3C3500523447 /* MarkupTileProjection.h */,
@@ -1451,7 +1451,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		90A25395613B515F6166EFDF /* [CP] Embed Pods Frameworks */ = {

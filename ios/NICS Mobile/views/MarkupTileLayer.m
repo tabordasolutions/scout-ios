@@ -61,12 +61,12 @@
 	}
 	
 	/*for(int i = 0; i < pointCount; i++)
-	{
+	 {
 		CGPoint pointPx = [proj latLngToPoint: points[i]];
 		
 		floatPoints[i*2] = pointPx.x;
 		floatPoints[i*2 + 1] = pointPx.y;
-	}*/
+	 }*/
 	NSString *dashStyle = fireline.feature.dashStyle;
 	
 	UIBezierPath *path = [UIBezierPath bezierPath];
@@ -156,7 +156,7 @@
 		CGPoint end = CGPointMake(floatPoints[size - 2] - 0.5*diameter, floatPoints[size - 1] - 0.5*diameter);
 		CGContextFillEllipseInRect(context,  CGRectMake(end.x,end.y,diameter,diameter));
 	}
-
+	
 	
 	[path stroke];
 }
@@ -179,7 +179,7 @@
 			break;
 		}
 	}
-
+	
 	if(isNew)
 	{
 		[_threadNames addObject:threadName];
@@ -199,7 +199,7 @@
 	// Apparently, however, iOS calls this method on any number of threads (the unique thread count continues to rise the more tiles you cause to be drawn)
 	// Given this info, I'm not too sure how we might be able to use, say 10 UIImages, and reuse them over and over again, like on Android
 	// However, on-iOS-device testing should tell us whether this is even required or not... because the current set up (creating and caching many UIImages)
- 	// might not even be that resource intensive (on-device testing is required to reach a conclusion)
+	// might not even be that resource intensive (on-device testing is required to reach a conclusion)
 	
 	
 	//==================================================================
@@ -212,14 +212,25 @@
 	CGContextRef context = UIGraphicsGetCurrentContext();
 	
 	MarkupTileProjection *tileProj = [[MarkupTileProjection alloc] initWithTileSize:self.tileSize x:x y:y zoom:zoom];
-
+	
+	
+	//Getting the tile bounds:
+	GMSCoordinateBounds *tileBoundsLatLng = [tileProj getTileBounds];
+	
+	CGPoint tileBoundsNE = [tileProj latLngToPoint:tileBoundsLatLng.northEast];
+	CGPoint tileBoundsSW = [tileProj latLngToPoint:tileBoundsLatLng.southWest];
+	
+	//Tile boundinx box:
+	CGPoint tileBboxMins = CGPointMake(tileBoundsSW.x, tileBoundsNE.y);
+	CGPoint tileBboxMaxs = CGPointMake(tileBoundsNE.x, tileBoundsSW.y);
+	
 	
 	//==================================================================
 	//                      Drawing a debug grid
 	//==================================================================
 	
-	/*//Drawing a black 10px x 10px grid
-	CGContextSetRGBStrokeColor(context, 0.0f, 0.0f, 0.0f, 0.2f);
+	//Drawing a black 10px x 10px grid
+	/*CGContextSetRGBStrokeColor(context, 0.0f, 0.0f, 0.0f, 0.2f);
 	CGContextSetLineWidth(context, 1.0f);
 	for(int i = 0; i < self.tileSize; i += 10)
 	{
@@ -240,7 +251,7 @@
 	CGContextAddLineToPoint(context, self.tileSize, self.tileSize);
 	CGContextAddLineToPoint(context, 0, self.tileSize);
 	CGContextAddLineToPoint(context, 0, 0);
-
+	
 	//This draws the current path, and clears the current path
 	CGContextStrokePath(context);*/
 	
@@ -253,8 +264,44 @@
 		
 		NSLog(@"Drawing %d fireline features\n",(int)[_firelinesMarkup.firelineFeatures count]);
 		
+		
 		for (MarkupFireline *feature in _firelinesMarkup.firelineFeatures)
 		{
+			//Getting the fireline's bounds:
+			
+			CLLocationCoordinate2D boundsSWLatLng = feature.boundsSW;
+			CLLocationCoordinate2D boundsNELatLng = feature.boundsNE;
+			
+			CGPoint boundsSW = [tileProj latLngToPoint:boundsSWLatLng];
+			CGPoint boundsNE = [tileProj latLngToPoint:boundsNELatLng];
+			
+			//Getting the fireline's bounding box
+			CGPoint bboxMins = CGPointMake(boundsSW.x, boundsNE.y);
+			CGPoint bboxMaxs = CGPointMake(boundsNE.x, boundsSW.y);
+			
+			//If the line's bbox does not touch the tile's bbox, skip this line
+			if([self bboxesIntersectBbox1Min:bboxMins Bbox1Maxs:bboxMaxs Bbox2Mins:tileBboxMins Bbox2Maxs:tileBboxMaxs] == false)
+				continue;
+			
+			
+			//===============================================================
+			//      			Drawing Fireline Bounding Boxes
+			//===============================================================
+			
+			//Drawing fireline bounding box:
+			/*CGContextSetRGBStrokeColor(context, 0.0f, 1.0f, 0.0f, 1.0f);
+			CGContextSetLineWidth(context, 1.0f);
+			CGContextMoveToPoint(context, boundsSW.x, boundsSW.y);
+			CGContextAddLineToPoint(context, boundsNE.x, boundsSW.y);
+			CGContextAddLineToPoint(context, boundsNE.x, boundsNE.y);
+			CGContextAddLineToPoint(context, boundsSW.x, boundsNE.y);
+			CGContextAddLineToPoint(context, boundsSW.x, boundsSW.y);
+			CGContextStrokePath(context);*/
+			
+			//===============================================================
+			//
+			//===============================================================
+			
 			[self drawFirelineFeature:feature withProjection:tileProj];
 		}
 	}
@@ -268,6 +315,27 @@
 	UIGraphicsEndImageContext();
 	
 	[receiver receiveTileWithX:x y:y zoom:zoom image:image];
+}
+
+//Returns true of the two bounding boxes intersect
+-(bool) bboxesIntersectBbox1Min:(CGPoint)bbox1Mins Bbox1Maxs:(CGPoint)bbox1Maxs Bbox2Mins:(CGPoint)bbox2Mins Bbox2Maxs:(CGPoint)bbox2Maxs
+{
+	//Adding a slight buffer to the bounding boxes (to not truncate markup styling on edges)
+	double buffer = 30;
+	
+	//Check if bbox1 is to the left of bbox2
+	if(bbox1Maxs.x + buffer <= bbox2Mins.x)
+		return false;
+	//Check if bbox1 is to the right of bbox2
+	if(bbox1Mins.x - buffer >= bbox2Maxs.x)
+		return false;
+	//Check if bbox1 is above bbox2
+	if(bbox1Mins.y - buffer >= bbox2Maxs.y)
+		return false;
+	//Check if bbox1 is below bbox2
+	if(bbox1Maxs.y + buffer <= bbox2Mins.y)
+		return false;
+	return true;
 }
 
 @end
