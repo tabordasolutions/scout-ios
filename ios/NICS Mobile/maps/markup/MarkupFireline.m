@@ -277,219 +277,19 @@
 }
 
 
-- (id) initWithPoints:(CLLocationCoordinate2D*)points OfLength:(int)pointCount AndDashStyle:(NSString*)dashStyle AndFeatureId:(NSString *)featureId
+- (id) initWithPoints:(NSArray*)points AndFeature:(MarkupFeature*)feature
 {
 	NSLog(@"Fireline being created\n");
 
-	self = [super init];
+	self = [super initWithMap:nil feature:feature];
 	
 	_featurePoints = points;
-	_featurePointsCount = pointCount;
-	_dashStyle = dashStyle;
-	_removedFromMap = false;
-	[super setFeatureId:featureId];
-	//_featureId = featureID;
 	
 	//TODO: calculate the bounding box for this fireline
 	NSLog(@"Fireline finished being created\n");
 
 	return self;
 }
-
-/*- (id)initWithMap:(GMSMapView *)view features:(NSArray *)features parentViewController:(MapMarkupViewController *)viewController
-{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [viewController startCollabLoadingSpinner];
-
-        //Starting the image contex with a specified size
-        UIGraphicsBeginImageContextWithOptions(view.bounds.size, NO, 0.0f);
-        
-        for (MarkupFeature *feature in features) {
-            
-            __block MarkupFireline *self = [super initWithMap:view feature:feature];
-            
-            if(self)
-            {
-                self.points = [feature getCLPointsArray];
-                
-                GMSMutablePath *coordinatePath = [GMSMutablePath path];
-                
-                NSMutableArray *coordinates = [NSMutableArray new];
-                CLLocation *location;
-                CLLocationCoordinate2D markerLocation;
-                
-                __block GMSCoordinateBounds *lineBounds = [GMSCoordinateBounds new];
-                for(id point in self.points)
-                {
-                    [point getValue:&markerLocation];
-                    
-                    location = [[CLLocation alloc] initWithLatitude:markerLocation.latitude longitude:markerLocation.longitude];
-                    lineBounds = [lineBounds includingCoordinate:markerLocation];
-                    
-                    [coordinates addObject:location];
-                    [coordinatePath addCoordinate:location.coordinate];
-                }
-                self.path = coordinatePath;
-                
-                CLLocationCoordinate2D modSW = CLLocationCoordinate2DMake(lineBounds.southWest.latitude + 0.01, lineBounds.southWest.longitude - 0.01);
-                CLLocationCoordinate2D modNE = CLLocationCoordinate2DMake(lineBounds.northEast.latitude - 0.01,  lineBounds.northEast.longitude + 0.01);
-                
-                lineBounds = [lineBounds includingCoordinate:modSW];
-                lineBounds = [lineBounds includingCoordinate:modNE];
-                
-                
-                CGPoint sw = [view.projection pointForCoordinate:modSW];
-                CGPoint ne = [view.projection pointForCoordinate:modNE];
-                
-                int size = (int) self.points.count * 2;
-                float floatPoints[size];
-                memset(floatPoints, 0, size * sizeof(int));
-                
-                for(int i = 0; i < coordinates.count; i++)
-                {
-                    CLLocation *location = [coordinates objectAtIndex:i];
-                    CGPoint pt = [view.projection pointForCoordinate:location.coordinate];
-                    
-                    
-                    GMSCoordinateBounds *visibleBounds = [[GMSCoordinateBounds alloc] initWithRegion:view.projection.visibleRegion];
-                    
-                    //FIXME: this stops processing a line if one of its points goes outside of the view bounds?
-                    //if ([visibleBounds containsCoordinate:location.coordinate] == false)
-                    //{
-                    //    break;
-                    //}
-                    
-                    //floatPoints[(i * 2)] = pt.x - sw.x;
-                    //floatPoints[(i * 2) + 1] = pt.y - ne.y;
-                    
-                    //removing the subtraction from the image center, because we are drawing relative to image bounds, not relative to fireline bounds
-                    floatPoints[(i * 2)] = pt.x;
-                    floatPoints[(i * 2) + 1] = pt.y;
-                }
-                
-                
-                
-                
-                
-                NSString *dashStyle = feature.dashStyle;
-                
-                __block UIBezierPath *path = [UIBezierPath bezierPath];
-                
-                
-                //Default to black
-                [[UIColor blackColor] set];
-                
-                if([dashStyle isEqualToString:@"primary-fire-line"])
-                {
-                    //Add the line itself to the path
-                    [MarkupFireline addLine:floatPoints pathPtLen:size ToPath:path];
-                    [path setLineCapStyle:kCGLineCapSquare];
-                    [path setLineWidth:2.0];
-                    CGFloat dashes[] = {0, 8};
-                    [path setLineDash:dashes count:2 phase:0];
-                    
-                    [path stroke];
-                }
-                else if([dashStyle isEqualToString:@"secondary-fire-line"])
-                {
-                    //Add the line itself to the path
-                    [MarkupFireline addLine:floatPoints pathPtLen:size ToPath:path];
-                    [path setLineCapStyle:kCGLineCapRound];
-                    CGFloat dashes[] = {0, 8};
-                    [path setLineDash:dashes count:2 phase:0];
-                    
-                    [path stroke];
-                }
-                else if([dashStyle isEqualToString:@"proposed-dozer-line"])
-                {
-                    //X dot X dot
-                    //markupStyle values:
-                    //0: uncontrolled fireline barbs
-                    //1: 'x'
-                    //2: 'X'
-                    //3: dots
-                    [MarkupFireline addAdvancedStyling:floatPoints pathPtLen:size path:path markupStyle:2 markupSpacing:20.0f markupOfs:0.0f];
-                    [MarkupFireline addAdvancedStyling:floatPoints pathPtLen:size path:path markupStyle:3 markupSpacing:20.0f markupOfs:10.0f];
-                    [path setLineCapStyle: kCGLineCapRound];
-                    [path setLineWidth:2.0];
-                    
-                    [path stroke];
-                }
-                else if([dashStyle isEqualToString:@"completed-dozer-line"])
-                {
-                    //x x x x
-                    [MarkupFireline addAdvancedStyling:floatPoints pathPtLen:size path:path markupStyle:1 markupSpacing:13.0f markupOfs:0.0f];
-                    [path setLineCapStyle: kCGLineCapRound];
-                    [path setLineWidth:2.0];
-                    
-                    [path stroke];
-                }
-                else if([dashStyle isEqualToString:@"fire-edge-line"])
-                {
-                    //barb barb barb
-                    //Add the line itself to the path
-                    [MarkupFireline addLine:floatPoints pathPtLen:size ToPath:path];
-                    [MarkupFireline addAdvancedStyling:floatPoints pathPtLen:size path:path markupStyle:0 markupSpacing:10.0f markupOfs:0.0f];
-                    [[UIColor redColor] set];
-                    [path setLineWidth:2.0];
-                    
-                    [path stroke];
-                }
-                else if ([dashStyle isEqualToString:@"action-point"])
-                {
-                    //Add the line itself to the path
-                    [MarkupFireline addLine:floatPoints pathPtLen:size ToPath:path];
-                    
-                    //Drawing a thick black border
-                    [path setLineWidth:6.0];
-                    [path stroke];
-                    
-                    
-                    //Drawing a thin orange line
-                    [path setLineWidth:4.0f];
-                    [[UIColor colorWithRed:1.0f green:0.639216f blue:0.0f alpha:1.0f] set];
-                    [path stroke];
-                    
-                    //Adding two large circles at the start and end of the line
-                    CGContextRef context = UIGraphicsGetCurrentContext();
-                    float diameter = 10.0f;
-                    CGContextSetRGBFillColor(context, 1.0f, 0.639216f, 0.0f, 1.0f);
-                    CGPoint start = CGPointMake(floatPoints[0] - 0.5*diameter, floatPoints[1] - 0.5*diameter);
-                    CGContextFillEllipseInRect(context, CGRectMake(start.x,start.y,diameter,diameter));
-                    
-                    CGPoint end = CGPointMake(floatPoints[size - 2] - 0.5*diameter, floatPoints[size - 1] - 0.5*diameter);
-                    CGContextFillEllipseInRect(context,  CGRectMake(end.x,end.y,diameter,diameter));
-                }
-                
-                
-                //                        float width = ne.x - sw.x;
-                //                        float height = sw.y - ne.y;
-                //
-                //                        if(width > 0 && height > 0 && width < 2048 && height < 2048)
-                //                        {
-                //                            UIImage *image = [self generateImageFromPath:path Size:CGSizeMake(width, height)];
-                //
-                //                            _groundOverlay = [GMSGroundOverlay groundOverlayWithBounds:lineBounds icon:image];
-                //                            _groundOverlay.anchor = CGPointMake(0.5, 0.5);
-                //                            _groundOverlay.map = self.mapView;
-                //                        }
-                
-                
-            }
-            
-        }
-        
-        UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
-        
-        _groundOverlay = [GMSGroundOverlay groundOverlayWithBounds:[[GMSCoordinateBounds alloc] initWithRegion:view.projection.visibleRegion] icon:image];
-        _groundOverlay.anchor = CGPointMake(0.5, 0.5);
-        _groundOverlay.map = self.mapView;
-        [viewController stopCollabLoadingSpinner];
-        
-    });
-    return self;
-}*/
 
 double getDistanceMetresBetweenLocationCoordinates(
                                                    CLLocationCoordinate2D coord1,
@@ -528,9 +328,6 @@ double getDistanceMetresBetweenLocationCoordinates(
 }
 
 - (void)removeFromMap {
-	_removedFromMap = true;
-    /*if(_groundOverlay != nil) {
-        _groundOverlay.map = nil;
-    }*/
+	//Nothing to do here
 }
 @end

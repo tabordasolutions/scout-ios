@@ -38,30 +38,17 @@
 @class MapMarkupViewController;
 @interface MarkupFireline: MarkupBaseShape
 
-/*
-@property GMSGroundOverlay *groundOverlay;
-@property UIImage *markerImage;
-@property NSString *imagePath;
-*/
-
 
 //The calculated bounding box for this fireline feature
 @property CLLocationCoordinate2D boundsSW;
 @property CLLocationCoordinate2D boundsNE;
 
 //The list of LatLng points that make up this feature
-@property CLLocationCoordinate2D *featurePoints;
-@property int featurePointsCount;
+//@property CLLocationCoordinate2D *featurePoints;
+@property NSArray *featurePoints;
 
-//The style of this feature
-@property NSString *dashStyle;
 
-//Has this markup been deleted from the map?
-@property bool removedFromMap;
-
-- (id) initWithPoints:(CLLocationCoordinate2D*)points OfLength:(int)pointCount AndDashStyle:(NSString*)dashStyle AndFeatureId:(NSString*)featureId;
-
-//- (id)initWithMap:(GMSMapView *)view features:(NSArray *)features parentViewController:(MapMarkupViewController*)viewController;
+- (id) initWithPoints:(NSArray*)points AndFeature:(MarkupFeature*)feature;
 
 + (void)addAdvancedStyling:(float[])points pathPtLen:(float)pointLen path:(UIBezierPath *)path markupStyle:(int)style markupSpacing:(float)spacing markupOfs:(float)ofs;
 + (void) addLine:(float[])points pathPtLen:(float)pointLen ToPath:(UIBezierPath *)path;

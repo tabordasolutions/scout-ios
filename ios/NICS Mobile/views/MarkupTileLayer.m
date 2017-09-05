@@ -44,21 +44,30 @@
 
 -(void) drawFirelineFeature:(MarkupFireline *)fireline withProjection:(MarkupTileProjection *)proj
 {
-	CLLocationCoordinate2D *points = fireline.featurePoints;
-	
-	int pointCount = fireline.featurePointsCount;
+	int pointCount = (int) [fireline.featurePoints count];
 	int size = pointCount * 2;
 	float floatPoints[size];
 	memset(floatPoints, 0, size * sizeof(float));
 	
-	for(int i = 0; i < pointCount; i++)
+	int i = 0;
+	for(NSValue *coord in fireline.featurePoints)
+	{
+		CLLocationCoordinate2D latLngCoord;
+		[coord getValue:&latLngCoord];
+		CGPoint pointPx = [proj latLngToPoint:latLngCoord];
+		
+		floatPoints[i++] = pointPx.x;
+		floatPoints[i++] = pointPx.y;
+	}
+	
+	/*for(int i = 0; i < pointCount; i++)
 	{
 		CGPoint pointPx = [proj latLngToPoint: points[i]];
 		
 		floatPoints[i*2] = pointPx.x;
 		floatPoints[i*2 + 1] = pointPx.y;
-	}
-	NSString *dashStyle = fireline.dashStyle;
+	}*/
+	NSString *dashStyle = fireline.feature.dashStyle;
 	
 	UIBezierPath *path = [UIBezierPath bezierPath];
 	
@@ -209,7 +218,7 @@
 	//                      Drawing a debug grid
 	//==================================================================
 	
-	//Drawing a black 10px x 10px grid
+	/*//Drawing a black 10px x 10px grid
 	CGContextSetRGBStrokeColor(context, 0.0f, 0.0f, 0.0f, 0.2f);
 	CGContextSetLineWidth(context, 1.0f);
 	for(int i = 0; i < self.tileSize; i += 10)
@@ -233,7 +242,7 @@
 	CGContextAddLineToPoint(context, 0, 0);
 
 	//This draws the current path, and clears the current path
-	CGContextStrokePath(context);
+	CGContextStrokePath(context);*/
 	
 	
 	//==================================================================
@@ -246,7 +255,6 @@
 		
 		for (MarkupFireline *feature in _firelinesMarkup.firelineFeatures)
 		{
-			if(! feature.removedFromMap)
 			[self drawFirelineFeature:feature withProjection:tileProj];
 		}
 	}

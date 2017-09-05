@@ -51,17 +51,18 @@
 		NSMutableArray *points = [feature getCLPointsArray];
 		CLLocationCoordinate2D markerLocation;
 		
-		CLLocationCoordinate2D latLngPoints[points.count];
+		NSMutableArray *latLngPoints = [[NSMutableArray alloc] init];
 		
 		for(int i = 0; i < points.count; i++)
 		{
 			id pointLatLng = points[i];
 			[pointLatLng getValue:&markerLocation];
 			
-			latLngPoints[i] = CLLocationCoordinate2DMake(markerLocation.latitude, markerLocation.longitude);
+			CLLocationCoordinate2D coord = CLLocationCoordinate2DMake(markerLocation.latitude, markerLocation.longitude);
+			[latLngPoints addObject:[NSValue valueWithBytes:&coord objCType:@encode(CLLocationCoordinate2D)]];
 		}
 		
-		[featureList addObject:[[MarkupFireline alloc] initWithPoints:latLngPoints OfLength:(int)points.count AndDashStyle:feature.dashStyle AndFeatureId:feature.featureId]];
+		[featureList addObject:[[MarkupFireline alloc] initWithPoints:latLngPoints AndFeature:feature]];
 	}
 	
 	

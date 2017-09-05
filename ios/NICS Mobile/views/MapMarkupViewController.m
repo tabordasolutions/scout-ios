@@ -351,41 +351,20 @@ int mapZoomLevel = 6;
 		_tileLayer.firelinesMarkup = firelineFeatures;
 		
 		//Tell tileLayer to redraw tiles
-		[_tileLayer clearTileCache];
+		dispatch_async(dispatch_get_main_queue(), ^{
+			[_tileLayer clearTileCache];
+		});
 	}
+	
 	NSLog(@"Firelinefeaturs created\n");
-	
-	//This dictionary stuff cause a crash, clearly markupShapes is expecting a specific type of feature....
-    // Apparently this just updates a dictionary?
-	/*for(int i = 0; i < features.count; i++)
-	{
-		MarkupFeature* feature = features[i];
-		if([feature.featureId isEqualToString: @"draft"])
-		{
-			
-		}
-	}*/
-	
-	//LUIS FIXME: the current structure I came up with isn't going to work, I need something that integrates with the way features are stored and handled in the database
-	// such that any individual fireline can be removed from the map
-	// I'm not too sure what's going on in the memory management side of things, but it's back to the drawing board for coming up with a different architecture
-
 	for(MarkupBaseShape *feature in firelineFeatures.firelineFeatures)
 	{
 		if([feature.featureId isEqualToString: @"draft"]){
 			[_markupDraftShapes addObject:feature];
 		}else{
-			[_markupShapes setValue:feature forKey:feature.featureId];
+			[_markupShapes setValue:feature forKey:feature.feature.featureId];
 		}
 	}
-	/*for (MarkupFeature * feature in features)
-	{
-		if([feature.featureId isEqualToString: @"draft"]){
-			[_markupDraftShapes addObject:feature];
-		}else{
-			[_markupShapes setValue:feature forKey:feature.featureId];
-		}
-    	}*/
 	NSLog(@"Firelinefeaturs dictionary updated\n");
 }
 
@@ -564,9 +543,6 @@ int mapZoomLevel = 6;
 	    else
 	    {
 		    NSLog(@"tile layer is NOT null, calling refresh\n");
-		    
-		    //TODO: call this whenever the firelines change / are updated (this tells GMSDK to redraw tiles that may already be drawn)
-		    //[_tileLayer clearTileCache];
 		    
 		    //This call appears to be required after calling [_mapView clear]
 		    _tileLayer.map = _mapView;
