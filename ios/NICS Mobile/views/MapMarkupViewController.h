@@ -104,8 +104,9 @@
 @property GMUClusterManager *_clusterManager;
 
 
-//Luis tile layer test
+//For rendering firelines
 @property MarkupTileLayer *tileLayer;
+@property MarkupFirelineFeatures *firelineFeatures;
 
 - (void)updateWfsLayers;
 

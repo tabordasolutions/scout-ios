@@ -43,7 +43,8 @@
 @property NSArray* firelineFeatures;
 
 //Transforms the feature data to MarkupFireline objects
-- (id)initWithFeatures:(NSArray *)features;
+//- (id)init;
+- (void) setFeatures:(NSArray *)features;
 
 
 @end

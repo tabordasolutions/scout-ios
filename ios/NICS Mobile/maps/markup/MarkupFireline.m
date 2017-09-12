@@ -277,7 +277,7 @@
 }
 
 
-- (id) initWithPoints:(NSArray*)points AndFeature:(MarkupFeature*)feature
+/*- (id) initWithPoints:(NSArray*)points AndFeature:(MarkupFeature*)feature
 {
 	NSLog(@"Fireline being created\n");
 	
@@ -286,6 +286,40 @@
 	_featurePoints = points;
 	
 	//TODO: calculate the bounding box for this fireline
+	[self calculateBBox];
+	
+	NSLog(@"Fireline finished being created\n");
+	
+	return self;
+}*/
+
+
+- (id) initWithFeature:(MarkupFeature*)feature
+{
+	NSLog(@"Fireline being created\n");
+	
+	//Creatig a list of CLLocationCoordinate2D
+	//======================================================
+	NSMutableArray *points = [feature getCLPointsArray];
+	CLLocationCoordinate2D markerLocation;
+	
+	NSMutableArray *latLngPoints = [[NSMutableArray alloc] init];
+	
+	for(int i = 0; i < points.count; i++)
+	{
+		id pointLatLng = points[i];
+		[pointLatLng getValue:&markerLocation];
+		
+		CLLocationCoordinate2D coord = CLLocationCoordinate2DMake(markerLocation.latitude, markerLocation.longitude);
+		[latLngPoints addObject:[NSValue valueWithBytes:&coord objCType:@encode(CLLocationCoordinate2D)]];
+	}
+	//======================================================
+	
+	
+	self = [super initWithMap:nil feature:feature];
+	
+	_featurePoints = latLngPoints;
+	
 	[self calculateBBox];
 	
 	NSLog(@"Fireline finished being created\n");

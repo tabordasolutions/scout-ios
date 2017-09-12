@@ -341,14 +341,27 @@ int mapZoomLevel = 6;
 
 -(void)addFirelinesToMap:(NSArray *) features
 {
+	//In this function, we are being passed the fireline features from the database
+	//the database handles updating / deleting firelines from the server
+	//this function simply adds them to our list of rendering firelines
+	
 	NSLog(@"About to create firelinefeatures\n");
 	//Storing fireline features in this MarkupFireline object
-	MarkupFirelineFeatures *firelineFeatures = [[MarkupFirelineFeatures alloc] initWithFeatures:features];
+	//MarkupFirelineFeatures *firelineFeatures = [[MarkupFirelineFeatures alloc] initWithFeatures:features];
+	
+	//Should we reuse thisfirelineFeatures object instead of creating a new one each time?
+	if(_firelineFeatures == nil)
+	{
+		_firelineFeatures = [[MarkupFirelineFeatures alloc] init];
+	}
+	//Should we delete the current _firelineFeatures.features array if its already there?
+	
+	[_firelineFeatures setFeatures:features];
 	
 	//Setting MarkupTileLayer's fireline features to this new object
-	if(_tileLayer != NULL)
+	if(_tileLayer != nil)
 	{
-		_tileLayer.firelinesMarkup = firelineFeatures;
+		_tileLayer.firelinesMarkup = _firelineFeatures;
 		
 		//Tell tileLayer to redraw tiles
 		dispatch_async(dispatch_get_main_queue(), ^{
@@ -357,12 +370,12 @@ int mapZoomLevel = 6;
 	}
 	
 	NSLog(@"Firelinefeaturs created\n");
-	for(MarkupBaseShape *feature in firelineFeatures.firelineFeatures)
+	for(MarkupBaseShape *firelineShape in _firelineFeatures.firelineFeatures)
 	{
-		if([feature.featureId isEqualToString: @"draft"]){
-			[_markupDraftShapes addObject:feature];
+		if([firelineShape.featureId isEqualToString: @"draft"]){
+			[_markupDraftShapes addObject:firelineShape];
 		}else{
-			[_markupShapes setValue:feature forKey:feature.feature.featureId];
+			[_markupShapes setValue:firelineShape forKey:firelineShape.feature.featureId];
 		}
 	}
 	NSLog(@"Firelinefeaturs dictionary updated\n");
@@ -399,6 +412,13 @@ int mapZoomLevel = 6;
                     [_markupShapes setValue:segment forKey:feature.featureId];
                 }
             }
+		  else {
+			  //Is this code being used for firelines?
+			  //If so, they should run through this block
+			  NSLog(@"=============================================================================");
+			  NSLog(@"Found a segment with a non-null dash type that is trying to be added to a map");
+		  }
+			  
         } else if(currentType == rectangle || currentType == polygon) {
             MarkupPolygon *polygon = [[MarkupPolygon alloc] initWithMap:_mapView feature:feature];
             if([feature.featureId isEqualToString: @"draft"]){
@@ -492,13 +512,15 @@ int mapZoomLevel = 6;
                 //if this function was called from restclient receiving new data
                 if([notification.name isEqualToString:@"markupFeaturesUpdateReceived"]){
                     
-//                        _mapView.mapType =  [[[notification userInfo] valueForKey:@"mapType"] intValue];
+//                  _mapView.mapType =  [[[notification userInfo] valueForKey:@"mapType"] intValue];
                     
                     NSString* jsonString =  [[notification userInfo] valueForKey:@"markupFeaturesJson"];
                     NSError* error = nil;
                     MarkupMessage *message = [[MarkupMessage alloc] initWithString:jsonString error:&error];
-                
-                    for(MarkupFeature* feature in message.features){
+				 
+				//FIXME: this is where individual features are added to / removed from the map
+				//so how do I handle this in firelinefeatures?
+				for(MarkupFeature* feature in message.features){
                         if (feature.dashStyle != nil){
                             break;
                         }
@@ -530,7 +552,6 @@ int mapZoomLevel = 6;
     dispatch_async(dispatch_get_main_queue(), ^{
         [_mapView clear];
 	    
-		//Luis tile test
 	    if(_tileLayer == NULL)
 	    {
 		    NSLog(@"tile layer is null\n");

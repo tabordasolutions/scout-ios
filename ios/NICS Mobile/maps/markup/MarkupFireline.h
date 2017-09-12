@@ -48,7 +48,9 @@
 @property NSArray *featurePoints;
 
 
-- (id) initWithPoints:(NSArray*)points AndFeature:(MarkupFeature*)feature;
+//- (id) initWithPoints:(NSArray*)points AndFeature:(MarkupFeature*)feature;
+- (id) initWithFeature:(MarkupFeature*)feature;
+
 
 + (void)addAdvancedStyling:(float[])points pathPtLen:(float)pointLen path:(UIBezierPath *)path markupStyle:(int)style markupSpacing:(float)spacing markupOfs:(float)ofs;
 + (void) addLine:(float[])points pathPtLen:(float)pointLen ToPath:(UIBezierPath *)path;

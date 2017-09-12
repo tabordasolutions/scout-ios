@@ -38,39 +38,40 @@
 
 @implementation MarkupFirelineFeatures
 
-- (id) initWithFeatures:(NSArray*)features
+/*- (id) init
 {
-	NSLog(@"Feature being created\n");
 	self = [super init];
-	
+	return self;
+}*/
+
+- (void) setFeatures:features
+{
 	NSMutableArray *featureList = [[NSMutableArray alloc] init];
 	
 	//Calculating the LatLng points of the feature
 	for(MarkupFeature* feature in features)
 	{
-		NSMutableArray *points = [feature getCLPointsArray];
-		CLLocationCoordinate2D markerLocation;
-		
-		NSMutableArray *latLngPoints = [[NSMutableArray alloc] init];
-		
-		for(int i = 0; i < points.count; i++)
-		{
+		/*NSMutableArray *points = [feature getCLPointsArray];
+		 CLLocationCoordinate2D markerLocation;
+		 
+		 NSMutableArray *latLngPoints = [[NSMutableArray alloc] init];
+		 
+		 for(int i = 0; i < points.count; i++)
+		 {
 			id pointLatLng = points[i];
 			[pointLatLng getValue:&markerLocation];
 			
 			CLLocationCoordinate2D coord = CLLocationCoordinate2DMake(markerLocation.latitude, markerLocation.longitude);
 			[latLngPoints addObject:[NSValue valueWithBytes:&coord objCType:@encode(CLLocationCoordinate2D)]];
-		}
-		
-		[featureList addObject:[[MarkupFireline alloc] initWithPoints:latLngPoints AndFeature:feature]];
+		 }
+		 
+		 
+		 [featureList addObject:[[MarkupFireline alloc] initWithPoints:latLngPoints AndFeature:feature]];*/
+		[featureList addObject:[[MarkupFireline alloc] initWithFeature:feature]];
 	}
 	
 	
 	_firelineFeatures = featureList;
-	
-	NSLog(@"Feature finished being created\n");
-
-	return self;
 }
 
 
