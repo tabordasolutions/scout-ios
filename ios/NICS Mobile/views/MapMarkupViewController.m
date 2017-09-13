@@ -341,6 +341,7 @@ int mapZoomLevel = 6;
 
 -(void)addFirelinesToMap:(NSArray *) features
 {
+    
 	//In this function, we are being passed the fireline features from the database
 	//the database handles updating / deleting firelines from the server
 	//this function simply adds them to our list of rendering firelines
@@ -499,7 +500,7 @@ int mapZoomLevel = 6;
         
         dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
         dispatch_async(queue, ^{
-        
+            
             if(markupProcessing == false){
                 markupProcessing = true;
                 
@@ -512,15 +513,16 @@ int mapZoomLevel = 6;
                 //if this function was called from restclient receiving new data
                 if([notification.name isEqualToString:@"markupFeaturesUpdateReceived"]){
                     
-//                  _mapView.mapType =  [[[notification userInfo] valueForKey:@"mapType"] intValue];
+                    //                  _mapView.mapType =  [[[notification userInfo] valueForKey:@"mapType"] intValue];
                     
                     NSString* jsonString =  [[notification userInfo] valueForKey:@"markupFeaturesJson"];
                     NSError* error = nil;
                     MarkupMessage *message = [[MarkupMessage alloc] initWithString:jsonString error:&error];
-				 
-				//FIXME: this is where individual features are added to / removed from the map
-				//so how do I handle this in firelinefeatures?
-				for(MarkupFeature* feature in message.features){
+                    
+                    
+                    [self addFirelinesToMap:message.features];
+                    
+                    for(MarkupFeature* feature in message.features){
                         if (feature.dashStyle != nil){
                             break;
                         }
@@ -539,7 +541,7 @@ int mapZoomLevel = 6;
                 });
             }
             markupProcessing = false;
-     });
+        });
     }
 }
 
@@ -551,11 +553,11 @@ int mapZoomLevel = 6;
     
     dispatch_async(dispatch_get_main_queue(), ^{
         [_mapView clear];
-	    
-	    if(_tileLayer == NULL)
-	    {
-		    NSLog(@"tile layer is null\n");
-			_tileLayer = [[MarkupTileLayer alloc] init];
+        
+        if(_tileLayer == NULL)
+        {
+            NSLog(@"tile layer is null\n");
+            _tileLayer = [[MarkupTileLayer alloc] init];
 			_tileLayer.tileSize = 512;
 			_tileLayer.map = _mapView;
 		    	//Not necessary: defaults to true

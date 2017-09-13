@@ -67,6 +67,9 @@
 		 
 		 
 		 [featureList addObject:[[MarkupFireline alloc] initWithPoints:latLngPoints AndFeature:feature]];*/
+        if (feature.dashStyle == nil) {
+            break;
+        }
 		[featureList addObject:[[MarkupFireline alloc] initWithFeature:feature]];
 	}
 	
