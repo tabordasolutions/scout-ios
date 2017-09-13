@@ -40,11 +40,18 @@
 @interface MarkupFirelineFeatures: NSObject
 
 //Array of MarkupFireline objects
-@property NSArray* firelineFeatures;
+@property NSMutableArray* firelineFeatures;
 
 //Transforms the feature data to MarkupFireline objects
 //- (id)init;
 - (void) setFeatures:(NSArray *)features;
+
+//Adds a single fireline feature to the firelineFeatures array
+- (void) addFeature:(MarkupFeature*)feature;
+//Deletes the fireline in the array firelineFeatures whose featureID matches featureToDelete.featureID
+//Returns 1 if it found and deleted a fireline, returns 0 otherwise
+- (int) deleteFeatureWithId:(NSString*)featureId;
+
 
 
 @end

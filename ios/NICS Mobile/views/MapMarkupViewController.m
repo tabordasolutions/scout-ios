@@ -341,21 +341,17 @@ int mapZoomLevel = 6;
 
 -(void)addFirelinesToMap:(NSArray *) features
 {
-    
 	//In this function, we are being passed the fireline features from the database
 	//the database handles updating / deleting firelines from the server
 	//this function simply adds them to our list of rendering firelines
 	
-	NSLog(@"About to create firelinefeatures\n");
 	//Storing fireline features in this MarkupFireline object
-	//MarkupFirelineFeatures *firelineFeatures = [[MarkupFirelineFeatures alloc] initWithFeatures:features];
 	
-	//Should we reuse thisfirelineFeatures object instead of creating a new one each time?
 	if(_firelineFeatures == nil)
 	{
 		_firelineFeatures = [[MarkupFirelineFeatures alloc] init];
 	}
-	//Should we delete the current _firelineFeatures.features array if its already there?
+	//Should we delete the current _firelineFeatures.firelineFeatures array if its already instantiated?
 	
 	[_firelineFeatures setFeatures:features];
 	
@@ -363,14 +359,8 @@ int mapZoomLevel = 6;
 	if(_tileLayer != nil)
 	{
 		_tileLayer.firelinesMarkup = _firelineFeatures;
-		
-		//Tell tileLayer to redraw tiles
-		dispatch_async(dispatch_get_main_queue(), ^{
-			[_tileLayer clearTileCache];
-		});
 	}
 	
-	NSLog(@"Firelinefeaturs created\n");
 	for(MarkupBaseShape *firelineShape in _firelineFeatures.firelineFeatures)
 	{
 		if([firelineShape.featureId isEqualToString: @"draft"]){
@@ -379,7 +369,6 @@ int mapZoomLevel = 6;
 			[_markupShapes setValue:firelineShape forKey:firelineShape.feature.featureId];
 		}
 	}
-	NSLog(@"Firelinefeaturs dictionary updated\n");
 }
 
 -(void)addFeatureToMap:(MarkupFeature*) feature {
@@ -413,13 +402,6 @@ int mapZoomLevel = 6;
                     [_markupShapes setValue:segment forKey:feature.featureId];
                 }
             }
-		  else {
-			  //Is this code being used for firelines?
-			  //If so, they should run through this block
-			  NSLog(@"=============================================================================");
-			  NSLog(@"Found a segment with a non-null dash type that is trying to be added to a map");
-		  }
-			  
         } else if(currentType == rectangle || currentType == polygon) {
             MarkupPolygon *polygon = [[MarkupPolygon alloc] initWithMap:_mapView feature:feature];
             if([feature.featureId isEqualToString: @"draft"]){
@@ -503,38 +485,58 @@ int mapZoomLevel = 6;
             
             if(markupProcessing == false){
                 markupProcessing = true;
-                
-                //if room switched or first load then init map with local storage
-                if(_currentCollabRoomId == nil || _currentCollabRoomId != [_dataManager getSelectedCollabroomId]){
-                    [self redrawLocalMapFeatures];
-                    _currentCollabRoomId = [_dataManager getSelectedCollabroomId];
-                }
+			  
+			  //if room switched or first load then init map with local storage
+			  if(_currentCollabRoomId == nil || _currentCollabRoomId != [_dataManager getSelectedCollabroomId]){
+				  [self redrawLocalMapFeatures];
+				  _currentCollabRoomId = [_dataManager getSelectedCollabroomId];
+			  }
                 
                 //if this function was called from restclient receiving new data
                 if([notification.name isEqualToString:@"markupFeaturesUpdateReceived"]){
+				 
+				//Set to true if we modified a fireline
+				//This is so we don't refresh the tile layer if we didn't add or delete any firelines
+				bool refreshTileLayer = false;
                     
-                    //                  _mapView.mapType =  [[[notification userInfo] valueForKey:@"mapType"] intValue];
+                    //_mapView.mapType =  [[[notification userInfo] valueForKey:@"mapType"] intValue];
                     
                     NSString* jsonString =  [[notification userInfo] valueForKey:@"markupFeaturesJson"];
                     NSError* error = nil;
                     MarkupMessage *message = [[MarkupMessage alloc] initWithString:jsonString error:&error];
                     
-                    
-                    [self addFirelinesToMap:message.features];
-                    
+				 
                     for(MarkupFeature* feature in message.features){
-                        if (feature.dashStyle != nil){
-                            break;
-                        }
-                        [self addFeatureToMap:feature];
+					
+					//If this feature is a fireline, add it to the features array
+                        	if (feature.dashStyle != nil){
+						[_firelineFeatures addFeature:feature];
+						refreshTileLayer = true;
+                        	}
+					[self addFeatureToMap:feature];
+				}
+
+				for(NSString* featureId in message.deletedFeature){
+					//In case this is a fireline, try removing it from the fireline list
+					if([_firelineFeatures deleteFeatureWithId:featureId] == 1)
+						refreshTileLayer = true;
+					
+					[self removeFeatureFromMap:featureId];
                     }
-                    for(NSString* featureId in message.deletedFeature){
-                        [self removeFeatureFromMap:featureId];
-                    }
-                    
+				 
                     [self clearMapOfDraftFeatures];
+				 
+				 
+				//Tell tile layer to redraw, but only if we added or deleted at least one fireline
+				 if(refreshTileLayer && _tileLayer != nil) {
+					dispatch_async(dispatch_get_main_queue(), ^{
+						[_tileLayer clearTileCache];
+					 });
+				 }
                 }
-                
+			  
+
+			  
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [[self tableView] reloadData];
                     [self checkIosVersionThenWfsUpdate];
@@ -556,7 +558,6 @@ int mapZoomLevel = 6;
         
         if(_tileLayer == NULL)
         {
-            NSLog(@"tile layer is null\n");
             _tileLayer = [[MarkupTileLayer alloc] init];
 			_tileLayer.tileSize = 512;
 			_tileLayer.map = _mapView;
@@ -565,12 +566,12 @@ int mapZoomLevel = 6;
 	    }
 	    else
 	    {
-		    NSLog(@"tile layer is NOT null, calling refresh\n");
-		    
 		    //This call appears to be required after calling [_mapView clear]
 		    _tileLayer.map = _mapView;
+		    
+		    //Tell tileLayer to redraw tiles
+		    [_tileLayer clearTileCache];
 	    }
-	    
     });
     
     for(MarkupFeature* feature in [_dataManager getAllNonFirelinesForCollabRoomId:[_dataManager getSelectedCollabroomId]]){
