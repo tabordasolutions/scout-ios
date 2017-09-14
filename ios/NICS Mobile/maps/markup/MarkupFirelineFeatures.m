@@ -38,40 +38,47 @@
 
 @implementation MarkupFirelineFeatures
 
-- (id) initWithFeatures:(NSArray*)features
+- (void) setFeatures:(NSArray*)features
 {
-	NSLog(@"Feature being created\n");
-	self = [super init];
-	
 	NSMutableArray *featureList = [[NSMutableArray alloc] init];
 	
 	//Calculating the LatLng points of the feature
 	for(MarkupFeature* feature in features)
 	{
-		NSMutableArray *points = [feature getCLPointsArray];
-		CLLocationCoordinate2D markerLocation;
-		
-		NSMutableArray *latLngPoints = [[NSMutableArray alloc] init];
-		
-		for(int i = 0; i < points.count; i++)
-		{
-			id pointLatLng = points[i];
-			[pointLatLng getValue:&markerLocation];
-			
-			CLLocationCoordinate2D coord = CLLocationCoordinate2DMake(markerLocation.latitude, markerLocation.longitude);
-			[latLngPoints addObject:[NSValue valueWithBytes:&coord objCType:@encode(CLLocationCoordinate2D)]];
-		}
-		
-		[featureList addObject:[[MarkupFireline alloc] initWithPoints:latLngPoints AndFeature:feature]];
+		[featureList addObject:[[MarkupFireline alloc] initWithFeature:feature]];
 	}
 	
 	
 	_firelineFeatures = featureList;
-	
-	NSLog(@"Feature finished being created\n");
-
-	return self;
 }
 
+//Adds a single fireline feature to the firelineFeatures array
+- (void) addFeature:(MarkupFeature*)feature
+{
+	[_firelineFeatures addObject:[[MarkupFireline alloc] initWithFeature:feature]];
+}
+
+//Deletes the fireline in the array firelineFeatures whose featureID matches featureToDelete.featureID
+//returns 1 if it found and deleted a fireline, returns 0 otherwise
+- (int) deleteFeatureWithId:(NSString*)featureId
+{
+	if(featureId == nil)
+		return 0;
+	
+	int idToDelete = [featureId intValue];
+	
+	for(MarkupBaseShape* listShape in _firelineFeatures) {
+		int idFound = [listShape.feature.featureId intValue];
+		
+		//String comparison always fails, presumably due to some encoding issue: so compare the string int values
+		//This always returns false, even if the string appear identical
+		//if([(listShape.feature.featureId) isEqualToString:featureId]) {
+		if(idFound == idToDelete) {
+			[_firelineFeatures removeObject:listShape];
+			return 1;
+		}
+	}
+	return 0;
+}
 
 @end

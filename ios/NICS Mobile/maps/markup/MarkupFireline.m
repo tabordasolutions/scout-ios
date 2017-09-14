@@ -227,7 +227,7 @@
 			case 0:
 			{
 				float gap = 1.0f;
-				float barbLength = 10.0f;
+				float barbLength = 30.0f;
 				
 				[path moveToPoint: CGPointApplyAffineTransform(CGPointMake(-gap,0), trans)];
 				[path addLineToPoint: CGPointApplyAffineTransform(CGPointMake(-gap - barbLength, 0), trans)];
@@ -237,7 +237,7 @@
 				//Small X
 			case 1:
 			{
-				float lineLength = 4.0f;
+				float lineLength = 8.0f;
 				[path moveToPoint: CGPointApplyAffineTransform(CGPointMake(-lineLength, -lineLength), trans)];
 				[path addLineToPoint: CGPointApplyAffineTransform(CGPointMake(lineLength, lineLength), trans)];
 				[path moveToPoint: CGPointApplyAffineTransform(CGPointMake(-lineLength, lineLength), trans)];
@@ -247,7 +247,7 @@
 				//Big X:
 			case 2:
 			{
-				float lineLength = 5.0f;
+				float lineLength = 10.0f;
 				[path moveToPoint: CGPointApplyAffineTransform(CGPointMake(-lineLength, -lineLength), trans)];
 				[path addLineToPoint: CGPointApplyAffineTransform(CGPointMake(lineLength, lineLength), trans)];
 				[path moveToPoint: CGPointApplyAffineTransform(CGPointMake(-lineLength, lineLength), trans)];
@@ -276,16 +276,32 @@
 	}
 }
 
-
-- (id) initWithPoints:(NSArray*)points AndFeature:(MarkupFeature*)feature
+- (id) initWithFeature:(MarkupFeature*)feature
 {
 	NSLog(@"Fireline being created\n");
 	
+	//Creatig a list of CLLocationCoordinate2D
+	//======================================================
+	NSMutableArray *points = [feature getCLPointsArray];
+	CLLocationCoordinate2D markerLocation;
+	
+	NSMutableArray *latLngPoints = [[NSMutableArray alloc] init];
+	
+	for(int i = 0; i < points.count; i++)
+	{
+		id pointLatLng = points[i];
+		[pointLatLng getValue:&markerLocation];
+		
+		CLLocationCoordinate2D coord = CLLocationCoordinate2DMake(markerLocation.latitude, markerLocation.longitude);
+		[latLngPoints addObject:[NSValue valueWithBytes:&coord objCType:@encode(CLLocationCoordinate2D)]];
+	}
+	//======================================================
+	
+	
 	self = [super initWithMap:nil feature:feature];
 	
-	_featurePoints = points;
+	_featurePoints = latLngPoints;
 	
-	//TODO: calculate the bounding box for this fireline
 	[self calculateBBox];
 	
 	NSLog(@"Fireline finished being created\n");
