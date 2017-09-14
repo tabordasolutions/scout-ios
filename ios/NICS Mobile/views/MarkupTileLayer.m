@@ -59,14 +59,7 @@
 		floatPoints[i++] = pointPx.x;
 		floatPoints[i++] = pointPx.y;
 	}
-	
-	/*for(int i = 0; i < pointCount; i++)
-	 {
-		CGPoint pointPx = [proj latLngToPoint: points[i]];
-		
-		floatPoints[i*2] = pointPx.x;
-		floatPoints[i*2 + 1] = pointPx.y;
-	 }*/
+
 	NSString *dashStyle = fireline.feature.dashStyle;
 	
 	UIBezierPath *path = [UIBezierPath bezierPath];
@@ -80,8 +73,8 @@
 		//Add the line itself to the path
 		[MarkupFireline addLine:floatPoints pathPtLen:size ToPath:path];
 		[path setLineCapStyle:kCGLineCapSquare];
-		[path setLineWidth:2.0];
-		CGFloat dashes[] = {0, 8};
+		[path setLineWidth:16.0];
+		CGFloat dashes[] = {0, 40};
 		[path setLineDash:dashes count:2 phase:0];
 		
 		[path stroke];
@@ -91,7 +84,8 @@
 		//Add the line itself to the path
 		[MarkupFireline addLine:floatPoints pathPtLen:size ToPath:path];
 		[path setLineCapStyle:kCGLineCapRound];
-		CGFloat dashes[] = {0, 8};
+		[path setLineWidth:16.0];
+		CGFloat dashes[] = {0, 40};
 		[path setLineDash:dashes count:2 phase:0];
 		
 		[path stroke];
@@ -104,19 +98,19 @@
 		//1: 'x'
 		//2: 'X'
 		//3: dots
-		[MarkupFireline addAdvancedStyling:floatPoints pathPtLen:size path:path markupStyle:2 markupSpacing:20.0f markupOfs:0.0f];
-		[MarkupFireline addAdvancedStyling:floatPoints pathPtLen:size path:path markupStyle:3 markupSpacing:20.0f markupOfs:10.0f];
+		[MarkupFireline addAdvancedStyling:floatPoints pathPtLen:size path:path markupStyle:2 markupSpacing:80.0f markupOfs:0.0f];
+		[MarkupFireline addAdvancedStyling:floatPoints pathPtLen:size path:path markupStyle:3 markupSpacing:80.0f markupOfs:40.0f];
 		[path setLineCapStyle: kCGLineCapRound];
-		[path setLineWidth:2.0];
+		[path setLineWidth:8.0];
 		
 		[path stroke];
 	}
 	else if([dashStyle isEqualToString:@"completed-dozer-line"])
 	{
 		//x x x x
-		[MarkupFireline addAdvancedStyling:floatPoints pathPtLen:size path:path markupStyle:1 markupSpacing:13.0f markupOfs:0.0f];
+		[MarkupFireline addAdvancedStyling:floatPoints pathPtLen:size path:path markupStyle:1 markupSpacing:40.0f markupOfs:0.0f];
 		[path setLineCapStyle: kCGLineCapRound];
-		[path setLineWidth:2.0];
+		[path setLineWidth:8.0];
 		
 		[path stroke];
 	}
@@ -125,11 +119,18 @@
 		//barb barb barb
 		//Add the line itself to the path
 		[MarkupFireline addLine:floatPoints pathPtLen:size ToPath:path];
-		[MarkupFireline addAdvancedStyling:floatPoints pathPtLen:size path:path markupStyle:0 markupSpacing:10.0f markupOfs:0.0f];
+		//Stroke the line itself
 		[[UIColor redColor] set];
-		[path setLineWidth:2.0];
+		[path setLineWidth:8.0];
 		
 		[path stroke];
+		
+		//Clear the line and add the barbs to draw them at a thinner thickness
+		[path removeAllPoints];
+		[MarkupFireline addAdvancedStyling:floatPoints pathPtLen:size path:path markupStyle:0 markupSpacing:20.0f markupOfs:0.0f];
+		[path setLineWidth:4.0];
+		[path stroke];
+		
 	}
 	else if ([dashStyle isEqualToString:@"action-point"])
 	{
@@ -137,18 +138,18 @@
 		[MarkupFireline addLine:floatPoints pathPtLen:size ToPath:path];
 		
 		//Drawing a thick black border
-		[path setLineWidth:6.0];
+		[path setLineWidth:16.0];
 		[path stroke];
 		
 		
 		//Drawing a thin orange line
-		[path setLineWidth:4.0f];
+		[path setLineWidth:12.0f];
 		[[UIColor colorWithRed:1.0f green:0.639216f blue:0.0f alpha:1.0f] set];
 		[path stroke];
 		
 		//Adding two large circles at the start and end of the line
 		CGContextRef context = UIGraphicsGetCurrentContext();
-		float diameter = 10.0f;
+		float diameter = 40.0f;
 		CGContextSetRGBFillColor(context, 1.0f, 0.639216f, 0.0f, 1.0f);
 		CGPoint start = CGPointMake(floatPoints[0] - 0.5*diameter, floatPoints[1] - 0.5*diameter);
 		CGContextFillEllipseInRect(context, CGRectMake(start.x,start.y,diameter,diameter));
@@ -157,8 +158,7 @@
 		CGContextFillEllipseInRect(context,  CGRectMake(end.x,end.y,diameter,diameter));
 	}
 	
-	
-	[path stroke];
+	//[path stroke];
 }
 
 -(void) requestTileForX:(NSUInteger)x y:(NSUInteger)y zoom:(NSUInteger)zoom receiver:(id<GMSTileReceiver>)receiver
