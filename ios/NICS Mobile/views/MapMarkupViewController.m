@@ -185,7 +185,7 @@ int mapZoomLevel = 6;
     SEL noArgumentSelectorEdit = @selector(ToggleEditMap);
     [_editMapButton addTarget:self action:noArgumentSelectorEdit forControlEvents:UIControlEventTouchUpInside];
     [_editMapButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    _editMapButton.frame = CGRectMake( 25, _mapView.bounds.size.height - mapBtnOffset, 50, 50);
+    _editMapButton.frame = CGRectMake( 60, _mapView.bounds.size.height - mapBtnOffset, 50, 50);
     _editMapButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin;
     [_editMapButton setImage:[UIImage imageNamed:@"pencil_icon.png"] forState:UIControlStateNormal];
     [_mapView addSubview:_editMapButton];
