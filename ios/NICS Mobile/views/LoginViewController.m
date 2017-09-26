@@ -145,11 +145,10 @@ bool useOpenAM = false;
     [RestClient loginUser:_usernameField.text password:_passwordField.text completion:^(BOOL successful, NSString* msg) {
         if(successful) {
             
-            if(_autoLoginSwitch.isOn){
-                [dataManager setPassword:_passwordField.text];
-            }
-            
             [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                if(_autoLoginSwitch.isOn){
+                    [dataManager setPassword:_passwordField.text];
+                }
                 [_loadingLabel setText:NSLocalizedString(@"Loading Incidents and Collaboration Rooms...",nil)];
             }];
             

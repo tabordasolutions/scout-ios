@@ -66,7 +66,6 @@
 		01D77CE51BB5C872008B38BB /* FormDamageInformation.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01D77CE71BB5C872008B38BB /* FormDamageInformation.xib */; };
 		01DEEBBC1C4ECDE700501DBF /* FormColorPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 01DEEBBA1C4ECDE700501DBF /* FormColorPicker.m */; };
 		01DEEBBD1C4ECDE700501DBF /* FormColorPicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01DEEBBB1C4ECDE700501DBF /* FormColorPicker.xib */; };
-		01F3F0F41C4849B200F65AE9 /* images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 01F3F0F31C4849B200F65AE9 /* images.xcassets */; };
 		01F4CF1D1AE7FD34009F6747 /* WfsFeature.m in Sources */ = {isa = PBXBuildFile; fileRef = 01F4CF1C1AE7FD34009F6747 /* WfsFeature.m */; };
 		01F6AF6D1BE2A42700EED9B7 /* FormImageSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 01F6AF6B1BE2A42700EED9B7 /* FormImageSelector.m */; };
 		01F6AF6E1BE2A42700EED9B7 /* FormImageSelector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01F6AF6C1BE2A42700EED9B7 /* FormImageSelector.xib */; };
@@ -185,6 +184,7 @@
 		5528E7131F2994A6003EC8F7 /* OverviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5528E7111F2994A6003EC8F7 /* OverviewViewController.m */; };
 		5528E7141F2994A6003EC8F7 /* OverviewViewControllerTablet.m in Sources */ = {isa = PBXBuildFile; fileRef = 5528E7121F2994A6003EC8F7 /* OverviewViewControllerTablet.m */; };
 		5528E7161F299934003EC8F7 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5528E7151F299934003EC8F7 /* Settings.bundle */; };
+		557E037E1F797426005A32DB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 557E037D1F797425005A32DB /* Images.xcassets */; };
 		5589E9C21F2F90D0003EA98F /* Markup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5589E9C11F2F90D0003EA98F /* Markup.swift */; };
 		55B249751F29A1220006DDEB /* GMUGridBasedClusterAlgorithm.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B2493A1F29A1220006DDEB /* GMUGridBasedClusterAlgorithm.m */; };
 		55B249761F29A1220006DDEB /* GMUNonHierarchicalDistanceBasedAlgorithm.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B2493C1F29A1220006DDEB /* GMUNonHierarchicalDistanceBasedAlgorithm.m */; };
@@ -337,7 +337,6 @@
 		01DEEBB91C4ECDE700501DBF /* FormColorPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FormColorPicker.h; sourceTree = "<group>"; };
 		01DEEBBA1C4ECDE700501DBF /* FormColorPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FormColorPicker.m; sourceTree = "<group>"; };
 		01DEEBBB1C4ECDE700501DBF /* FormColorPicker.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FormColorPicker.xib; sourceTree = "<group>"; };
-		01F3F0F31C4849B200F65AE9 /* images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = images.xcassets; sourceTree = "<group>"; };
 		01F4CF1B1AE7FD34009F6747 /* WfsFeature.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WfsFeature.h; sourceTree = "<group>"; };
 		01F4CF1C1AE7FD34009F6747 /* WfsFeature.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WfsFeature.m; sourceTree = "<group>"; };
 		01F6AF6A1BE2A42700EED9B7 /* FormImageSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FormImageSelector.h; sourceTree = "<group>"; };
@@ -558,6 +557,7 @@
 		5528E7121F2994A6003EC8F7 /* OverviewViewControllerTablet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OverviewViewControllerTablet.m; sourceTree = "<group>"; };
 		5528E7151F299934003EC8F7 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		5528E7171F299DEB003EC8F7 /* libGoogle-Maps-iOS-Utils.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libGoogle-Maps-iOS-Utils.a"; path = "../../../Library/Developer/Xcode/DerivedData/NICS_Mobile-dzlbwtkvvfulvbayhtnfihfqpdyz/Build/Products/Debug-iphonesimulator/Google-Maps-iOS-Utils/libGoogle-Maps-iOS-Utils.a"; sourceTree = "<group>"; };
+		557E037D1F797425005A32DB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "NICS Mobile/Images.xcassets"; sourceTree = "<group>"; };
 		5589E9C01F2F90CF003EA98F /* SCOUT Mobile-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SCOUT Mobile-Bridging-Header.h"; sourceTree = "<group>"; };
 		5589E9C11F2F90D0003EA98F /* Markup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Markup.swift; sourceTree = "<group>"; };
 		559225911F3B9158004AD2E0 /* libCocoaSecurity.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libCocoaSecurity.a; path = "../../../Library/Developer/Xcode/DerivedData/NICS_Mobile-gyxhhofwmqdyyqewsepidemqhdhw/Build/Products/Debug-iphonesimulator/CocoaSecurity/libCocoaSecurity.a"; sourceTree = "<group>"; };
@@ -800,6 +800,7 @@
 		3A141A9718DB34AC00466AD3 = {
 			isa = PBXGroup;
 			children = (
+				557E037D1F797425005A32DB /* Images.xcassets */,
 				88E8C9771D1771980075AA03 /* Default-568h@2x.png */,
 				3A141AA918DB34AC00466AD3 /* NICS Mobile */,
 				3A141AC218DB34AD00466AD3 /* NICS MobileTests */,
@@ -836,7 +837,6 @@
 			children = (
 				55B248E11F29A0950006DDEB /* Google-Maps-iOS-Utils */,
 				5528E7151F299934003EC8F7 /* Settings.bundle */,
-				01F3F0F31C4849B200F65AE9 /* images.xcassets */,
 				3A3C9D6B18DB441200EEBA17 /* api */,
 				3A141AB218DB34AC00466AD3 /* AppDelegate.h */,
 				5528E70F1F299473003EC8F7 /* AppDelegate.m */,
@@ -1402,6 +1402,7 @@
 				3A3C9E5C18DB441300EEBA17 /* userinfo_schema.json in Resources */,
 				018474271C23231A000133AF /* SquareEditView.xib in Resources */,
 				018474311C232379000133AF /* LineEditView.xib in Resources */,
+				557E037E1F797426005A32DB /* Images.xcassets in Resources */,
 				014969031BFBC91D00F164E2 /* MapEditView.xib in Resources */,
 				0184741D1C2321EB000133AF /* CircleEditView.xib in Resources */,
 				01B04DE41BDA74BC001898BB /* FormLocation.xib in Resources */,
@@ -1409,7 +1410,6 @@
 				3A3C9E6618DB441300EEBA17 /* FormSpinner.xib in Resources */,
 				0126382B1C161EA30086E3B3 /* ReportInfoWindowSmall.xib in Resources */,
 				01C8BE741BFE2DD800FF99B0 /* SelectSymbolMenuViewController.xib in Resources */,
-				01F3F0F41C4849B200F65AE9 /* images.xcassets in Resources */,
 				018474221C2322CF000133AF /* SymbolEditView.xib in Resources */,
 				01582D911C29F8A000307C76 /* weatherreport_schema.json in Resources */,
 				3A3C9CF618DB403D00EEBA17 /* Main_iPad.storyboard in Resources */,

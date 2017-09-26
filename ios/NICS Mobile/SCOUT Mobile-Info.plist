@@ -2,12 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSCameraUsageDescription</key>
-	<string>Allows you to take a picture to attach it to a General Message</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Allows you to select and attach an image to a General Messages</string>
-	<key>LSApplicationCategoryType</key>
-	<string></string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -23,17 +17,23 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>6.3.0.2</string>
+	<string>6.3.0.3</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>6.3</string>
+	<key>LSApplicationCategoryType</key>
+	<string></string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>Allows you to take a picture to attach it to a General Message</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Allows your team to know where you are through SCOUT</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Allows your team to know where you are through SCOUT</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Allows you to select and attach an image to a General Messages</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
