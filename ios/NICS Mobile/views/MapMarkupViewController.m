@@ -811,27 +811,35 @@ int mapZoomLevel = 6;
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
-    cell.backgroundColor = [UIColor clearColor];
-    if(_markupShapes.count > 0) {
-        MarkupBaseShape* shape;
-        
-        shape = [[_markupShapes allValues] objectAtIndex:indexPath.row];
-
-        UILongPressGestureRecognizer *longPressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressCell:)];
-        [cell addGestureRecognizer:longPressGesture];
-        
-        UILabel *label = (UILabel *)[cell.contentView viewWithTag:10];
-
-        NSString* datestring = [[Utils getDateFormatter] stringFromDate:[NSDate dateWithTimeIntervalSince1970:[shape.feature.seqtime longValue]]];
-        
-        label.text = [NSString stringWithFormat:@"%@%@%@", datestring, @" - ", shape.feature.username];
-
-        UILabel *timeLabel = (UILabel *)[cell.contentView viewWithTag:20];
-        timeLabel.text = [NSString stringWithFormat:@"%@%@", NSLocalizedString(@"Type: ",nil), shape.feature.type];
-    }
-    
-    return cell;
+	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+	cell.backgroundColor = [UIColor clearColor];
+	if(_markupShapes.count > 0) {
+		MarkupBaseShape* shape;
+		
+		shape = [[_markupShapes allValues] objectAtIndex:indexPath.row];
+		
+		UILongPressGestureRecognizer *longPressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressCell:)];
+		[cell addGestureRecognizer:longPressGesture];
+		
+		UILabel *label = (UILabel *)[cell.contentView viewWithTag:10];
+		
+		NSString* datestring = [[Utils getDateFormatter] stringFromDate:[NSDate dateWithTimeIntervalSince1970:[shape.feature.seqtime longValue]]];
+		
+		// Luis's truncated text fix: have to specify paragraph line break mode
+		NSMutableParagraphStyle *timestampParagraphStyle = [[NSMutableParagraphStyle alloc] init];
+		timestampParagraphStyle.lineBreakMode = NSLineBreakByTruncatingTail;
+		NSDictionary *timestampAttributes = @{NSParagraphStyleAttributeName: timestampParagraphStyle};
+		NSString *timestampString = [NSString stringWithFormat:@"%@%@%@", datestring, @" - ", shape.feature.username];
+		label.attributedText = [[NSMutableAttributedString alloc] initWithString:timestampString attributes:timestampAttributes];
+		
+		// Old method of setting the label's text
+		//label.text = [NSString stringWithFormat:@"%@%@%@", datestring, @" - ", shape.feature.username];
+		
+		UILabel *timeLabel = (UILabel *)[cell.contentView viewWithTag:20];
+		timeLabel.text = [NSString stringWithFormat:@"%@%@", NSLocalizedString(@"Type: ",nil), shape.feature.type];
+	}
+	
+	return cell;
 }
 
 -(NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
