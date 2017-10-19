@@ -9,7 +9,7 @@
 "0eK-Vn-ta7.title" = "Field Report Detail";
 
 /* Class = "UILabel"; text = "No General Messages have been posted in this incident yet."; ObjectID = "0t7-MD-iWa"; */
-"0t7-MD-iWa.text" = "No General Messages have been posted in this incident yet.";
+"0t7-MD-iWa.text" = "No Field Reports have been posted in this incident yet.";
 
 /* Class = "UILabel"; text = "No Damage Reports have been posted in this incident yet."; ObjectID = "20l-MD-9Xg"; */
 "20l-MD-9Xg.text" = "No Damage Reports have been posted in this incident yet.";
@@ -285,7 +285,7 @@
 "moY-mr-D99.normalTitle" = "Settings";
 
 /* Class = "UINavigationItem"; title = "General Messages"; ObjectID = "n8F-PA-2U7"; */
-"n8F-PA-2U7.title" = "General Messages";
+"n8F-PA-2U7.title" = "Field Reports";
 
 /* Class = "UITableViewController"; title = "Field Report List"; ObjectID = "nDf-Gm-BmV"; */
 "nDf-Gm-BmV.title" = "Field Report List";
@@ -318,7 +318,7 @@
 "tS3-rY-o9n.placeholder" = "Latitude";
 
 /* Class = "UILabel"; text = "General Message"; ObjectID = "tVX-t8-LZ6"; */
-"tVX-t8-LZ6.text" = "General Message";
+"tVX-t8-LZ6.text" = "Field Report";
 
 /* Class = "UILabel"; text = "Location (lat, long - decimal)"; ObjectID = "tYz-cy-rFO"; */
 "tYz-cy-rFO.text" = "Location (lat, long - decimal)";

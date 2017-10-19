@@ -17,7 +17,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>6.3.0.3</string>
+	<string>6.3.0.4.1</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
@@ -27,13 +27,13 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>Allows you to take a picture to attach it to a General Message</string>
+	<string>Allows you to take a picture to attach it to a Field Report</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Allows your team to know where you are through SCOUT</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Allows your team to know where you are through SCOUT</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Allows you to select and attach an image to a General Messages</string>
+	<string>Allows you to select and attach an image to a Field Report</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
