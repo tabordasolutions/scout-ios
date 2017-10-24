@@ -192,7 +192,7 @@
 "ehO-oJ-Xl1.text" = "Hora de registro";
 
 /* Class = "UIButton"; normalTitle = "General Message"; ObjectID = "f4F-ED-ies"; */
-"f4F-ED-ies.normalTitle" = "Mensaje general";
+"f4F-ED-ies.normalTitle" = "Informe de Campo";
 
 /* Class = "UILabel"; text = "1.0"; ObjectID = "fu5-or-CpW"; */
 "fu5-or-CpW.text" = "1.0";
@@ -216,7 +216,7 @@
 "hrT-mm-kjh.text" = "0";
 
 /* Class = "UILabel"; text = "No General Messages have been posted in this incident yet."; ObjectID = "iNb-c9-1j8"; */
-"iNb-c9-1j8.text" = "No se han registrado mensajes generales para esta incidencia";
+"iNb-c9-1j8.text" = "No se han registrado Informes de Campo para esta incidencia";
 
 /* Class = "UIButton"; normalTitle = "Save Draft"; ObjectID = "j9G-Ym-pSp"; */
 "j9G-Ym-pSp.normalTitle" = "Guardad borrador";

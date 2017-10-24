@@ -9,7 +9,7 @@
 "0eK-Vn-ta7.title" = "Información/Contenido del informe de campo";
 
 /* Class = "UILabel"; text = "No General Messages have been posted in this incident yet."; ObjectID = "0t7-MD-iWa"; */
-"0t7-MD-iWa.text" = "No se han registrado mensajes generales para esta incidencia";
+"0t7-MD-iWa.text" = "No se han registrado Informes de Campo para esta incidencia";
 
 /* Class = "UILabel"; text = "No Damage Reports have been posted in this incident yet."; ObjectID = "20l-MD-9Xg"; */
 "20l-MD-9Xg.text" = "No se han registrado informes de daños para esta incidencia";
@@ -282,7 +282,7 @@
 "moY-mr-D99.normalTitle" = "Ajustes";
 
 /* Class = "UINavigationItem"; title = "General Messages"; ObjectID = "n8F-PA-2U7"; */
-"n8F-PA-2U7.title" = "Mensaje general";
+"n8F-PA-2U7.title" = "Informe de Campo";
 
 /* Class = "UITableViewController"; title = "Field Report List"; ObjectID = "nDf-Gm-BmV"; */
 "nDf-Gm-BmV.title" = "Lista de informes de campo or reporte de campo";
@@ -315,7 +315,7 @@
 "tS3-rY-o9n.placeholder" = "Latitud";
 
 /* Class = "UILabel"; text = "General Message"; ObjectID = "tVX-t8-LZ6"; */
-"tVX-t8-LZ6.text" = "Mensaje general";
+"tVX-t8-LZ6.text" = "Informe de Campo";
 
 /* Class = "UILabel"; text = "Location (lat, long - decimal)"; ObjectID = "tYz-cy-rFO"; */
 "tYz-cy-rFO.text" = "Localización (latitud, longitud -decimal)";
