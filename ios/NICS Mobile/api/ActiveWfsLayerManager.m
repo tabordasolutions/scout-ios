@@ -51,7 +51,7 @@ NSMutableArray* trackingLayers;
     damagePayload.internalurl = [[DataManager getInstance] getGeoServerFromSettings];
     
     TrackingLayerPayload* generalPayload = [[TrackingLayerPayload alloc]init];
-    generalPayload.displayname = NSLocalizedString(@"SCOUT General Messages",nil);
+    generalPayload.displayname = NSLocalizedString(@"SCOUT Field Reports",nil);
     generalPayload.layername = @"nics_sr";
     generalPayload.internalurl = [[DataManager getInstance] getGeoServerFromSettings];
     

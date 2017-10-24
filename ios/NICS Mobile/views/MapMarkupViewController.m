@@ -582,7 +582,7 @@ int mapZoomLevel = 6;
 	
     [self addFirelinesToMap:[_dataManager getAllFirelinesForCollabRoomId:[_dataManager getSelectedCollabroomId]]];
     
-    if([_dataManager getTrackingLayerEnabled:NSLocalizedString(@"SCOUT General Messages",nil)]){
+    if([_dataManager getTrackingLayerEnabled:NSLocalizedString(@"SCOUT Field Reports",nil)]){
         [self addAllGeneralMessageSymbolsToMap];
     }
     if([_dataManager getTrackingLayerEnabled:NSLocalizedString(@"SCOUT Damage Surveys",nil)]){
@@ -597,7 +597,7 @@ int mapZoomLevel = 6;
     
     TrackingLayerPayload* trackingLayerToCompare = [[ActiveWfsLayerManager getTrackingLayers] objectAtIndex:layerIndex ];
     
-    if([trackingLayerToCompare.displayname isEqualToString:NSLocalizedString(@"SCOUT General Messages",nil)]){
+    if([trackingLayerToCompare.displayname isEqualToString:NSLocalizedString(@"SCOUT Field Reports",nil)]){
         if(isOn == 1){
             [self addAllGeneralMessageSymbolsToMap];
         }else{
@@ -644,10 +644,10 @@ int mapZoomLevel = 6;
 
 -(void)addGeneralMessageSymbolToMap:(SimpleReportPayload*)payload{
     
-    if([_dataManager getTrackingLayerEnabled:NSLocalizedString(@"SCOUT General Messages",nil)]){
+    if([_dataManager getTrackingLayerEnabled:NSLocalizedString(@"SCOUT Field Reports",nil)]){
     
         MarkupFeature *feature = [[MarkupFeature alloc]init];
-        feature.type = @"General Message";
+        feature.type = @"Field Report";
         feature.graphic = @"images/drawmenu/markers/helispot.png";
         feature.username = payload.messageData.user;
         feature.photoPath = payload.messageData.fullpath;
@@ -656,7 +656,7 @@ int mapZoomLevel = 6;
         
         NSString* datestring = [[Utils getDateFormatter] stringFromDate:[NSDate dateWithTimeIntervalSince1970:[payload.seqtime longValue]/1000.0]];
         
-        feature.featureattributes = [@"General Message" stringByAppendingFormat:@"%@%@%@%@%@%@%@%@%@%@%@%@%@%@%@%@%@",
+        feature.featureattributes = [@"Field Report" stringByAppendingFormat:@"%@%@%@%@%@%@%@%@%@%@%@%@%@%@%@%@%@",
                                      @"\n",NSLocalizedString(@"User:",nil),payload.messageData.user,
                                      @"\n",NSLocalizedString(@"Recipient",nil),@":",payload.messageData.category,
                                      @"\n",NSLocalizedString(@"Description",nil),@":",payload.messageData.msgDescription,

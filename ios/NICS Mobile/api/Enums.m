@@ -340,7 +340,7 @@ static NSDictionary *simpleReportCategories;
         return text;
     } else if([type isEqualToString:@"Explosive Report"]) {
         return ExplosiveReportMarkup;
-    } else if([type isEqualToString:@"General Message"]) {
+    } else if([type isEqualToString:@"Field Report"]) {
         return GeneralMessageMarkup;
     }else if([type isEqualToString:@"Damage Report"]) {
         return DamageReportMarkup;
