@@ -56,10 +56,10 @@
 - (void)configureView
 {
     [_imageView setImage:nil];
-    
+    self.title = NSLocalizedString(@"Field Report",nil);
     _categoryView.options = [Enums simpleReportCategoriesList];
     [_categoryView setup];
-    _categoryView.label.text = NSLocalizedString(@"Recipient",nil);
+    _categoryView.label.text = NSLocalizedString(@"Please Forward Information to:",nil);
     [_categoryView refreshLayout:_descriptionView];
 
     if(_hideEditControls) {

@@ -88,7 +88,7 @@ NSDateFormatter *_dateFormatter;
     [UIView setAnimationDuration: movementDuration];
     
     if(moveup){
-        view.frame = CGRectOffset(view.frame, 0, movement);
+        view.frame = CGRectOffset(view.bounds, 0, movement);
     }else{
         view.frame = originalFrame;
     }

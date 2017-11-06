@@ -658,7 +658,7 @@ int mapZoomLevel = 6;
         
         feature.featureattributes = [@"Field Report" stringByAppendingFormat:@"%@%@%@%@%@%@%@%@%@%@%@%@%@%@%@%@%@",
                                      @"\n",NSLocalizedString(@"User:",nil),payload.messageData.user,
-                                     @"\n",NSLocalizedString(@"Recipient",nil),@":",payload.messageData.category,
+                                     @"\n",NSLocalizedString(@"Please Forward Information to:",nil),@":",payload.messageData.category,
                                      @"\n",NSLocalizedString(@"Description",nil),@":",payload.messageData.msgDescription,
                                      @"\n",
                                      payload.messageData.latitude,@" , ",payload.messageData.longitude,

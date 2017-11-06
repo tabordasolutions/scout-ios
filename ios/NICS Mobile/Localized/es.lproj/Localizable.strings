@@ -745,7 +745,7 @@
 "SARApp PLI" = "SARApp PLI";
 
 /* General Message Form Fields */
-"Recipient" = "Destinatario";
+"Please Forward Information to:" = "Envíe información a:";
 
 /* Recipient dropdown options */
 "Agency Representative" = "Representante de la agencia";
