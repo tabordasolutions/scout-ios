@@ -253,7 +253,8 @@ int mapZoomLevel = 6;
         CGRect newFrame;
         
         if(_dataManager.isIpad){
-            newFrame = CGRectMake(0, 0, 512, 622);
+            newFrame = CGRectMake(0, 0, self.view.layer.frame.size.width + _tableView.layer.frame.size.width, 622);
+            _tableView.hidden = true;
         }else{
             newFrame = self.view.superview.frame;
             newFrame.size.height -= self.view.frame.origin.y;

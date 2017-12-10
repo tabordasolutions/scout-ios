@@ -102,6 +102,8 @@
 @property UIViewController* previousViewToReturnTo;
 @property ReportInfoWindow* currentReportWindow;
 @property GMUClusterManager *_clusterManager;
+@property IBOutlet NSLayoutConstraint *mapViewWidthConstraint;
+@property IBOutlet NSLayoutConstraint *tableViewWidthConstraint;
 
 
 //For rendering firelines
