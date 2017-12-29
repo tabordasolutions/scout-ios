@@ -38,6 +38,7 @@
 
 @interface MapMarkupViewController ()
 @property float currentZoomLevel;
+@property BOOL isExpanded;
 @end
 
 static NSNumber* selectedIndex;
@@ -62,7 +63,7 @@ int mapZoomLevel = 6;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    _isExpanded = false;
     _dateFormatter = [[NSDateFormatter alloc] init];
     [_dateFormatter setDateFormat:@"MM/dd HH:mm:ss"];
     
@@ -242,32 +243,47 @@ int mapZoomLevel = 6;
         _originalMapFrame =_mapView.frame;
     }
     
-    [UIView beginAnimations: @"anim" context: nil];
-    [UIView setAnimationBeginsFromCurrentState: YES];
-    [UIView setAnimationDuration: 0.35f];
+//    [UIView beginAnimations: @"anim" context: nil];
+//    [UIView setAnimationBeginsFromCurrentState: YES];
+//    [UIView setAnimationDuration: 0.35f];
     
     UIImage *image;
+    CGRect newFrame;
+
     
-    if(_mapView.frame.size.height == _originalMapFrame.size.height)
-    {
-        CGRect newFrame;
-        
-        if(_dataManager.isIpad){
-            newFrame = CGRectMake(0, 0, 512, 622);
-        }else{
+    if(_dataManager.isIpad){
+        if (_isExpanded == false) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"expandMapView" object:nil];
+            newFrame = CGRectMake(0, 0, 1024, 622);
+            _mapView.frame = newFrame;
+            image = [UIImage imageNamed:@"up_arrow_icon.png"];
+            _isExpanded = true;
+
+        } else {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"contractMapView" object:nil];
+            _mapView.frame = _originalMapFrame;
+            image = [UIImage imageNamed:@"down_arrow_icon.png"];
+            _isExpanded = false;
+        }
+    } else {
+        if(_mapView.frame.size.height == _originalMapFrame.size.height)
+        {
             newFrame = self.view.superview.frame;
             newFrame.size.height -= self.view.frame.origin.y;
+            
+            _mapView.frame = newFrame;
+            image = [UIImage imageNamed:@"up_arrow_icon.png"];
+            
+        }else{
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"contractMapView" object:nil];
+            _mapView.frame = _originalMapFrame;
+            image = [UIImage imageNamed:@"down_arrow_icon.png"];
         }
-        _mapView.frame = newFrame;
-        image = [UIImage imageNamed:@"up_arrow_icon.png"];
-        
-    }else{
-        _mapView.frame = _originalMapFrame;
-        image = [UIImage imageNamed:@"down_arrow_icon.png"];
     }
-    
+
     [_extendMapButton setImage:image forState:UIControlStateNormal];
-    [UIView commitAnimations];
+    [self.view setNeedsLayout];
+    //    [UIView commitAnimations];
 }
 
 -(void)ToggleEditMap{

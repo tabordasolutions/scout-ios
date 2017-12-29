@@ -66,6 +66,25 @@ UIStoryboard *currentStoryboard;
     UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(MapRefreshButtonLongPress:)];
     [longPress setMinimumPressDuration:3];
     [_MapRefreshButton addGestureRecognizer:longPress];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(expandMapView) name:@"expandMapView" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(contractMapview) name:@"contractMapView" object:nil];
+}
+
+-(void)expandMapView {
+    CGRect mapFrame = mapController.view.frame;
+    mapFrame.size.width = 1024;
+    mapFrame.size.height = _RoomCanvas.frame.size.height;
+    selectedRoomController.frame = mapFrame;
+    mapController.view.frame = mapFrame;
+    [self.view setNeedsLayout];
+}
+
+-(void)contractMapview {
+    CGRect mapFrame = mapController.view.frame;
+    mapFrame.size.width = _RoomCanvas.frame.size.width;
+    mapFrame.size.height = _RoomCanvas.frame.size.height;
+    mapController.view.frame = mapFrame;
+    [self.view setNeedsLayout];
 }
 
 - (void)didReceiveMemoryWarning {

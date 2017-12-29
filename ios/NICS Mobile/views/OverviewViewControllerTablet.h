@@ -52,7 +52,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *selectIncidentHelperLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *collabroomDownArrowImage;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *collabroomsLoadingIndicator;
-
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *mapViewWidth;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *chatViewWidth;
 @property DataManager *dataManager;
 
 @property UIActionSheet *incidentMenu;

@@ -119,17 +119,20 @@ UIStoryboard *currentStoryboard;
 }
 
 - (IBAction)ChatButtonPressed:(id)sender {
-
-    [[IncidentButtonBar GetChatController] viewDidAppear:TRUE];
     
-    _currentReport = @"Chat";
-    [self SetCanvas:[IncidentButtonBar GetChatController].view];
-    
-    [[IncidentButtonBar GetAddButton] setHidden:TRUE];
-    [[IncidentButtonBar GetSaveDraftButton]setHidden:TRUE];
-    [[IncidentButtonBar GetCancelButton]setHidden:TRUE];
-    [[IncidentButtonBar GetSubmitButton]setHidden:TRUE];
-    [[IncidentButtonBar GetFilterButton] setHidden:TRUE];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[IncidentButtonBar GetChatController] viewDidAppear:TRUE];
+        
+        _currentReport = @"Chat";
+        [self SetCanvas:[IncidentButtonBar GetChatController].view];
+        
+        [[IncidentButtonBar GetAddButton] setHidden:TRUE];
+        [[IncidentButtonBar GetSaveDraftButton]setHidden:TRUE];
+        [[IncidentButtonBar GetCancelButton]setHidden:TRUE];
+        [[IncidentButtonBar GetSubmitButton]setHidden:TRUE];
+        [[IncidentButtonBar GetFilterButton] setHidden:TRUE];
+        [self.view setNeedsLayout];
+    });
 }
 
 - (IBAction)SetCanvasToGeneralMessage:(id)sender {
