@@ -280,7 +280,7 @@ NSInteger lastIndexSelected;
     //    if(_filteredList && indexPath.row==0){
     //        return 180;
     //    }
-    return 50;
+    return 70;
 }
 
 @end

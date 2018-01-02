@@ -36,6 +36,8 @@
 #import "IncidentButtonBar.h"
 
 @interface OverviewViewControllerTablet ()
+@property CGFloat mapViewOriginalWidth;
+@property CGFloat chatViewOriginalWidth;
 
 @end
 
@@ -55,11 +57,15 @@ NSNotificationCenter *notificationCenter;
     [IncidentButtonBar SetOverview:self];
     [_dataManager setOverviewController:self];
     notificationCenter = [NSNotificationCenter defaultCenter];
+    _mapViewOriginalWidth = 580;
+    _chatViewOriginalWidth = 444;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(SetPullTimersFromOptions) name:@"DidBecomeActive" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(startCollabLoadingSpinner) name:@"collabroomStartedLoading" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(stopCollabLoadingSpinner) name:@"collabroomFinishedLoading" object:nil];
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(expandMapView) name:@"expandMapView" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(contractMapview) name:@"contractMapView" object:nil];
+
     [self SetPullTimersFromOptions];
     
     self.navigationItem.hidesBackButton = YES;
@@ -142,6 +148,18 @@ NSNotificationCenter *notificationCenter;
     }
 }
 
+-(void)expandMapView {
+    CGFloat maxWidth = self.view.layer.frame.size.width;
+    self.mapViewWidth.constant = maxWidth;
+    self.chatViewWidth.constant = 0;
+    [self.view setNeedsLayout];
+}
+
+-(void)contractMapview {
+    self.mapViewWidth.constant = _mapViewOriginalWidth;
+    self.chatViewWidth.constant = _chatViewOriginalWidth;
+    [self.view setNeedsLayout];
+}
 -(void)SetPullTimersFromOptions{
     [_dataManager requestChatMessagesRepeatedEvery:[[DataManager getChatUpdateFrequencyFromSettings] intValue] immediate:NO];
     [_dataManager requestSimpleReportsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings] intValue] immediate:NO];
