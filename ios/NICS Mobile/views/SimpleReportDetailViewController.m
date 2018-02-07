@@ -378,17 +378,18 @@
 }
 
 - (IBAction)submitReportButtonPressed:(UIButton *)button {
-    
-    if(_imagePath && _isImageSaved) {
+	
+	// Luis disabled this to allow reports without images
+    //if(_imagePath && _isImageSaved) {
         [_dataManager deleteSimpleReportFromStoreAndForward:_payload];
         _payload = [self getPayload:NO];
         [_dataManager addSimpleReportToStoreAndForward:_payload];
         [self.navigationController popViewControllerAnimated:YES];
 
-    } else {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error",nil) message:NSLocalizedString(@"Please select or take an image to submit.",nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles: nil];
-        [alertView show];
-    }
+    //} else {
+    //    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error",nil) message:NSLocalizedString(@"Please select or take an image to submit.",nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles: nil];
+    //    [alertView show];
+    //}
 }
 
 - (void)submitTabletReportButtonPressed {
@@ -428,7 +429,12 @@
 }
 
 - (void)cancelTabletButtonPressed {
-    [[IncidentButtonBar GetIncidentCanvasController] SetCanvasToGeneralMessageFromButtonBar];
+	
+	if(self.hideEditControls == false){
+		[self showCancelAlertView];
+	}else{
+		[[IncidentButtonBar GetIncidentCanvasController] SetCanvasToGeneralMessageFromButtonBar];
+	}
 }
 
 - (SimpleReportPayload *)getPayload:(BOOL)isDraft {
@@ -438,11 +444,17 @@
     data.longitude = [NSNumber numberWithDouble:[_longitudeView.text doubleValue]];
     data.msgDescription = _descriptionView.text;
     data.category = [_categoryView getTextView].text;
+    data.image = @"";
+    data.fullpath = @"";
+	NSLog(@"Hullo, about to check for FR image");
+
     if(_isImageSaved && _imagePath) {
+	    //LUIS NOTE: this doesn't run, so that's good
+	    NSLog(@"imageSaved = %d, imagePath = %@", _isImageSaved,_imagePath);
         data.image = _imagePath;
         data.fullpath = _imagePath;
     }
-    
+	
     SimpleReportPayload *payload = [SimpleReportPayload new];
     
     if(isDraft) {
@@ -541,7 +553,13 @@
     }];
     
     UIAlertAction* continueButton = [UIAlertAction actionWithTitle:@"Continue Editing" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action){
-        
+	    
+        if([_dataManager isIpad]){
+		   [[IncidentButtonBar GetSaveDraftButton] setHidden:FALSE];
+		   [[IncidentButtonBar GetCancelButton] setHidden:FALSE];
+		   [[IncidentButtonBar GetSubmitButton] setHidden:FALSE];
+		   self.hideEditControls = false;
+	   }
     }];
     
     [alert addAction:saveAndCloseButton];

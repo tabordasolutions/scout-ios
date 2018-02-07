@@ -78,10 +78,88 @@ static NSNotificationCenter *notificationCenter;
 
 -(void) postSimpleReport: (SimpleReportPayload*) payload{
 
-    [assetsLibrary assetForURL:[NSURL URLWithString:payload.messageData.fullpath] resultBlock:^(ALAsset *asset) {
-        
+	// If the field report has no image associated with it:
+	if([payload.messageData.fullpath length] == 0)
+	{
+		// No image supplied, use a default placeholder image.
+		
+		// Luis's note:
+		// This is sort of an ugly hack.
+		// The client requested being able to upload Field Reports without any attached images,
+		// and I was unable to succesfully integrate support for posting a FR with no image,
+		// so as a temporary workaround, I will make it so Field Reports with no image get uploaded
+		// with a placeholder default image.
+		
+		// For a normal SCOUT logo
+		//UIImage* placeholderImage = [UIImage imageNamed:@"SCOUT_logo"];
+		// An image with "No image associated with this report" text with a faded SCOUT background
+		UIImage* placeholderImage = [UIImage imageNamed:@"SCOUT_FR_noimage_placeholder"];
+		NSData* imageContainer = UIImagePNGRepresentation(placeholderImage);
+		NSString* placeholderImagePath = [[NSBundle mainBundle] resourcePath];
+		Byte *buffer = (Byte*)malloc([imageContainer length]);
+		[imageContainer getBytes:buffer length:[imageContainer length]];
+		NSData *imageData = [NSData dataWithBytesNoCopy:buffer length:[imageContainer length] freeWhenDone:YES];
+		
+		if(imageData)
+		{
+			// create post request params
+			NSInteger statusCode = -1;
+			
+			NSMutableDictionary *requestParams = [NSMutableDictionary new];
+			[requestParams setObject:[[UIDevice currentDevice].identifierForVendor UUIDString] forKey:@"deviceId"];
+			[requestParams setObject:payload.incidentid forKey:@"incidentid"];
+			[requestParams setObject:payload.usersessionid forKey:@"usersessionid"];
+			[requestParams setObject:payload.messageData.latitude forKey:@"latitude"];
+			[requestParams setObject:payload.messageData.longitude forKey:@"longitude"];
+			[requestParams setObject:@0.0 forKey:@"altitude"];
+			[requestParams setObject:@0.0 forKey:@"track"];
+			[requestParams setObject:@0.0 forKey:@"speed"];
+			[requestParams setObject:@0.0 forKey:@"accuracy"];
+			[requestParams setObject:payload.messageData.msgDescription forKey:@"description"];
+			[requestParams setObject:payload.messageData.category forKey:@"category"];
+			[requestParams setObject:payload.seqtime forKey:@"seqtime"];
+			
+			activeConnection = [RestClient synchronousMultipartPostToUrl:[NSString stringWithFormat:@"%@%@%@", @"reports/", payload.incidentid,  @"/SR"] postData:imageData imageName:placeholderImagePath requestParams:requestParams statusCode:&statusCode];
+			
+			[activeConnection scheduleInRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];
+			[activeConnection start];
+		}
+
+		
+		// The following code executs synchronousMultipartPostToUrl with no image
+		// This method doesn't work, but should really be fixed in the future
+		// Post a SR without an image
+		/*NSInteger statusCode = -1;
+		
+		NSMutableDictionary *requestParams = [NSMutableDictionary new];
+		[requestParams setObject:[[UIDevice currentDevice].identifierForVendor UUIDString] forKey:@"deviceId"];
+		[requestParams setObject:payload.incidentid forKey:@"incidentid"];
+		[requestParams setObject:payload.usersessionid forKey:@"usersessionid"];
+		[requestParams setObject:payload.messageData.latitude forKey:@"latitude"];
+		[requestParams setObject:payload.messageData.longitude forKey:@"longitude"];
+		[requestParams setObject:@0.0 forKey:@"altitude"];
+		[requestParams setObject:@0.0 forKey:@"track"];
+		[requestParams setObject:@0.0 forKey:@"speed"];
+		[requestParams setObject:@0.0 forKey:@"accuracy"];
+		[requestParams setObject:payload.messageData.msgDescription forKey:@"description"];
+		[requestParams setObject:payload.messageData.category forKey:@"category"];
+		[requestParams setObject:payload.seqtime forKey:@"seqtime"];
+
+		// Post the report without an image
+		activeConnection = [RestClient synchronousMultipartPostToUrl:[NSString stringWithFormat:@"%@%@%@", @"reports/", payload.incidentid,  @"/SR"]
+												  postData:nil imageName:nil requestParams:requestParams statusCode:&statusCode];
+		
+		[activeConnection scheduleInRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];
+		[activeConnection start];*/
+
+		return;
+	}
+	
+	
+	[assetsLibrary assetForURL:[NSURL URLWithString:payload.messageData.fullpath]
+				resultBlock:^(ALAsset *asset) {
         NSInteger statusCode = -1;
-        
+		
         ALAssetRepresentation *rep = [asset defaultRepresentation];
         NSNumber *length = [NSNumber numberWithLongLong:rep.size];
         
@@ -106,7 +184,18 @@ static NSNotificationCenter *notificationCenter;
             [requestParams setObject:payload.messageData.msgDescription forKey:@"description"];
             [requestParams setObject:payload.messageData.category forKey:@"category"];
             [requestParams setObject:payload.seqtime forKey:@"seqtime"];
-            
+
+		   // If the payload did not specify an image:
+		   // FIXME: this leads to an invalid image being sent to the server
+		   //if([payload.messageData.fullpath length] == 0)
+		   //{
+		   //	   activeConnection = [RestClient synchronousMultipartPostToUrl:[NSString stringWithFormat:@"%@%@%@", @"reports/", payload.incidentid,  @"/SR"] postData:nil imageName:nil requestParams:requestParams statusCode:&statusCode];
+		   //}
+		   //else
+		   //{
+		   //   activeConnection = [RestClient synchronousMultipartPostToUrl:[NSString stringWithFormat:@"%@%@%@", @"reports/", payload.incidentid,  @"/SR"] postData:imageData imageName:payload.messageData.fullpath requestParams:requestParams statusCode:&statusCode];
+		   //}
+		   
             activeConnection = [RestClient synchronousMultipartPostToUrl:[NSString stringWithFormat:@"%@%@%@", @"reports/", payload.incidentid,  @"/SR"] postData:imageData imageName:payload.messageData.fullpath requestParams:requestParams statusCode:&statusCode];
             
             [activeConnection scheduleInRunLoop:[NSRunLoop mainRunLoop]

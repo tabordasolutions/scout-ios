@@ -218,6 +218,38 @@ static MultipartPostQueue* mMultipartPostQueue;
 
 - (NSURLConnection *) synchronousMultipartPostToUrl:(NSString *)url postData:(NSData *)postData imageName:(NSString *)imageName requestParams:(NSMutableDictionary *)requestParams statusCode:(NSInteger *)statusCode {
 
+	// Luis:
+	// This fails to send, but it should be close to what is actually required in the case of no image being supplied
+    /*if(imageName == nil || postData == nil)
+    {
+	    // Convert the request parameters to a JSON string
+	    NSError *error;
+	    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:requestParams options:0 error:&error];
+	    //options:0 = options:NSJSONWritingPrettyPrinted for readable format
+
+	    if(!jsonData)
+	    {
+		    NSLog(@"Got an error: %@", error);
+		    return NULL;
+	    }
+	    NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+	    
+	    NSURL* postUrl = [NSURL URLWithString:[[dataManager getServerFromSettings] stringByAppendingString:url]];
+	    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:postUrl];
+	    [request setHTTPMethod:@"POST"];
+	    [request setValue:@"application/json" forHTTPHeaderField: @"Content-Type"];
+	    [request setValue:myUsername forHTTPHeaderField:@"CUSTOM-uid"];
+	    [request setAllHTTPHeaderFields:[self getCookies]];
+	    
+	    //add the body to the post
+	    NSMutableData *postBody = [NSMutableData data];
+	    [postBody appendData:[jsonString dataUsingEncoding:NSUTF8StringEncoding]];
+	    [request setHTTPBody:postBody];
+	    return [[NSURLConnection alloc] initWithRequest:request delegate:mMultipartPostQueue startImmediately:NO];
+    }*/
+
+	//WAIT WAIT, DEFAULT IMAGE IS WORKING RIGHT NOW
+	
     // the boundary string : a random string, that will not repeat in post data, to separate post data fields.
     NSString *boundaryConstant = @"----------V2ymHFg03ehbqgZCaKO6jy";
     NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", boundaryConstant];
@@ -233,15 +265,33 @@ static MultipartPostQueue* mMultipartPostQueue;
         NSString *tempKey = [keys nextObject];
         [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",tempKey] dataUsingEncoding:NSUTF8StringEncoding]];
         [postBody appendData:[[NSString stringWithFormat:@"%@",[requestParams objectForKey:tempKey]] dataUsingEncoding:NSUTF8StringEncoding]];
-        [postBody appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n", boundaryConstant] dataUsingEncoding:NSUTF8StringEncoding]];
+
+	    // Don't append this if it's the last requestparam
+	    if(i < [requestParams count] - 1)
+		    [postBody appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n", boundaryConstant] dataUsingEncoding:NSUTF8StringEncoding]];
     }
     
     //add data field and file data  filename=\"%@\" \r\n"
-    [postBody appendData:[[@"Content-Disposition: form-data; name=\"data\";  filename=\"" stringByAppendingFormat:@"%@%@", imageName, @"\" \r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
-    [postBody appendData:[@"Content-Type: application/octet-stream\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
-    [postBody appendData:[NSData dataWithData:postData]];
-    [postBody appendData:[[NSString stringWithFormat:@"\r\n--%@--\r\n", boundaryConstant] dataUsingEncoding:NSUTF8StringEncoding]];
-    
+    if(imageName != nil && postData != nil)
+    {
+	   [postBody appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n", boundaryConstant] dataUsingEncoding:NSUTF8StringEncoding]];
+ 
+        [postBody appendData:[[@"Content-Disposition: form-data; name=\"data\";  filename=\"" stringByAppendingFormat:@"%@%@", imageName, @"\" \r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+        [postBody appendData:[@"Content-Type: application/octet-stream\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+        [postBody appendData:[NSData dataWithData:postData]];
+	   [postBody appendData:[[NSString stringWithFormat:@"\r\n--%@--\r\n", boundaryConstant] dataUsingEncoding:NSUTF8StringEncoding]];
+    }
+	else
+	{
+		//FIXME: these fields are required for a successful report submission, but lead to an invalid image on the server when no image is supplied
+		[postBody appendData:[[@"Content-Disposition: form-data; name=\"data\";  filename=\"" stringByAppendingFormat:@"%@%@", @"", @"\" \r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+		/*[postBody appendData:[@"Content-Disposition: form-data; name=\"data\";  filename=\"\" \r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+
+		[postBody appendData:[@"Content-Type: application/octet-stream\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+		//[postBody appendData:[NSData dataWithData:postData]];
+		[postBody appendData:[[NSString stringWithFormat:@"\r\n--%@--\r\n", boundaryConstant] dataUsingEncoding:NSUTF8StringEncoding]];*/
+	}
+	
     NSURL* postUrl = [NSURL URLWithString:[[dataManager getServerFromSettings] stringByAppendingString:url]];
     
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:postUrl];

@@ -208,6 +208,15 @@
 		55B249881F29A1220006DDEB /* GQTPointQuadTree.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B249711F29A1220006DDEB /* GQTPointQuadTree.m */; };
 		55B249891F29A1220006DDEB /* GQTPointQuadTreeChild.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B249731F29A1220006DDEB /* GQTPointQuadTreeChild.m */; };
 		88E8C9781D1771980075AA03 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88E8C9771D1771980075AA03 /* Default-568h@2x.png */; };
+		9D10B9FD2024DEF70035E1D2 /* SCOUT_FR_noimage_placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D10B9FC2024DEF60035E1D2 /* SCOUT_FR_noimage_placeholder.png */; };
+		9D1D372B2007E18100A4FF53 /* SCOUT_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D1D372A2007E18100A4FF53 /* SCOUT_logo.png */; };
+		9DB52C2520053142003833B9 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DB52C2420053142003833B9 /* CoreMedia.framework */; };
+		9DB52C2720053149003833B9 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DB52C2620053149003833B9 /* CoreMotion.framework */; };
+		9DB52C2920053153003833B9 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DB52C2820053153003833B9 /* AVFoundation.framework */; };
+		9DB52C2B2005315A003833B9 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DB52C2A2005315A003833B9 /* SystemConfiguration.framework */; };
+		9DB52C2D20053160003833B9 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DB52C2C20053160003833B9 /* OpenGLES.framework */; };
+		9DB52C37200532C8003833B9 /* upload-dsym.sh in Resources */ = {isa = PBXBuildFile; fileRef = 9DB52C35200532C8003833B9 /* upload-dsym.sh */; };
+		9DB52C38200532C8003833B9 /* libTestFairy.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DB52C36200532C8003833B9 /* libTestFairy.a */; };
 		F967D53CE165EEF0E4B8B0B9 /* Pods_SCOUT_Mobile.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F5EDBF653327A0209BD7791 /* Pods_SCOUT_Mobile.framework */; };
 /* End PBXBuildFile section */
 
@@ -620,6 +629,16 @@
 		55B249741F29A1220006DDEB /* GQTPointQuadTreeItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GQTPointQuadTreeItem.h; sourceTree = "<group>"; };
 		6F5EDBF653327A0209BD7791 /* Pods_SCOUT_Mobile.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SCOUT_Mobile.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		88E8C9771D1771980075AA03 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		9D10B9FC2024DEF60035E1D2 /* SCOUT_FR_noimage_placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SCOUT_FR_noimage_placeholder.png; sourceTree = "<group>"; };
+		9D1D372A2007E18100A4FF53 /* SCOUT_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SCOUT_logo.png; sourceTree = "<group>"; };
+		9DB52C2420053142003833B9 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		9DB52C2620053149003833B9 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		9DB52C2820053153003833B9 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		9DB52C2A2005315A003833B9 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		9DB52C2C20053160003833B9 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		9DB52C34200532C8003833B9 /* TestFairy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFairy.h; sourceTree = "<group>"; };
+		9DB52C35200532C8003833B9 /* upload-dsym.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = "upload-dsym.sh"; sourceTree = "<group>"; };
+		9DB52C36200532C8003833B9 /* libTestFairy.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFairy.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -627,6 +646,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9DB52C2D20053160003833B9 /* OpenGLES.framework in Frameworks */,
+				9DB52C38200532C8003833B9 /* libTestFairy.a in Frameworks */,
+				9DB52C2B2005315A003833B9 /* SystemConfiguration.framework in Frameworks */,
+				9DB52C2920053153003833B9 /* AVFoundation.framework in Frameworks */,
+				9DB52C2720053149003833B9 /* CoreMotion.framework in Frameworks */,
+				9DB52C2520053142003833B9 /* CoreMedia.framework in Frameworks */,
 				3A141AA818DB34AC00466AD3 /* UIKit.framework in Frameworks */,
 				3A141AA418DB34AC00466AD3 /* Foundation.framework in Frameworks */,
 				F967D53CE165EEF0E4B8B0B9 /* Pods_SCOUT_Mobile.framework in Frameworks */,
@@ -661,6 +686,8 @@
 		0166C6751AE931B600716F1A /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				9D10B9FC2024DEF60035E1D2 /* SCOUT_FR_noimage_placeholder.png */,
+				9D1D372A2007E18100A4FF53 /* SCOUT_logo.png */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -800,6 +827,7 @@
 		3A141A9718DB34AC00466AD3 = {
 			isa = PBXGroup;
 			children = (
+				9DB52C2E2005325A003833B9 /* TestFairy */,
 				557E037D1F797425005A32DB /* Images.xcassets */,
 				88E8C9771D1771980075AA03 /* Default-568h@2x.png */,
 				3A141AA918DB34AC00466AD3 /* NICS Mobile */,
@@ -822,6 +850,11 @@
 		3A141AA218DB34AC00466AD3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9DB52C2C20053160003833B9 /* OpenGLES.framework */,
+				9DB52C2A2005315A003833B9 /* SystemConfiguration.framework */,
+				9DB52C2820053153003833B9 /* AVFoundation.framework */,
+				9DB52C2620053149003833B9 /* CoreMotion.framework */,
+				9DB52C2420053142003833B9 /* CoreMedia.framework */,
 				559225911F3B9158004AD2E0 /* libCocoaSecurity.a */,
 				5528E7171F299DEB003EC8F7 /* libGoogle-Maps-iOS-Utils.a */,
 				01088D5C1AA0EA3F00BF42C6 /* XCTest.framework */,
@@ -1291,6 +1324,16 @@
 			path = QuadTree;
 			sourceTree = "<group>";
 		};
+		9DB52C2E2005325A003833B9 /* TestFairy */ = {
+			isa = PBXGroup;
+			children = (
+				9DB52C34200532C8003833B9 /* TestFairy.h */,
+				9DB52C35200532C8003833B9 /* upload-dsym.sh */,
+				9DB52C36200532C8003833B9 /* libTestFairy.a */,
+			);
+			name = TestFairy;
+			sourceTree = "<group>";
+		};
 		EC251F5879C1AFF1522B7704 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -1395,6 +1438,7 @@
 				3A70106F18E0C82100C3DC42 /* damagereport_schema.json in Resources */,
 				019BAC6D1C21BD99007067EE /* ColorPicker.xib in Resources */,
 				3A141AAE18DB34AC00466AD3 /* InfoPlist.strings in Resources */,
+				9D10B9FD2024DEF70035E1D2 /* SCOUT_FR_noimage_placeholder.png in Resources */,
 				3A3C9E5A18DB441300EEBA17 /* resourcerequest_schema.json in Resources */,
 				01F6AF6E1BE2A42700EED9B7 /* FormImageSelector.xib in Resources */,
 				01C8BE761BFE2FA200FF99B0 /* SymbolCell.xib in Resources */,
@@ -1414,7 +1458,9 @@
 				01582D911C29F8A000307C76 /* weatherreport_schema.json in Resources */,
 				3A3C9CF618DB403D00EEBA17 /* Main_iPad.storyboard in Resources */,
 				3A3C9E5B18DB441300EEBA17 /* tasking_schema.json in Resources */,
+				9D1D372B2007E18100A4FF53 /* SCOUT_logo.png in Resources */,
 				3A3C9E6818DB441300EEBA17 /* FormView.xib in Resources */,
+				9DB52C37200532C8003833B9 /* upload-dsym.sh in Resources */,
 				01D77CE51BB5C872008B38BB /* FormDamageInformation.xib in Resources */,
 				88E8C9781D1771980075AA03 /* Default-568h@2x.png in Resources */,
 				017A58DC1C0F948000E683F0 /* ReportInfoWindow.xib in Resources */,
@@ -1454,7 +1500,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		90A25395613B515F6166EFDF /* [CP] Embed Pods Frameworks */ = {
@@ -1866,6 +1912,7 @@
 					Mobile,
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/build/Debug-iphoneos",
+					"$(PROJECT_DIR)/TestFairySDK-1.12.1",
 				);
 				OTHER_LDFLAGS = (
 					"${inherited}",
@@ -1935,6 +1982,7 @@
 					Mobile,
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/build/Debug-iphoneos",
+					"$(PROJECT_DIR)/TestFairySDK-1.12.1",
 				);
 				OTHER_LDFLAGS = (
 					"${inherited}",

@@ -66,6 +66,7 @@
 
 + (void)SaveDraftButtonPressed:(NSString*)currentReport;
 + (void)AddButtonPressed:(NSString*)currentReport;
++ (void)SetEditButtonsVisible:(BOOL*)visible;
 + (void)CancelButtonPressed:(NSString*)currentReport;
 + (void)SubmitButtonPressed:(NSString*)currentReport;
 + (void)FilterButtonPressed:(NSString*)currentReport;

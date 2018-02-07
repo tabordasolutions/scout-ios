@@ -112,6 +112,12 @@ static UIButton *FilterButton;
      }
 }
 
++ (void)SetEditButtonsVisible:(BOOL)visible {
+	[SaveDraftButton setHidden:visible];
+	[CancelButton setHidden:visible];
+	[SubmitButton setHidden:visible];
+}
+
 + (void)CancelButtonPressed:(NSString*)currentReport{
     
     [SaveDraftButton setHidden:TRUE];
