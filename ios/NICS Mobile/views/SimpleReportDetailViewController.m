@@ -56,6 +56,7 @@
 - (void)configureView
 {
     [_imageView setImage:nil];
+	
     self.title = NSLocalizedString(@"Field Report",nil);
     _categoryView.options = [Enums simpleReportCategoriesList];
     [_categoryView setup];
@@ -95,7 +96,8 @@
     }
     
     // Update the user interface for the detail item.
-    if(_payload.id != nil) {
+    if(_payload.id != nil)
+    {
         _latitudeView.text = [_payload.messageData.latitude stringValue];
         _longitudeView.text = [_payload.messageData.longitude stringValue];
         [_categoryView getTextView].text = _payload.messageData.category;
@@ -108,7 +110,8 @@
 
         NSArray* splitImagePath = [_imagePath componentsSeparatedByString: @"/"];
 
-        if([splitImagePath[0] isEqualToString:@"assets-library:"]){    //if the fullpath is a locally cached image that wasn't from web (if report was a draft mainly)
+        if([splitImagePath[0] isEqualToString:@"assets-library:"])
+	   {    //if the fullpath is a locally cached image that wasn't from web (if report was a draft mainly)
             
             [_assetsLibrary assetForURL:[NSURL URLWithString:_imagePath] resultBlock:^(ALAsset *asset) {
                 _imageView.image = [UIImage imageWithCGImage:[[asset defaultRepresentation] fullResolutionImage]];
@@ -121,8 +124,11 @@
             }
              ];
 
-        }else if(splitImagePath[0] == nil){
-            if(_imagePath != nil){
+        }
+	   else if(splitImagePath[0] == nil)
+	   {
+            if(_imagePath != nil)
+		  {
                 
                 [_assetsLibrary assetForURL:[NSURL URLWithString:_imagePath] resultBlock:^(ALAsset *asset) {
                     _imageView.image = [UIImage imageWithCGImage:[[asset defaultRepresentation] fullResolutionImage]];
@@ -139,7 +145,9 @@
                 [_imageLoadingView setHidden:YES];
             }
             
-        }else{
+        }
+	   else
+	   {
 
             NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
             NSString *documentsPath = [paths objectAtIndex:0]; //Get the docs directory
@@ -172,7 +180,8 @@
         [_categoryView getTextView].text = [[Enums simpleReportCategoriesDictionary] objectForKey:[NSNumber numberWithInt:Empty]];
         [_imageLoadingView stopAnimating];
         [_imageLoadingView setHidden:YES];
-        
+	    _imagePath = @"";
+	    _payload.messageData.fullpath = @"";
         _latitudeView.text = @"";
         _longitudeView.text = @"";
         [_categoryView getTextView].text = @"";
@@ -446,7 +455,6 @@
     data.category = [_categoryView getTextView].text;
     data.image = @"";
     data.fullpath = @"";
-	NSLog(@"Hullo, about to check for FR image");
 
     if(_isImageSaved && _imagePath) {
 	    //LUIS NOTE: this doesn't run, so that's good

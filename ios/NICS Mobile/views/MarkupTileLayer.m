@@ -38,7 +38,6 @@
 -(MarkupTileLayer*) init
 {
 	self = [super init];
-	_threadNames = [[NSMutableArray alloc] init];
 	return self;
 }
 
@@ -162,46 +161,7 @@
 }
 
 -(void) requestTileForX:(NSUInteger)x y:(NSUInteger)y zoom:(NSUInteger)zoom receiver:(id<GMSTileReceiver>)receiver
-{
-	//==================================================================
-	//         Debug code to see how many threads are being used
-	//==================================================================
-	
-	NSString *threadName = [[NSThread currentThread] description];
-	
-	//Add a new thread to the list of threads
-	bool isNew = true;
-	for(NSString *s in _threadNames)
-	{
-		if(s != NULL && [s isEqualToString:threadName])
-		{
-			isNew = false;
-			break;
-		}
-	}
-	
-	if(isNew)
-	{
-		[_threadNames addObject:threadName];
-		//NSLog(@"New thread detected: %@\n",threadName);
-	}
-	
-	NSLog(@"Request tile for x ran on the %@ thread (X: %d, Y: %d, zoom: %d)\n",threadName,(int)x,(int)y,(int)zoom);
-	NSLog(@"Total unique threads: %d\n",(int)[_threadNames count]);
-	
-	
-	//Luis Notes:
-	// So the reason I debugged how many unique threads this method is called on above is that:
-	// On Android, the equivalent method of this is only called on a set specific threads (10 unique threads)
-	// On Android, each of these 10 threads has 1 image allocated at the app startup (technically at the first map render call)
-	// Hence, Android reuses 10 images over and over again for drawing ALL of the markup
-	// This is pretty efficient, and I wanted to check how threads are handled on iOS to see if this same optimization could be done on iOS
-	// Apparently, however, iOS calls this method on any number of threads (the unique thread count continues to rise the more tiles you cause to be drawn)
-	// Given this info, I'm not too sure how we might be able to use, say 10 UIImages, and reuse them over and over again, like on Android
-	// However, on-iOS-device testing should tell us whether this is even required or not... because the current set up (creating and caching many UIImages)
-	// might not even be that resource intensive (on-device testing is required to reach a conclusion)
-	
-	
+{	
 	//==================================================================
 	//               Setting up the tile image to draw
 	//==================================================================

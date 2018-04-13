@@ -87,6 +87,12 @@
 
 @property CGRect originalFrame;
 @property CGRect originalMapFrame;
+@property CGRect originalFrameLayer1;
+@property CGRect originalFrameLayer2;
+@property CGRect originalFrameLayer3;
+@property CGRect originalFrameLayer4;
+
+
 //@property UIButton *fullscreenButton;
 @property UIButton *extendMapButton;
 @property UIButton *gotoReportButton;

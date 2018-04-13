@@ -46,298 +46,353 @@ NSNotificationCenter *notificationCenter;
 @implementation OverviewViewControllerTablet
 - (void)viewWillAppear:(BOOL)animated
 {
-    [super viewWillAppear:animated];
+	[super viewWillAppear:animated];
 }
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
-
-    _dataManager = [DataManager getInstance];
-    [IncidentButtonBar SetOverview:self];
-    [_dataManager setOverviewController:self];
-    notificationCenter = [NSNotificationCenter defaultCenter];
-    _mapViewOriginalWidth = 580;
-    _chatViewOriginalWidth = 444;
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(SetPullTimersFromOptions) name:@"DidBecomeActive" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(startCollabLoadingSpinner) name:@"collabroomStartedLoading" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(stopCollabLoadingSpinner) name:@"collabroomFinishedLoading" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(expandMapView) name:@"expandMapView" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(contractMapview) name:@"contractMapView" object:nil];
-
-    [self SetPullTimersFromOptions];
-    
-    self.navigationItem.hidesBackButton = YES;
-    
-    [_dataManager.locationManager startUpdatingLocation];
-    
-    _incidentMenu = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Select Incident", nil) delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
-    _incidentMenu.tag = 50;
-    
-    NSArray *options = [[[_dataManager getIncidentsList] allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
-    
-    for( NSString *title in options)  {
-        [_incidentMenu addButtonWithTitle:title];
-    }
-    
-    [_incidentMenu addButtonWithTitle:@"Cancel"];
-    _incidentMenu.cancelButtonIndex = [options count];
-        
-    NSString *currentIncidentName = [_dataManager getActiveIncidentName];
-    if(currentIncidentName != nil){
-        _selectedIncident = [[_dataManager getIncidentsList] objectForKey:currentIncidentName];
-        if(_selectedIncident != nil){
-            [_dataManager requestCollabroomsForIncident:_selectedIncident];
-            _selectedIncident.collabrooms = [_dataManager getCollabroomPayloadArray];
-//            _selectedCollabroomList = _selectedIncident.collabrooms;
-        }
-        
-    }
-    
-    NSString *currentRoomName = [_dataManager getSelectedCollabroomName];
-    if(currentRoomName != nil){
-        for(CollabroomPayload *collabroomPayload in _selectedIncident.collabrooms) {
-            if([collabroomPayload.name isEqualToString:currentRoomName]){
-                _selectedCollabroom = collabroomPayload;
-                [_dataManager setSelectedCollabRoomId:collabroomPayload.collabRoomId  collabRoomName:collabroomPayload.name];
-            }
-        }
-    }
-    
-    if(_selectedIncident == nil) {
-        [_IncidentCanvas setHidden:TRUE];
-        [_selectIncidentButton setTitle:NSLocalizedString(@"Select Incident", nil) forState:UIControlStateNormal];
-        [_selectRoomButton setHidden:TRUE];
-        [_collabroomDownArrowImage setHidden:TRUE];
-        [_selectIncidentHelperLabel setHidden:false];
-    }else{
-        [_IncidentCanvas setHidden:FALSE];
-        [_selectRoomButton setHidden:FALSE];
-        [_collabroomDownArrowImage setHidden:FALSE];
-        [_selectIncidentHelperLabel setHidden:true];
-        [_selectIncidentButton setTitle:_selectedIncident.incidentname forState:UIControlStateNormal];
-        
-        NSNotification *IncidentSwitchedNotification = [NSNotification notificationWithName:@"IncidentSwitched" object:_selectedIncident.incidentname];
-        [notificationCenter postNotification:IncidentSwitchedNotification];
-        
-        [_dataManager requestSimpleReportsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings] intValue] immediate:YES];
-        [_dataManager requestDamageReportsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings] intValue] immediate:YES];
-        [_dataManager requestFieldReportsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings] intValue] immediate:YES];
-        [_dataManager requestResourceRequestsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings] intValue] immediate:YES];
-        [_dataManager requestMdtRepeatedEvery:[DataManager getMdtUpdateFrequencyFromSettings] immediate:YES];
-        [_dataManager requestWfsUpdateRepeatedEvery:[[DataManager getWfsUpdateFrequencyFromSettings] intValue] immediate:YES];
-        [_dataManager requestWeatherReportsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings] intValue] immediate:YES];
-    }
-    
-    if(_selectedCollabroom == nil){
-//        [_RoomCanvas setHidden:TRUE];
-        [_selectRoomButton setTitle:NSLocalizedString(@"Select Room", nil) forState:UIControlStateNormal];
-    }else{
-
-        [_dataManager setSelectedCollabRoomId:_selectedCollabroom.collabRoomId collabRoomName:_selectedCollabroom.name];
-        
-        NSString* incidentNameReplace = [_selectedIncident.incidentname stringByAppendingString:@"-"];
-        [_selectRoomButton setTitle:[_selectedCollabroom.name stringByReplacingOccurrencesOfString:incidentNameReplace withString:@""] forState:UIControlStateNormal]; forState:UIControlStateNormal;
-        
-        NSNotification *IncidentSwitchedNotification = [NSNotification notificationWithName:@"CollabRoomSwitched" object:_selectedIncident.incidentname];
-        [notificationCenter postNotification:IncidentSwitchedNotification];
-        
-        [_dataManager requestChatMessagesRepeatedEvery:[[DataManager getChatUpdateFrequencyFromSettings] intValue] immediate:YES];
-        [_dataManager requestMarkupFeaturesRepeatedEvery:[[DataManager getMapUpdateFrequencyFromSettings] intValue] immediate:YES];
-    }
+	[super viewDidLoad];
+	
+	_dataManager = [DataManager getInstance];
+	[IncidentButtonBar SetOverview:self];
+	[_dataManager setOverviewController:self];
+	notificationCenter = [NSNotificationCenter defaultCenter];
+	_mapViewOriginalWidth = 580;
+	_chatViewOriginalWidth = 444;
+	
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(SetPullTimersFromOptions) name:@"DidBecomeActive" object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(startCollabLoadingSpinner) name:@"collabroomStartedLoading" object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(stopCollabLoadingSpinner) name:@"collabroomFinishedLoading" object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(expandMapView) name:@"expandMapView" object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(contractMapview) name:@"contractMapView" object:nil];
+	
+	[self SetPullTimersFromOptions];
+	[[MultipartPostQueue getInstance] addCahcedReportsToSendQueue];
+	
+	
+	self.navigationItem.hidesBackButton = YES;
+	
+	[_dataManager.locationManager startUpdatingLocation];
+	
+	_incidentMenu = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Select Incident", nil) delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
+	_incidentMenu.tag = 50;
+	
+	NSArray *options = [[[_dataManager getIncidentsList] allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+	
+	for( NSString *title in options)  {
+		[_incidentMenu addButtonWithTitle:title];
+	}
+	
+	[_incidentMenu addButtonWithTitle:@"Cancel"];
+	_incidentMenu.cancelButtonIndex = [options count];
+	
+	NSString *currentIncidentName = [_dataManager getActiveIncidentName];
+	
+	// Make sure our current incident is in the list of incidents:
+	if(currentIncidentName != nil){
+		_selectedIncident = [[_dataManager getIncidentsList] objectForKey:currentIncidentName];
+		if(_selectedIncident == nil)
+		{
+			[_dataManager setActiveIncident:nil];
+			currentIncidentName = nil;
+		}
+	}
+	
+	if(currentIncidentName != nil){
+		_selectedIncident = [[_dataManager getIncidentsList] objectForKey:currentIncidentName];
+		if(_selectedIncident != nil){
+			[_dataManager requestCollabroomsForIncident:_selectedIncident];
+			_selectedIncident.collabrooms = [_dataManager getCollabroomPayloadArray];
+			//            _selectedCollabroomList = _selectedIncident.collabrooms;
+		}
+		
+	}
+	
+	NSString *currentRoomName = [_dataManager getSelectedCollabroomName];
+	if(currentRoomName != nil){
+		for(CollabroomPayload *collabroomPayload in _selectedIncident.collabrooms) {
+			if([collabroomPayload.name isEqualToString:currentRoomName]){
+				_selectedCollabroom = collabroomPayload;
+				[_dataManager setSelectedCollabRoomId:collabroomPayload.collabRoomId  collabRoomName:collabroomPayload.name];
+			}
+		}
+	}
+	
+	if(_selectedIncident == nil) {
+		[_IncidentCanvas setHidden:TRUE];
+		[_selectIncidentButton setTitle:NSLocalizedString(@"Select Incident", nil) forState:UIControlStateNormal];
+		[_selectRoomButton setHidden:TRUE];
+		[_collabroomDownArrowImage setHidden:TRUE];
+		[_selectIncidentHelperLabel setHidden:false];
+	}else{
+		[_IncidentCanvas setHidden:FALSE];
+		[_selectRoomButton setHidden:FALSE];
+		[_collabroomDownArrowImage setHidden:FALSE];
+		[_selectIncidentHelperLabel setHidden:true];
+		[_selectIncidentButton setTitle:_selectedIncident.incidentname forState:UIControlStateNormal];
+		
+		NSNotification *IncidentSwitchedNotification = [NSNotification notificationWithName:@"IncidentSwitched" object:_selectedIncident.incidentname];
+		[notificationCenter postNotification:IncidentSwitchedNotification];
+		
+		[_dataManager requestSimpleReportsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings] intValue] immediate:YES];
+		[_dataManager requestDamageReportsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings] intValue] immediate:YES];
+		[_dataManager requestFieldReportsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings] intValue] immediate:YES];
+		[_dataManager requestResourceRequestsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings] intValue] immediate:YES];
+		[_dataManager requestMdtRepeatedEvery:[DataManager getMdtUpdateFrequencyFromSettings] immediate:YES];
+		[_dataManager requestWfsUpdateRepeatedEvery:[[DataManager getWfsUpdateFrequencyFromSettings] intValue] immediate:YES];
+		[_dataManager requestWeatherReportsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings] intValue] immediate:YES];
+	}
+	
+	if(_selectedCollabroom == nil){
+		//        [_RoomCanvas setHidden:TRUE];
+		[_selectRoomButton setTitle:NSLocalizedString(@"Select Room", nil) forState:UIControlStateNormal];
+	}else{
+		
+		[_dataManager setSelectedCollabRoomId:_selectedCollabroom.collabRoomId collabRoomName:_selectedCollabroom.name];
+		
+		NSString* incidentNameReplace = [_selectedIncident.incidentname stringByAppendingString:@"-"];
+		[_selectRoomButton setTitle:[_selectedCollabroom.name stringByReplacingOccurrencesOfString:incidentNameReplace withString:@""] forState:UIControlStateNormal]; forState:UIControlStateNormal;
+		
+		NSNotification *IncidentSwitchedNotification = [NSNotification notificationWithName:@"CollabRoomSwitched" object:_selectedIncident.incidentname];
+		[notificationCenter postNotification:IncidentSwitchedNotification];
+		
+		[_dataManager requestChatMessagesRepeatedEvery:[[DataManager getChatUpdateFrequencyFromSettings] intValue] immediate:YES];
+		[_dataManager requestMarkupFeaturesRepeatedEvery:[[DataManager getMapUpdateFrequencyFromSettings] intValue] immediate:YES];
+	}
 }
 
 -(void)expandMapView {
-    CGFloat maxWidth = self.view.layer.frame.size.width;
-    self.mapViewWidth.constant = maxWidth;
-    self.chatViewWidth.constant = 0;
-    [self.view setNeedsLayout];
+	CGFloat maxWidth = self.view.layer.frame.size.width;
+	self.mapViewWidth.constant = maxWidth;
+	self.chatViewWidth.constant = 0;
+	[self.view setNeedsLayout];
 }
 
 -(void)contractMapview {
-    self.mapViewWidth.constant = _mapViewOriginalWidth;
-    self.chatViewWidth.constant = _chatViewOriginalWidth;
-    [self.view setNeedsLayout];
+	self.mapViewWidth.constant = _mapViewOriginalWidth;
+	self.chatViewWidth.constant = _chatViewOriginalWidth;
+	[self.view setNeedsLayout];
 }
 -(void)SetPullTimersFromOptions{
-    [_dataManager requestChatMessagesRepeatedEvery:[[DataManager getChatUpdateFrequencyFromSettings] intValue] immediate:NO];
-    [_dataManager requestSimpleReportsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings] intValue] immediate:NO];
-    [_dataManager requestDamageReportsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings] intValue] immediate:NO];
-    [_dataManager requestFieldReportsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings] intValue] immediate:NO];
-    [_dataManager requestResourceRequestsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings] intValue] immediate:NO];
-    [_dataManager requestMarkupFeaturesRepeatedEvery:[[DataManager getMapUpdateFrequencyFromSettings] intValue] immediate:NO];
-    [_dataManager requestMdtRepeatedEvery:[DataManager getMdtUpdateFrequencyFromSettings] immediate:NO];
-    [_dataManager requestWfsUpdateRepeatedEvery:[[DataManager getWfsUpdateFrequencyFromSettings] intValue] immediate:NO];
-    [_dataManager requestWeatherReportsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings] intValue] immediate:NO];
+	[_dataManager requestChatMessagesRepeatedEvery:[[DataManager getChatUpdateFrequencyFromSettings] intValue] immediate:NO];
+	[_dataManager requestSimpleReportsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings] intValue] immediate:NO];
+	[_dataManager requestDamageReportsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings] intValue] immediate:NO];
+	[_dataManager requestFieldReportsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings] intValue] immediate:NO];
+	[_dataManager requestResourceRequestsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings] intValue] immediate:NO];
+	[_dataManager requestMarkupFeaturesRepeatedEvery:[[DataManager getMapUpdateFrequencyFromSettings] intValue] immediate:NO];
+	[_dataManager requestMdtRepeatedEvery:[DataManager getMdtUpdateFrequencyFromSettings] immediate:NO];
+	[_dataManager requestWfsUpdateRepeatedEvery:[[DataManager getWfsUpdateFrequencyFromSettings] intValue] immediate:NO];
+	[_dataManager requestWeatherReportsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings] intValue] immediate:NO];
 }
 
 - (IBAction)selectIncidentButtonPressed:(UIButton *)button {
-    [_incidentMenu showInView:self.parentViewController.view];
+	[_incidentMenu showInView:self.parentViewController.view];
 }
 
 - (IBAction)selectRoomButtonPressed:(UIButton *)button {
-    
-     NSMutableDictionary *collabrooms = [NSMutableDictionary new];
-    
-    for(CollabroomPayload *collabroomPayload in _selectedIncident.collabrooms) {
-        [collabrooms setObject:collabroomPayload.collabRoomId forKey:collabroomPayload.name];
-    }
-    
-    if(_selectedIncident.collabrooms != nil) {
-        [_dataManager clearCollabRoomList];
-        
-        for(CollabroomPayload *payload in _selectedIncident.collabrooms) {
-            [_dataManager addCollabroom:payload];
-        }
-    }
-    
-    NSArray * sortedCollabrooms = [[collabrooms allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
-    
-    _collabroomMenu = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Select Room", nil) delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
-    
-    NSString *replaceString = @"";
-    replaceString = [_selectedIncident.incidentname stringByAppendingString:@"-"];
-    
-    for( NSString *title in sortedCollabrooms)  {
-        [_collabroomMenu addButtonWithTitle:[title stringByReplacingOccurrencesOfString:replaceString withString:@""]];
-    }
-    
-    [_collabroomMenu addButtonWithTitle:NSLocalizedString(@"Cancel", nil)];
-    _collabroomMenu.cancelButtonIndex = [sortedCollabrooms count];
-
-    
-    [_collabroomMenu showInView:self.parentViewController.view];
+	
+	NSMutableDictionary *collabrooms = [NSMutableDictionary new];
+	
+	for(CollabroomPayload *collabroomPayload in _selectedIncident.collabrooms) {
+		[collabrooms setObject:collabroomPayload.collabRoomId forKey:collabroomPayload.name];
+	}
+	
+	if(_selectedIncident.collabrooms != nil) {
+		[_dataManager clearCollabRoomList];
+		
+		for(CollabroomPayload *payload in _selectedIncident.collabrooms) {
+			[_dataManager addCollabroom:payload];
+		}
+	}
+	
+	NSArray * sortedCollabrooms = [[collabrooms allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+	
+	_collabroomMenu = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Select Room", nil) delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
+	
+	NSString *replaceString = @"";
+	replaceString = [_selectedIncident.incidentname stringByAppendingString:@"-"];
+	
+	for( NSString *title in sortedCollabrooms)  {
+		[_collabroomMenu addButtonWithTitle:[title stringByReplacingOccurrencesOfString:replaceString withString:@""]];
+	}
+	
+	[_collabroomMenu addButtonWithTitle:NSLocalizedString(@"Cancel", nil)];
+	_collabroomMenu.cancelButtonIndex = [sortedCollabrooms count];
+	
+	
+	[_collabroomMenu showInView:self.parentViewController.view];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-    [super viewWillDisappear:animated];
-    [_dataManager.locationManager stopUpdatingLocation];
+	[super viewWillDisappear:animated];
+	[_dataManager.locationManager stopUpdatingLocation];
 }
 
 //fix for ghosting effect on ios7
 - (void)willPresentActionSheet:(UIActionSheet *)actionSheet {
-    actionSheet.backgroundColor = [UIColor whiteColor];
-    for (UIView *subview in actionSheet.subviews) {
-        subview.backgroundColor = [UIColor whiteColor];
-    }
+	actionSheet.backgroundColor = [UIColor whiteColor];
+	for (UIView *subview in actionSheet.subviews) {
+		subview.backgroundColor = [UIColor whiteColor];
+	}
 }
 
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    NSString *replaceString = @"";
-    
-    if(actionSheet.tag == 50) {
-        if(buttonIndex != _incidentMenu.cancelButtonIndex) {
-
-            _selectedIncident = [[_dataManager getIncidentsList] objectForKey:[actionSheet buttonTitleAtIndex:buttonIndex]];
-
-            [_dataManager requestCollabroomsForIncident:_selectedIncident];
-             _selectedIncident.collabrooms = [_dataManager getCollabroomPayloadArray];
-            
-            [_dataManager setSelectedCollabRoomId:@-1 collabRoomName:@"N/A"];
-            _selectedCollabroom = nil;
-        }else{
-            replaceString = [_selectedIncident.incidentname stringByAppendingString:@"-"];
-        }
-    } else {
-        replaceString = [_selectedIncident.incidentname stringByAppendingString:@"-"];
-        if(buttonIndex != _collabroomMenu.cancelButtonIndex) {
-            
-            
-            NSString* selectedRoom = [actionSheet buttonTitleAtIndex:buttonIndex];
-            
-//            [replaceString stringByAppendingString:
-            
-            _selectedCollabroom = [[_dataManager getCollabroomList] objectForKey:[[_dataManager getCollabroomNamesList] objectForKey:selectedRoom]];
-            
-            [_selectRoomButton setHidden:false];
-            [_collabroomDownArrowImage setHidden:FALSE];
-        }
-    }
-    
-    NSNotification *IncidentSwitchedNotification = nil;
-    NSNotification *CollabRoomSwitchedNotification = nil;
-    
-    if(_selectedIncident != nil) {
-        [_dataManager setActiveIncident:_selectedIncident];
-        
-        [_dataManager requestSimpleReportsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings] intValue] immediate:YES];
-        [_dataManager requestDamageReportsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings] intValue] immediate:YES];
-        [_dataManager requestFieldReportsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings] intValue] immediate:YES];
-        [_dataManager requestResourceRequestsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings] intValue] immediate:YES];
-        [_dataManager requestMdtRepeatedEvery:[DataManager getMdtUpdateFrequencyFromSettings] immediate:YES];
-        [_dataManager requestWfsUpdateRepeatedEvery:[[DataManager getWfsUpdateFrequencyFromSettings] intValue] immediate:YES];
-        [_dataManager requestWeatherReportsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings] intValue] immediate:YES];
-        
-        [_selectIncidentButton setTitle:_selectedIncident.incidentname forState:UIControlStateNormal];
-        IncidentSwitchedNotification = [NSNotification notificationWithName:@"IncidentSwitched" object:_selectedIncident.incidentname];
-
-    } else {
-        [_selectIncidentButton setTitle:NSLocalizedString(@"Select Incident", nil) forState:UIControlStateNormal];
-        
-    }
-    
-    if(_selectedCollabroom != nil) {
-        [_dataManager setSelectedCollabRoomId:_selectedCollabroom.collabRoomId collabRoomName:_selectedCollabroom.name];
-        
-        [_dataManager requestChatMessagesRepeatedEvery:[[DataManager getChatUpdateFrequencyFromSettings] intValue] immediate:YES];
-        [_dataManager requestMarkupFeaturesRepeatedEvery:[[DataManager getMapUpdateFrequencyFromSettings] intValue] immediate:YES];
-        
-      //  [_selectRoomButton setTitle:_selectedCollabroom.name forState:UIControlStateNormal];
-        [_selectRoomButton setTitle:[_selectedCollabroom.name stringByReplacingOccurrencesOfString:replaceString withString:@""] forState:UIControlStateNormal];
-         CollabRoomSwitchedNotification = [NSNotification notificationWithName:@"CollabRoomSwitched" object:_selectedCollabroom.name ];
-        
-    } else {
-         [_selectRoomButton setTitle:NSLocalizedString(@"Select Room", nil) forState:UIControlStateNormal];
-    }
-    if(!_selectedIncident){
-        [_selectRoomButton setHidden:true];
-        [_collabroomDownArrowImage setHidden:TRUE];
-        [_selectIncidentHelperLabel setHidden:false];
-    }else{
-        [_selectRoomButton setHidden:false];
-        [_collabroomDownArrowImage setHidden:false];
-        [_IncidentCanvas setHidden:FALSE];
-        [_selectIncidentHelperLabel setHidden:true];
-    }
-    
-    if(IncidentSwitchedNotification!=nil){
-        [notificationCenter postNotification:IncidentSwitchedNotification];
-    }
-    if(CollabRoomSwitchedNotification!=nil){
-        [notificationCenter postNotification:CollabRoomSwitchedNotification];
-    }
+	NSString *replaceString = @"";
+	
+	if(actionSheet.tag == 50) {
+		if(buttonIndex != _incidentMenu.cancelButtonIndex) {
+			
+			_selectedIncident = [[_dataManager getIncidentsList] objectForKey:[actionSheet buttonTitleAtIndex:buttonIndex]];
+			
+			[_dataManager requestCollabroomsForIncident:_selectedIncident];
+			_selectedIncident.collabrooms = [_dataManager getCollabroomPayloadArray];
+			
+			[_dataManager setSelectedCollabRoomId:@-1 collabRoomName:@"N/A"];
+			_selectedCollabroom = nil;
+		}else{
+			replaceString = [_selectedIncident.incidentname stringByAppendingString:@"-"];
+		}
+	} else {
+		replaceString = [_selectedIncident.incidentname stringByAppendingString:@"-"];
+		if(buttonIndex != _collabroomMenu.cancelButtonIndex) {
+			
+			
+			NSString* selectedRoom = [actionSheet buttonTitleAtIndex:buttonIndex];
+			
+			//            [replaceString stringByAppendingString:
+			
+			_selectedCollabroom = [[_dataManager getCollabroomList] objectForKey:[[_dataManager getCollabroomNamesList] objectForKey:selectedRoom]];
+			
+			[_selectRoomButton setHidden:false];
+			[_collabroomDownArrowImage setHidden:FALSE];
+		}
+	}
+	
+	NSNotification *IncidentSwitchedNotification = nil;
+	NSNotification *CollabRoomSwitchedNotification = nil;
+	
+	if(_selectedIncident != nil) {
+		[_dataManager setActiveIncident:_selectedIncident];
+		
+		[_dataManager requestSimpleReportsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings] intValue] immediate:YES];
+		[_dataManager requestDamageReportsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings] intValue] immediate:YES];
+		[_dataManager requestFieldReportsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings] intValue] immediate:YES];
+		[_dataManager requestResourceRequestsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings] intValue] immediate:YES];
+		[_dataManager requestMdtRepeatedEvery:[DataManager getMdtUpdateFrequencyFromSettings] immediate:YES];
+		[_dataManager requestWfsUpdateRepeatedEvery:[[DataManager getWfsUpdateFrequencyFromSettings] intValue] immediate:YES];
+		[_dataManager requestWeatherReportsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings] intValue] immediate:YES];
+		
+		[_selectIncidentButton setTitle:_selectedIncident.incidentname forState:UIControlStateNormal];
+		IncidentSwitchedNotification = [NSNotification notificationWithName:@"IncidentSwitched" object:_selectedIncident.incidentname];
+		
+	} else {
+		[_selectIncidentButton setTitle:NSLocalizedString(@"Select Incident", nil) forState:UIControlStateNormal];
+		
+	}
+	
+	if(_selectedCollabroom != nil) {
+		[_dataManager setSelectedCollabRoomId:_selectedCollabroom.collabRoomId collabRoomName:_selectedCollabroom.name];
+		
+		[_dataManager requestChatMessagesRepeatedEvery:[[DataManager getChatUpdateFrequencyFromSettings] intValue] immediate:YES];
+		[_dataManager requestMarkupFeaturesRepeatedEvery:[[DataManager getMapUpdateFrequencyFromSettings] intValue] immediate:YES];
+		
+		//  [_selectRoomButton setTitle:_selectedCollabroom.name forState:UIControlStateNormal];
+		[_selectRoomButton setTitle:[_selectedCollabroom.name stringByReplacingOccurrencesOfString:replaceString withString:@""] forState:UIControlStateNormal];
+		CollabRoomSwitchedNotification = [NSNotification notificationWithName:@"CollabRoomSwitched" object:_selectedCollabroom.name ];
+		
+	} else {
+		[_selectRoomButton setTitle:NSLocalizedString(@"Select Room", nil) forState:UIControlStateNormal];
+	}
+	if(!_selectedIncident){
+		[_selectRoomButton setHidden:true];
+		[_collabroomDownArrowImage setHidden:TRUE];
+		[_selectIncidentHelperLabel setHidden:false];
+	}else{
+		[_selectRoomButton setHidden:false];
+		[_collabroomDownArrowImage setHidden:false];
+		[_IncidentCanvas setHidden:FALSE];
+		[_selectIncidentHelperLabel setHidden:true];
+	}
+	
+	if(IncidentSwitchedNotification!=nil){
+		[notificationCenter postNotification:IncidentSwitchedNotification];
+	}
+	if(CollabRoomSwitchedNotification!=nil){
+		[notificationCenter postNotification:CollabRoomSwitchedNotification];
+	}
 }
 
 - (IBAction)nicsHelpButtonPressed:(id)sender {
-    NSString *settingsBundle = [[NSBundle mainBundle] pathForResource:@"Settings" ofType:@"bundle"];
-    if(!settingsBundle) {
-        NSLog(@"Could not find Settings.bundle");
-    }
-    
-    NSDictionary *settings = [NSDictionary dictionaryWithContentsOfFile:[settingsBundle stringByAppendingPathComponent:@"Root.plist"]];
-    NSDictionary *preferences = [settings objectForKey:@"Keys"];
-    NSString *helpURLString = preferences[@"ScoutHelp"];
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:helpURLString]];
+	NSString *settingsBundle = [[NSBundle mainBundle] pathForResource:@"Settings" ofType:@"bundle"];
+	if(!settingsBundle) {
+		NSLog(@"Could not find Settings.bundle");
+	}
+	
+	NSDictionary *settings = [NSDictionary dictionaryWithContentsOfFile:[settingsBundle stringByAppendingPathComponent:@"Root.plist"]];
+	NSDictionary *preferences = [settings objectForKey:@"Keys"];
+	NSString *helpURLString = preferences[@"ScoutHelp"];
+	[[UIApplication sharedApplication] openURL:[NSURL URLWithString:helpURLString]];
 }
 
 -(void)startCollabLoadingSpinner{
-    dispatch_async(dispatch_get_main_queue(), ^(void) {
-        [_collabroomsLoadingIndicator startAnimating];
-    });
-    
+	dispatch_async(dispatch_get_main_queue(), ^(void) {
+		[_collabroomsLoadingIndicator startAnimating];
+	});
+	
 }
 
 -(void)stopCollabLoadingSpinner{
-    dispatch_async(dispatch_get_main_queue(), ^(void) {
-        [_collabroomsLoadingIndicator stopAnimating];
-        _selectedIncident.collabrooms = [_dataManager getCollabroomPayloadArray];
-    });
+	dispatch_async(dispatch_get_main_queue(), ^(void) {
+		[_collabroomsLoadingIndicator stopAnimating];
+		_selectedIncident.collabrooms = [_dataManager getCollabroomPayloadArray];
+	});
 }
 
 -(void)navigateBackToLoginScreen{
-    [self.navigationController popToRootViewControllerAnimated:YES];
+	[self.navigationController popToRootViewControllerAnimated:YES];
+}
+
+// This method is called when we receive a specific response code from the servser
+// indicating the the user has logged in on a different device
+// Thus, we want to notify the user and close the application.
+-(void) showDuplicateLoginWarning:(BOOL) fromFR{
+	
+	NSLog(@"USIDDEFECT, attempting to relogin with credentials: %@, %@",[_dataManager getUsername],[_dataManager getPassword]);
+	NSLog(@"USIDDEFECT, using the new method, the credentials are: %@, %@",_dataManager.curSessionUsername,_dataManager.curSessionPassword);
+	
+	NSString *title = @"Warning";
+	NSString *message = @"You have logged into SCOUT on a different device\nYou have been logged out of this session\nPlease click Re-Login to continue using SCOUT\nYour other session will be logged out if you Re-login on this device\nOR\nPress Okay to close the application";
+	
+	if(fromFR)
+		message = @"You have logged into SCOUT on a different device\nYou have been logged out of this session\nPlease click Re-Login to complete the Field Report submission\nYour other session will be logged out if you Re-login on this device\nOR\nPress Okay to close the application";
+	
+	
+	UIAlertController * alert= [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+	
+	UIAlertAction* reloginButton = [UIAlertAction actionWithTitle:@"Re-Login" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action){
+		//[RestClient logoutUser:[_dataManager getUsername]];
+		@try {
+			[RestClient loginUser:[_dataManager getUsername] password:[_dataManager getPassword] completion:^(BOOL successful, NSString* msg) {
+				// Upon completion:
+				NSLog(@"USIDDEFECT, Resume Sending Reports about to be called... this must be asynchronous:");
+				[[MultipartPostQueue getInstance] resumeSendingReports];
+			}];
+		}
+		@catch (NSException *e) {
+			NSLog(@"USIDDEFECT, caught exception: %@",e);
+		}
+		//FIXME: This won't work 100% of the time, password is only stored if "autoLogin" is true,
+	}];
+	
+	UIAlertAction* okayButton = [UIAlertAction actionWithTitle:@"Okay" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action){
+		exit(0);
+	}];
+	
+	[alert addAction: reloginButton];
+	[alert addAction:okayButton];
+	
+	[self presentViewController:alert animated:YES completion:nil];
 }
 
 @end

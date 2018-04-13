@@ -21,7 +21,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>6.3</string>
+	<string>6.6</string>
 	<key>LSApplicationCategoryType</key>
 	<string></string>
 	<key>LSRequiresIPhoneOS</key>
@@ -32,6 +32,10 @@
 	<string>Allows your team to know where you are through SCOUT</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Allows your team to know where you are through SCOUT</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Allows your team to know where you are through SCOUT</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Allows you to add images to your photo library</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Allows you to select and attach an image to a Field Report</string>
 	<key>UIBackgroundModes</key>

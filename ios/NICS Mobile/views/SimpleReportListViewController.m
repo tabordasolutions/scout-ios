@@ -209,9 +209,9 @@ NSInteger lastIndexSelected;
     } else if( index == -2){
         payload = [IncidentButtonBar GetGeneralMessageDetailView].payload;
     } else {
-        payload = [SimpleReportPayload new];
+		  payload = [[SimpleReportPayload alloc] init];
     }
-    
+	
     if (isEdit==false) {
         if([payload.isDraft isEqual: @1]) {
             [IncidentButtonBar GetGeneralMessageDetailView].hideEditControls = NO;

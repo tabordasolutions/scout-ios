@@ -55,6 +55,8 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *mapViewWidth;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *chatViewWidth;
 @property DataManager *dataManager;
+@property NSTimer *checkSessionIDValidityTimer;
+
 
 @property UIActionSheet *incidentMenu;
 @property UIActionSheet *collabroomMenu;
@@ -62,6 +64,7 @@
 @property IncidentPayload *selectedIncident;
 @property CollabroomPayload *selectedCollabroom;
 
+- (void)showDuplicateLoginWarning:(BOOL)fromFR;
 - (IBAction)selectIncidentButtonPressed:(UIButton *)button;
 - (IBAction)selectRoomButtonPressed:(UIButton *)button;
 - (IBAction)nicsHelpButtonPressed:(id)sender;

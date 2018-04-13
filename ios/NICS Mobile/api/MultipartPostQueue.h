@@ -40,12 +40,36 @@
 
 @interface MultipartPostQueue : NSObject  <NSURLConnectionDelegate, NSURLConnectionDataDelegate>
 
+// If we detect that the app's login is invalid, stop future report posts
+// until the login is valid again.
+@property bool postingStopped;
+
+// Repeatedly checks the server to verify that the current session ID is still active.
+@property NSTimer *checkSessionIDValidityTimer;
+-(void) checkSessionIDValidity;
+-(void) startCheckSessionIDValidityTimer;
+
+// Holds a list of user session IDs we have already found to be invalid,
+// so we don't prompt the user for the same invalid session twice
+@property NSMutableArray *invalidSessionsHandled;
+// Returns true if invalidUSIDsHandled contains usid
+// If not, adds the usid to the array and returns false
+-(BOOL) invalidSessionAlreadyHandled:(long)usid;
+
+
+
 +(id) getInstance;
 
 -(id) init;
+-(void) dealloc;
 - (void)postReport: (ReportPayload*) reportPayload;
 - (void)postSimpleReport: (SimpleReportPayload*) payload;
 -(void) postDamageReports: (DamageReportPayload*) payload;
+- (void) checkIfMessageAccepted;
+// Sends the next report in the queue
+- (void) sendRemainingReports;
+- (void) stopSendingReports;
+- (void) resumeSendingReports;
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response;
 - (void)connection:(NSURLConnection *)connection didSendBodyData:(NSInteger)bytesWritten totalBytesWritten:(NSInteger)totalBytesWritten
 totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite;

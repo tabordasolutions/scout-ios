@@ -189,7 +189,5 @@
 - (NSNumber *)getLastMarkupFeatureTimestampForCollabroomId: (NSNumber *) collabroomId;
 - (void) removeAllFeaturesInCollabroom:(NSNumber*)collabRoomId;
 
-
-
 - (BOOL)addPersonalLogMessage:(ChatPayload *) payload;
 @end

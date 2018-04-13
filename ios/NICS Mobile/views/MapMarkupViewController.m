@@ -33,6 +33,7 @@
 //
 
 #import "MapMarkupViewController.h"
+#import "RoomCanvasUIViewController.h"
 @class SimpleReportDetailViewController;
 @class DamageReportDetailViewController;
 
@@ -237,53 +238,194 @@ int mapZoomLevel = 6;
 //    }
 //}
 
--(void)ExtendMapDown{
-    
-    if(_originalMapFrame.size.height == 0){     //store original frame size first time map is extended
-        _originalMapFrame =_mapView.frame;
+// Returns cur offset by ofs.origin.y
+-(CGRect) offsetFrame:(CGRect)cur with:(CGRect)ofs
+{
+	float deltaY = ofs.origin.y;
+	// I don't need to manually do this, storyboard constraints should handle the
+	// origin appropriately
+	//cur.origin.y = deltaY;
+	cur.size.height -= deltaY;
+	return cur;
+}
+
+-(void) extendMapDowniPad{
+	// If the original map frame is not yet initialized, store all original layer frame sizes
+	if(_originalMapFrame.size.width == 0)
+	{
+		// Actual map
+		_originalMapFrame = _mapView.frame;
+		// Layer 1
+		_originalFrameLayer1 = [IncidentButtonBar GetOverview].RoomCanvas.frame;
+		// Layer 2
+		RoomCanvasUIViewController *roomCanvasViewCntlr = nil;
+		for(UIViewController *c in [IncidentButtonBar GetOverview].childViewControllers)
+		{
+			// Check if we found the RoomCanvasUIViewController object
+			// This should ALWAYS return a valid controller
+			if([c class] == [RoomCanvasUIViewController class])
+				roomCanvasViewCntlr = (RoomCanvasUIViewController*) c;
+		}
+		_originalFrameLayer2 = roomCanvasViewCntlr.view.frame;
+		// Layer 3
+		_originalFrameLayer3 = roomCanvasViewCntlr.RoomCanvas.frame;
+		// Layer 4
+		_originalFrameLayer4 = [IncidentButtonBar GetMapMarkupController].view.frame;
+	}
+	
+	
+	//disables autolayouts allowing me more control over its positions
+	_tableView.translatesAutoresizingMaskIntoConstraints = YES;
+	_mapView.translatesAutoresizingMaskIntoConstraints = YES;
+	_MapEditCanvas.translatesAutoresizingMaskIntoConstraints = YES;
+	
+	
+	[UIView beginAnimations: @"tableAnim" context: nil];
+	[UIView setAnimationBeginsFromCurrentState: NO];
+	[UIView setAnimationDuration: 0.35f];
+	
+	if(_mapView.frame.size.width > _originalMapFrame.size.width){
+		//=======================================================================================
+		// This code restores the map to its smaller size
+		//=======================================================================================
+		OverviewViewControllerTablet *overviewViewController = [IncidentButtonBar GetOverview];
+		// Showing the right pane
+		[overviewViewController.IncidentCanvas setHidden:false];
+		// Restoring the left pane
+		[overviewViewController.RoomCanvas setFrame:_originalFrameLayer1];
+		[overviewViewController.RoomCanvas setNeedsLayout];
+		// Restoring the RoomCanvasUIViewController
+		RoomCanvasUIViewController *roomCanvasViewCntlr = nil;
+		for(UIViewController *c in overviewViewController.childViewControllers)
+		{
+			// Check if we found the RoomCanvasUIViewController object
+			if([c class] == [RoomCanvasUIViewController class])
+				roomCanvasViewCntlr = (RoomCanvasUIViewController*) c;
+		}
+		[roomCanvasViewCntlr.view setFrame:_originalFrameLayer2];
+		[roomCanvasViewCntlr.view setNeedsLayout];
+		[roomCanvasViewCntlr.RoomCanvas setFrame:_originalFrameLayer3];
+		[roomCanvasViewCntlr.RoomCanvas setNeedsLayout];
+		// Finally, restoring the new frame of the actual map view:
+		MapMarkupViewController * mapViewCntlr = [IncidentButtonBar GetMapMarkupController];
+		[mapViewCntlr.view setFrame:_originalFrameLayer4];
+		[mapViewCntlr.view setNeedsLayout];
+		[_extendMapButton setImage:[UIImage imageNamed:@"down_arrow_icon.png"] forState:UIControlStateNormal];
+		// Showing the map edit button
+		[_editMapButton setHidden:false];
+		// Restoring the map frame
+		_mapView.frame = _originalMapFrame;
+	}else{
+		//=======================================================================================
+		// This code expands the map
+		//=======================================================================================
+		OverviewViewControllerTablet *overviewViewController = [IncidentButtonBar GetOverview];
+		CGRect fullscreenFrame = overviewViewController.view.frame;
+		fullscreenFrame.origin.x = 0;
+		fullscreenFrame.origin.y = 0;
+		// Hiding the right pane
+		[overviewViewController.IncidentCanvas setHidden:true];
+		// Expanding the left pane
+		[overviewViewController.RoomCanvas setFrame:fullscreenFrame];
+		[overviewViewController.RoomCanvas setNeedsLayout];
+		// Scaling up the RoomCanvasUIViewController
+		RoomCanvasUIViewController *roomCanvasViewCntlr = nil;
+		for(UIViewController *c in overviewViewController.childViewControllers)
+		{
+			// Check if we found the RoomCanvasUIViewController object
+			if([c class] == [RoomCanvasUIViewController class])
+				roomCanvasViewCntlr = (RoomCanvasUIViewController*) c;
+		}
+		[roomCanvasViewCntlr.view setFrame:fullscreenFrame];
+		[roomCanvasViewCntlr.view setNeedsLayout];
+		fullscreenFrame = [self offsetFrame:fullscreenFrame with:roomCanvasViewCntlr.RoomCanvas.frame];
+		[roomCanvasViewCntlr.RoomCanvas setFrame:fullscreenFrame];
+		[roomCanvasViewCntlr.RoomCanvas setNeedsLayout];
+		// Finally, setting the new frame of the actual map view:
+		MapMarkupViewController * mapViewCntlr = [IncidentButtonBar GetMapMarkupController];
+		[mapViewCntlr.view setFrame:fullscreenFrame];
+		[mapViewCntlr.view setNeedsLayout];
+		[_extendMapButton setImage:[UIImage imageNamed:@"up_arrow_icon.png"] forState:UIControlStateNormal];
+		
+		// Hiding the map edit button
+		[_editMapButton setHidden:true];
+		
+		// Assigning the new map frame:
+		_mapView.frame = fullscreenFrame;
+	}
+	
+	[UIView setAnimationDelegate:self];
+	[UIView setAnimationDidStopSelector:@selector(ToggleEditMapAnimationStopped)];
+	[UIView commitAnimations];
+}
+
+-(void) extendMapDowniPhone{
+	// If the original map frame is not yet initialized, store all original layer frame sizes
+	if(_originalMapFrame.size.width == 0)
+	{
+		// Actual map
+		_originalMapFrame = _mapView.frame;
+	}
+	
+	
+	//disables autolayouts allowing me more control over its positions
+	_tableView.translatesAutoresizingMaskIntoConstraints = YES;
+	_mapView.translatesAutoresizingMaskIntoConstraints = YES;
+	_MapEditCanvas.translatesAutoresizingMaskIntoConstraints = YES;
+	
+	
+	[UIView beginAnimations: @"tableAnim" context: nil];
+	[UIView setAnimationBeginsFromCurrentState: NO];
+	[UIView setAnimationDuration: 0.35f];
+	
+
+	
+	if(_mapView.frame.size.height > _originalMapFrame.size.height){
+		//=======================================================================================
+		// This code restores the map to its smaller size
+		//=======================================================================================
+		// Showing the map edit button
+		[_editMapButton setHidden:false];
+		// Restoring the map frame
+		_mapView.frame = _originalMapFrame;
+		// Setting the button to expand button
+		[_extendMapButton setImage:[UIImage imageNamed:@"down_arrow_icon.png"] forState:UIControlStateNormal];
+	}else{
+		//=======================================================================================
+		// This code expands the map
+		//=======================================================================================
+		// Getting the fullscreen map layout
+		MapMarkupViewController *mapMarkupViewCntlr = [IncidentButtonBar GetMapMarkupController];
+		CGRect fullscreenFrame = mapMarkupViewCntlr.view.frame;
+		fullscreenFrame.origin.x = 0;
+		fullscreenFrame.origin.y = 0;
+		// This is about right for what the map needs to be adjusted by
+		fullscreenFrame.size.height -= 60;
+		// Hiding the map edit button
+		[_editMapButton setHidden:true];
+		// Assigning the new map frame:
+		_mapView.frame = fullscreenFrame;
+		// Setting the button to restore button
+		[_extendMapButton setImage:[UIImage imageNamed:@"up_arrow_icon.png"] forState:UIControlStateNormal];
+	}
+	
+	[UIView setAnimationDelegate:self];
+	[UIView setAnimationDidStopSelector:@selector(ToggleEditMapAnimationStopped)];
+	[UIView commitAnimations];
+}
+
+-(void)ExtendMapDown
+{
+    if(_dataManager.isIpad)
+    {
+	    [self extendMapDowniPad];
+	    return;
     }
-    
-//    [UIView beginAnimations: @"anim" context: nil];
-//    [UIView setAnimationBeginsFromCurrentState: YES];
-//    [UIView setAnimationDuration: 0.35f];
-    
-    UIImage *image;
-    CGRect newFrame;
-
-    
-    if(_dataManager.isIpad){
-        if (_isExpanded == false) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"expandMapView" object:nil];
-            newFrame = CGRectMake(0, 0, 1024, 622);
-            _mapView.frame = newFrame;
-            image = [UIImage imageNamed:@"up_arrow_icon.png"];
-            _isExpanded = true;
-
-        } else {
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"contractMapView" object:nil];
-            _mapView.frame = _originalMapFrame;
-            image = [UIImage imageNamed:@"down_arrow_icon.png"];
-            _isExpanded = false;
-        }
-    } else {
-        if(_mapView.frame.size.height == _originalMapFrame.size.height)
-        {
-            newFrame = self.view.superview.frame;
-            newFrame.size.height -= self.view.frame.origin.y;
-            
-            _mapView.frame = newFrame;
-            image = [UIImage imageNamed:@"up_arrow_icon.png"];
-            
-        }else{
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"contractMapView" object:nil];
-            _mapView.frame = _originalMapFrame;
-            image = [UIImage imageNamed:@"down_arrow_icon.png"];
-        }
+    else
+    {
+	    [self extendMapDowniPhone];
+	    return;
     }
-
-    [_extendMapButton setImage:image forState:UIControlStateNormal];
-    [self.view setNeedsLayout];
-    //    [UIView commitAnimations];
 }
 
 -(void)ToggleEditMap{

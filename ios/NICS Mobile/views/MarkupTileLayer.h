@@ -45,8 +45,6 @@
 
 @interface MarkupTileLayer : GMSTileLayer
 
-@property NSMutableArray *threadNames;
-
 @property MarkupFirelineFeatures *firelinesMarkup;
 
 -(void) drawFirelineFeature:(MarkupFireline *)fireline withProjection:(MarkupTileProjection *)proj;

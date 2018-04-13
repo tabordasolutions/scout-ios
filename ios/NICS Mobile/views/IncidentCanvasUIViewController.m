@@ -59,12 +59,13 @@ UIStoryboard *currentStoryboard;
     _currentReport = nil;
     
     _ReportsMenu = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Feature Coming Soon",nil) delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
+	
     
     //[_ReportsMenu addButtonWithTitle:NSLocalizedString(@"Damage Report",nil)];
 //    [_ReportsMenu addButtonWithTitle:NSLocalizedString(@"Resource Request",nil)];
 //    [_ReportsMenu addButtonWithTitle:NSLocalizedString(@"Field Report",nil)];
     //[_ReportsMenu addButtonWithTitle:NSLocalizedString(@"Weather Report",nil)];
-    [_ReportsMenu addButtonWithTitle:NSLocalizedString(@"Cancel",nil)];
+    [_ReportsMenu addButtonWithTitle:NSLocalizedString(@"Dismiss",nil)];
     
     [IncidentButtonBar SetIncidentCanvasController:self];
     [IncidentButtonBar SetIncidentCanvas:_IncidentCanvas];
@@ -80,7 +81,7 @@ UIStoryboard *currentStoryboard;
     [[IncidentButtonBar GetCancelButton]setHidden:TRUE];
     [[IncidentButtonBar GetSubmitButton]setHidden:TRUE];
     [[IncidentButtonBar GetFilterButton]setHidden:TRUE];
-    
+	
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(SetCanvasToReportDetailView:) name:@"GotoReportDetailView" object:nil];
     
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(SetCanvasToGeneralMessage:) name:@"IncidentSwitched" object:nil];
@@ -96,18 +97,18 @@ UIStoryboard *currentStoryboard;
     enum ReportTypesMenu reportType = buttonIndex;
     
     switch (reportType) {
-        case DamageReport:
-            [self SetCanvasToDamageReport];
-            break;
+//        case DamageReport:
+//            [self SetCanvasToDamageReport];
+//            break;
 //        case ResourceRequest:
 //            [self SetCanvasToResourceRequest];
 //            break;
 //        case FieldReport:
 //            [self SetCanvasToFieldReport];
 //            break;
-        case WeatherReport:
-            [self SetCanvasToWeatherReport];
-            break;
+//        case WeatherReport:
+//            [self SetCanvasToWeatherReport];
+//            break;
         case Cancel:
             
             break;

@@ -90,6 +90,13 @@
 @property int CurrentMapType;
 @property NSString *currentCookieDomain;
 
+// Used to store this login session's username and password
+// just in case we need to log the user in again
+// (storing in the database will interfere with the
+// "Remember username" and "Automatically login" functionality)
+@property NSString *curSessionPassword;
+@property NSString *curSessionUsername;
+
 +(id) getInstance;
 
 -(void)AppHasBeenSuspended:(NSNotification*)_notification;
@@ -299,4 +306,6 @@
 
 -(void)setIsIpad:(BOOL)setting;
 -(BOOL)getIsIpad;
+-(BOOL)getIsIpad;
+
 @end

@@ -277,9 +277,7 @@
 }
 
 - (id) initWithFeature:(MarkupFeature*)feature
-{
-	NSLog(@"Fireline being created\n");
-	
+{	
 	//Creatig a list of CLLocationCoordinate2D
 	//======================================================
 	NSMutableArray *points = [feature getCLPointsArray];
@@ -303,8 +301,6 @@
 	_featurePoints = latLngPoints;
 	
 	[self calculateBBox];
-	
-	NSLog(@"Fireline finished being created\n");
 	
 	return self;
 }

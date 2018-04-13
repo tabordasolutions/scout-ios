@@ -69,6 +69,7 @@
 @property IncidentPayload *selectedIncident;
 @property CollabroomPayload *selectedCollabroom;
 
+- (void)showDuplicateLoginWarning:(BOOL)fromFR;
 - (IBAction)selectIncidentButtonPressed:(UIButton *)button;
 - (IBAction)selectRoomButtonPressed:(UIButton *)button;
 - (IBAction)ReportsButtonPressed:(id)sender;
