@@ -388,15 +388,21 @@ static NSNotificationCenter *notificationCenter;
 	{
 		activeConnectionReceiveResponse = RESPONSE_OK;
 	}
-	else if(statusCode == 401)//LUIS FIXME: replace this with whichever value indicates logout (will be 401 on the next production push)
+	else if(statusCode == 401)
 	{
+		// We don't know which session ID is invalid at this point, so:
+		// If we received a 401 status code, do a check for invalid Session ID
+		[self stopSendingReports];
+		[self checkSessionIDValidity:true];
+		
 		// If we have already detected that the session is invalid don't show a duplicate notification
-		//FIXME: how am I going to get the usid for this?
+		// Note: If we were able to get the usid from the failed field report, use this.
+		// For now, use the above code.
 		//if(![self invalidSessionAlreadyHandled:usid])
-		{
-			[(OverviewViewController*)[dataManager getOverviewController] showDuplicateLoginWarning:true];
-			[self stopSendingReports];
-		}
+		//{
+		//	[(OverviewViewController*)[dataManager getOverviewController] showDuplicateLoginWarning:true];
+		//	[self stopSendingReports];
+		//}
 		activeConnectionReceiveResponse = RESPONSE_FAIL;
 	}
 	else
@@ -491,7 +497,7 @@ totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite {
 }
 
 
--(void) checkSessionIDValidity{
+-(void) checkSessionIDValidity:(bool) fromFR {
 	NSLog(@"CheckSessionIDValidity called");
 	if(![dataManager isLoggedIn])
 	{
@@ -529,7 +535,6 @@ totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite {
 			// Message format is as follows:
 			//{“status”:200,“message”:“ok”,“activeSession”:false}
 			//activeSession is false when it's invalid, true when valid
-			
 			NSNumber *activeSession = [responseDictionary objectForKey:@"activeSession"];
 			
 			NSLog(@"Active Session: %@",activeSession);
@@ -545,9 +550,11 @@ totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite {
 			// Stop future polls:
 			//[_checkSessionIDValidityTimer invalidate];
 			//_checkSessionIDValidityTimer = nil;
-			//dispatch_async(dispatch_get_main_queue(), ^{
-			[(OverviewViewController*)[dataManager getOverviewController] showDuplicateLoginWarning:false];
-			//});
+			
+			// Run showing the dialog on the main thread
+			dispatch_async(dispatch_get_main_queue(), ^{
+				[(OverviewViewController*)[dataManager getOverviewController] showDuplicateLoginWarning:fromFR];
+			});
 			// Resume polling:
 			//[self startCheckSessionIDValidityTimer];
 		}
@@ -583,7 +590,8 @@ NSMutableArray *invalidSessionsHandled;
 -(void) startCheckSessionIDValidityTimer {
 	if(_checkSessionIDValidityTimer != nil)
 		[_checkSessionIDValidityTimer invalidate];
-	_checkSessionIDValidityTimer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(checkSessionIDValidity) userInfo:nil repeats:YES];
+	_checkSessionIDValidityTimer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(checkSessionIDValidity:)
+											userInfo:@{@"fromFR":@false} repeats:YES];
 }
 
 -(void) dealloc {

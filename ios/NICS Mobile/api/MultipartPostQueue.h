@@ -46,7 +46,7 @@
 
 // Repeatedly checks the server to verify that the current session ID is still active.
 @property NSTimer *checkSessionIDValidityTimer;
--(void) checkSessionIDValidity;
+-(void) checkSessionIDValidity:(bool) fromFR;
 -(void) startCheckSessionIDValidityTimer;
 
 // Holds a list of user session IDs we have already found to be invalid,
