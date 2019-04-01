@@ -1,4 +1,4 @@
-		/*|~^~|Copyright (c) 2008-2016, Massachusetts Institute of Technology (MIT)
+/*|~^~|Copyright (c) 2008-2016, Massachusetts Institute of Technology (MIT)
  |~^~|All rights reserved.
  |~^~|
  |~^~|Redistribution and use in source and binary forms, with or without
@@ -25,20 +25,35 @@
  |~^~|CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
  |~^~|OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  |~^~|OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\*/
+/**
+ *
+ */
+//
+//  ReportOnConditionActionViewController.h
+//  SCOUT Mobile
+//
 
-//
-//  main.m
-//  NICS Mobile
-//
-//
 
 #import <UIKit/UIKit.h>
+#import "AssetsLibrary/AssetsLibrary.h"
+#import "DataManager.h"
+#import "SimpleReportPayload.h"
+#import "FormSpinner.h"
+#import "Enums.h"
+#import "IncidentButtonBar.h"
 
-#import "AppDelegate.h"
 
-int main(int argc, char * argv[])
-{
-    @autoreleasepool {
-        return UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
-	}
-}
+@interface ReportOnConditionActionViewController : UIViewController <UISplitViewControllerDelegate, UITextFieldDelegate, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+
+@property DataManager *dataManager;
+
+
+@property (weak, nonatomic) IBOutlet UIButton *createRocButton;
+@property (weak, nonatomic) IBOutlet UIButton *viewRocButton;
+
+
+- (IBAction)createRocButtonPressed:(id)sender;
+- (IBAction)viewRocButtonPressed:(id)sender;
+
+
+@end

@@ -35,7 +35,6 @@
 #import "AppDelegate.h"
 #import "LoginViewController.h"
 #import "SCOUT_Mobile-Swift.h"
-#import "TestFairy.h"
 
 @implementation AppDelegate
 
@@ -64,7 +63,6 @@
     [[UINavigationBar appearance] setShadowImage:[UIImage imageNamed:@"navborder.png"]];
     
 //     _notificationCenter = [NSNotificationCenter defaultCenter];
-    [TestFairy begin:@"9be3472d2b1509cc2a84b37e3a33ac87cd64a790"];
 
     return YES;
 }

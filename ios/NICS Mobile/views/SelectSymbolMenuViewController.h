@@ -40,6 +40,7 @@
 
 @interface SelectSymbolMenuViewController : UIViewController<UICollectionViewDataSource,UICollectionViewDelegate>
 
+//@property (weak, nonatomic) IBOutlet UITabBar *tabBar; Luis's temp addition, will be attempting to flesh out adding tabs to the symbol controller.
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (nonatomic, strong) NSArray *imageRefArray;
 @property DataManager* dataManager;

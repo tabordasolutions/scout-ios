@@ -6,624 +6,654 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		BCE3DE68053C99B18AAD56BE1F98BD73 /* GoogleMaps */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 46921981F609C5BA3CB72EC4EA41299D /* Build configuration list for PBXAggregateTarget "GoogleMaps" */;
+			buildPhases = (
+			);
+			dependencies = (
+			);
+			name = GoogleMaps;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
-		009C79BE88C2F4C986644CD3E0B088C2 /* JSONModelClassProperty.h in Headers */ = {isa = PBXBuildFile; fileRef = 8C852A6CCE53F4A275E503CD49F9E867 /* JSONModelClassProperty.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		01B02E06AD0A34A2987F089B3490867D /* CollapseClickCell.h in Headers */ = {isa = PBXBuildFile; fileRef = FB6ED306A471CAD4BD62830E982EC7A4 /* CollapseClickCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		06697BBB6E6D73B5F021E6DACAC5DE45 /* JSONAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = D658326805FBC25EF0DE0A83F9CC746A /* JSONAPI.m */; };
-		0A539197F1612A9881DBE93BC55AE9CA /* CocoaSecurity-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = ADFBEDFDAC7D8E8099B61F0E76115CBC /* CocoaSecurity-dummy.m */; };
-		0B1C5725C7BE03D622114275D6FD6EFA /* JSONModelError.m in Sources */ = {isa = PBXBuildFile; fileRef = 78F8B21CA452F450A7E308CE57BC3C72 /* JSONModelError.m */; };
-		0CABC146B7AE68D57FFCADE2BE7043A5 /* CocoaSecurity-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 95AF8ED1204DB8BA8AC979152FC854D0 /* CocoaSecurity-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		0E24E0956D0AD1AD9DC3CEE8A8D47FF2 /* CollapseClickCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E22D70D0127FFFB2981DBF012E0C2DA5 /* CollapseClickCell.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
-		2150024ED7640F5769FB70FEA2E1C5A6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E34E90DE8A96D3056CB64E8A6D8B5A4 /* Foundation.framework */; };
-		22554065FA07F1BFE5308A685394CB12 /* FMDatabaseQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F2AEC87E0FA75F7C5E1B92D094F9697 /* FMDatabaseQueue.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		22E8DDC15C60479D518723353EBF54E8 /* CollapseClick-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FCBE6FB3A6A506F92C3514AB3EF6E32 /* CollapseClick-dummy.m */; };
-		2AFB0AFA2138181E162CD00669D87FE3 /* JSONModelError.h in Headers */ = {isa = PBXBuildFile; fileRef = A653CE621C58A00173F7BA14FDD892CD /* JSONModelError.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2F138C03D449BC3486872792FEB19749 /* SecureNSUserDefaults-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 390BCD6562D0FBCA3E2988A01AFCD2B3 /* SecureNSUserDefaults-dummy.m */; };
-		3225910BFC7AA409FDD6921EA5BA38A8 /* CollapseClickArrow.h in Headers */ = {isa = PBXBuildFile; fileRef = 6EDFAED6E0D0DFBEEFA2DB005E9593E9 /* CollapseClickArrow.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		36E344E5B627E04368ECC96338E17F26 /* JSONModel-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = E8C1333FDBDEA8B6E7F0AD1E4EB86CC5 /* JSONModel-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		37F097E2269EF1BD238AD7449D796445 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = CD699570A5F40A35DEE96CBE96E4AA58 /* FMDatabase.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
-		37F6913EE3CD6EB8715086F0C9F6A823 /* JSONValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = BE84173D000D711179EAB9BC98C31617 /* JSONValueTransformer.m */; };
-		37FD169854FF4B397051998D611F152A /* JSONModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 6A3B8960FB7D03DCC7B20467C34EF7D1 /* JSONModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3B4396017C3D99AA00794188F0894DCC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E34E90DE8A96D3056CB64E8A6D8B5A4 /* Foundation.framework */; };
-		3E43906B70EB01C06F3AE17008B853B9 /* FMResultSet.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BDA2943B08067A605438E7C9BC0905C /* FMResultSet.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3F6399CDC49AF89E741899D8B54C8D01 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E34E90DE8A96D3056CB64E8A6D8B5A4 /* Foundation.framework */; };
-		40A6216FC50B4540584DA1C45F98F9FD /* JSONModelClassProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F18FD423F7857C7E75FACFAAE1F8974 /* JSONModelClassProperty.m */; };
-		491E480A67AF391D1E291A962E0508D3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E34E90DE8A96D3056CB64E8A6D8B5A4 /* Foundation.framework */; };
-		4EB17293737C717D12298CFFE6A67514 /* JSONAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = D39010640250BAE0F9A298219C0446D8 /* JSONAPI.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		506F1BFC824DA8E5AD1A76E55CC84EEE /* CollapseClick-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 61EA8A9A3D7F0403B625DEE0A461F874 /* CollapseClick-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		57FE38F17C0EDD5CF73B2A084A17586E /* JSONHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 595A8C125E5E9A560B4C7197C6C1C458 /* JSONHTTPClient.m */; };
-		58388F773008AF671CE67FE1C902E6CB /* JSONKeyMapper.h in Headers */ = {isa = PBXBuildFile; fileRef = FC40E209054445CFF5031927A6FA7840 /* JSONKeyMapper.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		60296A4C6B701CA9D4946B5763CA34C5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E34E90DE8A96D3056CB64E8A6D8B5A4 /* Foundation.framework */; };
-		637ADA4D6C4BE8D59D55A01D065A3988 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30D459FA48CF0CE907C9F62AA72ABDD1 /* CoreGraphics.framework */; };
-		643BFA52021DEFE83A9F77073E1538DB /* NSUserDefaults+SecureAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA194725087C5A635B383AA2D146C5D /* NSUserDefaults+SecureAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		6CED11E855CD3D135B8FD3C31BCF1D5C /* CollapseClick.h in Headers */ = {isa = PBXBuildFile; fileRef = B1F410EDCEBAEAB357B7DC8706139F40 /* CollapseClick.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		6E32A677B82B7B51A7D96D5D326944A7 /* Pods-SCOUT Mobile-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 4201CE1CD5AC6B6E86293BA71586CB25 /* Pods-SCOUT Mobile-dummy.m */; };
-		6F5906B58272E07A0850248867562581 /* JSONModelLib.h in Headers */ = {isa = PBXBuildFile; fileRef = 55F6D3AC68CF39ACB6A56008076F0634 /* JSONModelLib.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		72563ADE99DC9E753B27D48B16AA3654 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E34E90DE8A96D3056CB64E8A6D8B5A4 /* Foundation.framework */; };
-		772785574BC1059C2913576CBFF3AD17 /* JSONKeyMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = C83437289E266D2B8C3F42C6E350E82C /* JSONKeyMapper.m */; };
-		7F66E5779B29E0BC17D565DAD7CDEC1B /* JSONHTTPClient.h in Headers */ = {isa = PBXBuildFile; fileRef = D7F5F3BF32858827A6C0D2D21727BC56 /* JSONHTTPClient.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		8060025235D93F30A5F10B412DD0822E /* JSONModel-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CDA91D750BC2585B7B10200021A74E7 /* JSONModel-dummy.m */; };
-		826340F6BC0FCD151778F80302F6B224 /* SecureNSUserDefaults-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = F19CA414D9BFBA01EDDA85A0F7945F66 /* SecureNSUserDefaults-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		8436B88A9D95EB840C84022CD613EFB0 /* Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = DCAF7E288009440B246C70D2004F2669 /* Base64.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
-		87ECA447DB887426665260651B7F147E /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = F9CFC668F2E952F7847513B86F01AFFF /* FMResultSet.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
-		96E70B43FC04BC99AED1BBD4FB1D7581 /* FMDB-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 670C9FFF5B17D027C9146114E284E657 /* FMDB-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		98F19C682AC68E9D2E2052F709F42AF9 /* JSONModel+networking.m in Sources */ = {isa = PBXBuildFile; fileRef = D658D1D8D19488E0E85E4CCD28E1ED77 /* JSONModel+networking.m */; };
-		99288A0F68F8B1D8F41EF8029C343E25 /* SWRevealViewController-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AB317BEF381FBB49C1863E2B252DE5F /* SWRevealViewController-dummy.m */; };
-		9B8D84996694C541CD3434386E0A081A /* FMDatabasePool.h in Headers */ = {isa = PBXBuildFile; fileRef = 6BFAFFAC42DFA259D0A92CEE625B16A9 /* FMDatabasePool.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		9C11A290C9C5866A185A54F1EC04E2BB /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = D314A2F5637268101BEF53DCB7A8E476 /* FMDatabaseAdditions.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
-		9F26252AF7780ADC5E4A4C86256DD57B /* CocoaSecurity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87377255E8EA79FA4349521ECF7A1FFA /* CocoaSecurity.framework */; };
-		A1B5D80A8998311B8C9043E6942925E6 /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BC8E20E402C310EF9E41F888CF57C46 /* FMDatabaseQueue.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
-		A548833BE5FAD40830428F36E77D0F52 /* FMDatabaseAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = B299493C46D54A40A46D64032545572B /* FMDatabaseAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		A5BC08E8A9629CE48ACA2C7C9050CA1D /* CocoaSecurity.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D58AFD13A453665154AD6D65E30ECF6 /* CocoaSecurity.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		B4C8B4E0340E6E95B0F8A05A05180CB7 /* Pods-SCOUT Mobile-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A330FE8E511B1DDC9784AA38A89BF10 /* Pods-SCOUT Mobile-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		BAD13AF4C9155D52D7C61A423523E1FC /* CollapseClickCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 36D912DACC6ED3A29135301D10AC99A5 /* CollapseClickCell.xib */; };
-		C308C48E9C57707306F8580AE37248B2 /* CocoaSecurity.m in Sources */ = {isa = PBXBuildFile; fileRef = 30BAEBE48525457087A07457A24620E3 /* CocoaSecurity.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
-		C605A44DF96E7FCACF7D6E37B62F795D /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = AFDD7EB35592B0B3320965832EFB35DA /* FMDatabasePool.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
-		CCB74062CE0F4B8E5B7483599BC398DA /* FMDB.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FF58AE723F1B0C285DB51D87B07E1F3 /* FMDB.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D0EEC70A67E9E4CF0FC24527AF1FB92F /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DCDBF07B3A12CB5FA5B0336F92522D2 /* SWRevealViewController.m */; };
-		D4E9B3DE75C23D365E255B6212CB1CB7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E34E90DE8A96D3056CB64E8A6D8B5A4 /* Foundation.framework */; };
-		D5991941DC41DDDDDACAE0B5D47A4639 /* FMDB-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 64C5CA2AFB1BCCB293125E180BF82B1A /* FMDB-dummy.m */; };
-		DEF1BFDEFBF561124DB14ACD88C75EC9 /* SWRevealViewController-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = F82D49A38596D5FD21DC5B38ADFF82FE /* SWRevealViewController-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		DFA0B0C7EC02135911CACDAFD38BE715 /* JSONValueTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = B8D7E8430AFEAB75FCB542C12874A862 /* JSONValueTransformer.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		E35C2CDC3D347E46BD0FE1D17980D27F /* NSUserDefaults+SecureAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FDF279FD127B25FF08458072AE4EABE /* NSUserDefaults+SecureAdditions.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
-		E39D9A942BCE728467A42C478816966F /* JSONModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3BFBE1C0B3F1638CB09F6FBA7F7B61 /* JSONModel.m */; };
-		E3C47E114E924D2F331F9A3F122AEE5C /* JSONModel+networking.h in Headers */ = {isa = PBXBuildFile; fileRef = 2666B5B42938E56E0F9A47EFB243C286 /* JSONModel+networking.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F0B89095C0344AF8186ED14C380E30EA /* SWRevealViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 4497020E5C196B23B12C6D6F60C07589 /* SWRevealViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F11FAB91014130EE233A3429439D38D7 /* FMDatabase.h in Headers */ = {isa = PBXBuildFile; fileRef = E6FD6E0F6FF896CF29BE52CFAE0A8324 /* FMDatabase.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F245E32EE95FB0FFA30D31A6D61C5703 /* CollapseClick.m in Sources */ = {isa = PBXBuildFile; fileRef = 34D4F3D78F8C54061F183DD65077F448 /* CollapseClick.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
-		F943D107D3A83729A7A53ED2097C5583 /* CollapseClickArrow.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A6FB5E640E6F3F7CD8D91984BBB286 /* CollapseClickArrow.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
-		F98F9A32C528DF55CE3902FC2295694C /* Base64.h in Headers */ = {isa = PBXBuildFile; fileRef = 5BAAF8FB651A667AB22B8251BC227FB7 /* Base64.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		03E28A9F8DFB3F6590C07AE69C5E259F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37C13221C8D77074706274A4F80509AF /* Foundation.framework */; };
+		0A6B94D8877C0E4AE9B1105AB2F58382 /* JSONHTTPClient.h in Headers */ = {isa = PBXBuildFile; fileRef = BD50EE013D57158B2FE621ADA3313D41 /* JSONHTTPClient.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0C35EA82ECB4A24D772C66EB076F7867 /* FMDB-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = DB2D4AB090D030FBF9C723EF6E29CAC6 /* FMDB-dummy.m */; };
+		0D514E9FF78BE2E4A3EADE22BA47A0E9 /* SWRevealViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 565EED87F8470A5E17A92A9BFD9B59F5 /* SWRevealViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0E57664DA577758F1E7BC9FC65A642A2 /* CollapseClick.m in Sources */ = {isa = PBXBuildFile; fileRef = A5279C4B91D205DEC4AA91F2818E0B08 /* CollapseClick.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		13FD7E9978D248653947138702052DD4 /* Pods-SCOUT Mobile-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F928ACC6CA5E74BC951EF56221F7D1F /* Pods-SCOUT Mobile-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		14CCD23742E942AABBABA67561CA9145 /* CollapseClickArrow.h in Headers */ = {isa = PBXBuildFile; fileRef = 6E9FA45388535CE8E247A223AA99349B /* CollapseClickArrow.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		166182C8F2677CCDCA3D83ECAB4FC46B /* SWRevealViewController-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 9ACDF081C602458009BA9CC126A20CB8 /* SWRevealViewController-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		17083E67C4AB71B4514765435F1CA1B2 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F89C51257A9486B47EF5AAECED7DA3C /* CoreGraphics.framework */; };
+		17DC99218F27A47B573FEE2BC3448664 /* CollapseClickCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F8C160E988C7F9B4E7B8C98D8970EB74 /* CollapseClickCell.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		18C617CEA0EA66D3C1EA6CDEF3FB772D /* JSONModelError.m in Sources */ = {isa = PBXBuildFile; fileRef = F21B1248C4AEFA4197ACD0E638B9B745 /* JSONModelError.m */; };
+		18DED879A43AF6014BB29A59F2AFFCF5 /* JSONAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EE47B71DCC73C9D9631B9A2156BD3BF /* JSONAPI.m */; };
+		1E9370EE28E664783F4E828B8F628FAD /* SecureNSUserDefaults-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = B75EFB5938DEFCA2CA6709CAC0255F6D /* SecureNSUserDefaults-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2693A09F9361C71EE9255CA97DE041C8 /* JSONModelLib.h in Headers */ = {isa = PBXBuildFile; fileRef = C14A680480F5CBEE405819F46D61CDF0 /* JSONModelLib.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2B4D77F2FD826654591CD889D75469A4 /* CollapseClickCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 12878EE173B9516C7776B7E57D52EEA5 /* CollapseClickCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2BC0F034FDD2774C3DDB9F33E45EFEFB /* FMResultSet.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FD3F1F4B3274B44C6DFDB0250ECF441 /* FMResultSet.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2E0A4DAF8AE4FD22D39602C21BAC87C9 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 17DD7FBE3C3FE3A5F2548F37B2F2DFB6 /* SWRevealViewController.m */; };
+		2FB551018B95C5F599F40F313299B36F /* JSONModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 4915494EFBAC41C7750BBE6D727E4C99 /* JSONModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3240050346D69005B6F574B924C9BE02 /* JSONModelError.h in Headers */ = {isa = PBXBuildFile; fileRef = 431A9DB6224F178DFA4C1D7445FD8A59 /* JSONModelError.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		343B75E1B98C0E4169A0CD82B05480F2 /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 13F37584393C431CA38B72725588051F /* FMDatabaseQueue.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		345ED7D1DE224E3C44BEFB66AA77444F /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 99191A6F59DE328FB84C72C8AF456D35 /* FMDatabase.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		39957C6B5E06033C91165949F6DACBE8 /* JSONModelClassProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A68C52B79AD024F63C2229D75431089 /* JSONModelClassProperty.m */; };
+		4801E147FF4F3083BB1322E9DE0E42EB /* CollapseClickArrow.m in Sources */ = {isa = PBXBuildFile; fileRef = 12D20BBB6DF10AC19D3EF0C48291A687 /* CollapseClickArrow.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		4C2E30B56688FB9D46995A05F45B5BCF /* FMDatabase.h in Headers */ = {isa = PBXBuildFile; fileRef = 497C62FF2C2861C6E00611CD61581068 /* FMDatabase.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C569AE953594E55936665354BEB167B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37C13221C8D77074706274A4F80509AF /* Foundation.framework */; };
+		52FEFCD66219FAFBBBC15711700EA857 /* NSUserDefaults+SecureAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = E8D376465267D06AE305F37F05ACF79C /* NSUserDefaults+SecureAdditions.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		572F99F6F961BD0D940F889E69F72505 /* JSONValueTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = FD042F921BCDBA535B4DFFBC56A86972 /* JSONValueTransformer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5DB12BE375EFF5FC1E61287C2703B740 /* CocoaSecurity-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = E15F4975F5B91B9F4B986AF05556EAB5 /* CocoaSecurity-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5DF5F208F028ADD43078F49D6FE4A193 /* NSUserDefaults+SecureAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 848C09D568EC9AB725DC533286EC18C7 /* NSUserDefaults+SecureAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6A94897DC397E75E76AE0DEC570656EF /* SecureNSUserDefaults-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 71C3376C63A061A6A87C9E11F8F8EC8F /* SecureNSUserDefaults-dummy.m */; };
+		6BA162F850CF5A59143AC3FE0D58CE32 /* FMDatabaseAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A34FC6A9285C08B21FCDBA1D3E28949 /* FMDatabaseAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6C8E02B97DE8D66E9BEBD7DBDA5CAFD5 /* SWRevealViewController-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D62E1E8C408A950D22CE48B2407AA79 /* SWRevealViewController-dummy.m */; };
+		6EA99DC2F76C3B925182E78E9A14F397 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37C13221C8D77074706274A4F80509AF /* Foundation.framework */; };
+		843A80393130C719092B84C3D0482B8B /* FMDatabasePool.h in Headers */ = {isa = PBXBuildFile; fileRef = 867745495AFD49CC4C887BC1030FF8EE /* FMDatabasePool.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		85F9D6C8ED4CE6F9B7F18F446E8AF1C9 /* Base64.h in Headers */ = {isa = PBXBuildFile; fileRef = 48E7594B807305CFC54B83238F4204D8 /* Base64.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		86F7DEDA53CC4284197D7AA63D97C5C0 /* JSONModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D25FD0F2525F57E482F3CAB05FDE2C9 /* JSONModel.m */; };
+		88D7AAC32BAFFE2A90E0EE04B2161405 /* JSONModel-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 290CBB5CBAB9F2F0E7E58A475E446133 /* JSONModel-dummy.m */; };
+		8C6D73DC7C46637B433D067F923D769F /* JSONModel+networking.h in Headers */ = {isa = PBXBuildFile; fileRef = 159D8E98E5AD4A95FA2BB0FEF3817FA9 /* JSONModel+networking.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		916ABA1C895A388692D81FB4B0C60A58 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37C13221C8D77074706274A4F80509AF /* Foundation.framework */; };
+		928F455C06E234439994F51C4028148C /* JSONAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = F9E43F4DC37C9CD8677E66D6D4A063B7 /* JSONAPI.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		996B680BD960FE963B9E8F0C24F86C3F /* CocoaSecurity.m in Sources */ = {isa = PBXBuildFile; fileRef = DE5E019DC5CCC2817D9131F3076BB073 /* CocoaSecurity.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		9E571E872949B6C830D2663949733F28 /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 9639A69790B98A66BD99C807F42839BA /* FMDatabasePool.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		A059BACEA4B9C7791864C87ED449E9E5 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 5100068F037B0174C1FBCC96E9420BDA /* FMResultSet.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		A0BF5B5587D4D122DF306FFD3388624E /* CollapseClick.h in Headers */ = {isa = PBXBuildFile; fileRef = BF3603C2DBF67A60CBF0C03FAB6831EB /* CollapseClick.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A34046A4A407F9A7648BE4F32B2116AE /* JSONHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D9C21CAE0DA7E2C14D165D35B581F71 /* JSONHTTPClient.m */; };
+		A5F46F78342925536A078C8D1450D4C4 /* JSONKeyMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 7899E9C17211E55F400BB8E50CA90D0D /* JSONKeyMapper.m */; };
+		A979464A9102AD305BD7CAB549ED5FC7 /* CocoaSecurity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61D7EFE1A31F9486CFCF22771B7EFEC4 /* CocoaSecurity.framework */; };
+		B2152E19444F3499F643E212D051F8D0 /* FMDatabaseQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = C5E6064732F21AB5E8E5824474C0227E /* FMDatabaseQueue.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B400E970D1455A8A2EC0A37E11010F43 /* Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B42F55534153381A93DAD18AB4C5517 /* Base64.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		B6951C17075260D557A6E7DD24901D1C /* CollapseClickCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A20D3576BA133E1E8D234340EBBC892B /* CollapseClickCell.xib */; };
+		C18CD3EFF89C2FB89FC3C3443AB79EF9 /* Pods-SCOUT Mobile-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B82BBB40EB81428608B83D742B64941 /* Pods-SCOUT Mobile-dummy.m */; };
+		C89161EDC21DBAF463122DB6EB2B892B /* JSONKeyMapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FEF34A0876749C8B8FD17C04BA60661 /* JSONKeyMapper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C9E04EFEBD94A1B64EE635C6210241F3 /* CollapseClick-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 1082BAEA6BB11420B02EED6DD23BF726 /* CollapseClick-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CD3801AA791ACB9CB63086117A83CEAA /* CocoaSecurity.h in Headers */ = {isa = PBXBuildFile; fileRef = E0685312A9F13883AEC85B956348493F /* CocoaSecurity.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CE5148AE62FCD0101D30528849A611A2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37C13221C8D77074706274A4F80509AF /* Foundation.framework */; };
+		CF3257200471000FE568EB93CE0124B4 /* JSONValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B0053606D8D065F6EC74FE19CB09A43 /* JSONValueTransformer.m */; };
+		E13BDD8B50C20836DEBA85F3C5A5C616 /* CollapseClick-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 811EC9556967F81C094A058CED4B2C76 /* CollapseClick-dummy.m */; };
+		E4B04D373304913E1AE0363271445CD5 /* CocoaSecurity-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 279D02168599B3D4C8682E44FA8394BC /* CocoaSecurity-dummy.m */; };
+		E517C10C6ECF0C0A53BBE8E458EB909A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37C13221C8D77074706274A4F80509AF /* Foundation.framework */; };
+		E66D539811EC51EEFB48B7CC0AFEB557 /* JSONModel-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 76225E3A0080F9A5C71D3EF97E107FCE /* JSONModel-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E7A30E51E8F1D20F2D97C515D1D87D27 /* FMDB.h in Headers */ = {isa = PBXBuildFile; fileRef = E279620E960D7503D453E48D908AC2A2 /* FMDB.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EBE4098D555B6DF8E362980173B9FFE4 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 657FA70994CA7D7787EBDDFAE5168CBE /* FMDatabaseAdditions.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		F20B46808E7B20CCDC347C8594647E07 /* FMDB-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A31AACBC09598ACDEF9906FBDE906C2 /* FMDB-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F64804BAF773CC4D35A660246BB6A095 /* JSONModel+networking.m in Sources */ = {isa = PBXBuildFile; fileRef = D11867AC1F3ECE157DF5350C2A1EA4E0 /* JSONModel+networking.m */; };
+		F9FA339AEBB9C358CD4D01C71229FF33 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37C13221C8D77074706274A4F80509AF /* Foundation.framework */; };
+		FDDF50A3B1AFF9B35B47003942F11B4B /* JSONModelClassProperty.h in Headers */ = {isa = PBXBuildFile; fileRef = C4EA9323FB21157D64A22D90F7C8F2BA /* JSONModelClassProperty.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		401ABB42430EA6FD205DE15FA2EF082E /* PBXContainerItemProxy */ = {
+		06E811C651E507C6C061AF69D5FC39F9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 1CE15060B0E33F7AE0A78865CFACF946;
-			remoteInfo = CocoaSecurity;
+			remoteGlobalIDString = 4A593A2B677B35A6AD6DE28BC08C5B88;
+			remoteInfo = SecureNSUserDefaults;
 		};
-		4FD5FBE19D7FA523CF4550E87AF07FBB /* PBXContainerItemProxy */ = {
+		44EB50A0414645660EBE97E604FA1F76 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = BDC3C19B91D2F34DA36C772B9BC23DD5;
-			remoteInfo = SWRevealViewController;
+			remoteGlobalIDString = BCE3DE68053C99B18AAD56BE1F98BD73;
+			remoteInfo = GoogleMaps;
 		};
-		61C1C741F209F4C2D4833C88036E1E26 /* PBXContainerItemProxy */ = {
+		456275925644F8AD6BD1AB1DB9685DDF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 1CE15060B0E33F7AE0A78865CFACF946;
-			remoteInfo = CocoaSecurity;
-		};
-		697AA9EB31E881ED236B32A8EBCAE128 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = DC3688684BF42A20A8998F31DDA51A49;
-			remoteInfo = JSONModel;
-		};
-		6F447C784FCC6715A1786393AB434F79 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 251BAD17812F7EBF6532EACF66F941C3;
-			remoteInfo = FMDB;
-		};
-		947A1DB9694252CDB3B6055613A393AB /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 4F44BF00E3F3FB997F6C1D89283D9ED9;
+			remoteGlobalIDString = 84220F94EEA988A618D87969315D84D1;
 			remoteInfo = CollapseClick;
 		};
-		F0FE7B7BC6F1F8D3B87E13F57E5A735A /* PBXContainerItemProxy */ = {
+		701DAE7033E873504A82112ABAFA43F5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 95DE580D9E64B43C3365C94DD1FD86E3;
-			remoteInfo = SecureNSUserDefaults;
+			remoteGlobalIDString = CB3199AAC71ADD23529E32042795605A;
+			remoteInfo = SWRevealViewController;
+		};
+		A1D7C6628451C3AF149632EA2983203D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9C130CD3AA849E8ADCC55D0BC8E1020E;
+			remoteInfo = FMDB;
+		};
+		B86AF4F4F1DF28C396B10B55BB671A0F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 27D7B882B974130567379695AF91909D;
+			remoteInfo = CocoaSecurity;
+		};
+		BD7E325DBC7FF7708C754F96B7F62907 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 56E3CD603D494DFF149452467882C294;
+			remoteInfo = JSONModel;
+		};
+		F8E1E073DBC4C05BF9665F8327CBAB8B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 27D7B882B974130567379695AF91909D;
+			remoteInfo = CocoaSecurity;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0858A5B4C6B77930BC55E15B4619686E /* Pods-SCOUT Mobile-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-SCOUT Mobile-frameworks.sh"; sourceTree = "<group>"; };
-		0A330FE8E511B1DDC9784AA38A89BF10 /* Pods-SCOUT Mobile-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-SCOUT Mobile-umbrella.h"; sourceTree = "<group>"; };
-		0BDA2943B08067A605438E7C9BC0905C /* FMResultSet.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FMResultSet.h; path = src/fmdb/FMResultSet.h; sourceTree = "<group>"; };
-		0FCBE6FB3A6A506F92C3514AB3EF6E32 /* CollapseClick-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "CollapseClick-dummy.m"; sourceTree = "<group>"; };
-		1BC8E20E402C310EF9E41F888CF57C46 /* FMDatabaseQueue.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FMDatabaseQueue.m; path = src/fmdb/FMDatabaseQueue.m; sourceTree = "<group>"; };
-		1C9799EFF063005FEFE303424CF477D4 /* CollapseClick.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = CollapseClick.framework; path = CollapseClick.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		201EFE64C5ABCCEFC2D19D603A0740CF /* FMDB-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "FMDB-prefix.pch"; sourceTree = "<group>"; };
-		2666B5B42938E56E0F9A47EFB243C286 /* JSONModel+networking.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "JSONModel+networking.h"; path = "JSONModel/JSONModelNetworking/JSONModel+networking.h"; sourceTree = "<group>"; };
-		2B198BD26441096AFF8B0849D23EE4A7 /* Pods-SCOUT Mobile-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-SCOUT Mobile-resources.sh"; sourceTree = "<group>"; };
-		2F18FD423F7857C7E75FACFAAE1F8974 /* JSONModelClassProperty.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = JSONModelClassProperty.m; path = JSONModel/JSONModel/JSONModelClassProperty.m; sourceTree = "<group>"; };
-		30BAEBE48525457087A07457A24620E3 /* CocoaSecurity.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = CocoaSecurity.m; path = CocoaSecurity/CocoaSecurity.m; sourceTree = "<group>"; };
-		30D459FA48CF0CE907C9F62AA72ABDD1 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
-		34D4F3D78F8C54061F183DD65077F448 /* CollapseClick.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = CollapseClick.m; path = CollapseClick/CollapseClick.m; sourceTree = "<group>"; };
-		36D912DACC6ED3A29135301D10AC99A5 /* CollapseClickCell.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; name = CollapseClickCell.xib; path = CollapseClick/CollapseClickCell.xib; sourceTree = "<group>"; };
-		390BCD6562D0FBCA3E2988A01AFCD2B3 /* SecureNSUserDefaults-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SecureNSUserDefaults-dummy.m"; sourceTree = "<group>"; };
-		3CDA91D750BC2585B7B10200021A74E7 /* JSONModel-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "JSONModel-dummy.m"; sourceTree = "<group>"; };
-		3E9E47C20C1AE6BB779D96182803EA35 /* SWRevealViewController-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SWRevealViewController-prefix.pch"; sourceTree = "<group>"; };
-		3EAB641207FC6F60076C0456C3CEEB91 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		40CF8643DBB7A174AE4BC27248F4A4BC /* CocoaSecurity.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = CocoaSecurity.modulemap; sourceTree = "<group>"; };
-		41A6FB5E640E6F3F7CD8D91984BBB286 /* CollapseClickArrow.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = CollapseClickArrow.m; path = CollapseClick/CollapseClickArrow.m; sourceTree = "<group>"; };
-		4201CE1CD5AC6B6E86293BA71586CB25 /* Pods-SCOUT Mobile-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-SCOUT Mobile-dummy.m"; sourceTree = "<group>"; };
-		4349FEE04ABF2AC9A3217DD037C71713 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4497020E5C196B23B12C6D6F60C07589 /* SWRevealViewController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SWRevealViewController.h; path = SWRevealViewController/SWRevealViewController.h; sourceTree = "<group>"; };
-		4A3BFBE1C0B3F1638CB09F6FBA7F7B61 /* JSONModel.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = JSONModel.m; path = JSONModel/JSONModel/JSONModel.m; sourceTree = "<group>"; };
-		4B9E7991EBDF1B22984F49BA4E38C87D /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4D58AFD13A453665154AD6D65E30ECF6 /* CocoaSecurity.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CocoaSecurity.h; path = CocoaSecurity/CocoaSecurity.h; sourceTree = "<group>"; };
-		4F2AEC87E0FA75F7C5E1B92D094F9697 /* FMDatabaseQueue.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FMDatabaseQueue.h; path = src/fmdb/FMDatabaseQueue.h; sourceTree = "<group>"; };
-		4FF58AE723F1B0C285DB51D87B07E1F3 /* FMDB.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FMDB.h; path = src/fmdb/FMDB.h; sourceTree = "<group>"; };
-		516893042D431E413B13F52166C4F14B /* CollapseClick.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = CollapseClick.xcconfig; sourceTree = "<group>"; };
-		532BEAD1FFA3913D00306736A70D51BE /* CocoaSecurity-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "CocoaSecurity-prefix.pch"; sourceTree = "<group>"; };
-		54E9E6D8E1C101616B9F295493923417 /* JSONModel.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = JSONModel.xcconfig; sourceTree = "<group>"; };
-		55F6D3AC68CF39ACB6A56008076F0634 /* JSONModelLib.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = JSONModelLib.h; path = JSONModel/JSONModelLib.h; sourceTree = "<group>"; };
-		595A8C125E5E9A560B4C7197C6C1C458 /* JSONHTTPClient.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = JSONHTTPClient.m; path = JSONModel/JSONModelNetworking/JSONHTTPClient.m; sourceTree = "<group>"; };
-		5BAAF8FB651A667AB22B8251BC227FB7 /* Base64.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Base64.h; path = submodules/Base64/Base64/Base64.h; sourceTree = "<group>"; };
-		61EA8A9A3D7F0403B625DEE0A461F874 /* CollapseClick-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "CollapseClick-umbrella.h"; sourceTree = "<group>"; };
-		64C5CA2AFB1BCCB293125E180BF82B1A /* FMDB-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "FMDB-dummy.m"; sourceTree = "<group>"; };
-		662D82A359CE9A0766B7AEF21ADA1BEB /* CollapseClick-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "CollapseClick-prefix.pch"; sourceTree = "<group>"; };
-		670C9FFF5B17D027C9146114E284E657 /* FMDB-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "FMDB-umbrella.h"; sourceTree = "<group>"; };
-		6A3B8960FB7D03DCC7B20467C34EF7D1 /* JSONModel.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = JSONModel.h; path = JSONModel/JSONModel/JSONModel.h; sourceTree = "<group>"; };
-		6AE475689C8228585C833F67F8C1C634 /* FMDB.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = FMDB.framework; path = FMDB.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		6BFAFFAC42DFA259D0A92CEE625B16A9 /* FMDatabasePool.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FMDatabasePool.h; path = src/fmdb/FMDatabasePool.h; sourceTree = "<group>"; };
-		6E1E3A338B4FEBB17678AEFA04F40042 /* Pods_SCOUT_Mobile.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_SCOUT_Mobile.framework; path = "Pods-SCOUT Mobile.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
-		6E34E90DE8A96D3056CB64E8A6D8B5A4 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		6EC98B47285AA07518F947482B791CD8 /* CocoaSecurity.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = CocoaSecurity.xcconfig; sourceTree = "<group>"; };
-		6EDFAED6E0D0DFBEEFA2DB005E9593E9 /* CollapseClickArrow.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CollapseClickArrow.h; path = CollapseClick/CollapseClickArrow.h; sourceTree = "<group>"; };
-		6FDAE6267F3362A38858CC6C9BD1F042 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		78F8B21CA452F450A7E308CE57BC3C72 /* JSONModelError.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = JSONModelError.m; path = JSONModel/JSONModel/JSONModelError.m; sourceTree = "<group>"; };
-		7DCDBF07B3A12CB5FA5B0336F92522D2 /* SWRevealViewController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SWRevealViewController.m; path = SWRevealViewController/SWRevealViewController.m; sourceTree = "<group>"; };
-		7E9B0CE625CFD86704868F43787D3315 /* GoogleMapsBase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMapsBase.framework; path = Base/Frameworks/GoogleMapsBase.framework; sourceTree = "<group>"; };
-		7FDF279FD127B25FF08458072AE4EABE /* NSUserDefaults+SecureAdditions.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSUserDefaults+SecureAdditions.m"; path = "SecureNSUserDefaults/SecureNSUserDefaults/NSUserDefaults+SecureAdditions.m"; sourceTree = "<group>"; };
-		825054FA575CAFA8D1ED66BA42001109 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		8431B817F6819D6DAE50C901601C2D32 /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMaps.framework; path = Maps/Frameworks/GoogleMaps.framework; sourceTree = "<group>"; };
-		87377255E8EA79FA4349521ECF7A1FFA /* CocoaSecurity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CocoaSecurity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		881801284458EF9DF669C6CACC95BD7E /* JSONModel.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = JSONModel.modulemap; sourceTree = "<group>"; };
-		8C852A6CCE53F4A275E503CD49F9E867 /* JSONModelClassProperty.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = JSONModelClassProperty.h; path = JSONModel/JSONModel/JSONModelClassProperty.h; sourceTree = "<group>"; };
-		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		95AF8ED1204DB8BA8AC979152FC854D0 /* CocoaSecurity-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "CocoaSecurity-umbrella.h"; sourceTree = "<group>"; };
-		9653FB623EED973388F62F33CDF774E0 /* SecureNSUserDefaults.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = SecureNSUserDefaults.modulemap; sourceTree = "<group>"; };
-		983141D8359AF28BC563451AA886EF3E /* SecureNSUserDefaults.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SecureNSUserDefaults.framework; path = SecureNSUserDefaults.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		9AB317BEF381FBB49C1863E2B252DE5F /* SWRevealViewController-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SWRevealViewController-dummy.m"; sourceTree = "<group>"; };
-		9F6994B8F3B1F18B59E657A18CE3F102 /* SWRevealViewController.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SWRevealViewController.xcconfig; sourceTree = "<group>"; };
-		A0BA09A90B5A2DB94ED98F0765BEB979 /* CollapseClick.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = CollapseClick.modulemap; sourceTree = "<group>"; };
-		A3D539597DA5FEA204155EE09D2BAD26 /* JSONModel.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = JSONModel.framework; path = JSONModel.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		A653CE621C58A00173F7BA14FDD892CD /* JSONModelError.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = JSONModelError.h; path = JSONModel/JSONModel/JSONModelError.h; sourceTree = "<group>"; };
-		ADFBEDFDAC7D8E8099B61F0E76115CBC /* CocoaSecurity-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "CocoaSecurity-dummy.m"; sourceTree = "<group>"; };
-		AFDD7EB35592B0B3320965832EFB35DA /* FMDatabasePool.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FMDatabasePool.m; path = src/fmdb/FMDatabasePool.m; sourceTree = "<group>"; };
-		B05EF90EDCC9A06F4165B6F4CB68F8A7 /* SWRevealViewController.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SWRevealViewController.framework; path = SWRevealViewController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		B1F410EDCEBAEAB357B7DC8706139F40 /* CollapseClick.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CollapseClick.h; path = CollapseClick/CollapseClick.h; sourceTree = "<group>"; };
-		B299493C46D54A40A46D64032545572B /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FMDatabaseAdditions.h; path = src/fmdb/FMDatabaseAdditions.h; sourceTree = "<group>"; };
-		B54971E6366677157278085DB350E5DA /* JSONModel-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "JSONModel-prefix.pch"; sourceTree = "<group>"; };
-		B8D7E8430AFEAB75FCB542C12874A862 /* JSONValueTransformer.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = JSONValueTransformer.h; path = JSONModel/JSONModelTransformations/JSONValueTransformer.h; sourceTree = "<group>"; };
-		B91863EF76450890AAF6416707FA7BC2 /* Pods-SCOUT Mobile.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-SCOUT Mobile.modulemap"; sourceTree = "<group>"; };
-		BE84173D000D711179EAB9BC98C31617 /* JSONValueTransformer.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = JSONValueTransformer.m; path = JSONModel/JSONModelTransformations/JSONValueTransformer.m; sourceTree = "<group>"; };
-		BFC0B29B76CF5A7DDA1EB8ACB91B96DA /* SecureNSUserDefaults-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SecureNSUserDefaults-prefix.pch"; sourceTree = "<group>"; };
-		C27264F45AC35666B5D46D0D1E9B8A15 /* SecureNSUserDefaults.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SecureNSUserDefaults.xcconfig; sourceTree = "<group>"; };
-		C55067F1A0531DFDAC5CB68556A100F6 /* Pods-SCOUT Mobile-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-SCOUT Mobile-acknowledgements.plist"; sourceTree = "<group>"; };
-		C83437289E266D2B8C3F42C6E350E82C /* JSONKeyMapper.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = JSONKeyMapper.m; path = JSONModel/JSONModelTransformations/JSONKeyMapper.m; sourceTree = "<group>"; };
-		CC497402C16EF570570664C4F6F51684 /* SWRevealViewController.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = SWRevealViewController.modulemap; sourceTree = "<group>"; };
-		CD699570A5F40A35DEE96CBE96E4AA58 /* FMDatabase.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FMDatabase.m; path = src/fmdb/FMDatabase.m; sourceTree = "<group>"; };
-		CE1E9CD1DAC04BF6E5CC9CECBE8E5F06 /* Pods-SCOUT Mobile-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-SCOUT Mobile-acknowledgements.markdown"; sourceTree = "<group>"; };
-		D314A2F5637268101BEF53DCB7A8E476 /* FMDatabaseAdditions.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FMDatabaseAdditions.m; path = src/fmdb/FMDatabaseAdditions.m; sourceTree = "<group>"; };
-		D39010640250BAE0F9A298219C0446D8 /* JSONAPI.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = JSONAPI.h; path = JSONModel/JSONModelNetworking/JSONAPI.h; sourceTree = "<group>"; };
-		D658326805FBC25EF0DE0A83F9CC746A /* JSONAPI.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = JSONAPI.m; path = JSONModel/JSONModelNetworking/JSONAPI.m; sourceTree = "<group>"; };
-		D658D1D8D19488E0E85E4CCD28E1ED77 /* JSONModel+networking.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "JSONModel+networking.m"; path = "JSONModel/JSONModelNetworking/JSONModel+networking.m"; sourceTree = "<group>"; };
-		D7261A150F228E4FB825A0E044876150 /* FMDB.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = FMDB.modulemap; sourceTree = "<group>"; };
-		D7F5F3BF32858827A6C0D2D21727BC56 /* JSONHTTPClient.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = JSONHTTPClient.h; path = JSONModel/JSONModelNetworking/JSONHTTPClient.h; sourceTree = "<group>"; };
-		DAB6D60ABF7BF7A1883AD88698563FF4 /* GoogleMapsCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMapsCore.framework; path = Maps/Frameworks/GoogleMapsCore.framework; sourceTree = "<group>"; };
-		DBA194725087C5A635B383AA2D146C5D /* NSUserDefaults+SecureAdditions.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSUserDefaults+SecureAdditions.h"; path = "SecureNSUserDefaults/SecureNSUserDefaults/NSUserDefaults+SecureAdditions.h"; sourceTree = "<group>"; };
-		DCAF7E288009440B246C70D2004F2669 /* Base64.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = Base64.m; path = submodules/Base64/Base64/Base64.m; sourceTree = "<group>"; };
-		DE32AC83164AEDA6244F5E0DFD4331BD /* CocoaSecurity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = CocoaSecurity.framework; path = CocoaSecurity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		E09BD5CC10C64ED90EDFE1B7A57EF6B9 /* GoogleMaps.bundle */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.plug-in"; name = GoogleMaps.bundle; path = Maps/Frameworks/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle; sourceTree = "<group>"; };
-		E22D70D0127FFFB2981DBF012E0C2DA5 /* CollapseClickCell.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = CollapseClickCell.m; path = CollapseClick/CollapseClickCell.m; sourceTree = "<group>"; };
-		E3A0C50EFE37C6188EAC8EEC06FF6A65 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E5568F42410F4E7D519E8D3AF9E7E9FC /* Pods-SCOUT Mobile.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SCOUT Mobile.release.xcconfig"; sourceTree = "<group>"; };
-		E6FD6E0F6FF896CF29BE52CFAE0A8324 /* FMDatabase.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FMDatabase.h; path = src/fmdb/FMDatabase.h; sourceTree = "<group>"; };
-		E71235B478C85D39D3A2157264B8E194 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E8C1333FDBDEA8B6E7F0AD1E4EB86CC5 /* JSONModel-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "JSONModel-umbrella.h"; sourceTree = "<group>"; };
-		F176CEF301C10501E86A8B7B3F9FAE3B /* FMDB.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = FMDB.xcconfig; sourceTree = "<group>"; };
-		F19CA414D9BFBA01EDDA85A0F7945F66 /* SecureNSUserDefaults-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SecureNSUserDefaults-umbrella.h"; sourceTree = "<group>"; };
-		F82D49A38596D5FD21DC5B38ADFF82FE /* SWRevealViewController-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SWRevealViewController-umbrella.h"; sourceTree = "<group>"; };
-		F9CFC668F2E952F7847513B86F01AFFF /* FMResultSet.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FMResultSet.m; path = src/fmdb/FMResultSet.m; sourceTree = "<group>"; };
-		FB6ED306A471CAD4BD62830E982EC7A4 /* CollapseClickCell.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CollapseClickCell.h; path = CollapseClick/CollapseClickCell.h; sourceTree = "<group>"; };
-		FB96814D12C94ED6EB4E084FF54AF91B /* Pods-SCOUT Mobile.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SCOUT Mobile.debug.xcconfig"; sourceTree = "<group>"; };
-		FC40E209054445CFF5031927A6FA7840 /* JSONKeyMapper.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = JSONKeyMapper.h; path = JSONModel/JSONModelTransformations/JSONKeyMapper.h; sourceTree = "<group>"; };
+		00BCE0B14D7F359660B8FE5B071FA095 /* JSONModel.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = JSONModel.framework; path = JSONModel.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0A0B5DCCF6EFD1161BCFB2F37014FA23 /* JSONModel-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "JSONModel-Info.plist"; sourceTree = "<group>"; };
+		0B42F55534153381A93DAD18AB4C5517 /* Base64.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = Base64.m; path = submodules/Base64/Base64/Base64.m; sourceTree = "<group>"; };
+		0FEF34A0876749C8B8FD17C04BA60661 /* JSONKeyMapper.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = JSONKeyMapper.h; path = JSONModel/JSONModelTransformations/JSONKeyMapper.h; sourceTree = "<group>"; };
+		1082BAEA6BB11420B02EED6DD23BF726 /* CollapseClick-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "CollapseClick-umbrella.h"; sourceTree = "<group>"; };
+		12878EE173B9516C7776B7E57D52EEA5 /* CollapseClickCell.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CollapseClickCell.h; path = CollapseClick/CollapseClickCell.h; sourceTree = "<group>"; };
+		12D20BBB6DF10AC19D3EF0C48291A687 /* CollapseClickArrow.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = CollapseClickArrow.m; path = CollapseClick/CollapseClickArrow.m; sourceTree = "<group>"; };
+		135D440CE483C936B81DE8CAC74F8CC6 /* CocoaSecurity-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "CocoaSecurity-Info.plist"; sourceTree = "<group>"; };
+		13F37584393C431CA38B72725588051F /* FMDatabaseQueue.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FMDatabaseQueue.m; path = src/fmdb/FMDatabaseQueue.m; sourceTree = "<group>"; };
+		159D8E98E5AD4A95FA2BB0FEF3817FA9 /* JSONModel+networking.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "JSONModel+networking.h"; path = "JSONModel/JSONModelNetworking/JSONModel+networking.h"; sourceTree = "<group>"; };
+		17DD7FBE3C3FE3A5F2548F37B2F2DFB6 /* SWRevealViewController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SWRevealViewController.m; path = SWRevealViewController/SWRevealViewController.m; sourceTree = "<group>"; };
+		279D02168599B3D4C8682E44FA8394BC /* CocoaSecurity-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "CocoaSecurity-dummy.m"; sourceTree = "<group>"; };
+		290CBB5CBAB9F2F0E7E58A475E446133 /* JSONModel-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "JSONModel-dummy.m"; sourceTree = "<group>"; };
+		2B0053606D8D065F6EC74FE19CB09A43 /* JSONValueTransformer.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = JSONValueTransformer.m; path = JSONModel/JSONModelTransformations/JSONValueTransformer.m; sourceTree = "<group>"; };
+		351BD8DE7543FC9609BB1ECBE8214FAC /* CocoaSecurity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = CocoaSecurity.framework; path = CocoaSecurity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		37C13221C8D77074706274A4F80509AF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		3A31AACBC09598ACDEF9906FBDE906C2 /* FMDB-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "FMDB-umbrella.h"; sourceTree = "<group>"; };
+		3A68C52B79AD024F63C2229D75431089 /* JSONModelClassProperty.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = JSONModelClassProperty.m; path = JSONModel/JSONModel/JSONModelClassProperty.m; sourceTree = "<group>"; };
+		3E2704E519B7DAAAE3ED065CFC0A6338 /* GoogleMapsCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMapsCore.framework; path = Maps/Frameworks/GoogleMapsCore.framework; sourceTree = "<group>"; };
+		431A9DB6224F178DFA4C1D7445FD8A59 /* JSONModelError.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = JSONModelError.h; path = JSONModel/JSONModel/JSONModelError.h; sourceTree = "<group>"; };
+		4479D9B8C9D177C644EFECEA561CDF32 /* Pods-SCOUT Mobile.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SCOUT Mobile.release.xcconfig"; sourceTree = "<group>"; };
+		48E7594B807305CFC54B83238F4204D8 /* Base64.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Base64.h; path = submodules/Base64/Base64/Base64.h; sourceTree = "<group>"; };
+		4915494EFBAC41C7750BBE6D727E4C99 /* JSONModel.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = JSONModel.h; path = JSONModel/JSONModel/JSONModel.h; sourceTree = "<group>"; };
+		497C62FF2C2861C6E00611CD61581068 /* FMDatabase.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FMDatabase.h; path = src/fmdb/FMDatabase.h; sourceTree = "<group>"; };
+		4BBBA96AF99450E1C0DF037654CC5C24 /* CocoaSecurity.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = CocoaSecurity.xcconfig; sourceTree = "<group>"; };
+		4F89C51257A9486B47EF5AAECED7DA3C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.0.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
+		5100068F037B0174C1FBCC96E9420BDA /* FMResultSet.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FMResultSet.m; path = src/fmdb/FMResultSet.m; sourceTree = "<group>"; };
+		512363AC306E82154DBDBCD1993D052C /* GoogleMaps.bundle */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.plug-in"; name = GoogleMaps.bundle; path = Maps/Frameworks/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle; sourceTree = "<group>"; };
+		541192439EFB0C9D28BD38F56628DB59 /* SecureNSUserDefaults-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SecureNSUserDefaults-prefix.pch"; sourceTree = "<group>"; };
+		565EED87F8470A5E17A92A9BFD9B59F5 /* SWRevealViewController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SWRevealViewController.h; path = SWRevealViewController/SWRevealViewController.h; sourceTree = "<group>"; };
+		579DE781A032AFB13991F5747CA9B333 /* SWRevealViewController-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "SWRevealViewController-Info.plist"; sourceTree = "<group>"; };
+		5964BA0D7F5B533E1348C0F9A908D61E /* JSONModel.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = JSONModel.xcconfig; sourceTree = "<group>"; };
+		5A523806752CF217330E37E8849829F0 /* Pods-SCOUT Mobile-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-SCOUT Mobile-acknowledgements.markdown"; sourceTree = "<group>"; };
+		5B82BBB40EB81428608B83D742B64941 /* Pods-SCOUT Mobile-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-SCOUT Mobile-dummy.m"; sourceTree = "<group>"; };
+		5DB0E5DA0DFA96E81015077973A6B8B4 /* SecureNSUserDefaults.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = SecureNSUserDefaults.modulemap; sourceTree = "<group>"; };
+		5ED017CE429225233DBEBF27488E3461 /* JSONModel-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "JSONModel-prefix.pch"; sourceTree = "<group>"; };
+		5FD3F1F4B3274B44C6DFDB0250ECF441 /* FMResultSet.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FMResultSet.h; path = src/fmdb/FMResultSet.h; sourceTree = "<group>"; };
+		6060303E3CEEDC6AC3BBA44D3C75B766 /* FMDB.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = FMDB.framework; path = FMDB.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		61D7EFE1A31F9486CFCF22771B7EFEC4 /* CocoaSecurity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CocoaSecurity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		657FA70994CA7D7787EBDDFAE5168CBE /* FMDatabaseAdditions.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FMDatabaseAdditions.m; path = src/fmdb/FMDatabaseAdditions.m; sourceTree = "<group>"; };
+		6D25FD0F2525F57E482F3CAB05FDE2C9 /* JSONModel.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = JSONModel.m; path = JSONModel/JSONModel/JSONModel.m; sourceTree = "<group>"; };
+		6E9FA45388535CE8E247A223AA99349B /* CollapseClickArrow.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CollapseClickArrow.h; path = CollapseClick/CollapseClickArrow.h; sourceTree = "<group>"; };
+		7027D6EFC0AC800F5B368C4F0F9A9E2F /* CocoaSecurity-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "CocoaSecurity-prefix.pch"; sourceTree = "<group>"; };
+		71C3376C63A061A6A87C9E11F8F8EC8F /* SecureNSUserDefaults-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SecureNSUserDefaults-dummy.m"; sourceTree = "<group>"; };
+		76225E3A0080F9A5C71D3EF97E107FCE /* JSONModel-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "JSONModel-umbrella.h"; sourceTree = "<group>"; };
+		7899E9C17211E55F400BB8E50CA90D0D /* JSONKeyMapper.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = JSONKeyMapper.m; path = JSONModel/JSONModelTransformations/JSONKeyMapper.m; sourceTree = "<group>"; };
+		7C3374BF55775589D58B913AC0A68265 /* JSONModel.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = JSONModel.modulemap; sourceTree = "<group>"; };
+		7D54D70CF9A6BC5941DEC9041CEDA011 /* FMDB-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "FMDB-prefix.pch"; sourceTree = "<group>"; };
+		7D9C21CAE0DA7E2C14D165D35B581F71 /* JSONHTTPClient.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = JSONHTTPClient.m; path = JSONModel/JSONModelNetworking/JSONHTTPClient.m; sourceTree = "<group>"; };
+		7E27D2DF35C9A355E8EF460D4E34BBD8 /* FMDB.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = FMDB.modulemap; sourceTree = "<group>"; };
+		7F928ACC6CA5E74BC951EF56221F7D1F /* Pods-SCOUT Mobile-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-SCOUT Mobile-umbrella.h"; sourceTree = "<group>"; };
+		8000BABF0BC78514CC4E74E950196E96 /* SWRevealViewController.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = SWRevealViewController.modulemap; sourceTree = "<group>"; };
+		808F31561392C098BE793711BE7115D2 /* SWRevealViewController.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SWRevealViewController.framework; path = SWRevealViewController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		811EC9556967F81C094A058CED4B2C76 /* CollapseClick-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "CollapseClick-dummy.m"; sourceTree = "<group>"; };
+		848C09D568EC9AB725DC533286EC18C7 /* NSUserDefaults+SecureAdditions.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSUserDefaults+SecureAdditions.h"; path = "SecureNSUserDefaults/SecureNSUserDefaults/NSUserDefaults+SecureAdditions.h"; sourceTree = "<group>"; };
+		867745495AFD49CC4C887BC1030FF8EE /* FMDatabasePool.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FMDatabasePool.h; path = src/fmdb/FMDatabasePool.h; sourceTree = "<group>"; };
+		86D001DA1A68A73455E158F9EE8732FE /* SecureNSUserDefaults.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SecureNSUserDefaults.framework; path = SecureNSUserDefaults.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8EE47B71DCC73C9D9631B9A2156BD3BF /* JSONAPI.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = JSONAPI.m; path = JSONModel/JSONModelNetworking/JSONAPI.m; sourceTree = "<group>"; };
+		90359F9ACD3DC1A0D60BE6B673C39775 /* Pods-SCOUT Mobile-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-SCOUT Mobile-acknowledgements.plist"; sourceTree = "<group>"; };
+		9639A69790B98A66BD99C807F42839BA /* FMDatabasePool.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FMDatabasePool.m; path = src/fmdb/FMDatabasePool.m; sourceTree = "<group>"; };
+		978845A36A3D13DD4CE3076C475AA792 /* FMDB-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "FMDB-Info.plist"; sourceTree = "<group>"; };
+		99191A6F59DE328FB84C72C8AF456D35 /* FMDatabase.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FMDatabase.m; path = src/fmdb/FMDatabase.m; sourceTree = "<group>"; };
+		9A34FC6A9285C08B21FCDBA1D3E28949 /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FMDatabaseAdditions.h; path = src/fmdb/FMDatabaseAdditions.h; sourceTree = "<group>"; };
+		9ACDF081C602458009BA9CC126A20CB8 /* SWRevealViewController-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SWRevealViewController-umbrella.h"; sourceTree = "<group>"; };
+		9D62E1E8C408A950D22CE48B2407AA79 /* SWRevealViewController-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SWRevealViewController-dummy.m"; sourceTree = "<group>"; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		A20D3576BA133E1E8D234340EBBC892B /* CollapseClickCell.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; name = CollapseClickCell.xib; path = CollapseClick/CollapseClickCell.xib; sourceTree = "<group>"; };
+		A5279C4B91D205DEC4AA91F2818E0B08 /* CollapseClick.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = CollapseClick.m; path = CollapseClick/CollapseClick.m; sourceTree = "<group>"; };
+		A7820F17DB93BC4499A6B26652A44AE5 /* Pods_SCOUT_Mobile.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_SCOUT_Mobile.framework; path = "Pods-SCOUT Mobile.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AF33FE90F69B035381872E7FC905E765 /* GoogleMapsBase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMapsBase.framework; path = Base/Frameworks/GoogleMapsBase.framework; sourceTree = "<group>"; };
+		B75EFB5938DEFCA2CA6709CAC0255F6D /* SecureNSUserDefaults-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SecureNSUserDefaults-umbrella.h"; sourceTree = "<group>"; };
+		BBD1CDA927F5243123D43F81E4A01E6E /* Pods-SCOUT Mobile-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-SCOUT Mobile-frameworks.sh"; sourceTree = "<group>"; };
+		BD50EE013D57158B2FE621ADA3313D41 /* JSONHTTPClient.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = JSONHTTPClient.h; path = JSONModel/JSONModelNetworking/JSONHTTPClient.h; sourceTree = "<group>"; };
+		BF3603C2DBF67A60CBF0C03FAB6831EB /* CollapseClick.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CollapseClick.h; path = CollapseClick/CollapseClick.h; sourceTree = "<group>"; };
+		BFBDFCC94F5B5E249F00365552A6C9A7 /* SecureNSUserDefaults.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SecureNSUserDefaults.xcconfig; sourceTree = "<group>"; };
+		C14A680480F5CBEE405819F46D61CDF0 /* JSONModelLib.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = JSONModelLib.h; path = JSONModel/JSONModelLib.h; sourceTree = "<group>"; };
+		C1A6DDA2C194EDBCDFC85744C6D015E4 /* CollapseClick.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = CollapseClick.modulemap; sourceTree = "<group>"; };
+		C4EA9323FB21157D64A22D90F7C8F2BA /* JSONModelClassProperty.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = JSONModelClassProperty.h; path = JSONModel/JSONModel/JSONModelClassProperty.h; sourceTree = "<group>"; };
+		C5288214496915EEC1ABF329BEEF3489 /* SWRevealViewController.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SWRevealViewController.xcconfig; sourceTree = "<group>"; };
+		C5E6064732F21AB5E8E5824474C0227E /* FMDatabaseQueue.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FMDatabaseQueue.h; path = src/fmdb/FMDatabaseQueue.h; sourceTree = "<group>"; };
+		CE151307A00AC2B062D01BC5F97FB85A /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMaps.framework; path = Maps/Frameworks/GoogleMaps.framework; sourceTree = "<group>"; };
+		D11867AC1F3ECE157DF5350C2A1EA4E0 /* JSONModel+networking.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "JSONModel+networking.m"; path = "JSONModel/JSONModelNetworking/JSONModel+networking.m"; sourceTree = "<group>"; };
+		D12189F4BAF026444BC33F61BCB97814 /* CollapseClick.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = CollapseClick.framework; path = CollapseClick.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D782244D176BEB2059C4F26832421302 /* GoogleMaps.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = GoogleMaps.xcconfig; sourceTree = "<group>"; };
+		DA8DE0FA43E9BDC2143B74DD591DC8EB /* CocoaSecurity.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = CocoaSecurity.modulemap; sourceTree = "<group>"; };
+		DB2D4AB090D030FBF9C723EF6E29CAC6 /* FMDB-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "FMDB-dummy.m"; sourceTree = "<group>"; };
+		DC0F77BAE6D9AA8253E52B1D61E5DCB3 /* Pods-SCOUT Mobile-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-SCOUT Mobile-Info.plist"; sourceTree = "<group>"; };
+		DE5E019DC5CCC2817D9131F3076BB073 /* CocoaSecurity.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = CocoaSecurity.m; path = CocoaSecurity/CocoaSecurity.m; sourceTree = "<group>"; };
+		E0685312A9F13883AEC85B956348493F /* CocoaSecurity.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CocoaSecurity.h; path = CocoaSecurity/CocoaSecurity.h; sourceTree = "<group>"; };
+		E15F4975F5B91B9F4B986AF05556EAB5 /* CocoaSecurity-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "CocoaSecurity-umbrella.h"; sourceTree = "<group>"; };
+		E279620E960D7503D453E48D908AC2A2 /* FMDB.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FMDB.h; path = src/fmdb/FMDB.h; sourceTree = "<group>"; };
+		E4FF3C204F78EE6AD0AD75CD53544D3F /* CollapseClick-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "CollapseClick-Info.plist"; sourceTree = "<group>"; };
+		E591F32A5494E02FB5A331BC4341EED6 /* FMDB.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = FMDB.xcconfig; sourceTree = "<group>"; };
+		E8D376465267D06AE305F37F05ACF79C /* NSUserDefaults+SecureAdditions.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSUserDefaults+SecureAdditions.m"; path = "SecureNSUserDefaults/SecureNSUserDefaults/NSUserDefaults+SecureAdditions.m"; sourceTree = "<group>"; };
+		E8D388B3C56B9D885343CC8E165B46D5 /* Pods-SCOUT Mobile-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-SCOUT Mobile-resources.sh"; sourceTree = "<group>"; };
+		ECB7AD45D6A1ED10BF1FB960BE81B79C /* Pods-SCOUT Mobile.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-SCOUT Mobile.modulemap"; sourceTree = "<group>"; };
+		EDE62F09DB66AB0AEEDAB491477CE2E2 /* CollapseClick-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "CollapseClick-prefix.pch"; sourceTree = "<group>"; };
+		EFC03AFF7F923677FAB70FD33C00303A /* CollapseClick.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = CollapseClick.xcconfig; sourceTree = "<group>"; };
+		F21B1248C4AEFA4197ACD0E638B9B745 /* JSONModelError.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = JSONModelError.m; path = JSONModel/JSONModel/JSONModelError.m; sourceTree = "<group>"; };
+		F8147C96503DCC17CF0345FE7B65B523 /* SWRevealViewController-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SWRevealViewController-prefix.pch"; sourceTree = "<group>"; };
+		F8C160E988C7F9B4E7B8C98D8970EB74 /* CollapseClickCell.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = CollapseClickCell.m; path = CollapseClick/CollapseClickCell.m; sourceTree = "<group>"; };
+		F9E43F4DC37C9CD8677E66D6D4A063B7 /* JSONAPI.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = JSONAPI.h; path = JSONModel/JSONModelNetworking/JSONAPI.h; sourceTree = "<group>"; };
+		FBD44CD85C7D1338B9AB0242D031A6F4 /* Pods-SCOUT Mobile.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SCOUT Mobile.debug.xcconfig"; sourceTree = "<group>"; };
+		FD042F921BCDBA535B4DFFBC56A86972 /* JSONValueTransformer.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = JSONValueTransformer.h; path = JSONModel/JSONModelTransformations/JSONValueTransformer.h; sourceTree = "<group>"; };
+		FEAA9514DF053AA0FF9586160811E0C2 /* SecureNSUserDefaults-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "SecureNSUserDefaults-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		0F13FDE48FAA625D37D626F69DA46819 /* Frameworks */ = {
+		1298092A70B61CD441B2CC2609A6F03E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D4E9B3DE75C23D365E255B6212CB1CB7 /* Foundation.framework in Frameworks */,
+				A979464A9102AD305BD7CAB549ED5FC7 /* CocoaSecurity.framework in Frameworks */,
+				E517C10C6ECF0C0A53BBE8E458EB909A /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		1274C681FA6810136C4107B7F1F7F97C /* Frameworks */ = {
+		1FEE90E26AD54447BB45832C5E315E1D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9F26252AF7780ADC5E4A4C86256DD57B /* CocoaSecurity.framework in Frameworks */,
-				3F6399CDC49AF89E741899D8B54C8D01 /* Foundation.framework in Frameworks */,
+				916ABA1C895A388692D81FB4B0C60A58 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		36363B24FEC960F68200927FC34A00FE /* Frameworks */ = {
+		4E6706B9FC60BD43AF1F2B9DA8E6C469 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2150024ED7640F5769FB70FEA2E1C5A6 /* Foundation.framework in Frameworks */,
+				03E28A9F8DFB3F6590C07AE69C5E259F /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		5AABC34183D0155B4C282F1F3EE9A2AC /* Frameworks */ = {
+		AA8403889C88F42A3ED6E28408ED2E38 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				491E480A67AF391D1E291A962E0508D3 /* Foundation.framework in Frameworks */,
+				17083E67C4AB71B4514765435F1CA1B2 /* CoreGraphics.framework in Frameworks */,
+				CE5148AE62FCD0101D30528849A611A2 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		6608A3F389CD891C3CCBE9550606FC5B /* Frameworks */ = {
+		CC7027CB7D7CB7C116E8D038FFD8A756 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				637ADA4D6C4BE8D59D55A01D065A3988 /* CoreGraphics.framework in Frameworks */,
-				60296A4C6B701CA9D4946B5763CA34C5 /* Foundation.framework in Frameworks */,
+				6EA99DC2F76C3B925182E78E9A14F397 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		9795FEA0F18BD43580F5A1EE5BB7291C /* Frameworks */ = {
+		D449DBFD5F8BA102D2EA830B558175BF /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3B4396017C3D99AA00794188F0894DCC /* Foundation.framework in Frameworks */,
+				F9FA339AEBB9C358CD4D01C71229FF33 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		EEFB61A65EB8DA6653B544822EB9CE44 /* Frameworks */ = {
+		F01C8F36C0E1E8055D2205E4B0689DC1 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				72563ADE99DC9E753B27D48B16AA3654 /* Foundation.framework in Frameworks */,
+				4C569AE953594E55936665354BEB167B /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		142A56FDB34F5FB4F02E7A6BDC900A1B /* Products */ = {
+		15D0714F36996C18BDBD399B924A35B5 /* standard */ = {
 			isa = PBXGroup;
 			children = (
-				DE32AC83164AEDA6244F5E0DFD4331BD /* CocoaSecurity.framework */,
-				1C9799EFF063005FEFE303424CF477D4 /* CollapseClick.framework */,
-				6AE475689C8228585C833F67F8C1C634 /* FMDB.framework */,
-				A3D539597DA5FEA204155EE09D2BAD26 /* JSONModel.framework */,
-				6E1E3A338B4FEBB17678AEFA04F40042 /* Pods_SCOUT_Mobile.framework */,
-				983141D8359AF28BC563451AA886EF3E /* SecureNSUserDefaults.framework */,
-				B05EF90EDCC9A06F4165B6F4CB68F8A7 /* SWRevealViewController.framework */,
+				497C62FF2C2861C6E00611CD61581068 /* FMDatabase.h */,
+				99191A6F59DE328FB84C72C8AF456D35 /* FMDatabase.m */,
+				9A34FC6A9285C08B21FCDBA1D3E28949 /* FMDatabaseAdditions.h */,
+				657FA70994CA7D7787EBDDFAE5168CBE /* FMDatabaseAdditions.m */,
+				867745495AFD49CC4C887BC1030FF8EE /* FMDatabasePool.h */,
+				9639A69790B98A66BD99C807F42839BA /* FMDatabasePool.m */,
+				C5E6064732F21AB5E8E5824474C0227E /* FMDatabaseQueue.h */,
+				13F37584393C431CA38B72725588051F /* FMDatabaseQueue.m */,
+				E279620E960D7503D453E48D908AC2A2 /* FMDB.h */,
+				5FD3F1F4B3274B44C6DFDB0250ECF441 /* FMResultSet.h */,
+				5100068F037B0174C1FBCC96E9420BDA /* FMResultSet.m */,
 			);
-			name = Products;
+			name = standard;
 			sourceTree = "<group>";
 		};
-		159A112250B3D315A49CB1C59E9E5E7F /* SecureNSUserDefaults */ = {
+		215BA39B38B00B7607514B0B4637BB87 /* JSONModel */ = {
 			isa = PBXGroup;
 			children = (
-				DBA194725087C5A635B383AA2D146C5D /* NSUserDefaults+SecureAdditions.h */,
-				7FDF279FD127B25FF08458072AE4EABE /* NSUserDefaults+SecureAdditions.m */,
-				ED358E51CABF6D0F9C45F2071AB6CFEB /* Support Files */,
-			);
-			name = SecureNSUserDefaults;
-			path = SecureNSUserDefaults;
-			sourceTree = "<group>";
-		};
-		198C84D226305A71ACE571AFF244E983 /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				A0BA09A90B5A2DB94ED98F0765BEB979 /* CollapseClick.modulemap */,
-				516893042D431E413B13F52166C4F14B /* CollapseClick.xcconfig */,
-				0FCBE6FB3A6A506F92C3514AB3EF6E32 /* CollapseClick-dummy.m */,
-				662D82A359CE9A0766B7AEF21ADA1BEB /* CollapseClick-prefix.pch */,
-				61EA8A9A3D7F0403B625DEE0A461F874 /* CollapseClick-umbrella.h */,
-				E71235B478C85D39D3A2157264B8E194 /* Info.plist */,
-			);
-			name = "Support Files";
-			path = "../Target Support Files/CollapseClick";
-			sourceTree = "<group>";
-		};
-		1F7CE44439CDD64094C3EE25E554D4B4 /* Maps */ = {
-			isa = PBXGroup;
-			children = (
-				FAB2A5B7E813107F3F4072026299628F /* Frameworks */,
-				24F2FD19EEF1F3E7889A16D724882353 /* Resources */,
-			);
-			name = Maps;
-			sourceTree = "<group>";
-		};
-		24F2FD19EEF1F3E7889A16D724882353 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				E09BD5CC10C64ED90EDFE1B7A57EF6B9 /* GoogleMaps.bundle */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-		};
-		28302422231CA7DCA25372A5E646CCA5 /* CollapseClick */ = {
-			isa = PBXGroup;
-			children = (
-				B1F410EDCEBAEAB357B7DC8706139F40 /* CollapseClick.h */,
-				34D4F3D78F8C54061F183DD65077F448 /* CollapseClick.m */,
-				6EDFAED6E0D0DFBEEFA2DB005E9593E9 /* CollapseClickArrow.h */,
-				41A6FB5E640E6F3F7CD8D91984BBB286 /* CollapseClickArrow.m */,
-				FB6ED306A471CAD4BD62830E982EC7A4 /* CollapseClickCell.h */,
-				E22D70D0127FFFB2981DBF012E0C2DA5 /* CollapseClickCell.m */,
-				72C61FCAF63A8412ECD1AA85B9E5C598 /* Resources */,
-				198C84D226305A71ACE571AFF244E983 /* Support Files */,
-			);
-			name = CollapseClick;
-			path = CollapseClick;
-			sourceTree = "<group>";
-		};
-		2E47748F937326D3DF39DB42E3A3186F /* JSONModel */ = {
-			isa = PBXGroup;
-			children = (
-				D39010640250BAE0F9A298219C0446D8 /* JSONAPI.h */,
-				D658326805FBC25EF0DE0A83F9CC746A /* JSONAPI.m */,
-				D7F5F3BF32858827A6C0D2D21727BC56 /* JSONHTTPClient.h */,
-				595A8C125E5E9A560B4C7197C6C1C458 /* JSONHTTPClient.m */,
-				FC40E209054445CFF5031927A6FA7840 /* JSONKeyMapper.h */,
-				C83437289E266D2B8C3F42C6E350E82C /* JSONKeyMapper.m */,
-				6A3B8960FB7D03DCC7B20467C34EF7D1 /* JSONModel.h */,
-				4A3BFBE1C0B3F1638CB09F6FBA7F7B61 /* JSONModel.m */,
-				2666B5B42938E56E0F9A47EFB243C286 /* JSONModel+networking.h */,
-				D658D1D8D19488E0E85E4CCD28E1ED77 /* JSONModel+networking.m */,
-				8C852A6CCE53F4A275E503CD49F9E867 /* JSONModelClassProperty.h */,
-				2F18FD423F7857C7E75FACFAAE1F8974 /* JSONModelClassProperty.m */,
-				A653CE621C58A00173F7BA14FDD892CD /* JSONModelError.h */,
-				78F8B21CA452F450A7E308CE57BC3C72 /* JSONModelError.m */,
-				55F6D3AC68CF39ACB6A56008076F0634 /* JSONModelLib.h */,
-				B8D7E8430AFEAB75FCB542C12874A862 /* JSONValueTransformer.h */,
-				BE84173D000D711179EAB9BC98C31617 /* JSONValueTransformer.m */,
-				CBFE6A5F941237B929B29D0BE071803D /* Support Files */,
+				F9E43F4DC37C9CD8677E66D6D4A063B7 /* JSONAPI.h */,
+				8EE47B71DCC73C9D9631B9A2156BD3BF /* JSONAPI.m */,
+				BD50EE013D57158B2FE621ADA3313D41 /* JSONHTTPClient.h */,
+				7D9C21CAE0DA7E2C14D165D35B581F71 /* JSONHTTPClient.m */,
+				0FEF34A0876749C8B8FD17C04BA60661 /* JSONKeyMapper.h */,
+				7899E9C17211E55F400BB8E50CA90D0D /* JSONKeyMapper.m */,
+				4915494EFBAC41C7750BBE6D727E4C99 /* JSONModel.h */,
+				6D25FD0F2525F57E482F3CAB05FDE2C9 /* JSONModel.m */,
+				159D8E98E5AD4A95FA2BB0FEF3817FA9 /* JSONModel+networking.h */,
+				D11867AC1F3ECE157DF5350C2A1EA4E0 /* JSONModel+networking.m */,
+				C4EA9323FB21157D64A22D90F7C8F2BA /* JSONModelClassProperty.h */,
+				3A68C52B79AD024F63C2229D75431089 /* JSONModelClassProperty.m */,
+				431A9DB6224F178DFA4C1D7445FD8A59 /* JSONModelError.h */,
+				F21B1248C4AEFA4197ACD0E638B9B745 /* JSONModelError.m */,
+				C14A680480F5CBEE405819F46D61CDF0 /* JSONModelLib.h */,
+				FD042F921BCDBA535B4DFFBC56A86972 /* JSONValueTransformer.h */,
+				2B0053606D8D065F6EC74FE19CB09A43 /* JSONValueTransformer.m */,
+				E7C5ADF954238656517C872BEEA72640 /* Support Files */,
 			);
 			name = JSONModel;
 			path = JSONModel;
 			sourceTree = "<group>";
 		};
-		406C7A6BEDD7F08202CCE36D708126D4 /* Support Files */ = {
+		31C3061D032926B103E6A9A24AEB871B /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				4B9E7991EBDF1B22984F49BA4E38C87D /* Info.plist */,
-				CC497402C16EF570570664C4F6F51684 /* SWRevealViewController.modulemap */,
-				9F6994B8F3B1F18B59E657A18CE3F102 /* SWRevealViewController.xcconfig */,
-				9AB317BEF381FBB49C1863E2B252DE5F /* SWRevealViewController-dummy.m */,
-				3E9E47C20C1AE6BB779D96182803EA35 /* SWRevealViewController-prefix.pch */,
-				F82D49A38596D5FD21DC5B38ADFF82FE /* SWRevealViewController-umbrella.h */,
+				8000BABF0BC78514CC4E74E950196E96 /* SWRevealViewController.modulemap */,
+				C5288214496915EEC1ABF329BEEF3489 /* SWRevealViewController.xcconfig */,
+				9D62E1E8C408A950D22CE48B2407AA79 /* SWRevealViewController-dummy.m */,
+				579DE781A032AFB13991F5747CA9B333 /* SWRevealViewController-Info.plist */,
+				F8147C96503DCC17CF0345FE7B65B523 /* SWRevealViewController-prefix.pch */,
+				9ACDF081C602458009BA9CC126A20CB8 /* SWRevealViewController-umbrella.h */,
 			);
 			name = "Support Files";
 			path = "../Target Support Files/SWRevealViewController";
 			sourceTree = "<group>";
 		};
-		4993A0B93E6129AACD54A56F3F0395A2 /* Frameworks */ = {
+		33CED643124ED1515D5138A2FC4E1B5D /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				7E9B0CE625CFD86704868F43787D3315 /* GoogleMapsBase.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		4A24F78D6B273E8EB5C5FC94EE959083 /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				D7261A150F228E4FB825A0E044876150 /* FMDB.modulemap */,
-				F176CEF301C10501E86A8B7B3F9FAE3B /* FMDB.xcconfig */,
-				64C5CA2AFB1BCCB293125E180BF82B1A /* FMDB-dummy.m */,
-				201EFE64C5ABCCEFC2D19D603A0740CF /* FMDB-prefix.pch */,
-				670C9FFF5B17D027C9146114E284E657 /* FMDB-umbrella.h */,
-				825054FA575CAFA8D1ED66BA42001109 /* Info.plist */,
+				7E27D2DF35C9A355E8EF460D4E34BBD8 /* FMDB.modulemap */,
+				E591F32A5494E02FB5A331BC4341EED6 /* FMDB.xcconfig */,
+				DB2D4AB090D030FBF9C723EF6E29CAC6 /* FMDB-dummy.m */,
+				978845A36A3D13DD4CE3076C475AA792 /* FMDB-Info.plist */,
+				7D54D70CF9A6BC5941DEC9041CEDA011 /* FMDB-prefix.pch */,
+				3A31AACBC09598ACDEF9906FBDE906C2 /* FMDB-umbrella.h */,
 			);
 			name = "Support Files";
 			path = "../Target Support Files/FMDB";
 			sourceTree = "<group>";
 		};
-		4ACBFA23D2BDBC153A2733AB9EB020E4 /* Frameworks */ = {
+		3B3EBA2830A260F586E54AD29180E1E4 /* CollapseClick */ = {
 			isa = PBXGroup;
 			children = (
-				87377255E8EA79FA4349521ECF7A1FFA /* CocoaSecurity.framework */,
-				90B2BBE1FB3C33A285EBB2CA0F3A382C /* iOS */,
+				BF3603C2DBF67A60CBF0C03FAB6831EB /* CollapseClick.h */,
+				A5279C4B91D205DEC4AA91F2818E0B08 /* CollapseClick.m */,
+				6E9FA45388535CE8E247A223AA99349B /* CollapseClickArrow.h */,
+				12D20BBB6DF10AC19D3EF0C48291A687 /* CollapseClickArrow.m */,
+				12878EE173B9516C7776B7E57D52EEA5 /* CollapseClickCell.h */,
+				F8C160E988C7F9B4E7B8C98D8970EB74 /* CollapseClickCell.m */,
+				DAAEF4D179C5782D2F2CF8378F1F85AE /* Resources */,
+				CBFA16F4B6766B29D78DD135B8B8A0E6 /* Support Files */,
 			);
-			name = Frameworks;
+			name = CollapseClick;
+			path = CollapseClick;
 			sourceTree = "<group>";
 		};
-		5AB75D0930F2EE087481FF22724D5F38 /* Targets Support Files */ = {
+		3E9695AD43907C508884D232346B3140 /* Maps */ = {
 			isa = PBXGroup;
 			children = (
-				E3D18D42B60D539174DFBAE82E43090F /* Pods-SCOUT Mobile */,
+				B48FA920E0B1ADC14D58D0C70FA689D3 /* Frameworks */,
+				AE7A870E5D1607535EFDFCFFB2B6262F /* Resources */,
 			);
-			name = "Targets Support Files";
+			name = Maps;
 			sourceTree = "<group>";
 		};
-		5E5CE3D38185B848FADDB397F200D752 /* CocoaSecurity */ = {
+		47D7D5675964087B5D018A0794601298 /* SWRevealViewController */ = {
 			isa = PBXGroup;
 			children = (
-				5BAAF8FB651A667AB22B8251BC227FB7 /* Base64.h */,
-				DCAF7E288009440B246C70D2004F2669 /* Base64.m */,
-				4D58AFD13A453665154AD6D65E30ECF6 /* CocoaSecurity.h */,
-				30BAEBE48525457087A07457A24620E3 /* CocoaSecurity.m */,
-				ECB19133CDFE12DDBC831D7BCB615B4C /* Support Files */,
-			);
-			name = CocoaSecurity;
-			path = CocoaSecurity;
-			sourceTree = "<group>";
-		};
-		72C61FCAF63A8412ECD1AA85B9E5C598 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				36D912DACC6ED3A29135301D10AC99A5 /* CollapseClickCell.xib */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-		};
-		750FF8450D78F41B1AB85FD2CECA96CF /* Base */ = {
-			isa = PBXGroup;
-			children = (
-				4993A0B93E6129AACD54A56F3F0395A2 /* Frameworks */,
-			);
-			name = Base;
-			sourceTree = "<group>";
-		};
-		77179260318955BC4FCE1966363F9F62 /* GoogleMaps */ = {
-			isa = PBXGroup;
-			children = (
-				750FF8450D78F41B1AB85FD2CECA96CF /* Base */,
-				1F7CE44439CDD64094C3EE25E554D4B4 /* Maps */,
-			);
-			name = GoogleMaps;
-			path = GoogleMaps;
-			sourceTree = "<group>";
-		};
-		7DB346D0F39D3F0E887471402A8071AB = {
-			isa = PBXGroup;
-			children = (
-				93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */,
-				4ACBFA23D2BDBC153A2733AB9EB020E4 /* Frameworks */,
-				B069E885A1E78E71F23D86D0747FB1FB /* Pods */,
-				142A56FDB34F5FB4F02E7A6BDC900A1B /* Products */,
-				5AB75D0930F2EE087481FF22724D5F38 /* Targets Support Files */,
-			);
-			sourceTree = "<group>";
-		};
-		7DFD1A5A0B622216041E70DF5754BE73 /* standard */ = {
-			isa = PBXGroup;
-			children = (
-				E6FD6E0F6FF896CF29BE52CFAE0A8324 /* FMDatabase.h */,
-				CD699570A5F40A35DEE96CBE96E4AA58 /* FMDatabase.m */,
-				B299493C46D54A40A46D64032545572B /* FMDatabaseAdditions.h */,
-				D314A2F5637268101BEF53DCB7A8E476 /* FMDatabaseAdditions.m */,
-				6BFAFFAC42DFA259D0A92CEE625B16A9 /* FMDatabasePool.h */,
-				AFDD7EB35592B0B3320965832EFB35DA /* FMDatabasePool.m */,
-				4F2AEC87E0FA75F7C5E1B92D094F9697 /* FMDatabaseQueue.h */,
-				1BC8E20E402C310EF9E41F888CF57C46 /* FMDatabaseQueue.m */,
-				4FF58AE723F1B0C285DB51D87B07E1F3 /* FMDB.h */,
-				0BDA2943B08067A605438E7C9BC0905C /* FMResultSet.h */,
-				F9CFC668F2E952F7847513B86F01AFFF /* FMResultSet.m */,
-			);
-			name = standard;
-			sourceTree = "<group>";
-		};
-		90B2BBE1FB3C33A285EBB2CA0F3A382C /* iOS */ = {
-			isa = PBXGroup;
-			children = (
-				30D459FA48CF0CE907C9F62AA72ABDD1 /* CoreGraphics.framework */,
-				6E34E90DE8A96D3056CB64E8A6D8B5A4 /* Foundation.framework */,
-			);
-			name = iOS;
-			sourceTree = "<group>";
-		};
-		A2B098207F150DE87BC21E5DA4722D16 /* SWRevealViewController */ = {
-			isa = PBXGroup;
-			children = (
-				4497020E5C196B23B12C6D6F60C07589 /* SWRevealViewController.h */,
-				7DCDBF07B3A12CB5FA5B0336F92522D2 /* SWRevealViewController.m */,
-				406C7A6BEDD7F08202CCE36D708126D4 /* Support Files */,
+				565EED87F8470A5E17A92A9BFD9B59F5 /* SWRevealViewController.h */,
+				17DD7FBE3C3FE3A5F2548F37B2F2DFB6 /* SWRevealViewController.m */,
+				31C3061D032926B103E6A9A24AEB871B /* Support Files */,
 			);
 			name = SWRevealViewController;
 			path = SWRevealViewController;
 			sourceTree = "<group>";
 		};
-		B069E885A1E78E71F23D86D0747FB1FB /* Pods */ = {
+		4B63CF7A0DFB7CC9FE6E35BA44C4495C /* GoogleMaps */ = {
 			isa = PBXGroup;
 			children = (
-				5E5CE3D38185B848FADDB397F200D752 /* CocoaSecurity */,
-				28302422231CA7DCA25372A5E646CCA5 /* CollapseClick */,
-				F50A32EBF0253A21345907B2D7F4A109 /* FMDB */,
-				77179260318955BC4FCE1966363F9F62 /* GoogleMaps */,
-				2E47748F937326D3DF39DB42E3A3186F /* JSONModel */,
-				159A112250B3D315A49CB1C59E9E5E7F /* SecureNSUserDefaults */,
-				A2B098207F150DE87BC21E5DA4722D16 /* SWRevealViewController */,
+				639F801ACA5C9D22E90D9365BACFE650 /* Base */,
+				3E9695AD43907C508884D232346B3140 /* Maps */,
+				CCDF3466F14FFB0BBA1458EEB9BD356D /* Support Files */,
 			);
-			name = Pods;
+			name = GoogleMaps;
+			path = GoogleMaps;
 			sourceTree = "<group>";
 		};
-		CBFE6A5F941237B929B29D0BE071803D /* Support Files */ = {
+		4D4D4AB9DA8E6DA16E290A3C91BA94D4 /* SecureNSUserDefaults */ = {
 			isa = PBXGroup;
 			children = (
-				6FDAE6267F3362A38858CC6C9BD1F042 /* Info.plist */,
-				881801284458EF9DF669C6CACC95BD7E /* JSONModel.modulemap */,
-				54E9E6D8E1C101616B9F295493923417 /* JSONModel.xcconfig */,
-				3CDA91D750BC2585B7B10200021A74E7 /* JSONModel-dummy.m */,
-				B54971E6366677157278085DB350E5DA /* JSONModel-prefix.pch */,
-				E8C1333FDBDEA8B6E7F0AD1E4EB86CC5 /* JSONModel-umbrella.h */,
+				848C09D568EC9AB725DC533286EC18C7 /* NSUserDefaults+SecureAdditions.h */,
+				E8D376465267D06AE305F37F05ACF79C /* NSUserDefaults+SecureAdditions.m */,
+				7BCE927989C1FA7BAB93CE9E848A5596 /* Support Files */,
 			);
-			name = "Support Files";
-			path = "../Target Support Files/JSONModel";
+			name = SecureNSUserDefaults;
+			path = SecureNSUserDefaults;
 			sourceTree = "<group>";
 		};
-		E3D18D42B60D539174DFBAE82E43090F /* Pods-SCOUT Mobile */ = {
+		501746696CCB2234CBDC5669E35757BA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				4349FEE04ABF2AC9A3217DD037C71713 /* Info.plist */,
-				B91863EF76450890AAF6416707FA7BC2 /* Pods-SCOUT Mobile.modulemap */,
-				CE1E9CD1DAC04BF6E5CC9CECBE8E5F06 /* Pods-SCOUT Mobile-acknowledgements.markdown */,
-				C55067F1A0531DFDAC5CB68556A100F6 /* Pods-SCOUT Mobile-acknowledgements.plist */,
-				4201CE1CD5AC6B6E86293BA71586CB25 /* Pods-SCOUT Mobile-dummy.m */,
-				0858A5B4C6B77930BC55E15B4619686E /* Pods-SCOUT Mobile-frameworks.sh */,
-				2B198BD26441096AFF8B0849D23EE4A7 /* Pods-SCOUT Mobile-resources.sh */,
-				0A330FE8E511B1DDC9784AA38A89BF10 /* Pods-SCOUT Mobile-umbrella.h */,
-				FB96814D12C94ED6EB4E084FF54AF91B /* Pods-SCOUT Mobile.debug.xcconfig */,
-				E5568F42410F4E7D519E8D3AF9E7E9FC /* Pods-SCOUT Mobile.release.xcconfig */,
+				AF33FE90F69B035381872E7FC905E765 /* GoogleMapsBase.framework */,
 			);
-			name = "Pods-SCOUT Mobile";
-			path = "Target Support Files/Pods-SCOUT Mobile";
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		ECB19133CDFE12DDBC831D7BCB615B4C /* Support Files */ = {
+		639F801ACA5C9D22E90D9365BACFE650 /* Base */ = {
 			isa = PBXGroup;
 			children = (
-				40CF8643DBB7A174AE4BC27248F4A4BC /* CocoaSecurity.modulemap */,
-				6EC98B47285AA07518F947482B791CD8 /* CocoaSecurity.xcconfig */,
-				ADFBEDFDAC7D8E8099B61F0E76115CBC /* CocoaSecurity-dummy.m */,
-				532BEAD1FFA3913D00306736A70D51BE /* CocoaSecurity-prefix.pch */,
-				95AF8ED1204DB8BA8AC979152FC854D0 /* CocoaSecurity-umbrella.h */,
-				3EAB641207FC6F60076C0456C3CEEB91 /* Info.plist */,
+				501746696CCB2234CBDC5669E35757BA /* Frameworks */,
 			);
-			name = "Support Files";
-			path = "../Target Support Files/CocoaSecurity";
+			name = Base;
 			sourceTree = "<group>";
 		};
-		ED358E51CABF6D0F9C45F2071AB6CFEB /* Support Files */ = {
+		6F050B46FDF7C6F6072F7CC299BF02B2 /* FMDB */ = {
 			isa = PBXGroup;
 			children = (
-				E3A0C50EFE37C6188EAC8EEC06FF6A65 /* Info.plist */,
-				9653FB623EED973388F62F33CDF774E0 /* SecureNSUserDefaults.modulemap */,
-				C27264F45AC35666B5D46D0D1E9B8A15 /* SecureNSUserDefaults.xcconfig */,
-				390BCD6562D0FBCA3E2988A01AFCD2B3 /* SecureNSUserDefaults-dummy.m */,
-				BFC0B29B76CF5A7DDA1EB8ACB91B96DA /* SecureNSUserDefaults-prefix.pch */,
-				F19CA414D9BFBA01EDDA85A0F7945F66 /* SecureNSUserDefaults-umbrella.h */,
-			);
-			name = "Support Files";
-			path = "../Target Support Files/SecureNSUserDefaults";
-			sourceTree = "<group>";
-		};
-		F50A32EBF0253A21345907B2D7F4A109 /* FMDB */ = {
-			isa = PBXGroup;
-			children = (
-				7DFD1A5A0B622216041E70DF5754BE73 /* standard */,
-				4A24F78D6B273E8EB5C5FC94EE959083 /* Support Files */,
+				15D0714F36996C18BDBD399B924A35B5 /* standard */,
+				33CED643124ED1515D5138A2FC4E1B5D /* Support Files */,
 			);
 			name = FMDB;
 			path = FMDB;
 			sourceTree = "<group>";
 		};
-		FAB2A5B7E813107F3F4072026299628F /* Frameworks */ = {
+		7BCE927989C1FA7BAB93CE9E848A5596 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				8431B817F6819D6DAE50C901601C2D32 /* GoogleMaps.framework */,
-				DAB6D60ABF7BF7A1883AD88698563FF4 /* GoogleMapsCore.framework */,
+				5DB0E5DA0DFA96E81015077973A6B8B4 /* SecureNSUserDefaults.modulemap */,
+				BFBDFCC94F5B5E249F00365552A6C9A7 /* SecureNSUserDefaults.xcconfig */,
+				71C3376C63A061A6A87C9E11F8F8EC8F /* SecureNSUserDefaults-dummy.m */,
+				FEAA9514DF053AA0FF9586160811E0C2 /* SecureNSUserDefaults-Info.plist */,
+				541192439EFB0C9D28BD38F56628DB59 /* SecureNSUserDefaults-prefix.pch */,
+				B75EFB5938DEFCA2CA6709CAC0255F6D /* SecureNSUserDefaults-umbrella.h */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/SecureNSUserDefaults";
+			sourceTree = "<group>";
+		};
+		97997616F7480B010A12B96D8FA08A40 /* CocoaSecurity */ = {
+			isa = PBXGroup;
+			children = (
+				48E7594B807305CFC54B83238F4204D8 /* Base64.h */,
+				0B42F55534153381A93DAD18AB4C5517 /* Base64.m */,
+				E0685312A9F13883AEC85B956348493F /* CocoaSecurity.h */,
+				DE5E019DC5CCC2817D9131F3076BB073 /* CocoaSecurity.m */,
+				D60BBFAD43535A79500779BE9469A3EE /* Support Files */,
+			);
+			name = CocoaSecurity;
+			path = CocoaSecurity;
+			sourceTree = "<group>";
+		};
+		97CAF9BD050AEE2133DEF4D20BDB66F9 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				4F89C51257A9486B47EF5AAECED7DA3C /* CoreGraphics.framework */,
+				37C13221C8D77074706274A4F80509AF /* Foundation.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		AE7A870E5D1607535EFDFCFFB2B6262F /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				512363AC306E82154DBDBCD1993D052C /* GoogleMaps.bundle */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		B48FA920E0B1ADC14D58D0C70FA689D3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CE151307A00AC2B062D01BC5F97FB85A /* GoogleMaps.framework */,
+				3E2704E519B7DAAAE3ED065CFC0A6338 /* GoogleMapsCore.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C822C77B46865009E8927766213FA20B /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				DAF7787BEB1EB41277CF97821B876A9D /* Pods-SCOUT Mobile */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+		CBFA16F4B6766B29D78DD135B8B8A0E6 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				C1A6DDA2C194EDBCDFC85744C6D015E4 /* CollapseClick.modulemap */,
+				EFC03AFF7F923677FAB70FD33C00303A /* CollapseClick.xcconfig */,
+				811EC9556967F81C094A058CED4B2C76 /* CollapseClick-dummy.m */,
+				E4FF3C204F78EE6AD0AD75CD53544D3F /* CollapseClick-Info.plist */,
+				EDE62F09DB66AB0AEEDAB491477CE2E2 /* CollapseClick-prefix.pch */,
+				1082BAEA6BB11420B02EED6DD23BF726 /* CollapseClick-umbrella.h */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/CollapseClick";
+			sourceTree = "<group>";
+		};
+		CCDF3466F14FFB0BBA1458EEB9BD356D /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				D782244D176BEB2059C4F26832421302 /* GoogleMaps.xcconfig */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/GoogleMaps";
+			sourceTree = "<group>";
+		};
+		CF1408CF629C7361332E53B88F7BD30C = {
+			isa = PBXGroup;
+			children = (
+				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
+				F9E34E237AE4C94CA52E01E1528E0EB0 /* Frameworks */,
+				F7A9A60FE2C56851B08945F26435C085 /* Pods */,
+				D1D1A6DC445191CA93A745ED8DB2368B /* Products */,
+				C822C77B46865009E8927766213FA20B /* Targets Support Files */,
+			);
+			sourceTree = "<group>";
+		};
+		D1D1A6DC445191CA93A745ED8DB2368B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				351BD8DE7543FC9609BB1ECBE8214FAC /* CocoaSecurity.framework */,
+				D12189F4BAF026444BC33F61BCB97814 /* CollapseClick.framework */,
+				6060303E3CEEDC6AC3BBA44D3C75B766 /* FMDB.framework */,
+				00BCE0B14D7F359660B8FE5B071FA095 /* JSONModel.framework */,
+				A7820F17DB93BC4499A6B26652A44AE5 /* Pods_SCOUT_Mobile.framework */,
+				86D001DA1A68A73455E158F9EE8732FE /* SecureNSUserDefaults.framework */,
+				808F31561392C098BE793711BE7115D2 /* SWRevealViewController.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D60BBFAD43535A79500779BE9469A3EE /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				DA8DE0FA43E9BDC2143B74DD591DC8EB /* CocoaSecurity.modulemap */,
+				4BBBA96AF99450E1C0DF037654CC5C24 /* CocoaSecurity.xcconfig */,
+				279D02168599B3D4C8682E44FA8394BC /* CocoaSecurity-dummy.m */,
+				135D440CE483C936B81DE8CAC74F8CC6 /* CocoaSecurity-Info.plist */,
+				7027D6EFC0AC800F5B368C4F0F9A9E2F /* CocoaSecurity-prefix.pch */,
+				E15F4975F5B91B9F4B986AF05556EAB5 /* CocoaSecurity-umbrella.h */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/CocoaSecurity";
+			sourceTree = "<group>";
+		};
+		DAAEF4D179C5782D2F2CF8378F1F85AE /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				A20D3576BA133E1E8D234340EBBC892B /* CollapseClickCell.xib */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		DAF7787BEB1EB41277CF97821B876A9D /* Pods-SCOUT Mobile */ = {
+			isa = PBXGroup;
+			children = (
+				ECB7AD45D6A1ED10BF1FB960BE81B79C /* Pods-SCOUT Mobile.modulemap */,
+				5A523806752CF217330E37E8849829F0 /* Pods-SCOUT Mobile-acknowledgements.markdown */,
+				90359F9ACD3DC1A0D60BE6B673C39775 /* Pods-SCOUT Mobile-acknowledgements.plist */,
+				5B82BBB40EB81428608B83D742B64941 /* Pods-SCOUT Mobile-dummy.m */,
+				BBD1CDA927F5243123D43F81E4A01E6E /* Pods-SCOUT Mobile-frameworks.sh */,
+				DC0F77BAE6D9AA8253E52B1D61E5DCB3 /* Pods-SCOUT Mobile-Info.plist */,
+				E8D388B3C56B9D885343CC8E165B46D5 /* Pods-SCOUT Mobile-resources.sh */,
+				7F928ACC6CA5E74BC951EF56221F7D1F /* Pods-SCOUT Mobile-umbrella.h */,
+				FBD44CD85C7D1338B9AB0242D031A6F4 /* Pods-SCOUT Mobile.debug.xcconfig */,
+				4479D9B8C9D177C644EFECEA561CDF32 /* Pods-SCOUT Mobile.release.xcconfig */,
+			);
+			name = "Pods-SCOUT Mobile";
+			path = "Target Support Files/Pods-SCOUT Mobile";
+			sourceTree = "<group>";
+		};
+		E7C5ADF954238656517C872BEEA72640 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				7C3374BF55775589D58B913AC0A68265 /* JSONModel.modulemap */,
+				5964BA0D7F5B533E1348C0F9A908D61E /* JSONModel.xcconfig */,
+				290CBB5CBAB9F2F0E7E58A475E446133 /* JSONModel-dummy.m */,
+				0A0B5DCCF6EFD1161BCFB2F37014FA23 /* JSONModel-Info.plist */,
+				5ED017CE429225233DBEBF27488E3461 /* JSONModel-prefix.pch */,
+				76225E3A0080F9A5C71D3EF97E107FCE /* JSONModel-umbrella.h */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/JSONModel";
+			sourceTree = "<group>";
+		};
+		F7A9A60FE2C56851B08945F26435C085 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				97997616F7480B010A12B96D8FA08A40 /* CocoaSecurity */,
+				3B3EBA2830A260F586E54AD29180E1E4 /* CollapseClick */,
+				6F050B46FDF7C6F6072F7CC299BF02B2 /* FMDB */,
+				4B63CF7A0DFB7CC9FE6E35BA44C4495C /* GoogleMaps */,
+				215BA39B38B00B7607514B0B4637BB87 /* JSONModel */,
+				4D4D4AB9DA8E6DA16E290A3C91BA94D4 /* SecureNSUserDefaults */,
+				47D7D5675964087B5D018A0794601298 /* SWRevealViewController */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		F9E34E237AE4C94CA52E01E1528E0EB0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				61D7EFE1A31F9486CFCF22771B7EFEC4 /* CocoaSecurity.framework */,
+				97CAF9BD050AEE2133DEF4D20BDB66F9 /* iOS */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -631,94 +661,95 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		1065E79F062F2C4623DBD407A01F292B /* Headers */ = {
+		1249C24264E5892C7846CA23D7EF1F6A /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				643BFA52021DEFE83A9F77073E1538DB /* NSUserDefaults+SecureAdditions.h in Headers */,
-				826340F6BC0FCD151778F80302F6B224 /* SecureNSUserDefaults-umbrella.h in Headers */,
+				C9E04EFEBD94A1B64EE635C6210241F3 /* CollapseClick-umbrella.h in Headers */,
+				A0BF5B5587D4D122DF306FFD3388624E /* CollapseClick.h in Headers */,
+				14CCD23742E942AABBABA67561CA9145 /* CollapseClickArrow.h in Headers */,
+				2B4D77F2FD826654591CD889D75469A4 /* CollapseClickCell.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		3D2A080C5CD4ED4520C6AEFA1D6BA26F /* Headers */ = {
+		22FCB1AA63752902DBFAF1BC72F66A8A /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F11FAB91014130EE233A3429439D38D7 /* FMDatabase.h in Headers */,
-				A548833BE5FAD40830428F36E77D0F52 /* FMDatabaseAdditions.h in Headers */,
-				9B8D84996694C541CD3434386E0A081A /* FMDatabasePool.h in Headers */,
-				22554065FA07F1BFE5308A685394CB12 /* FMDatabaseQueue.h in Headers */,
-				96E70B43FC04BC99AED1BBD4FB1D7581 /* FMDB-umbrella.h in Headers */,
-				CCB74062CE0F4B8E5B7483599BC398DA /* FMDB.h in Headers */,
-				3E43906B70EB01C06F3AE17008B853B9 /* FMResultSet.h in Headers */,
+				5DF5F208F028ADD43078F49D6FE4A193 /* NSUserDefaults+SecureAdditions.h in Headers */,
+				1E9370EE28E664783F4E828B8F628FAD /* SecureNSUserDefaults-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		83269D8F3CE0BF096CB9B0286F20612F /* Headers */ = {
+		2AC6BF2C4388DFD31259EFB38B017BD0 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DEF1BFDEFBF561124DB14ACD88C75EC9 /* SWRevealViewController-umbrella.h in Headers */,
-				F0B89095C0344AF8186ED14C380E30EA /* SWRevealViewController.h in Headers */,
+				166182C8F2677CCDCA3D83ECAB4FC46B /* SWRevealViewController-umbrella.h in Headers */,
+				0D514E9FF78BE2E4A3EADE22BA47A0E9 /* SWRevealViewController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		AA9640C8D62B84C38491F466133C86ED /* Headers */ = {
+		2E0510C9A84D7D9C8381BAD6438A6A9F /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				506F1BFC824DA8E5AD1A76E55CC84EEE /* CollapseClick-umbrella.h in Headers */,
-				6CED11E855CD3D135B8FD3C31BCF1D5C /* CollapseClick.h in Headers */,
-				3225910BFC7AA409FDD6921EA5BA38A8 /* CollapseClickArrow.h in Headers */,
-				01B02E06AD0A34A2987F089B3490867D /* CollapseClickCell.h in Headers */,
+				4C2E30B56688FB9D46995A05F45B5BCF /* FMDatabase.h in Headers */,
+				6BA162F850CF5A59143AC3FE0D58CE32 /* FMDatabaseAdditions.h in Headers */,
+				843A80393130C719092B84C3D0482B8B /* FMDatabasePool.h in Headers */,
+				B2152E19444F3499F643E212D051F8D0 /* FMDatabaseQueue.h in Headers */,
+				F20B46808E7B20CCDC347C8594647E07 /* FMDB-umbrella.h in Headers */,
+				E7A30E51E8F1D20F2D97C515D1D87D27 /* FMDB.h in Headers */,
+				2BC0F034FDD2774C3DDB9F33E45EFEFB /* FMResultSet.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B66340A46C5607B311080B338F4F9986 /* Headers */ = {
+		7A4BFB60A6B8AFFE0E5BB3C1DF50BBF0 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F98F9A32C528DF55CE3902FC2295694C /* Base64.h in Headers */,
-				0CABC146B7AE68D57FFCADE2BE7043A5 /* CocoaSecurity-umbrella.h in Headers */,
-				A5BC08E8A9629CE48ACA2C7C9050CA1D /* CocoaSecurity.h in Headers */,
+				928F455C06E234439994F51C4028148C /* JSONAPI.h in Headers */,
+				0A6B94D8877C0E4AE9B1105AB2F58382 /* JSONHTTPClient.h in Headers */,
+				C89161EDC21DBAF463122DB6EB2B892B /* JSONKeyMapper.h in Headers */,
+				8C6D73DC7C46637B433D067F923D769F /* JSONModel+networking.h in Headers */,
+				E66D539811EC51EEFB48B7CC0AFEB557 /* JSONModel-umbrella.h in Headers */,
+				2FB551018B95C5F599F40F313299B36F /* JSONModel.h in Headers */,
+				FDDF50A3B1AFF9B35B47003942F11B4B /* JSONModelClassProperty.h in Headers */,
+				3240050346D69005B6F574B924C9BE02 /* JSONModelError.h in Headers */,
+				2693A09F9361C71EE9255CA97DE041C8 /* JSONModelLib.h in Headers */,
+				572F99F6F961BD0D940F889E69F72505 /* JSONValueTransformer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		BBF7227F5BD0440E9DF598DF26EC3891 /* Headers */ = {
+		C38F63E9D82F30A8C544CFFFED96C81E /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4EB17293737C717D12298CFFE6A67514 /* JSONAPI.h in Headers */,
-				7F66E5779B29E0BC17D565DAD7CDEC1B /* JSONHTTPClient.h in Headers */,
-				58388F773008AF671CE67FE1C902E6CB /* JSONKeyMapper.h in Headers */,
-				E3C47E114E924D2F331F9A3F122AEE5C /* JSONModel+networking.h in Headers */,
-				36E344E5B627E04368ECC96338E17F26 /* JSONModel-umbrella.h in Headers */,
-				37FD169854FF4B397051998D611F152A /* JSONModel.h in Headers */,
-				009C79BE88C2F4C986644CD3E0B088C2 /* JSONModelClassProperty.h in Headers */,
-				2AFB0AFA2138181E162CD00669D87FE3 /* JSONModelError.h in Headers */,
-				6F5906B58272E07A0850248867562581 /* JSONModelLib.h in Headers */,
-				DFA0B0C7EC02135911CACDAFD38BE715 /* JSONValueTransformer.h in Headers */,
+				13FD7E9978D248653947138702052DD4 /* Pods-SCOUT Mobile-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		CEEE52E605A19C493230DCBB8BB5D99E /* Headers */ = {
+		E8AD7ED8F61AF7686679BC16118615C4 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B4C8B4E0340E6E95B0F8A05A05180CB7 /* Pods-SCOUT Mobile-umbrella.h in Headers */,
+				85F9D6C8ED4CE6F9B7F18F446E8AF1C9 /* Base64.h in Headers */,
+				5DB12BE375EFF5FC1E61287C2703B740 /* CocoaSecurity-umbrella.h in Headers */,
+				CD3801AA791ACB9CB63086117A83CEAA /* CocoaSecurity.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		1CE15060B0E33F7AE0A78865CFACF946 /* CocoaSecurity */ = {
+		27D7B882B974130567379695AF91909D /* CocoaSecurity */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 93516C885C0F185BEA0221B8BAC8C1D4 /* Build configuration list for PBXNativeTarget "CocoaSecurity" */;
+			buildConfigurationList = 29A7A5CF28F477B83CAF06FAB27C2274 /* Build configuration list for PBXNativeTarget "CocoaSecurity" */;
 			buildPhases = (
-				B7526EE14C4407BD3415191FF9035300 /* Sources */,
-				36363B24FEC960F68200927FC34A00FE /* Frameworks */,
-				B66340A46C5607B311080B338F4F9986 /* Headers */,
+				E8AD7ED8F61AF7686679BC16118615C4 /* Headers */,
+				79FAA37E01F43C3018857FBB097722D5 /* Sources */,
+				D449DBFD5F8BA102D2EA830B558175BF /* Frameworks */,
+				587A9284625C7B17E55BA3277547563D /* Resources */,
 			);
 			buildRules = (
 			);
@@ -726,109 +757,36 @@
 			);
 			name = CocoaSecurity;
 			productName = CocoaSecurity;
-			productReference = DE32AC83164AEDA6244F5E0DFD4331BD /* CocoaSecurity.framework */;
+			productReference = 351BD8DE7543FC9609BB1ECBE8214FAC /* CocoaSecurity.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		251BAD17812F7EBF6532EACF66F941C3 /* FMDB */ = {
+		4A593A2B677B35A6AD6DE28BC08C5B88 /* SecureNSUserDefaults */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5B0566FF0CE681AC326D316CEC45A8CF /* Build configuration list for PBXNativeTarget "FMDB" */;
+			buildConfigurationList = 125CF3396DACBFF7BFA791D12EC685AA /* Build configuration list for PBXNativeTarget "SecureNSUserDefaults" */;
 			buildPhases = (
-				8FE0D4B503A94502F3431DC0DCB58040 /* Sources */,
-				EEFB61A65EB8DA6653B544822EB9CE44 /* Frameworks */,
-				3D2A080C5CD4ED4520C6AEFA1D6BA26F /* Headers */,
+				22FCB1AA63752902DBFAF1BC72F66A8A /* Headers */,
+				9D9FFD00DEB0618584B89AFAF9E8D30D /* Sources */,
+				1298092A70B61CD441B2CC2609A6F03E /* Frameworks */,
+				3B3FBABED60E567D0D23F7278F55AF89 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-			);
-			name = FMDB;
-			productName = FMDB;
-			productReference = 6AE475689C8228585C833F67F8C1C634 /* FMDB.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		3C7FE2CBE5B8E30F8806DDEE01D10FC2 /* Pods-SCOUT Mobile */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = D20EB3CAC8B48ECECE3B345DC7229A49 /* Build configuration list for PBXNativeTarget "Pods-SCOUT Mobile" */;
-			buildPhases = (
-				977FF3839DDC580C34160C11CA16F986 /* Sources */,
-				9795FEA0F18BD43580F5A1EE5BB7291C /* Frameworks */,
-				CEEE52E605A19C493230DCBB8BB5D99E /* Headers */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				FA6F2CA573F31E7865626EB02279E329 /* PBXTargetDependency */,
-				084D4E5D042D6E514B7D1374F1E76362 /* PBXTargetDependency */,
-				529643B75A809B85ED3CBE52F2002A15 /* PBXTargetDependency */,
-				8884B8C23E2536D986548E9BEB53D68F /* PBXTargetDependency */,
-				CB2AE345ABE8C981C107F7271DB2995E /* PBXTargetDependency */,
-				F2817E75AB92AE6B65A8CF360BD789BB /* PBXTargetDependency */,
-			);
-			name = "Pods-SCOUT Mobile";
-			productName = "Pods-SCOUT Mobile";
-			productReference = 6E1E3A338B4FEBB17678AEFA04F40042 /* Pods_SCOUT_Mobile.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		4F44BF00E3F3FB997F6C1D89283D9ED9 /* CollapseClick */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 2B367C51EFA490BA07835273C999FCDA /* Build configuration list for PBXNativeTarget "CollapseClick" */;
-			buildPhases = (
-				30182C64A761244B5846EFF3911849A9 /* Sources */,
-				5AABC34183D0155B4C282F1F3EE9A2AC /* Frameworks */,
-				AA9640C8D62B84C38491F466133C86ED /* Headers */,
-				6DA7E2378156FCEAF7BD1FB090F70784 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = CollapseClick;
-			productName = CollapseClick;
-			productReference = 1C9799EFF063005FEFE303424CF477D4 /* CollapseClick.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		95DE580D9E64B43C3365C94DD1FD86E3 /* SecureNSUserDefaults */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 20F83DE077DA189D0F5223EE39D9FA8A /* Build configuration list for PBXNativeTarget "SecureNSUserDefaults" */;
-			buildPhases = (
-				1CFA96EE5F16DDFBA263AEE4F6F43353 /* Sources */,
-				1274C681FA6810136C4107B7F1F7F97C /* Frameworks */,
-				1065E79F062F2C4623DBD407A01F292B /* Headers */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				7989F75E502F4533BFBD1A64D9C12928 /* PBXTargetDependency */,
+				52FF2D4D3C6DDBEEF2B4E10F78B53584 /* PBXTargetDependency */,
 			);
 			name = SecureNSUserDefaults;
 			productName = SecureNSUserDefaults;
-			productReference = 983141D8359AF28BC563451AA886EF3E /* SecureNSUserDefaults.framework */;
+			productReference = 86D001DA1A68A73455E158F9EE8732FE /* SecureNSUserDefaults.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		BDC3C19B91D2F34DA36C772B9BC23DD5 /* SWRevealViewController */ = {
+		56E3CD603D494DFF149452467882C294 /* JSONModel */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8616B4A9963EFB5C5E84420925D6ECCC /* Build configuration list for PBXNativeTarget "SWRevealViewController" */;
+			buildConfigurationList = 776C45FC4051FAFF12BC483BE794308A /* Build configuration list for PBXNativeTarget "JSONModel" */;
 			buildPhases = (
-				BC94935C83684A800795D4C91C0418A8 /* Sources */,
-				6608A3F389CD891C3CCBE9550606FC5B /* Frameworks */,
-				83269D8F3CE0BF096CB9B0286F20612F /* Headers */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = SWRevealViewController;
-			productName = SWRevealViewController;
-			productReference = B05EF90EDCC9A06F4165B6F4CB68F8A7 /* SWRevealViewController.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		DC3688684BF42A20A8998F31DDA51A49 /* JSONModel */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = F4D16BF2938703D3A0079C402F5E75D8 /* Build configuration list for PBXNativeTarget "JSONModel" */;
-			buildPhases = (
-				CF525CD81327D7C4B38AF818D91B35A1 /* Sources */,
-				0F13FDE48FAA625D37D626F69DA46819 /* Frameworks */,
-				BBF7227F5BD0440E9DF598DF26EC3891 /* Headers */,
+				7A4BFB60A6B8AFFE0E5BB3C1DF50BBF0 /* Headers */,
+				0C5630CEDE1B38817B5E8187AE8A78A4 /* Sources */,
+				4E6706B9FC60BD43AF1F2B9DA8E6C469 /* Frameworks */,
+				8DC1C704377093952F80F9336B47A82F /* Resources */,
 			);
 			buildRules = (
 			);
@@ -836,241 +794,308 @@
 			);
 			name = JSONModel;
 			productName = JSONModel;
-			productReference = A3D539597DA5FEA204155EE09D2BAD26 /* JSONModel.framework */;
+			productReference = 00BCE0B14D7F359660B8FE5B071FA095 /* JSONModel.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		84220F94EEA988A618D87969315D84D1 /* CollapseClick */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1A8E2C5BEC4570E699C4327E6F146835 /* Build configuration list for PBXNativeTarget "CollapseClick" */;
+			buildPhases = (
+				1249C24264E5892C7846CA23D7EF1F6A /* Headers */,
+				4F435850E3D531DCECA6AB9616A9426D /* Sources */,
+				1FEE90E26AD54447BB45832C5E315E1D /* Frameworks */,
+				5844A84D5488F1A099FE617EE0894795 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CollapseClick;
+			productName = CollapseClick;
+			productReference = D12189F4BAF026444BC33F61BCB97814 /* CollapseClick.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		9C130CD3AA849E8ADCC55D0BC8E1020E /* FMDB */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 54320349FAF7EBC4F27F14598AAA4511 /* Build configuration list for PBXNativeTarget "FMDB" */;
+			buildPhases = (
+				2E0510C9A84D7D9C8381BAD6438A6A9F /* Headers */,
+				F59072949D67823723145257112F12B4 /* Sources */,
+				CC7027CB7D7CB7C116E8D038FFD8A756 /* Frameworks */,
+				A31E733A9011822CBEDFB2E937BA3317 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FMDB;
+			productName = FMDB;
+			productReference = 6060303E3CEEDC6AC3BBA44D3C75B766 /* FMDB.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		CB3199AAC71ADD23529E32042795605A /* SWRevealViewController */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C3E1AFC1C691C53232E225AE145D588F /* Build configuration list for PBXNativeTarget "SWRevealViewController" */;
+			buildPhases = (
+				2AC6BF2C4388DFD31259EFB38B017BD0 /* Headers */,
+				1FA5B8EAD81F70B6BD731EDA934954F1 /* Sources */,
+				AA8403889C88F42A3ED6E28408ED2E38 /* Frameworks */,
+				01E60A11C8C8BB1C62D8EA2822443852 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SWRevealViewController;
+			productName = SWRevealViewController;
+			productReference = 808F31561392C098BE793711BE7115D2 /* SWRevealViewController.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		E282C6E9506A2D91659255E7E6270C15 /* Pods-SCOUT Mobile */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E608E7AF977B049D2628F313CEC8E660 /* Build configuration list for PBXNativeTarget "Pods-SCOUT Mobile" */;
+			buildPhases = (
+				C38F63E9D82F30A8C544CFFFED96C81E /* Headers */,
+				B97B593045F7362FE76757D46FC677AE /* Sources */,
+				F01C8F36C0E1E8055D2205E4B0689DC1 /* Frameworks */,
+				EE3A8ACDFDC5E0C7318DAB1D4DD84160 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				545063B7F446F2452065132BD9739A50 /* PBXTargetDependency */,
+				271EDD6F2259F11ED319E8A500AE0142 /* PBXTargetDependency */,
+				379B81666E733A874670A8024C7F470A /* PBXTargetDependency */,
+				5F479C49355A84001479BB9AAD5628AE /* PBXTargetDependency */,
+				BB3A1584C0C8720D1539B3DABF72D525 /* PBXTargetDependency */,
+				A145703E9A402F9824C537D8A74AB438 /* PBXTargetDependency */,
+				945AE10BC92356153C59070036E8EE40 /* PBXTargetDependency */,
+			);
+			name = "Pods-SCOUT Mobile";
+			productName = "Pods-SCOUT Mobile";
+			productReference = A7820F17DB93BC4499A6B26652A44AE5 /* Pods_SCOUT_Mobile.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		D41D8CD98F00B204E9800998ECF8427E /* Project object */ = {
+		BFDFE7DC352907FC980B868725387E98 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0830;
-				LastUpgradeCheck = 0700;
+				LastSwiftUpdateCheck = 0930;
+				LastUpgradeCheck = 0930;
 			};
-			buildConfigurationList = 2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */;
+			buildConfigurationList = 4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 			);
-			mainGroup = 7DB346D0F39D3F0E887471402A8071AB;
-			productRefGroup = 142A56FDB34F5FB4F02E7A6BDC900A1B /* Products */;
+			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
+			productRefGroup = D1D1A6DC445191CA93A745ED8DB2368B /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				1CE15060B0E33F7AE0A78865CFACF946 /* CocoaSecurity */,
-				4F44BF00E3F3FB997F6C1D89283D9ED9 /* CollapseClick */,
-				251BAD17812F7EBF6532EACF66F941C3 /* FMDB */,
-				DC3688684BF42A20A8998F31DDA51A49 /* JSONModel */,
-				3C7FE2CBE5B8E30F8806DDEE01D10FC2 /* Pods-SCOUT Mobile */,
-				95DE580D9E64B43C3365C94DD1FD86E3 /* SecureNSUserDefaults */,
-				BDC3C19B91D2F34DA36C772B9BC23DD5 /* SWRevealViewController */,
+				27D7B882B974130567379695AF91909D /* CocoaSecurity */,
+				84220F94EEA988A618D87969315D84D1 /* CollapseClick */,
+				9C130CD3AA849E8ADCC55D0BC8E1020E /* FMDB */,
+				BCE3DE68053C99B18AAD56BE1F98BD73 /* GoogleMaps */,
+				56E3CD603D494DFF149452467882C294 /* JSONModel */,
+				E282C6E9506A2D91659255E7E6270C15 /* Pods-SCOUT Mobile */,
+				4A593A2B677B35A6AD6DE28BC08C5B88 /* SecureNSUserDefaults */,
+				CB3199AAC71ADD23529E32042795605A /* SWRevealViewController */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		6DA7E2378156FCEAF7BD1FB090F70784 /* Resources */ = {
+		01E60A11C8C8BB1C62D8EA2822443852 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BAD13AF4C9155D52D7C61A423523E1FC /* CollapseClickCell.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3B3FBABED60E567D0D23F7278F55AF89 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5844A84D5488F1A099FE617EE0894795 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B6951C17075260D557A6E7DD24901D1C /* CollapseClickCell.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		587A9284625C7B17E55BA3277547563D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8DC1C704377093952F80F9336B47A82F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A31E733A9011822CBEDFB2E937BA3317 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EE3A8ACDFDC5E0C7318DAB1D4DD84160 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		1CFA96EE5F16DDFBA263AEE4F6F43353 /* Sources */ = {
+		0C5630CEDE1B38817B5E8187AE8A78A4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E35C2CDC3D347E46BD0FE1D17980D27F /* NSUserDefaults+SecureAdditions.m in Sources */,
-				2F138C03D449BC3486872792FEB19749 /* SecureNSUserDefaults-dummy.m in Sources */,
+				18DED879A43AF6014BB29A59F2AFFCF5 /* JSONAPI.m in Sources */,
+				A34046A4A407F9A7648BE4F32B2116AE /* JSONHTTPClient.m in Sources */,
+				A5F46F78342925536A078C8D1450D4C4 /* JSONKeyMapper.m in Sources */,
+				F64804BAF773CC4D35A660246BB6A095 /* JSONModel+networking.m in Sources */,
+				88D7AAC32BAFFE2A90E0EE04B2161405 /* JSONModel-dummy.m in Sources */,
+				86F7DEDA53CC4284197D7AA63D97C5C0 /* JSONModel.m in Sources */,
+				39957C6B5E06033C91165949F6DACBE8 /* JSONModelClassProperty.m in Sources */,
+				18C617CEA0EA66D3C1EA6CDEF3FB772D /* JSONModelError.m in Sources */,
+				CF3257200471000FE568EB93CE0124B4 /* JSONValueTransformer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		30182C64A761244B5846EFF3911849A9 /* Sources */ = {
+		1FA5B8EAD81F70B6BD731EDA934954F1 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				22E8DDC15C60479D518723353EBF54E8 /* CollapseClick-dummy.m in Sources */,
-				F245E32EE95FB0FFA30D31A6D61C5703 /* CollapseClick.m in Sources */,
-				F943D107D3A83729A7A53ED2097C5583 /* CollapseClickArrow.m in Sources */,
-				0E24E0956D0AD1AD9DC3CEE8A8D47FF2 /* CollapseClickCell.m in Sources */,
+				6C8E02B97DE8D66E9BEBD7DBDA5CAFD5 /* SWRevealViewController-dummy.m in Sources */,
+				2E0A4DAF8AE4FD22D39602C21BAC87C9 /* SWRevealViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		8FE0D4B503A94502F3431DC0DCB58040 /* Sources */ = {
+		4F435850E3D531DCECA6AB9616A9426D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				37F097E2269EF1BD238AD7449D796445 /* FMDatabase.m in Sources */,
-				9C11A290C9C5866A185A54F1EC04E2BB /* FMDatabaseAdditions.m in Sources */,
-				C605A44DF96E7FCACF7D6E37B62F795D /* FMDatabasePool.m in Sources */,
-				A1B5D80A8998311B8C9043E6942925E6 /* FMDatabaseQueue.m in Sources */,
-				D5991941DC41DDDDDACAE0B5D47A4639 /* FMDB-dummy.m in Sources */,
-				87ECA447DB887426665260651B7F147E /* FMResultSet.m in Sources */,
+				E13BDD8B50C20836DEBA85F3C5A5C616 /* CollapseClick-dummy.m in Sources */,
+				0E57664DA577758F1E7BC9FC65A642A2 /* CollapseClick.m in Sources */,
+				4801E147FF4F3083BB1322E9DE0E42EB /* CollapseClickArrow.m in Sources */,
+				17DC99218F27A47B573FEE2BC3448664 /* CollapseClickCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		977FF3839DDC580C34160C11CA16F986 /* Sources */ = {
+		79FAA37E01F43C3018857FBB097722D5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6E32A677B82B7B51A7D96D5D326944A7 /* Pods-SCOUT Mobile-dummy.m in Sources */,
+				B400E970D1455A8A2EC0A37E11010F43 /* Base64.m in Sources */,
+				E4B04D373304913E1AE0363271445CD5 /* CocoaSecurity-dummy.m in Sources */,
+				996B680BD960FE963B9E8F0C24F86C3F /* CocoaSecurity.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B7526EE14C4407BD3415191FF9035300 /* Sources */ = {
+		9D9FFD00DEB0618584B89AFAF9E8D30D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8436B88A9D95EB840C84022CD613EFB0 /* Base64.m in Sources */,
-				0A539197F1612A9881DBE93BC55AE9CA /* CocoaSecurity-dummy.m in Sources */,
-				C308C48E9C57707306F8580AE37248B2 /* CocoaSecurity.m in Sources */,
+				52FEFCD66219FAFBBBC15711700EA857 /* NSUserDefaults+SecureAdditions.m in Sources */,
+				6A94897DC397E75E76AE0DEC570656EF /* SecureNSUserDefaults-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		BC94935C83684A800795D4C91C0418A8 /* Sources */ = {
+		B97B593045F7362FE76757D46FC677AE /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				99288A0F68F8B1D8F41EF8029C343E25 /* SWRevealViewController-dummy.m in Sources */,
-				D0EEC70A67E9E4CF0FC24527AF1FB92F /* SWRevealViewController.m in Sources */,
+				C18CD3EFF89C2FB89FC3C3443AB79EF9 /* Pods-SCOUT Mobile-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		CF525CD81327D7C4B38AF818D91B35A1 /* Sources */ = {
+		F59072949D67823723145257112F12B4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				06697BBB6E6D73B5F021E6DACAC5DE45 /* JSONAPI.m in Sources */,
-				57FE38F17C0EDD5CF73B2A084A17586E /* JSONHTTPClient.m in Sources */,
-				772785574BC1059C2913576CBFF3AD17 /* JSONKeyMapper.m in Sources */,
-				98F19C682AC68E9D2E2052F709F42AF9 /* JSONModel+networking.m in Sources */,
-				8060025235D93F30A5F10B412DD0822E /* JSONModel-dummy.m in Sources */,
-				E39D9A942BCE728467A42C478816966F /* JSONModel.m in Sources */,
-				40A6216FC50B4540584DA1C45F98F9FD /* JSONModelClassProperty.m in Sources */,
-				0B1C5725C7BE03D622114275D6FD6EFA /* JSONModelError.m in Sources */,
-				37F6913EE3CD6EB8715086F0C9F6A823 /* JSONValueTransformer.m in Sources */,
+				345ED7D1DE224E3C44BEFB66AA77444F /* FMDatabase.m in Sources */,
+				EBE4098D555B6DF8E362980173B9FFE4 /* FMDatabaseAdditions.m in Sources */,
+				9E571E872949B6C830D2663949733F28 /* FMDatabasePool.m in Sources */,
+				343B75E1B98C0E4169A0CD82B05480F2 /* FMDatabaseQueue.m in Sources */,
+				0C35EA82ECB4A24D772C66EB076F7867 /* FMDB-dummy.m in Sources */,
+				A059BACEA4B9C7791864C87ED449E9E5 /* FMResultSet.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		084D4E5D042D6E514B7D1374F1E76362 /* PBXTargetDependency */ = {
+		271EDD6F2259F11ED319E8A500AE0142 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = CollapseClick;
-			target = 4F44BF00E3F3FB997F6C1D89283D9ED9 /* CollapseClick */;
-			targetProxy = 947A1DB9694252CDB3B6055613A393AB /* PBXContainerItemProxy */;
+			target = 84220F94EEA988A618D87969315D84D1 /* CollapseClick */;
+			targetProxy = 456275925644F8AD6BD1AB1DB9685DDF /* PBXContainerItemProxy */;
 		};
-		529643B75A809B85ED3CBE52F2002A15 /* PBXTargetDependency */ = {
+		379B81666E733A874670A8024C7F470A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = FMDB;
-			target = 251BAD17812F7EBF6532EACF66F941C3 /* FMDB */;
-			targetProxy = 6F447C784FCC6715A1786393AB434F79 /* PBXContainerItemProxy */;
+			target = 9C130CD3AA849E8ADCC55D0BC8E1020E /* FMDB */;
+			targetProxy = A1D7C6628451C3AF149632EA2983203D /* PBXContainerItemProxy */;
 		};
-		7989F75E502F4533BFBD1A64D9C12928 /* PBXTargetDependency */ = {
+		52FF2D4D3C6DDBEEF2B4E10F78B53584 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = CocoaSecurity;
-			target = 1CE15060B0E33F7AE0A78865CFACF946 /* CocoaSecurity */;
-			targetProxy = 401ABB42430EA6FD205DE15FA2EF082E /* PBXContainerItemProxy */;
+			target = 27D7B882B974130567379695AF91909D /* CocoaSecurity */;
+			targetProxy = B86AF4F4F1DF28C396B10B55BB671A0F /* PBXContainerItemProxy */;
 		};
-		8884B8C23E2536D986548E9BEB53D68F /* PBXTargetDependency */ = {
+		545063B7F446F2452065132BD9739A50 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = JSONModel;
-			target = DC3688684BF42A20A8998F31DDA51A49 /* JSONModel */;
-			targetProxy = 697AA9EB31E881ED236B32A8EBCAE128 /* PBXContainerItemProxy */;
+			name = CocoaSecurity;
+			target = 27D7B882B974130567379695AF91909D /* CocoaSecurity */;
+			targetProxy = F8E1E073DBC4C05BF9665F8327CBAB8B /* PBXContainerItemProxy */;
 		};
-		CB2AE345ABE8C981C107F7271DB2995E /* PBXTargetDependency */ = {
+		5F479C49355A84001479BB9AAD5628AE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = SWRevealViewController;
-			target = BDC3C19B91D2F34DA36C772B9BC23DD5 /* SWRevealViewController */;
-			targetProxy = 4FD5FBE19D7FA523CF4550E87AF07FBB /* PBXContainerItemProxy */;
+			name = GoogleMaps;
+			target = BCE3DE68053C99B18AAD56BE1F98BD73 /* GoogleMaps */;
+			targetProxy = 44EB50A0414645660EBE97E604FA1F76 /* PBXContainerItemProxy */;
 		};
-		F2817E75AB92AE6B65A8CF360BD789BB /* PBXTargetDependency */ = {
+		945AE10BC92356153C59070036E8EE40 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = SecureNSUserDefaults;
-			target = 95DE580D9E64B43C3365C94DD1FD86E3 /* SecureNSUserDefaults */;
-			targetProxy = F0FE7B7BC6F1F8D3B87E13F57E5A735A /* PBXContainerItemProxy */;
+			target = 4A593A2B677B35A6AD6DE28BC08C5B88 /* SecureNSUserDefaults */;
+			targetProxy = 06E811C651E507C6C061AF69D5FC39F9 /* PBXContainerItemProxy */;
 		};
-		FA6F2CA573F31E7865626EB02279E329 /* PBXTargetDependency */ = {
+		A145703E9A402F9824C537D8A74AB438 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = CocoaSecurity;
-			target = 1CE15060B0E33F7AE0A78865CFACF946 /* CocoaSecurity */;
-			targetProxy = 61C1C741F209F4C2D4833C88036E1E26 /* PBXContainerItemProxy */;
+			name = SWRevealViewController;
+			target = CB3199AAC71ADD23529E32042795605A /* SWRevealViewController */;
+			targetProxy = 701DAE7033E873504A82112ABAFA43F5 /* PBXContainerItemProxy */;
+		};
+		BB3A1584C0C8720D1539B3DABF72D525 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = JSONModel;
+			target = 56E3CD603D494DFF149452467882C294 /* JSONModel */;
+			targetProxy = BD7E325DBC7FF7708C754F96B7F62907 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		0E7C18A5C2794AD2BA45229B31D56AC0 /* Debug */ = {
+		053EE6AEB937DF808F9BC5DAAB4D7B33 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9F6994B8F3B1F18B59E657A18CE3F102 /* SWRevealViewController.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/SWRevealViewController/SWRevealViewController-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/SWRevealViewController/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/SWRevealViewController/SWRevealViewController.modulemap";
-				PRODUCT_NAME = SWRevealViewController;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 3.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		1D3AD03CE2994448F733066DA84A0410 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = C27264F45AC35666B5D46D0D1E9B8A15 /* SecureNSUserDefaults.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/SecureNSUserDefaults/SecureNSUserDefaults-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/SecureNSUserDefaults/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/SecureNSUserDefaults/SecureNSUserDefaults.modulemap";
-				PRODUCT_NAME = SecureNSUserDefaults;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 3.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		3A7AF2BCCD60166F3344C5370951E77E /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6EC98B47285AA07518F947482B791CD8 /* CocoaSecurity.xcconfig */;
+			baseConfigurationReference = 4BBBA96AF99450E1C0DF037654CC5C24 /* CocoaSecurity.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -1082,11 +1107,12 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_PREFIX_HEADER = "Target Support Files/CocoaSecurity/CocoaSecurity-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/CocoaSecurity/Info.plist";
+				INFOPLIST_FILE = "Target Support Files/CocoaSecurity/CocoaSecurity-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/CocoaSecurity/CocoaSecurity.modulemap";
+				PRODUCT_MODULE_NAME = CocoaSecurity;
 				PRODUCT_NAME = CocoaSecurity;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -1099,7 +1125,164 @@
 			};
 			name = Release;
 		};
-		4F7D46B8E27DBE368ED587FD44D7A1D9 /* Debug */ = {
+		13223651A86478A7A285BA641D29AA2B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = EFC03AFF7F923677FAB70FD33C00303A /* CollapseClick.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/CollapseClick/CollapseClick-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/CollapseClick/CollapseClick-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/CollapseClick/CollapseClick.modulemap";
+				PRODUCT_MODULE_NAME = CollapseClick;
+				PRODUCT_NAME = CollapseClick;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		143D106F850B9A902381D8ECD9284371 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = BFBDFCC94F5B5E249F00365552A6C9A7 /* SecureNSUserDefaults.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/SecureNSUserDefaults/SecureNSUserDefaults-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/SecureNSUserDefaults/SecureNSUserDefaults-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/SecureNSUserDefaults/SecureNSUserDefaults.modulemap";
+				PRODUCT_MODULE_NAME = SecureNSUserDefaults;
+				PRODUCT_NAME = SecureNSUserDefaults;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		15531BF5C4343964505853542654621F /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5964BA0D7F5B533E1348C0F9A908D61E /* JSONModel.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/JSONModel/JSONModel-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/JSONModel/JSONModel-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/JSONModel/JSONModel.modulemap";
+				PRODUCT_MODULE_NAME = JSONModel;
+				PRODUCT_NAME = JSONModel;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		1F39A9EB0E5CE41B798271173C88B531 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E591F32A5494E02FB5A331BC4341EED6 /* FMDB.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/FMDB/FMDB-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/FMDB/FMDB-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/FMDB/FMDB.modulemap";
+				PRODUCT_MODULE_NAME = FMDB;
+				PRODUCT_NAME = FMDB;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		1FFE3C2874F839E5BDCF5A3AE87F7425 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = BFBDFCC94F5B5E249F00365552A6C9A7 /* SecureNSUserDefaults.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/SecureNSUserDefaults/SecureNSUserDefaults-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/SecureNSUserDefaults/SecureNSUserDefaults-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/SecureNSUserDefaults/SecureNSUserDefaults.modulemap";
+				PRODUCT_MODULE_NAME = SecureNSUserDefaults;
+				PRODUCT_NAME = SecureNSUserDefaults;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		6B24865849881D487417D822F26460EC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -1109,10 +1292,12 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -1120,6 +1305,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -1128,7 +1314,6 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGNING_REQUIRED = NO;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -1149,110 +1334,35 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				MTL_ENABLE_DEBUG_INFO = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = NO_SIGNING/;
 				STRIP_INSTALLED_PRODUCT = NO;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.2;
 				SYMROOT = "${SRCROOT}/../build";
 			};
 			name = Debug;
 		};
-		5AA7690EFB4A9D935862C582ABFA7A41 /* Debug */ = {
+		6F1C07C1B602964D8C325E1F202C57B3 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C27264F45AC35666B5D46D0D1E9B8A15 /* SecureNSUserDefaults.xcconfig */;
+			baseConfigurationReference = D782244D176BEB2059C4F26832421302 /* GoogleMaps.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/SecureNSUserDefaults/SecureNSUserDefaults-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/SecureNSUserDefaults/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/SecureNSUserDefaults/SecureNSUserDefaults.modulemap";
-				PRODUCT_NAME = SecureNSUserDefaults;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 3.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		5F3C84E1BABF500FCF98F51DF09F0856 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 54E9E6D8E1C101616B9F295493923417 /* JSONModel.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/JSONModel/JSONModel-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/JSONModel/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/JSONModel/JSONModel.modulemap";
-				PRODUCT_NAME = JSONModel;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
 		};
-		6ECBB7393B010CB4551F1EEE037A60A8 /* Debug */ = {
+		72CC4B3C8579B40B9E92B60246B81159 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F176CEF301C10501E86A8B7B3F9FAE3B /* FMDB.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/FMDB/FMDB-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/FMDB/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/FMDB/FMDB.modulemap";
-				PRODUCT_NAME = FMDB;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 3.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		733BD9D0AD9EC0F74798FB8F605EDAB2 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 516893042D431E413B13F52166C4F14B /* CollapseClick.xcconfig */;
+			baseConfigurationReference = EFC03AFF7F923677FAB70FD33C00303A /* CollapseClick.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -1264,103 +1374,12 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_PREFIX_HEADER = "Target Support Files/CollapseClick/CollapseClick-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/CollapseClick/Info.plist";
+				INFOPLIST_FILE = "Target Support Files/CollapseClick/CollapseClick-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/CollapseClick/CollapseClick.modulemap";
-				PRODUCT_NAME = CollapseClick;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 3.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		782A6E7D14FDF545B86F219FF05CB86A /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = F176CEF301C10501E86A8B7B3F9FAE3B /* FMDB.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/FMDB/FMDB-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/FMDB/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/FMDB/FMDB.modulemap";
-				PRODUCT_NAME = FMDB;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 3.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		994D559CAD1684009B654F65ED137D61 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9F6994B8F3B1F18B59E657A18CE3F102 /* SWRevealViewController.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/SWRevealViewController/SWRevealViewController-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/SWRevealViewController/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/SWRevealViewController/SWRevealViewController.modulemap";
-				PRODUCT_NAME = SWRevealViewController;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 3.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		B182D9239D3325AFCAFA74B0BDC0C020 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 516893042D431E413B13F52166C4F14B /* CollapseClick.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/CollapseClick/CollapseClick-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/CollapseClick/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/CollapseClick/CollapseClick.modulemap";
+				PRODUCT_MODULE_NAME = CollapseClick;
 				PRODUCT_NAME = CollapseClick;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -1373,10 +1392,11 @@
 			};
 			name = Release;
 		};
-		B67EDA6C506770763469634CC7A0CF94 /* Debug */ = {
+		7D16BBA9C9DFBC7523EDF8CAF783FFEB /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 54E9E6D8E1C101616B9F295493923417 /* JSONModel.xcconfig */;
+			baseConfigurationReference = FBD44CD85C7D1338B9AB0242D031A6F4 /* Pods-SCOUT Mobile.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -1386,37 +1406,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/JSONModel/JSONModel-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/JSONModel/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/JSONModel/JSONModel.modulemap";
-				PRODUCT_NAME = JSONModel;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 3.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		BC0258090BDD6E1E66AF3D982625E594 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = E5568F42410F4E7D519E8D3AF9E7E9FC /* Pods-SCOUT Mobile.release.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "Target Support Files/Pods-SCOUT Mobile/Info.plist";
+				INFOPLIST_FILE = "Target Support Files/Pods-SCOUT Mobile/Pods-SCOUT Mobile-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -1426,20 +1416,20 @@
 				OTHER_LIBTOOLFLAGS = "";
 				PODS_ROOT = "$(SRCROOT)";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_SCOUT_Mobile;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
-			name = Release;
+			name = Debug;
 		};
-		E5B58E4413F2F866B0E86F38DD2F5FEC /* Debug */ = {
+		91A223FAE10F6EF63E545A09BC895026 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6EC98B47285AA07518F947482B791CD8 /* CocoaSecurity.xcconfig */;
+			baseConfigurationReference = 4479D9B8C9D177C644EFECEA561CDF32 /* Pods-SCOUT Mobile.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -1449,24 +1439,27 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/CocoaSecurity/CocoaSecurity-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/CocoaSecurity/Info.plist";
+				INFOPLIST_FILE = "Target Support Files/Pods-SCOUT Mobile/Pods-SCOUT Mobile-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/CocoaSecurity/CocoaSecurity.modulemap";
-				PRODUCT_NAME = CocoaSecurity;
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-SCOUT Mobile/Pods-SCOUT Mobile.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
-			name = Debug;
+			name = Release;
 		};
-		F382FC2073CDADE3AE932C0A7FF678CC /* Release */ = {
+		941D2361789486AF91B4F48A0B2292CE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -1476,10 +1469,12 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -1487,6 +1482,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -1495,7 +1491,6 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGNING_REQUIRED = NO;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -1514,16 +1509,19 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = NO_SIGNING/;
 				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 4.2;
 				SYMROOT = "${SRCROOT}/../build";
 			};
 			name = Release;
 		};
-		FD12A31D09A77041FDF048CDB3C04068 /* Debug */ = {
+		9D43A21D4AB1FBB1DB56A3872F3DF7E6 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FB96814D12C94ED6EB4E084FF54AF91B /* Pods-SCOUT Mobile.debug.xcconfig */;
+			baseConfigurationReference = C5288214496915EEC1ABF329BEEF3489 /* SWRevealViewController.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -1534,101 +1532,248 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "Target Support Files/Pods-SCOUT Mobile/Info.plist";
+				GCC_PREFIX_HEADER = "Target Support Files/SWRevealViewController/SWRevealViewController-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/SWRevealViewController/SWRevealViewController-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-SCOUT Mobile/Pods-SCOUT Mobile.modulemap";
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_SCOUT_Mobile;
+				MODULEMAP_FILE = "Target Support Files/SWRevealViewController/SWRevealViewController.modulemap";
+				PRODUCT_MODULE_NAME = SWRevealViewController;
+				PRODUCT_NAME = SWRevealViewController;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
 		};
+		9F8631DD3EE2C3D874754E791BD3C7EF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D782244D176BEB2059C4F26832421302 /* GoogleMaps.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		BC4BE0867A0703C1ADAADE2396B4FFD8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4BBBA96AF99450E1C0DF037654CC5C24 /* CocoaSecurity.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/CocoaSecurity/CocoaSecurity-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/CocoaSecurity/CocoaSecurity-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/CocoaSecurity/CocoaSecurity.modulemap";
+				PRODUCT_MODULE_NAME = CocoaSecurity;
+				PRODUCT_NAME = CocoaSecurity;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		C0FB33BE6EAF3AD7CCB85A6C7058A079 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E591F32A5494E02FB5A331BC4341EED6 /* FMDB.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/FMDB/FMDB-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/FMDB/FMDB-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/FMDB/FMDB.modulemap";
+				PRODUCT_MODULE_NAME = FMDB;
+				PRODUCT_NAME = FMDB;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		DEE8A9D82E385511DFFCF4E9566B0363 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5964BA0D7F5B533E1348C0F9A908D61E /* JSONModel.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/JSONModel/JSONModel-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/JSONModel/JSONModel-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/JSONModel/JSONModel.modulemap";
+				PRODUCT_MODULE_NAME = JSONModel;
+				PRODUCT_NAME = JSONModel;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		F3A210293FEE2F88B98E695C993D9703 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C5288214496915EEC1ABF329BEEF3489 /* SWRevealViewController.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/SWRevealViewController/SWRevealViewController-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/SWRevealViewController/SWRevealViewController-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/SWRevealViewController/SWRevealViewController.modulemap";
+				PRODUCT_MODULE_NAME = SWRevealViewController;
+				PRODUCT_NAME = SWRevealViewController;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		20F83DE077DA189D0F5223EE39D9FA8A /* Build configuration list for PBXNativeTarget "SecureNSUserDefaults" */ = {
+		125CF3396DACBFF7BFA791D12EC685AA /* Build configuration list for PBXNativeTarget "SecureNSUserDefaults" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				5AA7690EFB4A9D935862C582ABFA7A41 /* Debug */,
-				1D3AD03CE2994448F733066DA84A0410 /* Release */,
+				1FFE3C2874F839E5BDCF5A3AE87F7425 /* Debug */,
+				143D106F850B9A902381D8ECD9284371 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2B367C51EFA490BA07835273C999FCDA /* Build configuration list for PBXNativeTarget "CollapseClick" */ = {
+		1A8E2C5BEC4570E699C4327E6F146835 /* Build configuration list for PBXNativeTarget "CollapseClick" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				733BD9D0AD9EC0F74798FB8F605EDAB2 /* Debug */,
-				B182D9239D3325AFCAFA74B0BDC0C020 /* Release */,
+				13223651A86478A7A285BA641D29AA2B /* Debug */,
+				72CC4B3C8579B40B9E92B60246B81159 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */ = {
+		29A7A5CF28F477B83CAF06FAB27C2274 /* Build configuration list for PBXNativeTarget "CocoaSecurity" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				4F7D46B8E27DBE368ED587FD44D7A1D9 /* Debug */,
-				F382FC2073CDADE3AE932C0A7FF678CC /* Release */,
+				BC4BE0867A0703C1ADAADE2396B4FFD8 /* Debug */,
+				053EE6AEB937DF808F9BC5DAAB4D7B33 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5B0566FF0CE681AC326D316CEC45A8CF /* Build configuration list for PBXNativeTarget "FMDB" */ = {
+		46921981F609C5BA3CB72EC4EA41299D /* Build configuration list for PBXAggregateTarget "GoogleMaps" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				6ECBB7393B010CB4551F1EEE037A60A8 /* Debug */,
-				782A6E7D14FDF545B86F219FF05CB86A /* Release */,
+				9F8631DD3EE2C3D874754E791BD3C7EF /* Debug */,
+				6F1C07C1B602964D8C325E1F202C57B3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8616B4A9963EFB5C5E84420925D6ECCC /* Build configuration list for PBXNativeTarget "SWRevealViewController" */ = {
+		4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				0E7C18A5C2794AD2BA45229B31D56AC0 /* Debug */,
-				994D559CAD1684009B654F65ED137D61 /* Release */,
+				6B24865849881D487417D822F26460EC /* Debug */,
+				941D2361789486AF91B4F48A0B2292CE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		93516C885C0F185BEA0221B8BAC8C1D4 /* Build configuration list for PBXNativeTarget "CocoaSecurity" */ = {
+		54320349FAF7EBC4F27F14598AAA4511 /* Build configuration list for PBXNativeTarget "FMDB" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				E5B58E4413F2F866B0E86F38DD2F5FEC /* Debug */,
-				3A7AF2BCCD60166F3344C5370951E77E /* Release */,
+				1F39A9EB0E5CE41B798271173C88B531 /* Debug */,
+				C0FB33BE6EAF3AD7CCB85A6C7058A079 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D20EB3CAC8B48ECECE3B345DC7229A49 /* Build configuration list for PBXNativeTarget "Pods-SCOUT Mobile" */ = {
+		776C45FC4051FAFF12BC483BE794308A /* Build configuration list for PBXNativeTarget "JSONModel" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				FD12A31D09A77041FDF048CDB3C04068 /* Debug */,
-				BC0258090BDD6E1E66AF3D982625E594 /* Release */,
+				DEE8A9D82E385511DFFCF4E9566B0363 /* Debug */,
+				15531BF5C4343964505853542654621F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		F4D16BF2938703D3A0079C402F5E75D8 /* Build configuration list for PBXNativeTarget "JSONModel" */ = {
+		C3E1AFC1C691C53232E225AE145D588F /* Build configuration list for PBXNativeTarget "SWRevealViewController" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				B67EDA6C506770763469634CC7A0CF94 /* Debug */,
-				5F3C84E1BABF500FCF98F51DF09F0856 /* Release */,
+				9D43A21D4AB1FBB1DB56A3872F3DF7E6 /* Debug */,
+				F3A210293FEE2F88B98E695C993D9703 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E608E7AF977B049D2628F313CEC8E660 /* Build configuration list for PBXNativeTarget "Pods-SCOUT Mobile" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7D16BBA9C9DFBC7523EDF8CAF783FFEB /* Debug */,
+				91A223FAE10F6EF63E545A09BC895026 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+	rootObject = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 }

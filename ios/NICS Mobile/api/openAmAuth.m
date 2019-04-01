@@ -225,11 +225,16 @@ static MultipartPostQueue* mMultipartPostQueue;
 	[request setHTTPBody:postData];
 	[request setHTTPMethod:@"POST"];
 	
-	NSLog(@"USIDDEFECT, loginuser URL: %@",[[dataManager getServerFromSettings] stringByAppendingString:url]);
-	NSLog(@"USIDDEFECT, loginuser HTTPMethod: %@",@"POST");
-	NSLog(@"USIDDEFECT, loginuser Headers: %@",[request allHTTPHeaderFields]);
-	NSLog(@"USIDDEFECT, loginuser Struct: %@",request);
-	NSLog(@"USIDDEFECT, loginuser HTTPBody: %@",[[NSString alloc] initWithData:postData encoding:NSUTF8StringEncoding]);
+	NSLog(@"=======================================");
+	NSLog(@"  Printing EMAPI Request");
+	NSLog(@"	synchronousPostToUrl");
+	NSLog(@"=======================================");
+	NSLog(@"URL: %@",[[dataManager getServerFromSettings] stringByAppendingString:url]);
+	NSLog(@"HTTPMethod: %@",@"POST");
+	NSLog(@"Headers: %@",[request allHTTPHeaderFields]);
+	NSLog(@"Struct: %@",request);
+	NSLog(@"HTTPBody: %@",[[NSString alloc] initWithData:postData encoding:NSUTF8StringEncoding]);
+	NSLog(@"=======================================");
 	
 	NSLog(@"<NSURLRequest %@>", request);
 	
@@ -331,6 +336,7 @@ static MultipartPostQueue* mMultipartPostQueue;
 	// Debug printing the generated request
 	NSLog(@"=======================================");
 	NSLog(@"  Printing EMAPI Request");
+	NSLog(@"	synchronousMultipartPostToUrl");
 	NSLog(@"=======================================");
 	NSLog(@"Request URL: %@", [request URL]);
 	NSLog(@"Request HTTP Method: %@", [request HTTPMethod]);

@@ -38,6 +38,12 @@
 
 @end
 
+// Used by the shared delegate to differentiate the 3 UIActionSheets
+// (.tag is set after instantiation, then read in the clickedButtonAtIndex delegate)
+const int TAG_REPORTS_MENU = 60;
+const int TAG_INCIDENT_MENU = 50;
+const int TAG_COLLABROOM_MENU = 40;
+
 @implementation OverviewViewController
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -69,7 +75,7 @@
 	
 	_incidentMenu = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Select Incident",nil) delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
 	
-	_incidentMenu.tag = 50;
+	_incidentMenu.tag = TAG_INCIDENT_MENU;
 	
 	NSArray *options = [[[_dataManager getIncidentsList] allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
 	
@@ -126,6 +132,7 @@
 		[_dataManager requestResourceRequestsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings] intValue] immediate:YES];
 		[_dataManager requestMdtRepeatedEvery:[DataManager getMdtUpdateFrequencyFromSettings] immediate:YES];
 		[_dataManager requestWfsUpdateRepeatedEvery:[[DataManager getWfsUpdateFrequencyFromSettings] intValue] immediate:YES];
+		//ROCTODO - Request ROCs from server
 	}
 	
 	if(_selectedCollabroom == nil){
@@ -149,15 +156,24 @@
 		[_ReportsButtonView setHidden:FALSE];
 	}
 	
-	_ReportsMenu = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Feature Coming Soon",nil) delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
+	// Disabled Title
+	//_ReportsMenu = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Feature Coming Soon",nil) delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
+	
+	_ReportsMenu = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Select a Report Type",nil) delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
+	_ReportsMenu.tag = TAG_REPORTS_MENU;
+
+	
+	// Enable the following lines to access report types
+	//================================================================================
+	[_ReportsMenu addButtonWithTitle:NSLocalizedString(@"Report on Condition",nil)];//ROCTODO - make the button take you to the appropriate form
 	
 	//[_ReportsMenu addButtonWithTitle:NSLocalizedString(@"Damage Report",nil)];
-	//    [_ReportsMenu addButtonWithTitle:NSLocalizedString(@"Resource Request",nil)];
-	//    [_ReportsMenu addButtonWithTitle:NSLocalizedString(@"Field Report",nil)];
+	//[_ReportsMenu addButtonWithTitle:NSLocalizedString(@"Resource Request",nil)];
+	//[_ReportsMenu addButtonWithTitle:NSLocalizedString(@"Field Report",nil)];
 	//[_ReportsMenu addButtonWithTitle:NSLocalizedString(@"Weather Report",nil)];
-	[_ReportsMenu addButtonWithTitle:NSLocalizedString(@"Cancel",nil)];
+	//================================================================================
 	
-	_ReportsMenu.tag = 60;
+	[_ReportsMenu addButtonWithTitle:NSLocalizedString(@"Cancel",nil)];
 }
 
 //gets called everytime the app is brought back to the forground regardless of what view is currently open
@@ -198,6 +214,7 @@
 	NSArray * sortedCollabrooms = [[collabrooms allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
 	
 	_collabroomMenu = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Select Room",nil) delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
+	_collabroomMenu.tag = TAG_COLLABROOM_MENU;
 	
 	NSString *replaceString = @"";
 	replaceString = [_selectedIncident.incidentname stringByAppendingString:@"-"];
@@ -211,6 +228,7 @@
 	
 	[_collabroomMenu showInView:self.parentViewController.view];
 }
+
 - (IBAction)ReportsButtonPressed:(id)sender {
 	[_ReportsMenu showInView:self.parentViewController.view];
 }
@@ -242,10 +260,12 @@
 	}
 }
 
+// This is the delegate that handles the _ReportsMenu, _incidentMenu, and _collanroomMenu
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
 	NSString *replaceString = @"";
 	
-	if(actionSheet.tag == 50) {
+	// If the actionSheet is the incident menu
+	if(actionSheet.tag == TAG_INCIDENT_MENU) {
 		if(buttonIndex != _incidentMenu.cancelButtonIndex) {
 			
 			_selectedIncident = [[_dataManager getIncidentsList] objectForKey:[actionSheet buttonTitleAtIndex:buttonIndex]];
@@ -256,29 +276,26 @@
 			[_dataManager setSelectedCollabRoomId:@-1 collabRoomName:@"N/A"];
 			_selectedCollabroom = nil;
 		}
-	}else if(actionSheet.tag == 60){
+	}
+	// If the actionSheet is the reports menu
+	else if(actionSheet.tag == TAG_REPORTS_MENU){
+		enum ReportTypesMenu reportType = buttonIndex;
 		
-		//        enum ReportTypesMenu reportType = buttonIndex;
-		
-		//        switch (buttonIndex) {
-		//            case 0:
-		//                [self performSegueWithIdentifier:@"segue_damage_report" sender:self];
-		//                break;
-		////            case 1:
-		////                [self performSegueWithIdentifier:@"segue_resource_request" sender:self];
-		////                break;
-		////            case 2:
-		////                 [self performSegueWithIdentifier:@"segue_field_report" sender:self];
-		////                break;
-		//            case 1:
-		//                [self performSegueWithIdentifier:@"segue_weather_report" sender:self];
-		//                break;
-		//            default:
-		//                break;
-		//        }
-		
-		
-	}else {
+		switch (buttonIndex) {
+			case 0:
+				[self performSegueWithIdentifier:@"segue_roc_action" sender:self];
+				break;
+			default:
+				break;
+		}
+		// Unused segues:
+		//[self performSegueWithIdentifier:@"segue_damage_report" sender:self];
+		//[self performSegueWithIdentifier:@"segue_resource_request" sender:self];
+		//[self performSegueWithIdentifier:@"segue_field_report" sender:self];
+		//[self performSegueWithIdentifier:@"segue_weather_report" sender:self];
+	}
+	// If the actionSheet is the collabroom menu
+	else if(actionSheet.tag == TAG_COLLABROOM_MENU){
 		replaceString = [_selectedIncident.incidentname stringByAppendingString:@"-"];
 		if(buttonIndex != _collabroomMenu.cancelButtonIndex) {
 			//            _selectedCollabroom = [[_dataManager getCollabroomList] objectForKey:[[_dataManager getCollabroomNamesList] objectForKey:[replaceString stringByAppendingString:[actionSheet buttonTitleAtIndex:buttonIndex]]]];
@@ -339,9 +356,19 @@
 }
 
 
-// This method is called when we receive a specific response code from the servser
+
+
+
+
+
+
+
+
+
+
+// This method is called when we receive a specific response code from the server
 // indicating the the user has logged in on a different device
-// Thus, we want to notify the user and close the application.
+// Thus, we want to notify the user and allow them to re-log-in or close the application.
 -(void) showDuplicateLoginWarning:(BOOL)fromFR{
 	
 	NSLog(@"USIDDEFECT, attempting to relogin with credentials: %@, %@",[_dataManager getUsername],[_dataManager getPassword]);

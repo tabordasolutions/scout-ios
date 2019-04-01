@@ -61,10 +61,11 @@
 
 
 @property DataManager *dataManager;
-
 @property UIActionSheet *incidentMenu;
 @property UIActionSheet *collabroomMenu;
 @property UIActionSheet *ReportsMenu;
+
+
 
 @property IncidentPayload *selectedIncident;
 @property CollabroomPayload *selectedCollabroom;
@@ -76,3 +77,5 @@
 - (IBAction)nicsHelpButtonPressed:(id)sender;
 
 @end
+
+

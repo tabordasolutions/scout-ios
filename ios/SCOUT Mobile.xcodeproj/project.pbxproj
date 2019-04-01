@@ -210,13 +210,13 @@
 		88E8C9781D1771980075AA03 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88E8C9771D1771980075AA03 /* Default-568h@2x.png */; };
 		9D10B9FD2024DEF70035E1D2 /* SCOUT_FR_noimage_placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D10B9FC2024DEF60035E1D2 /* SCOUT_FR_noimage_placeholder.png */; };
 		9D1D372B2007E18100A4FF53 /* SCOUT_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D1D372A2007E18100A4FF53 /* SCOUT_logo.png */; };
+		9D6CA661220E3BE3003B7546 /* ReportOnConditionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D6CA660220E3BE3003B7546 /* ReportOnConditionViewController.m */; };
+		9D6CA666220E3C27003B7546 /* ReportOnConditionActionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D6CA665220E3C27003B7546 /* ReportOnConditionActionViewController.m */; };
 		9DB52C2520053142003833B9 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DB52C2420053142003833B9 /* CoreMedia.framework */; };
 		9DB52C2720053149003833B9 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DB52C2620053149003833B9 /* CoreMotion.framework */; };
 		9DB52C2920053153003833B9 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DB52C2820053153003833B9 /* AVFoundation.framework */; };
 		9DB52C2B2005315A003833B9 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DB52C2A2005315A003833B9 /* SystemConfiguration.framework */; };
 		9DB52C2D20053160003833B9 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DB52C2C20053160003833B9 /* OpenGLES.framework */; };
-		9DB52C37200532C8003833B9 /* upload-dsym.sh in Resources */ = {isa = PBXBuildFile; fileRef = 9DB52C35200532C8003833B9 /* upload-dsym.sh */; };
-		9DB52C38200532C8003833B9 /* libTestFairy.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DB52C36200532C8003833B9 /* libTestFairy.a */; };
 		F967D53CE165EEF0E4B8B0B9 /* Pods_SCOUT_Mobile.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F5EDBF653327A0209BD7791 /* Pods_SCOUT_Mobile.framework */; };
 /* End PBXBuildFile section */
 
@@ -631,14 +631,15 @@
 		88E8C9771D1771980075AA03 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		9D10B9FC2024DEF60035E1D2 /* SCOUT_FR_noimage_placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SCOUT_FR_noimage_placeholder.png; sourceTree = "<group>"; };
 		9D1D372A2007E18100A4FF53 /* SCOUT_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SCOUT_logo.png; sourceTree = "<group>"; };
+		9D6CA65F220E3BC4003B7546 /* ReportOnConditionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReportOnConditionViewController.h; sourceTree = "<group>"; };
+		9D6CA660220E3BE3003B7546 /* ReportOnConditionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReportOnConditionViewController.m; sourceTree = "<group>"; };
+		9D6CA665220E3C27003B7546 /* ReportOnConditionActionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReportOnConditionActionViewController.m; sourceTree = "<group>"; };
+		9D8ED2C622270D12001AD307 /* ReportOnConditionActionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReportOnConditionActionViewController.h; sourceTree = "<group>"; };
 		9DB52C2420053142003833B9 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		9DB52C2620053149003833B9 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		9DB52C2820053153003833B9 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		9DB52C2A2005315A003833B9 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		9DB52C2C20053160003833B9 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
-		9DB52C34200532C8003833B9 /* TestFairy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFairy.h; sourceTree = "<group>"; };
-		9DB52C35200532C8003833B9 /* upload-dsym.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = "upload-dsym.sh"; sourceTree = "<group>"; };
-		9DB52C36200532C8003833B9 /* libTestFairy.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFairy.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -647,7 +648,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				9DB52C2D20053160003833B9 /* OpenGLES.framework in Frameworks */,
-				9DB52C38200532C8003833B9 /* libTestFairy.a in Frameworks */,
 				9DB52C2B2005315A003833B9 /* SystemConfiguration.framework in Frameworks */,
 				9DB52C2920053153003833B9 /* AVFoundation.framework in Frameworks */,
 				9DB52C2720053149003833B9 /* CoreMotion.framework in Frameworks */,
@@ -780,6 +780,7 @@
 		01A8C7411ABB471A00B367F0 /* Reports */ = {
 			isa = PBXGroup;
 			children = (
+				9D6CA664220E3C12003B7546 /* ReportOnCondition */,
 				3A70105918E09F8900C3DC42 /* DamageReportDetailViewController.h */,
 				3A70105A18E09F8900C3DC42 /* DamageReportDetailViewController.m */,
 				3A70105B18E09F8900C3DC42 /* DamageReportListViewController.h */,
@@ -827,7 +828,6 @@
 		3A141A9718DB34AC00466AD3 = {
 			isa = PBXGroup;
 			children = (
-				9DB52C2E2005325A003833B9 /* TestFairy */,
 				557E037D1F797425005A32DB /* Images.xcassets */,
 				88E8C9771D1771980075AA03 /* Default-568h@2x.png */,
 				3A141AA918DB34AC00466AD3 /* NICS Mobile */,
@@ -1324,14 +1324,15 @@
 			path = QuadTree;
 			sourceTree = "<group>";
 		};
-		9DB52C2E2005325A003833B9 /* TestFairy */ = {
+		9D6CA664220E3C12003B7546 /* ReportOnCondition */ = {
 			isa = PBXGroup;
 			children = (
-				9DB52C34200532C8003833B9 /* TestFairy.h */,
-				9DB52C35200532C8003833B9 /* upload-dsym.sh */,
-				9DB52C36200532C8003833B9 /* libTestFairy.a */,
+				9D8ED2C622270D12001AD307 /* ReportOnConditionActionViewController.h */,
+				9D6CA65F220E3BC4003B7546 /* ReportOnConditionViewController.h */,
+				9D6CA660220E3BE3003B7546 /* ReportOnConditionViewController.m */,
+				9D6CA665220E3C27003B7546 /* ReportOnConditionActionViewController.m */,
 			);
-			name = TestFairy;
+			name = ReportOnCondition;
 			sourceTree = "<group>";
 		};
 		EC251F5879C1AFF1522B7704 /* Pods */ = {
@@ -1460,7 +1461,6 @@
 				3A3C9E5B18DB441300EEBA17 /* tasking_schema.json in Resources */,
 				9D1D372B2007E18100A4FF53 /* SCOUT_logo.png in Resources */,
 				3A3C9E6818DB441300EEBA17 /* FormView.xib in Resources */,
-				9DB52C37200532C8003833B9 /* upload-dsym.sh in Resources */,
 				01D77CE51BB5C872008B38BB /* FormDamageInformation.xib in Resources */,
 				88E8C9781D1771980075AA03 /* Default-568h@2x.png in Resources */,
 				017A58DC1C0F948000E683F0 /* ReportInfoWindow.xib in Resources */,
@@ -1500,7 +1500,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		90A25395613B515F6166EFDF /* [CP] Embed Pods Frameworks */ = {
@@ -1509,7 +1509,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-SCOUT Mobile/Pods-SCOUT Mobile-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-SCOUT Mobile/Pods-SCOUT Mobile-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/CocoaSecurity/CocoaSecurity.framework",
 				"${BUILT_PRODUCTS_DIR}/CollapseClick/CollapseClick.framework",
 				"${BUILT_PRODUCTS_DIR}/FMDB/FMDB.framework",
@@ -1528,7 +1528,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SCOUT Mobile/Pods-SCOUT Mobile-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SCOUT Mobile/Pods-SCOUT Mobile-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		C8FCD4A163033E3C8E8A4C3C /* [CP] Copy Pods Resources */ = {
@@ -1537,16 +1537,16 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-SCOUT Mobile/Pods-SCOUT Mobile-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-SCOUT Mobile/Pods-SCOUT Mobile-resources.sh",
 				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SCOUT Mobile/Pods-SCOUT Mobile-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SCOUT Mobile/Pods-SCOUT Mobile-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1685,12 +1685,14 @@
 				0184742B1C23234E000133AF /* PolygonEditView.m in Sources */,
 				3A3C9E2B18DB441200EEBA17 /* ResourceRequestTable.m in Sources */,
 				3A3C9E3718DB441200EEBA17 /* ResourceRequestMessage.m in Sources */,
+				9D6CA661220E3BE3003B7546 /* ReportOnConditionViewController.m in Sources */,
 				3A3C9E3318DB441200EEBA17 /* IncidentMessage.m in Sources */,
 				01582D8F1C29EC7300307C76 /* WeatherReportListViewController.m in Sources */,
 				01AB5DF41AD467BA00A879B0 /* ChatViewCell.m in Sources */,
 				3A3C9E6218DB441300EEBA17 /* FieldReportListViewController.m in Sources */,
 				01582D831C29E84500307C76 /* WeatherReportMessage.m in Sources */,
 				3A70106418E0A1EB00C3DC42 /* DamageReportMessage.m in Sources */,
+				9D6CA666220E3C27003B7546 /* ReportOnConditionActionViewController.m in Sources */,
 				3A3C9E4318DB441300EEBA17 /* ReportPayload.m in Sources */,
 				5528E7101F299473003EC8F7 /* AppDelegate.m in Sources */,
 				013A5B721C230DF2009256EF /* CircleEditView.m in Sources */,

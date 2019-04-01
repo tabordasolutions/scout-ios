@@ -57,15 +57,24 @@ UIStoryboard *currentStoryboard;
      currentStoryboard = [UIStoryboard storyboardWithName:@"Main_iPad_Prototype" bundle:nil];
 
     _currentReport = nil;
-    
-    _ReportsMenu = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Feature Coming Soon",nil) delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
 	
-    
-    //[_ReportsMenu addButtonWithTitle:NSLocalizedString(@"Damage Report",nil)];
-//    [_ReportsMenu addButtonWithTitle:NSLocalizedString(@"Resource Request",nil)];
-//    [_ReportsMenu addButtonWithTitle:NSLocalizedString(@"Field Report",nil)];
-    //[_ReportsMenu addButtonWithTitle:NSLocalizedString(@"Weather Report",nil)];
-    [_ReportsMenu addButtonWithTitle:NSLocalizedString(@"Dismiss",nil)];
+	
+	// Enable this line to show "Feature Coming Soon" dialog
+	//========================================================================
+    //_ReportsMenu = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Feature Coming Soon",nil) delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
+	//========================================================================
+	
+	
+	// Enable these lines to display Reports
+	//========================================================================
+	_ReportsMenu = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Select Report Type",nil) delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
+    [_ReportsMenu addButtonWithTitle:NSLocalizedString(@"Damage Report",nil)];
+    [_ReportsMenu addButtonWithTitle:NSLocalizedString(@"Resource Request",nil)];
+    [_ReportsMenu addButtonWithTitle:NSLocalizedString(@"Field Report",nil)];
+    [_ReportsMenu addButtonWithTitle:NSLocalizedString(@"Weather Report",nil)];
+	//========================================================================
+	
+	[_ReportsMenu addButtonWithTitle:NSLocalizedString(@"Dismiss",nil)];
     
     [IncidentButtonBar SetIncidentCanvasController:self];
     [IncidentButtonBar SetIncidentCanvas:_IncidentCanvas];

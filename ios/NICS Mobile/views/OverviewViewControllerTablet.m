@@ -43,7 +43,7 @@
 
 NSNotificationCenter *notificationCenter;
 
-@implementation OverviewViewControllerTablet
+@implementation OverviewViewControllerTablet   
 - (void)viewWillAppear:(BOOL)animated
 {
 	[super viewWillAppear:animated];
@@ -151,7 +151,7 @@ NSNotificationCenter *notificationCenter;
 		[_dataManager setSelectedCollabRoomId:_selectedCollabroom.collabRoomId collabRoomName:_selectedCollabroom.name];
 		
 		NSString* incidentNameReplace = [_selectedIncident.incidentname stringByAppendingString:@"-"];
-		[_selectRoomButton setTitle:[_selectedCollabroom.name stringByReplacingOccurrencesOfString:incidentNameReplace withString:@""] forState:UIControlStateNormal]; forState:UIControlStateNormal;
+		[_selectRoomButton setTitle:[_selectedCollabroom.name stringByReplacingOccurrencesOfString:incidentNameReplace withString:@""] forState:UIControlStateNormal];
 		
 		NSNotification *IncidentSwitchedNotification = [NSNotification notificationWithName:@"CollabRoomSwitched" object:_selectedIncident.incidentname];
 		[notificationCenter postNotification:IncidentSwitchedNotification];

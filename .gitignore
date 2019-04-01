@@ -82,3 +82,6 @@ ios/NICS Mobile/Settings.bundle/*
 
 # Excluding the Google Maps framework directory
 ios/Pods/GoogleMaps/
+
+# Exclude the entire pods directory
+ios/Pods
