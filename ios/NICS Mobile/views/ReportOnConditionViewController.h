@@ -37,6 +37,10 @@
 //#import <UIKit/UIKit.h>
 //#import "AssetsLibrary/AssetsLibrary.h"
 #import "DataManager.h"
+#import "Fields/TextFieldDropdownController .h"
+#import "Fields/CheckBoxTableViewController.h"
+#import "Fields/StringPickerViewController.h"
+
 //#import "SimpleReportPayload.h"
 //#import "FormSpinner.h"
 //#import "Enums.h"

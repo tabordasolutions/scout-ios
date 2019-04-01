@@ -217,6 +217,9 @@
 		9DB52C2920053153003833B9 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DB52C2820053153003833B9 /* AVFoundation.framework */; };
 		9DB52C2B2005315A003833B9 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DB52C2A2005315A003833B9 /* SystemConfiguration.framework */; };
 		9DB52C2D20053160003833B9 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DB52C2C20053160003833B9 /* OpenGLES.framework */; };
+		9DF395C122527F6D00233379 /* TextFieldDropdownController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DF395C022527F6D00233379 /* TextFieldDropdownController.m */; };
+		9DF395C422527FD000233379 /* CheckBoxTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DF395C322527FD000233379 /* CheckBoxTableViewController.m */; };
+		9DF395C722527FEB00233379 /* StringPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DF395C622527FEB00233379 /* StringPickerViewController.m */; };
 		F967D53CE165EEF0E4B8B0B9 /* Pods_SCOUT_Mobile.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F5EDBF653327A0209BD7791 /* Pods_SCOUT_Mobile.framework */; };
 /* End PBXBuildFile section */
 
@@ -640,6 +643,12 @@
 		9DB52C2820053153003833B9 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		9DB52C2A2005315A003833B9 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		9DB52C2C20053160003833B9 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		9DF395BF22527F5100233379 /* TextFieldDropdownController .h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TextFieldDropdownController .h"; sourceTree = "<group>"; };
+		9DF395C022527F6D00233379 /* TextFieldDropdownController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TextFieldDropdownController.m; sourceTree = "<group>"; };
+		9DF395C222527FC300233379 /* CheckBoxTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CheckBoxTableViewController.h; sourceTree = "<group>"; };
+		9DF395C322527FD000233379 /* CheckBoxTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CheckBoxTableViewController.m; sourceTree = "<group>"; };
+		9DF395C522527FE200233379 /* StringPickerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StringPickerViewController.h; sourceTree = "<group>"; };
+		9DF395C622527FEB00233379 /* StringPickerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StringPickerViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1327,12 +1336,26 @@
 		9D6CA664220E3C12003B7546 /* ReportOnCondition */ = {
 			isa = PBXGroup;
 			children = (
+				9DF395BE22527ED000233379 /* Fields */,
 				9D8ED2C622270D12001AD307 /* ReportOnConditionActionViewController.h */,
 				9D6CA65F220E3BC4003B7546 /* ReportOnConditionViewController.h */,
 				9D6CA660220E3BE3003B7546 /* ReportOnConditionViewController.m */,
 				9D6CA665220E3C27003B7546 /* ReportOnConditionActionViewController.m */,
 			);
 			name = ReportOnCondition;
+			sourceTree = "<group>";
+		};
+		9DF395BE22527ED000233379 /* Fields */ = {
+			isa = PBXGroup;
+			children = (
+				9DF395BF22527F5100233379 /* TextFieldDropdownController .h */,
+				9DF395C022527F6D00233379 /* TextFieldDropdownController.m */,
+				9DF395C222527FC300233379 /* CheckBoxTableViewController.h */,
+				9DF395C322527FD000233379 /* CheckBoxTableViewController.m */,
+				9DF395C522527FE200233379 /* StringPickerViewController.h */,
+				9DF395C622527FEB00233379 /* StringPickerViewController.m */,
+			);
+			path = Fields;
 			sourceTree = "<group>";
 		};
 		EC251F5879C1AFF1522B7704 /* Pods */ = {
@@ -1563,6 +1586,7 @@
 				55B249831F29A1220006DDEB /* GMULineString.m in Sources */,
 				3A3C9E3918DB441200EEBA17 /* TaskFormMessage.m in Sources */,
 				01D538131AB09FA000DF1579 /* IncidentCanvasUIViewController.m in Sources */,
+				9DF395C122527F6D00233379 /* TextFieldDropdownController.m in Sources */,
 				019BAC701C21C7DD007067EE /* ColorPicker.m in Sources */,
 				3A70106A18E0C27100C3DC42 /* DamageReportTable.m in Sources */,
 				3A3C9E2618DB441200EEBA17 /* ChatTable.m in Sources */,
@@ -1588,6 +1612,7 @@
 				3A48B40318E1CB4A00109967 /* MarkupText.m in Sources */,
 				3A3C9E2818DB441200EEBA17 /* FieldReportTable.m in Sources */,
 				013CD0121BB1DE1E004824CE /* userorg.m in Sources */,
+				9DF395C422527FD000233379 /* CheckBoxTableViewController.m in Sources */,
 				3A70105D18E09F8900C3DC42 /* DamageReportDetailViewController.m in Sources */,
 				3A3C9E3018DB441200EEBA17 /* ChatMessage.m in Sources */,
 				3A3C9E6118DB441300EEBA17 /* FieldReportDetailViewController.m in Sources */,
@@ -1647,6 +1672,7 @@
 				3A3C9E3F18DB441300EEBA17 /* FieldReportPayload.m in Sources */,
 				3A3C9E2E18DB441200EEBA17 /* Enums.m in Sources */,
 				0166C67C1AE9532D00716F1A /* WfsTrackingTableViewController.m in Sources */,
+				9DF395C722527FEB00233379 /* StringPickerViewController.m in Sources */,
 				55B2497A1F29A1220006DDEB /* GMUStaticCluster.m in Sources */,
 				3A3C9E6018DB441300EEBA17 /* CustomTextView.m in Sources */,
 				013CD00F1BB1DD0A004824CE /* OrganizationPayload.m in Sources */,
