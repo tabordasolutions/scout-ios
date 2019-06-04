@@ -38,6 +38,7 @@
 static BOOL firstRun = YES;
 
 static BOOL receivingSimpleReports = NO;
+static BOOL receivingReportOnConditions = NO;
 static BOOL receivingDamageReports = NO;
 static BOOL receivingFieldReports = NO;
 static BOOL receivingResourceRequests = NO;
@@ -413,6 +414,82 @@ static MultipartPostQueue* mMultipartPostQueue;
 		}
 	}
 }
+
++ (void) getReportOnConditionsForIncidentId:(NSNumber *)incidentId offset:(NSNumber *)offset limit:(NSNumber *)limit completion:(void (^)(BOOL successful)) completion
+{
+	if(!receivingReportOnConditions && ![incidentId  isEqual: @-1])
+	{
+		receivingReportOnConditions = YES;
+		
+		dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
+		dispatch_async(queue, ^{
+			NSInteger statusCode = -1;
+			
+			
+			NSString *url = [NSString stringWithFormat:@"reports/%@/ROC?sortOrder=desc&fromDate=%lld",incidentId,([[dataManager getLastReportOnConditionTimestampForIncidentId:incidentId] longLongValue])];
+			
+			NSLog(@"About to request ROCs from URL: \"%@\"",url);
+			NSString* jsonString = [self synchronousGetFromUrl:url statusCode:&statusCode];
+			
+			NSLog(@"ROC - getROCsForIncident - Got json string: %@",jsonString);
+	
+			NSError* error = nil;
+			
+			// Converting json to an NSDictionary
+			NSMutableDictionary *serverPayload = [ReportOnConditionData jsonDictionaryFromJsonString:jsonString];
+			
+			// Instead of checking the error value, check the return value
+			if(serverPayload != nil && [serverPayload isKindOfClass:[NSDictionary class]])
+			{
+				// Confirming the message is okay:
+				if([[ReportOnConditionData jsonGetString:serverPayload withName:@"message"] isEqualToString:@"ok"])
+				{
+					
+					// Parsing the dictionary to a list of ReportOnConditionData
+					NSArray<ReportOnConditionData> *reports = [ReportOnConditionData multipleFromServerPayload:serverPayload];
+					
+					// Adding all inbound ROCs to the server
+					[dataManager addReportOnConditionsToHistory:reports];
+					
+					// Removing all sent ROCs from the store and forward table
+					NSArray<ReportOnConditionData> *outboundROCs = [dataManager getAllReportOnConditionsFromStoreAndForward];
+					
+					for(ReportOnConditionData *roc in outboundROCs)
+					{
+						// If the roc has been sent, remove it.
+						if(roc.sendStatus == SENT)
+						{
+							[dataManager deleteReportOnConditionFromStoreAndForward:roc];
+						}
+					}
+				}
+			}
+			
+			
+			receivingReportOnConditions = NO;
+			completion(YES);
+		});
+	}
+}
+
++ (void)postReportOnConditions
+{
+	NSMutableArray<ReportOnConditionData>* rocs = [dataManager getAllReportOnConditionsFromStoreAndForward];
+	
+	for(ReportOnConditionData *data in rocs)
+	{
+		if(data.sendStatus == WAITING_TO_SEND)
+		{
+			NSLog(@"ROC - Got an ROC payload message from store and forward table, adding it to send queue. (Incident: %@, creationDate: %@",data.incidentname, data.datecreated);
+			
+			[mMultipartPostQueue addPayloadToSendQueue:data];
+			// Why are we only adding one to the send queue before breaking?
+			// I just followed the algorithm that SimpleReports use
+			break;
+		}
+	}
+}
+
 
 +(void) getFieldReportsForIncidentId:(NSNumber *)incidentId offset:(NSNumber *)offset limit:(NSNumber *)limit completion:(void (^)(BOOL))completion{
 	if(!receivingFieldReports && ![incidentId  isEqual: @-1]) {
@@ -1051,6 +1128,68 @@ static MultipartPostQueue* mMultipartPostQueue;
 		parser.delegate = self;
 	}
 }
+
+
+
+
++ (NSDictionary*) getLocationBasedDataForLatitude:(double)lat andLongitude:(double)lon
+{
+	NSLog(@"ROC - About to request location-based data for location: %f, %f",lat,lon);
+	
+	NSInteger statusCode = -1;
+	
+	NSString *url = [NSString stringWithFormat:@"reports/1/locationBasedData?longitude=%f&latitude=%f&CRS=EPSG:4326&searchRangeInMiles=100",lon,lat];
+
+	
+	NSLog(@"ROC - About to request location-based data from URL: \"%@\"",url);
+	
+	
+	NSString* jsonString = [self synchronousGetFromUrl:url statusCode:&statusCode];
+	
+	NSError* error = nil;
+	
+	
+	NSLog(@"ROC - got location-based data JSON: \"%@\"",jsonString);
+	
+	
+	if(jsonString != nil)
+	{
+		NSData *jsonStringData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+		
+		
+		NSError *error = nil;
+		id object = [NSJSONSerialization JSONObjectWithData:jsonStringData options:0 error:&error];
+		
+		// Check if json was malformed
+		if(!error)
+		{
+			if([object isKindOfClass:[NSDictionary class]])
+			{
+				NSDictionary *jsonDictionary = object;
+				
+				
+				if([jsonDictionary[@"status"] intValue] == 200)
+				{
+					if([jsonDictionary[@"message"] isEqualToString:@"OK"])
+					{
+						NSDictionary *locationDataDictionary = jsonDictionary[@"data"];
+
+						return locationDataDictionary;
+					}
+				}
+			}
+		}
+	}
+	
+	// If we reached this statement, there was an error somewhere above
+	return nil;
+}
+
+
+
+
+
+
 
 + (void)WfsXmlParsingComplete: (NSMutableArray*)features: (TrackingLayerPayload*)layer{
 	

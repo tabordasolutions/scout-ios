@@ -236,14 +236,14 @@ static MultipartPostQueue* mMultipartPostQueue;
 	NSLog(@"HTTPBody: %@",[[NSString alloc] initWithData:postData encoding:NSUTF8StringEncoding]);
 	NSLog(@"=======================================");
 	
-	NSLog(@"<NSURLRequest %@>", request);
+	NSLog(@"synchronousPost - NSURLRequest \"%@\"", request);
 	
 	NSHTTPURLResponse *response = nil;
 	NSError *error = nil;
 	NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
 	
 	*statusCode = [response statusCode];
-	NSLog(@"USIDDEFECT, loginuser response data: %@",[[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding]);
+	NSLog(@"synchronousPost - response data: %@",[[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding]);
 	return [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
 }
 

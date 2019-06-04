@@ -34,6 +34,7 @@
 #import <Foundation/Foundation.h>
 #import "AssetsLibrary/AssetsLibrary.h"
 #import "SimpleReportPayload.h"
+#import "ReportOnConditionData.h"
 #import "ReportPayload.h"
 #import "RestClient.h"
 #import "Enums.h"
@@ -62,9 +63,10 @@
 
 -(id) init;
 -(void) dealloc;
-- (void)postReport: (ReportPayload*) reportPayload;
+- (void)postReport: (NSObject*) report;
 - (void)postSimpleReport: (SimpleReportPayload*) payload;
 -(void) postDamageReports: (DamageReportPayload*) payload;
+- (void) postReportOnCondition:(ReportOnConditionData*) payload;
 - (void) checkIfMessageAccepted;
 // Sends the next report in the queue
 - (void) sendRemainingReports;
@@ -75,6 +77,6 @@
 totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite;
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data;
 
--(void)addPayloadToSendQueue:(ReportPayload*) payload;
--(void)addCahcedReportsToSendQueue;
+-(void)addPayloadToSendQueue:(NSObject*) payload;
+-(void)addCachedReportsToSendQueue;
 @end

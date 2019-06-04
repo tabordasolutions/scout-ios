@@ -34,7 +34,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "TextFieldDropdownController .h"
+#import "TextFieldDropdownController.h"
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -77,7 +77,6 @@
 	_dropdownMenuTableView = [[UITableView alloc] initWithFrame:CGRectZero];
 	[_dropdownMenuTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"rocCellId"];
 	
-	[_textField setDelegate:self];
 	[_dropdownMenuTableView setDelegate:self];
 	[_dropdownMenuTableView setDataSource:self];
 	[_dropdownMenuTableView reloadData];
@@ -163,13 +162,12 @@
 	//-------------------------------------------------------------------------
 	// This adds a border to the tableview
 	//_dropdownMenuTableView.contentInset = UIEdgeInsetsMake(50, 0, 0, 0);
-	
 	//_dropdownMenuTableView.layer.borderColor = UIColor.blackColor.CGColor;
 	//_dropdownMenuTableView.layer.borderWidth = 0.5;
+	
 	[_dropdownMenuTableView setBackgroundColor:[UIColor colorWithRed:0.078 green:0.137 blue:0.173 alpha:1.0]];
 	_dropdownMenuTableView.layer.cornerRadius = 3;
 	//-------------------------------------------------------------------------
-	
 	
 	return self;
 }
@@ -239,11 +237,19 @@
 
 - (void) textFieldDidEndEditing:(UITextField *)textField
 {
+	// Clearing the border color, if it's set (to clear the red error border)
+	_textField.layer.borderColor = UIColor.clearColor.CGColor;
+	_textField.layer.borderWidth = 0.0;
+	
 	[_dropdownMenuTableView setHidden:true];
 }
 
 - (BOOL) textFieldShouldClear:(UITextField *)textField
 {
+	// Clearing the border color, if it's set (to clear the red error border)
+	_textField.layer.borderColor = UIColor.clearColor.CGColor;
+	_textField.layer.borderWidth = 0.0;
+	
 	[self filterOptionsForText:@""];
 	[_dropdownMenuTableView setHidden:false];
 	return true;
@@ -254,10 +260,12 @@
 	// Buidling the final string that the textField will contain.
 	NSString *finalString = [[textField text] stringByReplacingCharactersInRange:range withString:string];
 	
+	// Clearing the border color, if it's set (to clear the red error border)
+	_textField.layer.borderColor = UIColor.clearColor.CGColor;
+	_textField.layer.borderWidth = 0.0;
+	
 	// Filter the available options:
 	[self filterOptionsForText:finalString];
-	
-	NSLog(@"ROC changeChars: range:%@, repcement:%@",NSStringFromRange(range),string);
 }
 //--------------------------------------------------------------------------------------------------------------------------
 
@@ -290,6 +298,7 @@
 	cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
 	
 	// Style the cell:
+	[[cell textLabel] setAdjustsFontSizeToFitWidth:true];
 	[[cell textLabel] setText:[_activeDropdownMenuOptions objectAtIndex:[indexPath row]]];
 	[[cell textLabel] setTextColor:[UIColor whiteColor]];
 	[cell setBackgroundColor:[UIColor clearColor]];
@@ -301,9 +310,16 @@
 //--------------------------------------------------------------------------------------------------------------------------
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath*)indexPath
 {
-	NSLog(@"ROC Selected option: %@", [_activeDropdownMenuOptions objectAtIndex:[indexPath row]]);
 	// Set the text view's text:
 	[_textField setText: [_activeDropdownMenuOptions objectAtIndex:[indexPath row]]];
+	[_textField sendActionsForControlEvents:UIControlEventValueChanged];
+	[_textField sendActionsForControlEvents:UIControlEventEditingChanged];
+	[_textField sendActionsForControlEvents:UIControlEventEditingDidEnd];
+	
+	// Clearing the border color, if it's set (to clear the red error border)
+	_textField.layer.borderColor = UIColor.clearColor.CGColor;
+	_textField.layer.borderWidth = 0.0;
+	
 	// Deselect the tableView cell
 	[tableView deselectRowAtIndexPath:indexPath animated:true];
 	// Hide the tableView

@@ -37,9 +37,10 @@
 //#import <UIKit/UIKit.h>
 //#import "AssetsLibrary/AssetsLibrary.h"
 #import "DataManager.h"
-#import "Fields/TextFieldDropdownController .h"
+#import "Fields/TextFieldDropdownController.h"
 #import "Fields/CheckBoxTableViewController.h"
 #import "Fields/StringPickerViewController.h"
+#import "Fields/DateTimePickerController.h"
 
 //#import "SimpleReportPayload.h"
 //#import "FormSpinner.h"
@@ -49,82 +50,77 @@
 
 @interface ReportOnConditionViewController : UIViewController <UISplitViewControllerDelegate, UITextFieldDelegate, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
+
+// Static function to set the viewing mode for ReportOnConditionViewController
+// true - loads the current incident's latest ROC and displays it
+// false - shows the blank form for creating a new ROC
++ (void) setViewControllerViewingMode:(bool)mode;
+
+//=============================================================================
+// Info
+//=============================================================================
+@property DataManager *dataManager;
+@property NSArray<NSString*> *allIncidentNames;
+@property IncidentPayload *currentIncidentPayload;
+
+
+// Holds the type of the last ROC submitted for the current incident
+// one of {ROC_NONE, ROC_NON_FINAL, ROC_FINAL}
+@property int lastIncidentReportType;
+// Holds the type of the current ROC
+// one of {ROC_NEW, ROC_UPDATE, ROC_FINAL}
+@property int currentReportType;
+// Whether or not the new ROC form will create a new incident on submission
+@property bool creatingNewIncident;
+
+// Whether or not the request for location-based weather data was successful
+@property bool successfullyGotAllWeatherData;
+
+
+
 //=============================================================================
 // Section Headers / Views
 //=============================================================================
-@property IBOutlet UIView *section1HeaderView;
-@property IBOutlet UIImageView *section1HeaderArrowImage;
-@property IBOutlet UIView *section1ContentView;
-@property IBOutlet UIImageView *section1HeaderErrotableviwrImage;
+@property IBOutlet UIView *incidentInfoHeaderView;
+@property IBOutlet UIImageView *incidentInfoHeaderArrowImage;
+@property IBOutlet UIView *incidentInfoContentView;
+@property IBOutlet UIImageView *incidentInfoHeaderErrorImage;
 
+@property IBOutlet UIView *rocIncidentInfoHeaderView;
+@property IBOutlet UIImageView *rocIncidentInfoHeaderArrowImage;
+@property IBOutlet UIView *rocIncidentInfoContentView;
+@property IBOutlet UIImageView *rocIncidentInfoHeaderErrorImage;
 
-@property IBOutlet UIView *section2HeaderView;
-@property IBOutlet UIImageView *section2HeaderArrowImage;
-@property IBOutlet UIView *section2ContentView;
-@property IBOutlet UIImageView *section2HeaderErrorImage;
+@property IBOutlet UIView *vegFireIncidentScopeHeaderView;
+@property IBOutlet UIImageView *vegFireIncidentScopeHeaderArrowImage;
+@property IBOutlet UIView *vegFireIncidentScopeContentView;
+@property IBOutlet UIImageView *vegFireIncidentScopeHeaderErrorImage;
+
+@property IBOutlet UIView *weatherInfoHeaderView;
+@property IBOutlet UIImageView *weatherInfoHeaderArrowImage;
+@property IBOutlet UIView *weatherInfoContentView;
+@property IBOutlet UIImageView *weatherInfoHeaderErrorImage;
+
+@property IBOutlet UIView *threatsEvacsHeaderView;
+@property IBOutlet UIImageView *threatsEvacsHeaderArrowImage;
+@property IBOutlet UIView *threatsEvacsContentView;
+@property IBOutlet UIImageView *threatsEvacsHeaderErrorImage;
+
+@property IBOutlet UIView *resourceCommitmentHeaderView;
+@property IBOutlet UIImageView *resourceCommitmentHeaderArrowImage;
+@property IBOutlet UIView *resourceCommitmentContentView;
+@property IBOutlet UIImageView *resourceCommitmentHeaderErrorImage;
+
+@property IBOutlet UIView *otherInfoHeaderView;
+@property IBOutlet UIImageView *otherInfoHeaderArrowImage;
+@property IBOutlet UIView *otherInfoContentView;
+@property IBOutlet UIImageView *otherInfoHeaderErrorImage;
+
+@property IBOutlet UIView *emailHeaderView;
+@property IBOutlet UIImageView *emailHeaderArrowImage;
+@property IBOutlet UIView *emailContentView;
+@property IBOutlet UIImageView *emailHeaderErrorImage;
 //=============================================================================
-
-
-//=============================================================================
-// Test Variables -  TODO - REMOVE THESE
-//=============================================================================
-//-----------------------------------------------------------------------------
-// Test Dynamic Text Boxes Variables
-//-----------------------------------------------------------------------------
-
-@property IBOutlet UIButton *testButton;
-@property IBOutlet UIStackView *testStackView;
-
-@property (weak, nonatomic) IBOutlet UIView *contentView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *testHeightConstraint;
-
-//-----------------------------------------------------------------------------
-// Test Dropdown Variables
-//-----------------------------------------------------------------------------
-@property IBOutlet UITextField *dropdownTextField;
-// Keeping strong references to each delegate so they don't get garbage collected
-@property NSMutableArray *delegatesArray;
-- (void) makeAutocompleteTextField:(UITextField*)textField withOptions:(NSArray*)options;
-//=============================================================================
-
-//-----------------------------------------------------------------------------
-// Test Checkbox Tableview variables
-//-----------------------------------------------------------------------------
-@property IBOutlet UITableView *checkboxTableView;
-
-//-----------------------------------------------------------------------------
-// Test Picker Field
-//-----------------------------------------------------------------------------
-@property UIAlertController *testDateAlertController;
-@property UIDatePicker *testDatePicker;
-
-
-@property UIAlertController *testAlertController;
-@property UIPickerView *testPickerView;
-
-- (void) makeStringPickerTextField:(UITextField *)textView withOptions:(NSArray*)options;
-
-
-- (void) dateAlertControllerDoneClick;
-- (void) dateAlertControllerCancelClick;
-- (void) createDateAlertController;
-
-
-- (void) alertControllerDoneClick;
-- (void) alertControllerCancelClick;
-//- (void) createAlertController;
-
-
-@property IBOutlet UITextField *testCountiesField;
-
-
-//-----------------------------------------------------------------------------
-// Test Checkbox Fields
-//-----------------------------------------------------------------------------
-@property IBOutlet UIButton *testCheckbox;
-
-@property BOOL checkboxSelected;
-- (void) checkBoxTapped:(id) obj;
 
 //=============================================================================
 // Section Variables
@@ -132,55 +128,364 @@
 //---------------------------------------------------------------------------
 // ROC Form Info Fields
 //---------------------------------------------------------------------------
+@property IBOutlet UITextView *incidentNameLabelTextView;
+@property IBOutlet UITextField *incidentNameTextField;
+@property IBOutlet UITextView *reportTypeLabelTextView;
+@property IBOutlet UITextField *reportTypeTextField;
 //---------------------------------------------------------------------------
 // Incident Info Fields
 //---------------------------------------------------------------------------
+@property IBOutlet UITextField *incidentNumberTextField;
+@property IBOutlet UITableView *incidentTypeTableView;
+@property IBOutlet UITextField *incidentLatitudeDegreesTextField;
+@property IBOutlet UITextField *incidentLatitudeMinutesTextField;
+@property IBOutlet UITextField *incidentLongitudeDegreesTextField;
+@property IBOutlet UITextField *incidentLongitudeMinutesTextField;
+@property IBOutlet UIButton *incidentLocateButton;
+@property IBOutlet UITextField *incidentStateField;
 //---------------------------------------------------------------------------
 // ROC Incident Info Fields
 //---------------------------------------------------------------------------
+@property IBOutlet UITextField *rocInitialCountyTextField;
+@property IBOutlet UITextField *rocAdditionalCountiesTextField;
+@property IBOutlet UITextField *rocLocationTextField;
+@property IBOutlet UITextField *rocDPATextField;
+@property IBOutlet UITextField *rocOwnershipTextField;
+@property IBOutlet UITextField *rocJurisdictionTextField;
+@property IBOutlet UITextField *rocStartDateTextField;
+@property IBOutlet UITextField *rocStartTimeTextField;
 //---------------------------------------------------------------------------
 // Vegetation Fire Incident Scope Fields
 //---------------------------------------------------------------------------
+@property IBOutlet UITextField *vegFireAcreageTextField;
+@property IBOutlet UITextField *vegFireSpreadRateTextField;
+@property IBOutlet UITextView *vegFireFuelTypeLabelTextView;
+// Checkboxes
+@property IBOutlet UIButton *vegFireFuelTypeGrassCheckbox;
+@property IBOutlet UIButton *vegFireFuelTypeBrushCheckbox;
+@property IBOutlet UIButton *vegFireFuelTypeTimberCheckbox;
+@property IBOutlet UIButton *vegFireFuelTypeOakWoodlandCheckbox;
+@property IBOutlet UIButton *vegFireFuelTypeOtherCheckbox;
+
+@property IBOutlet UIView *vegFireFuelTypesView;
+@property IBOutlet UIView *vegFireOtherFuelTypeView;
+
+@property IBOutlet UITextField *vegFireOtherFuelTypeTextField;
+@property IBOutlet UITextField *vegFirePercentContainedTextField;
 //---------------------------------------------------------------------------
 // Weather Information Fields
 //---------------------------------------------------------------------------
+@property IBOutlet UITextField *weatherTemperatureTextField;
+@property IBOutlet UITextField *weatherHumidityTextField;
+@property IBOutlet UITextField *weatherWindSpeedTextField;
+@property IBOutlet UITextField *weatherWindDirectionTextField;
+@property IBOutlet UITextField *weatherGustsTextField;
 //---------------------------------------------------------------------------
 // Threats & Evacuations Fields
 //---------------------------------------------------------------------------
+@property IBOutlet UITextField *threatsEvacsTextField;
+@property IBOutlet UITextView *threatsEvacsInfoLabelTextView;
+@property IBOutlet UIStackView *threatsEvacsInfoListStackView;
+@property IBOutlet UIButton *threatsEvacsAddButton;
+@property IBOutlet NSLayoutConstraint *threatsEvacsListHeightConstraint;
+
+@property IBOutlet UITextField *threatsStructuresTextField;
+@property IBOutlet UITextView *threatsStructuresInfoLabelTextView;
+@property IBOutlet UIStackView *threatsStructuresInfoListStackView;
+@property IBOutlet UIButton *threatsStructuresAddButton;
+@property IBOutlet NSLayoutConstraint *threatsStructuresListHeightConstraint;
+
+@property IBOutlet UITextField *threatsInfrastructureTextField;
+@property IBOutlet UITextView *threatsInfrastructureInfoLabelTextView;
+@property IBOutlet UIStackView *threatsInfrastructureInfoListStackView;
+@property IBOutlet UIButton *threatsInfrastructureAddButton;
+@property IBOutlet NSLayoutConstraint *threatsInfrastructureListHeightConstraint;
+
 //---------------------------------------------------------------------------
 // Resource Commitment Fields
 //---------------------------------------------------------------------------
+@property IBOutlet UITextField *calFireIncidentTextField;
+// Checkboxes
+@property IBOutlet UIButton *calFireResourcesNoneCheckbox;
+@property IBOutlet UIButton *calFireResourcesAirCheckbox;
+@property IBOutlet UIButton *calFireResourcesGroundCheckbox;
+@property IBOutlet UIButton *calFireResourcesAirAndGroundCheckbox;
+@property IBOutlet UIButton *calFireResourcesAirAndGroundAugmentedCheckbox;
+@property IBOutlet UIButton *calFireResourcesAgencyRepOrderedCheckbox;
+@property IBOutlet UIButton *calFireResourcesAgencyRepAssignedCheckbox;
+@property IBOutlet UIButton *calFireResourcesContinuedCheckbox;
+@property IBOutlet UIButton *calFireResourcesSignificantAugmentationCheckbox;
+@property IBOutlet UIButton *calFireResourcesVlatOrderCheckbox;
+@property IBOutlet UIButton *calFireResourcesVlatAssignedCheckbox;
+@property IBOutlet UIButton *calFireResourcesNoDivertCheckbox;
+@property IBOutlet UIButton *calFireResourcesLatAssignedCheckbox;
+@property IBOutlet UIButton *calFireResourcesAllReleasedCheckbox;
+
+// Checkbox Views
+@property IBOutlet UIView *calFireResourcesNoneCheckboxView;
+@property IBOutlet UIView *calFireResourcesAirCheckboxView;
+@property IBOutlet UIView *calFireResourcesGroundCheckboxView;
+@property IBOutlet UIView *calFireResourcesAirAndGroundCheckboxView;
+@property IBOutlet UIView *calFireResourcesAirAndGroundAugmentedCheckboxView;
+@property IBOutlet UIView *calFireResourcesAgencyRepOrderedCheckboxView;
+@property IBOutlet UIView *calFireResourcesAgencyRepAssignedCheckboxView;
+@property IBOutlet UIView *calFireResourcesContinuedCheckboxView;
+@property IBOutlet UIView *calFireResourcesSignificantAugmentationCheckboxView;
+@property IBOutlet UIView *calFireResourcesVlatOrderCheckboxView;
+@property IBOutlet UIView *calFireResourcesVlatAssignedCheckboxView;
+@property IBOutlet UIView *calFireResourcesNoDivertCheckboxView;
+@property IBOutlet UIView *calFireResourcesLatAssignedCheckboxView;
+@property IBOutlet UIView *calFireResourcesAllReleasedCheckboxView;
+
+
 //---------------------------------------------------------------------------
 // Other Significant Info Fields
 //---------------------------------------------------------------------------
+@property IBOutlet UIStackView *otherInfoListStackView;
+@property IBOutlet UIButton *otherInfoAddButton;
+@property IBOutlet NSLayoutConstraint *otherInfoListHeightConstraint;
 //---------------------------------------------------------------------------
 // Email Fields
 //---------------------------------------------------------------------------
-
+@property IBOutlet UITextField *emailTextField;
 //---------------------------------------------------------------------------
-
-
 //=============================================================================
 
 
-@property DataManager *dataManager;
+//=============================================================================
+// Form Field View Controllers
+// This section holds explicit references to specific view controllers
+//=============================================================================
+@property CheckBoxTableViewController *incidentTypeViewController;
+//=============================================================================
 
+
+
+//=============================================================================
+// Form Logic Methods
+// These methods define the conditionality and behavior of the form
+// as it is being filled out
+//=============================================================================
+
+// Clears the textfield and sets it to the string, if the string is not "(null") or "null"
+- (bool) setFieldTextIfValid:(UITextField*)textField asValue:(NSString*)str;
+
+// Populates the form fields with values from a NSDictionary
+- (void) setLocationBasedDataFields:(NSDictionary*)data;
+
+// Called when the user taps the incident locate button
+// This is responsible for making a request to the SCOUT server and
+// retrieving location-based data (weather and jurisdiction info)
+- (IBAction) incidentLocateButtonPressed;
+
+// Called when one of the location fields has been editted
+// This is responsible for making the same request to the SCOUT server
+// as incidentLocateButtonPressed
+- (void) incidentLocationChanged;
+
+// Called when the incident name field is changed
+// This method is responsible for determining if the incidentName pertains to
+// an existing, or a new incident
+// This method then retrieves incident info (if applicable), and shows the
+// report type text field.
+- (void) incidentNameChanged;
+
+// Called when the ROC Report Type field is changed
+// This method is responsible for showing all of the applicable fields for the given report type
+// This method should set up the field behaviors as well
+// (Including setting up auto-complete fields, dropdown text fields, etc...)
+- (void) reportTypeChanged;
+
+// Populates the form with all ROC data from the parameter "data"
+// Locks all fields to make it read-only
+- (void) setFormToViewRocData:(ReportOnConditionData*)data;
+
+// This hides / shows the appropriate fields depending on the report type
+- (void) setupFormForReportType;
+
+// This makes all UI fields read-only
+- (void) makeAllFieldsReadOnly;
+
+// This is called when the incident type is changed
+// If the user selects / deselects vegetation fire
+// the veg. fire and the Threats & Evacs fields are set to required or not required
+- (void) incidentTypeChanged;
+
+// Called when the user select an option for Evacuations, sets up the fields with the correct autocomplete options
+- (void) evacuationsSpinnerChanged;
+
+@property NSArray *evacuationsAutocompleteOptions;
+
+// Called when the user selects an option for Structure Threats, sets up the fields with the correct autocomplete options
+- (void) structureThreatsSpinnerChanged;
+
+@property NSArray *structureThreatsAutocompleteOptions;
+
+
+// Called when the user selects an option for Infrastructure Threats, sets up the fields with the correct autocomplete options
+- (void) infrastructureThreatsSpinnerChanged;
+
+@property NSArray *infrastructureThreatsAutocompleteOptions;
+
+
+// The other info suggestions array
+@property NSArray *otherInfoAutocompleteOptions;
+
+
+//=============================================================================
+// Helper methods that set up fields
+//=============================================================================
+
+- (void) makeStringPickerTextField:(UITextField *)textField
+				   withOptions:(NSArray*)options
+					andTitle:(NSString*)title;
+
+- (void) makeDatePicker:(UITextField*)textField;
+- (void) makeTimePicker:(UITextField*)textField;
+
+
+// Adds an autocomplete-textField and a delete button to the stackview
+- (void) textFieldListAddButtonPressedForStackView:(UIStackView*)stackView
+							    withOptions:(NSArray*)options
+							 withConstraint:(NSLayoutConstraint*)constraint
+						  withDeleteSelector:(SEL)deleteSelector
+					  withAutocompleteOptions:(NSArray*)autocompleteOptions;
+
+// Removes a child view from the stackview, and decreases the size of the stackview
+- (void) textFieldListDeleteButtonPressed:(UIButton*)button forStackView:(UIStackView*)stackView withConstraint:(NSLayoutConstraint*)constraint;
+
+
+- (IBAction) threatsEvacsAddButtonPressed;
+- (void) threatsEvacsDeleteButtonPressed:(UIButton*)button;
+
+- (IBAction) threatsStructuresAddButtonPressed;
+- (void) threatsStructuresDeleteButtonPressed:(UIButton*)button;
+
+- (IBAction) threatsInfrastructureAddButtonPressed;
+- (void) threatsInfrastructureDeleteButtonPressed:(UIButton*)button;
+
+
+- (IBAction) otherInfoAddButtonPressed;
+- (void) otherInfoDeleteButtonPressed:(UIButton*)button;
+
+// If "hidden" is set to true, this hides all form sections
+// otherwise, this shows all form sections
+- (void) hideAllFormSections:(bool)hidden;
+
+- (void) makeCheckbox:(UIButton*)button;
+- (void) checkBoxTapped:(id) obj;
+
+// A variant of make Checkbox for the "Other Fuel Types" checkbox
+// This checkbox shows / hide the "Other Fuel Type" text field
+// that the user must then fill
+- (void) makeOtherFuelTypeCheckbox:(UIButton*)button;
+- (void) otherFuelTypeCheckboxTapped:(id) obj;
+
+// This method clears a textfield list stackview, and sets the the autocomplete array that
+// textFields in the stackview use for autocompletion
+- (void) setupTextFieldList:(UIStackView*)stackView
+		    withTextField:(UITextField*)textField
+		 heightConstraint:(NSLayoutConstraint*)constraint
+			   addButton:(UIButton*)button
+			  yesOptions:(NSArray*)yesOptions
+		 mitigatedOptions:(NSArray*)mitigatedOptions;
+
+// Checks if the field's delegate is in our delegates array, if so, remove it.
+- (void) cleanUpDelegateForTextField:(UITextField*)textField;
+- (void) cleanUpDelegateForTableView:(UITableView*)tableView;
+
+
+// Removes all child view from the stack view:
+- (void) clearTextFieldListStackView:(UIStackView*)stackView withHeightConstraint:(NSLayoutConstraint*)constraint;
+
+// Clears all of the UI textFields, tables, etc... for a fresh, empty form
+- (void) clearAllFormFields;
+
+// Keeping strong references to each delegate so they don't get garbage collected
+@property NSMutableArray *delegatesArray;
+- (void) makeAutocompleteTextField:(UITextField*)textField withOptions:(NSArray*)options;
+
+// Makes the textField clear the bordercolor and border when modified to hide the error outline
+- (void) makeTextFieldClearErrorWhenChanged:(UITextField*)textField;
+
+// Sets the placeholder text to "required" for required fields
+// NOTE - this method doesn't actually mark the text field as required for form validation
+// The validation logic is in the method areFormFieldsValid
+- (void) makeTextFieldRequired:(UITextField*)textField required:(bool)required;
+
+// Does a regular expression pattern match to verify that string represents a valid double
+- (bool) isValidDouble:(NSString*)string;
+// Does a regular expression pattern match to verify that string represents a valid integer
+- (bool) isValidInt:(NSString*)string;
+
+// Returns true if the string contains only whitespace
+- (bool) isStringEmpty:(NSString*)string;
+
+//=============================================================================
 
 
 @property IBOutlet UIButton *submitButton;
 @property IBOutlet UIButton *cancelButton;
 
 
+
+// Converts Decimal Degrees to Degree Decimal-Minutes
+// This function returns the integer Degrees portion of DDM
+- (int) getDegree:(double) degrees;
+
+// Converts Decimal Degrees to Degree Decimal-Minutes
+// This function returns the double Decimal-Minutes portion of DDM
+- (double) getMinutes:(double) degrees;
+
+// Converts Degrees Decimal-Minutes into Decimal Degrees
+- (double) toDecimalDegrees:(int)degrees minutes:(double)minutes;
+
+
+// Returns if a desired latlong is valid
+- (bool) isValidLatLongLatDeg:(int)latDeg LatMin:(double)latMin LonDeg:(int)lonDeg LonMin:(double)lonMin;
+
+
+
+
 // View holding the submit and cancel buttons
 @property IBOutlet UIView *buttonView;
 
 
-// TODO - implement this:
+// Hides all error views
+- (void) hideAllErrors;
+
+// Shows all error views (for testing purposes)
+- (void) showAllErrors;
+
+// Adds a red border to a field, indicating a validation error
+- (void) showViewError:(UIView*)view;
+
+
+
+// Removes the red border from a field, to clear the validation error
+- (void) clearViewError:(UIView*)view;
+
+
+// Checks to make sure all required form fields are filled out and that the
+// form is ready for submission
+// Returns true if all required fields are filled and all entered data is valid
+// Returns false if some input is malformed or a required field is missing
+// 		If it returns false, this method also shows an error on the missing / malformed fields,
+// 		and shows an error on the section itself
+- (bool) areFormFieldsValid;
+
+// Reads all form UI fields and populates a ReportOnConditionData object
+// This method provides no data validation for fields
+- (ReportOnConditionData*) formToRocData;
+
 - (IBAction)submitReportButtonPressed:(UIButton *)button;
+
+// TODO - implement this:
 - (void)submitTabletReportButtonPressed;
 
 // TODO - implement this:
 - (IBAction)cancelButtonPressed:(UIButton *)button;
+// TODO - implement this:
 - (void)cancelTabletButtonPressed;
 
 
@@ -193,61 +498,6 @@
 // Collapses all report sections
 - (void) collapseAllSections;
 
-
-// TEST ACTION
-- (IBAction)testButtonPush:(UIButton *)button;
-- (IBAction)testButtonPush2:(UIButton *)button;
-
-
-//@property IBOutlet UIScrollView *scrollView;
-
-
-//@property (strong, nonatomic) SimpleReportPayload *payload;
-//@property ALAssetsLibrary *assetsLibrary;
-//@property NSString *imagePath;
-//@property BOOL isImageSaved;
-//@property UIView *focusedTextView;
-//@property CGRect originalFrame;
-
-//@property IBOutlet UIActivityIndicatorView *imageLoadingView;
-
-/*@property IBOutlet UIView *locationButtonView;
- @property IBOutlet UIView *buttonView;
- @property (weak, nonatomic) IBOutlet UIView *contentView;
- 
- @property IBOutlet UIButton *saveAsDraftButton;
- @property IBOutlet UIButton *submitButton;
- @property IBOutlet UIButton *cancelButton;
- @property IBOutlet UIImageView *imageView;
- @property IBOutlet UITextField *latitudeView;
- @property IBOutlet UITextField *longitudeView;
- @property IBOutlet FormSpinner *categoryView;
- @property IBOutlet UITextView *descriptionView;*/
-
-
-/*@property IBOutlet UIButton createRocButton;
- @property IBOutlet UIButton viewRocButton;
- 
- //@property IBOutlet UIView *imageSelectionView;
- //@property IBOutlet NSLayoutConstraint *paddingTopConstraint;
- 
- - (IBAction)captureImagePressed:(UIButton *)button;
- - (IBAction)browseGalleryPressed:(UIButton *)button;
- 
- - (IBAction)lrfButtonPressed:(UIButton *)button;
- - (IBAction)gpsButtonPressed:(UIButton *)button;
- 
- - (IBAction)submitReportButtonPressed:(UIButton *)button;
- - (void)submitTabletReportButtonPressed;
- - (IBAction)saveDraftButtonPressed:(UIButton *)button;
- - (void)saveTabletDraftButtonPressed;
- - (IBAction)cancelButtonPressed:(UIButton *)button;
- - (void)cancelTabletButtonPressed;
- 
- - (SimpleReportPayload *)getPayload:(BOOL)isDraft;
- - (void) configureView;
- 
- @property BOOL hideEditControls;*/
 
 @end
 

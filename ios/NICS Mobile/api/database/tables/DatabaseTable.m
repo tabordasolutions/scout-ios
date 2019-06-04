@@ -76,6 +76,41 @@
         }];
 }
 
+- (void) createTableFromDictionary:(NSDictionary *)tableDictionary withPrimaryKey:(NSString*)primaryKey {
+	
+	NSMutableString *createQuery = [NSMutableString stringWithFormat:@"%@%@%@", @"create table ", _tableName, @" ("];
+	
+	BOOL isFirstColumn = true;
+	
+	for(NSString *key in [tableDictionary allKeys]) {
+		if(isFirstColumn) {
+			[createQuery appendFormat:@"%@%@%@", key, @" ", [tableDictionary objectForKey:key]];
+			isFirstColumn = false;
+		} else {
+			[createQuery appendFormat:@"%@%@%@%@", @", ", key, @" ", [tableDictionary objectForKey:key]];
+		}
+	}
+	
+	// Adding the primary key:
+	[createQuery appendFormat:@"%@%@%@", (isFirstColumn ? @"" : @", ") ,@"primary key" , primaryKey];
+	
+	[createQuery appendFormat:@"%@", @") "];
+	
+	
+	[_databaseQueue inTransaction:^(FMDatabase *db, BOOL *rollback) {
+		if(![db tableExists:_tableName]) {
+			BOOL success = [db executeUpdate:createQuery];
+			
+			if(success) {
+				NSLog(@"%@%@%@", @"Table ", _tableName, @" successfully created.");
+			}
+		} else {
+			NSLog(@"%@%@%@", @"Table ", _tableName, @" already exisits.");
+		}
+	}];
+}
+
+
 - (void) dropTable {
     NSString *dropTableQuery = [NSString stringWithFormat:@"%@%@", @"drop table ", _tableName];
     
@@ -100,6 +135,20 @@
         }
     }];
 }
+
+
+- (void) deleteRowsByKey: (NSString *) key1 withValue: (id) value1 andKey:(NSString *) key2 withValue:(id) value2 {
+	
+	NSString *deleteRowQuery = [NSString stringWithFormat:@"%@%@%@%@%@%@%@%@", @"delete from ", _tableName, @" where ", key1, @" =  ?", @" AND ", key2, @" = ?"];
+	
+	[_databaseQueue inTransaction:^(FMDatabase *db, BOOL *rollback) {
+		BOOL success = [db executeUpdate: deleteRowQuery, value1, value2];
+		if(success) {
+			NSLog(@"%@%d%@%@", @"Deleted ", [db changes], @" rows from ", _tableName);
+		}
+	}];
+}
+
 
 - (void) deleteAllRows {
     NSString *deleteAllRowsQuery = [NSString stringWithFormat:@"%@%@", @"delete from ", _tableName];

@@ -29,32 +29,38 @@
  *
  */
 //
-//  ReportOnConditionActionViewController.h
+//  DateTimePicker.h
 //  SCOUT Mobile
 //
+//  Created by Luis Gutierrez on 4/22/19.
+//  Copyright © 2019 MIT Lincoln Labs. All rights reserved.
+//
 
+// This class sets up a textField to be a date or time picker
+@interface DateTimePickerController : NSObject <UITextFieldDelegate>
 
-#import <UIKit/UIKit.h>
-#import "AssetsLibrary/AssetsLibrary.h"
-#import "DataManager.h"
-#import "SimpleReportPayload.h"
-#import "FormSpinner.h"
-#import "Enums.h"
-#import "IncidentButtonBar.h"
-#import "ReportOnConditionViewController.h"
+// Sets up the object to provide dropdown support for textField
+- (nullable id) initForTextField:(nonnull UITextField *)textField andView:(nonnull UIViewController*)viewController isTime:(bool)isTime;
 
+// Whether or not the datepicker should only allow time values
+@property bool isTimePicker;
+// The textField to operate on
+@property (nonnull, nonatomic) UITextField *textField;
 
-@interface ReportOnConditionActionViewController : UIViewController <UISplitViewControllerDelegate, UITextFieldDelegate, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
-
-@property DataManager *dataManager;
-
-
-@property (weak, nonatomic) IBOutlet UIButton *createRocButton;
-@property (weak, nonatomic) IBOutlet UIButton *viewRocButton;
-
-
-- (IBAction)createRocButtonPressed:(id)sender;
-- (IBAction)viewRocButtonPressed:(id)sender;
+// The view controller used to show the view
+@property (nonnull) UIViewController *viewController;
+// The controller responsible for
+@property (nonnull) UIAlertController *alertController;
+// The date picker itself
+@property (nonnull) UIDatePicker *datePicker;
+// Callback for pressing "Done" on the alert
+- (void) alertDoneClick;
+// Sets the field's date / time to a desired NSDate object
+- (void) setFieldToCurrentDateTime:(nullable NSDate*)date;
+// Callback for pressing "Cancel" on the alert
+- (void) alertCancelClick;
+// Delegate method to show the dialog on tap
+- (BOOL) textFieldShouldBeginEditing:(nonnull UITextField *)textField;
 
 
 @end

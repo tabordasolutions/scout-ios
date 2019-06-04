@@ -36,6 +36,8 @@
 #ifndef CheckBoxTableViewController_h
 #define CheckBoxTableViewController_h
 
+
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // CheckBoxTableViewController
@@ -46,12 +48,24 @@
 // This class is the datasource and delegate for a tableview that adds checkboxes
 @interface CheckBoxTableViewController : NSObject <UITableViewDataSource, UITableViewDelegate>
 // Sets up the object
-- (nullable id) initForTableView:(nonnull UITableView*)tableView withOptions:(nonnull NSArray*)options;
-
+- (id) initForTableView:(UITableView*)tableView withOptions:(NSArray*)options withSelector:(SEL)selector andTarget:(id)target;
+// Contains the tableview
+@property (nonnull) UITableView *tableView;
 // Contains all options
 @property (nonnull) NSMutableArray *tableViewOptions;
-// Contains only the filtered options based on the textField's contents
+// Contains the options that are selected
 @property (nonnull) NSMutableArray *selectedTableViewOptions;
+// Whether or not the table view checkboxes can be checked
+@property bool checkboxesEnabled;
+// OnChange selector
+@property SEL onChangeSelector;
+@property id onChangeSelectorTarget;
+
+- (void) deselectAllCheckboxes;
+// Returns the list of selected strings
+- (nonnull NSArray*) getSelectedOptions;
+// Selects the checkboxes for desired strings, deselects all other checkboxes
+- (void) setSelectedOptions:(nonnull NSArray*)options;
 //--------------------------------------------------------------------------------------------------------------------------
 // UITableView DataSource Methods
 //--------------------------------------------------------------------------------------------------------------------------

@@ -47,6 +47,8 @@
 // This class is the datasource and delegate for a pickerview
 @interface StringPickerViewController : NSObject <UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate>
 
+// Holds the string that is used as the title for the dialog box
+@property NSString *viewTitle;
 // Holds a reference to the ReportOnConditionViewController (we use this to show the alert dialog)
 @property UIViewController *viewController;
 // Holds a reference to the string to update the string
@@ -55,7 +57,12 @@
 @property NSMutableArray *spinnerOptions;
 // Holds the currently selected picker string
 @property NSString *selectedPickerString;
-- (id) initForTextField:(UITextField*)textField withOptions:(NSArray*)options andViewController:(UIViewController*)viewController;
+
+
+- (id) initForTextField:(UITextField*)textField
+		  withOptions:(NSArray*)options
+	    viewController:(UIViewController*)viewController
+		    withTitle:(NSString*)title;
 
 - (void) showAlert;
 

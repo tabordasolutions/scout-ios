@@ -48,8 +48,10 @@
 - (id)initWithName:(NSString *)tableName databaseQueue:(FMDatabaseQueue *)databaseQueue;
 
 - (void) createTableFromDictionary: (NSDictionary *) tableDictionary;
+- (void) createTableFromDictionary:(NSDictionary *)tableDictionary withPrimaryKey:(NSString*)primaryKey;
 - (void) dropTable;
 - (void) deleteRowsByKey: (NSString *) key value: (id) value;
+- (void) deleteRowsByKey: (NSString *) key1 withValue: (id) value1 andKey:(NSString *) key2 withValue:(id) value2;
 - (void) deleteAllRows;
 - (BOOL) insertRowForTableDictionary: (NSDictionary *)tableDictionary  dataDictionary: (NSDictionary *)dataDictionary;
 - (BOOL) insertAllRowsForTableDictionary: (NSDictionary *)tableDictionary  dataArray: (NSArray *)dataDictionary;

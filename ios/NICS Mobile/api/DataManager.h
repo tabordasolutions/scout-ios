@@ -67,6 +67,7 @@
 @property NSTimer *markupFeaturesPollingTimer;
 @property NSTimer *resourceRequestPollingTimer;
 @property NSTimer *simpleReportPollingTimer;
+@property NSTimer *reportOnConditionPollingTimer;
 @property NSTimer *wfsPollingTimer;
 
 @property NSUserDefaults *userPreferences;
@@ -115,6 +116,7 @@
 - (void) requestMarkupFeaturesRepeatedEvery:(int)seconds immediate:(BOOL)immediate;
 - (void) requestResourceRequestsRepeatedEvery:(int)seconds immediate:(BOOL)immediate;
 - (void) requestSimpleReportsRepeatedEvery:(int)seconds immediate:(BOOL)immediate;
+- (void) requestReportOnConditionsRepeatedEvery:(int)seconds immediate:(BOOL)immediate;
 - (void) requestMdtRepeatedEvery:(int)seonds immediate:(BOOL)immediate;
 - (void) requestWfsUpdateRepeatedEvery:(int)seonds immediate:(BOOL)immediate;
 - (void) requestCollabroomsForIncident:(IncidentPayload*)incident;
@@ -201,6 +203,25 @@
 
 - (NSNumber *)getLastSimpleReportTimestampForIncidentId: (NSNumber *) incidentId;
 
+#pragma mark Report on Conditions History/Store & Forward
+- (BOOL)addReportOnConditionsToHistory:(NSArray<ReportOnConditionData> *) payloadArray;
+
+- (BOOL)addReportOnConditionToHistory:(ReportOnConditionData *) payload;
+
+- (BOOL)addReportOnConditionsToStoreAndForward:(NSArray<ReportOnConditionData> *) payloadArray;
+
+- (BOOL)addReportOnConditionToStoreAndForward:(ReportOnConditionData *) payload;
+
+- (void)deleteReportOnConditionFromStoreAndForward:(ReportOnConditionData *) payload;
+
+- (NSMutableArray<ReportOnConditionData> *)getAllReportOnConditionsForIncidentId: (NSNumber *)incidentId;
+
+- (NSMutableArray<ReportOnConditionData> *)getAllReportOnConditionsForIncidentId: (NSNumber *)incidentId since: (NSNumber *)timestamp;
+
+- (NSMutableArray<ReportOnConditionData> *)getAllReportOnConditionsFromStoreAndForward;
+
+- (NSNumber *)getLastReportOnConditionTimestampForIncidentId: (NSNumber *) incidentId;
+
 #pragma mark Weather Report History/Store & Forward
 - (BOOL)addWeatherReportToHistory:(WeatherReportPayload *) payload;
 - (BOOL)addWeatherReportsToHistory:(NSArray<WeatherReportPayload> *) payloadArray;
@@ -280,6 +301,7 @@
 - (void)clearCollabRoomList;
 
 - (NSMutableDictionary *)getIncidentsList;
+- (NSArray<NSString*> *) getIncidentNamesList;
 - (NSMutableDictionary *)getCollabroomList;
 - (NSMutableDictionary *)getCollabroomNamesList;
 - (NSMutableArray *)getCollabroomPayloadArray;
@@ -306,6 +328,6 @@
 
 -(void)setIsIpad:(BOOL)setting;
 -(BOOL)getIsIpad;
--(BOOL)getIsIpad;
+
 
 @end

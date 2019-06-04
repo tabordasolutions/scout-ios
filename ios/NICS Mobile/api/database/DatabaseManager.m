@@ -58,6 +58,9 @@
         
         _simpleReportReceiveTable = [[SimpleReportTable alloc] initWithName:@"simpleReportReceiveTable" databaseQueue:_databaseQueue];
         _simpleReportSendTable = [[SimpleReportTable alloc] initWithName:@"simpleReportSendTable" databaseQueue:_databaseQueue];
+	    
+	    _reportOnConditionReceiveTable = [[ReportOnConditionTable alloc] initWithName:@"reportOnConditionReceiveTable" databaseQueue:_databaseQueue];
+	    _reportOnConditionSendTable = [[ReportOnConditionTable alloc] initWithName:@"reportOnConditionSendTable" databaseQueue:_databaseQueue];
 
         _weatherReportReceiveTable = [[WeatherReportTable alloc] initWithName:@"weatherReportReceiveTable" databaseQueue:_databaseQueue];
         _weatherReportSendTable = [[WeatherReportTable alloc] initWithName:@"weatherReportSendTable" databaseQueue:_databaseQueue];
@@ -68,8 +71,6 @@
         _mdtSendTable = [[MDTTable alloc] initWithName:@"mdtSendTable" databaseQueue:_databaseQueue];
         
         _personalLogTable = [[ChatTable alloc] initWithName:@"personalLogTable" databaseQueue:_databaseQueue];
-        
-        
     }
     return self;
 }
@@ -309,6 +310,51 @@
 
 - (NSNumber *)getLastSimpleReportTimestampForIncidentId: (NSNumber *) incidentId {
     return [_simpleReportReceiveTable getLastReportTimestampForIncidentId:incidentId];
+}
+
+#pragma mark Report On Condition History/Store & Forward
+- (BOOL)addReportOnConditionsToHistory:(NSArray<ReportOnConditionData*> *) payloadArray; {
+	return [_reportOnConditionReceiveTable addDataArray:payloadArray];
+}
+
+- (BOOL)addReportOnConditionToHistory:(ReportOnConditionData *) payload {
+	return [_reportOnConditionReceiveTable addData: payload];
+}
+- (BOOL)addReportOnConditionsToStoreAndForward:(NSArray<ReportOnConditionData*> *) payloadArray {
+	return [_reportOnConditionSendTable addDataArray:payloadArray];
+}
+
+- (BOOL)addReportOnConditionToStoreAndForward:(ReportOnConditionData *) payload {
+	return [_reportOnConditionSendTable addData: payload];
+}
+
+- (void)deleteReportOnConditionFromStoreAndForward:(ReportOnConditionData *) payload{
+	[_reportOnConditionSendTable removeData: payload];
+}
+- (NSMutableArray<ReportOnConditionData> *)getAllReportOnConditionsForIncidentId: (NSNumber *)incidentId since: (NSNumber *) timestamp {
+	
+	NSMutableArray<ReportOnConditionData>* temp = [_reportOnConditionReceiveTable getReportOnConditionsForIncidentId:incidentId since:timestamp];
+	
+	[temp addObjectsFromArray:[_reportOnConditionSendTable getReportOnConditionsForIncidentId:incidentId since:timestamp]];
+	
+	
+	[temp sortUsingComparator:^NSComparisonResult(ReportOnConditionData *obj1, ReportOnConditionData *obj2) {
+		return [obj2.datecreated compare:obj1.datecreated];
+	}];
+	
+	return temp;
+}
+
+- (NSMutableArray<ReportOnConditionData> *)getAllReportOnConditionsFromStoreAndForward {
+	return [_reportOnConditionSendTable getAllReportOnConditions];
+}
+
+- (NSNumber *)getLastReportOnConditionTimestampForIncidentId: (NSNumber *) incidentId {
+	return [_reportOnConditionReceiveTable getLastReportOnConditionTimestampForIncidentId:incidentId];
+}
+
+- (ReportOnConditionData *) getLastReportOnConditionForIncidentId: (NSNumber *) incidentId {
+	return [_reportOnConditionReceiveTable getLastReportOnConditionForIncidentId:incidentId];
 }
 
 #pragma mark Weather Report History/Store & Forward

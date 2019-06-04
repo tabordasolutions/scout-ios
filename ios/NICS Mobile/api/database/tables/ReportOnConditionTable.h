@@ -25,36 +25,28 @@
  |~^~|CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
  |~^~|OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  |~^~|OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\*/
-/**
- *
- */
 //
-//  ReportOnConditionActionViewController.h
+//  ReportOnConditionTable.h
 //  SCOUT Mobile
 //
+//  Created by Luis Gutierrez on 4/16/19.
+//  Copyright © 2019 MIT Lincoln Labs. All rights reserved.
+//
+#import "DatabaseTable.h"
+#import "ReportOnConditionData.h"
+
+@interface ReportOnConditionTable : DatabaseTable
 
 
-#import <UIKit/UIKit.h>
-#import "AssetsLibrary/AssetsLibrary.h"
-#import "DataManager.h"
-#import "SimpleReportPayload.h"
-#import "FormSpinner.h"
-#import "Enums.h"
-#import "IncidentButtonBar.h"
-#import "ReportOnConditionViewController.h"
+- (id)initWithName:(NSString *)tableName databaseQueue:(FMDatabaseQueue *)databaseQueue;
+- (BOOL) addData:(ReportOnConditionData *) data;
+- (void) removeData:(ReportOnConditionData *) data;
+- (BOOL) addDataArray:(NSArray *) dataArray;
 
-
-@interface ReportOnConditionActionViewController : UIViewController <UISplitViewControllerDelegate, UITextFieldDelegate, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
-
-@property DataManager *dataManager;
-
-
-@property (weak, nonatomic) IBOutlet UIButton *createRocButton;
-@property (weak, nonatomic) IBOutlet UIButton *viewRocButton;
-
-
-- (IBAction)createRocButtonPressed:(id)sender;
-- (IBAction)viewRocButtonPressed:(id)sender;
-
-
+- (NSNumber *) getLastReportOnConditionTimestampForIncidentId: (NSNumber *)incidentId;
+- (NSMutableArray<ReportOnConditionData> *) getReportOnConditionsForIncidentId: (NSNumber *)incidentId since: (NSNumber *)timestamp;
+- (NSMutableArray<ReportOnConditionData> *) getAllReportOnConditions;
+- (ReportOnConditionData *) getLastReportOnConditionForIncidentId: (NSNumber *)incidentId;
 @end
+
+

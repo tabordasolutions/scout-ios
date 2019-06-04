@@ -25,12 +25,14 @@
 - (IBAction)createRocButtonPressed:(id)sender
 {
 	NSLog(@"Create ROC Button Pressed");
+	[ReportOnConditionViewController setViewControllerViewingMode:false];
 	[self performSegueWithIdentifier:@"segue_roc_form" sender:self];
 }
 
 - (IBAction)viewRocButtonPressed:(id)sender
 {
 	NSLog(@"View ROC Button Pressed");
+	[ReportOnConditionViewController setViewControllerViewingMode:true];
 	[self performSegueWithIdentifier:@"segue_roc_form" sender:self];
 }
 @end

@@ -38,7 +38,7 @@
 //#define ITEST
 // note: ITEST has openam accessibility issues, so the mobile app fails to point to it.
 //Enable this line to point the app to staging
-//#define STAGING
+#define STAGING
 
 int BackgroundMdtPostCounter = 0;
 
@@ -242,6 +242,10 @@ int BackgroundMdtPostCounter = 0;
 		[_simpleReportPollingTimer invalidate];
 		_simpleReportPollingTimer = nil;
 	}
+	if( _reportOnConditionPollingTimer!=nil){
+		[_reportOnConditionPollingTimer invalidate];
+		_reportOnConditionPollingTimer = nil;
+	}
 	if( _wfsPollingTimer!=nil){
 		[_wfsPollingTimer invalidate];
 		_wfsPollingTimer = nil;
@@ -298,6 +302,26 @@ int BackgroundMdtPostCounter = 0;
 		_simpleReportPollingTimer = [NSTimer scheduledTimerWithTimeInterval:seconds target:self selector:@selector(requestSimpleReports) userInfo:nil repeats:YES];
 	});
 }
+
+- (void) requestReportOnConditionsRepeatedEvery:(int)seconds immediate:(BOOL)immediate  {
+	if(immediate) {
+		dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
+		dispatch_async(queue, ^{
+			[self requestReportOnConditions];
+		});
+	}
+	
+	if(_reportOnConditionPollingTimer != nil)
+	{
+		[_reportOnConditionPollingTimer invalidate];
+		_reportOnConditionPollingTimer = nil;
+	}
+	
+	dispatch_async(dispatch_get_main_queue(), ^{
+		_reportOnConditionPollingTimer = [NSTimer scheduledTimerWithTimeInterval:seconds target:self selector:@selector(requestReportOnConditions) userInfo:nil repeats:YES];
+	});
+}
+
 
 - (void) requestDamageReportsRepeatedEvery:(int)seconds immediate:(BOOL)immediate {
 	if(immediate) {
@@ -445,6 +469,18 @@ long long lastMdtSync = 0;
 	}];
 }
 
+-(void) requestReportOnConditions {
+	NSLog(@"Requesting report on conditions update...");
+	
+	[RestClient getReportOnConditionsForIncidentId:[self getActiveIncidentId] offset:@0 limit:@0 completion:^(BOOL successful) {
+		if(successful) {
+			NSLog(@"Refreshed Report on conditions Information");
+		}
+	}];
+}
+
+
+
 -(void) requestDamageReports {
 	NSLog(@"Requesting damage reports update...");
 	[RestClient getDamageReportsForIncidentId:[self getActiveIncidentId] offset:@0 limit:@0 completion:^(BOOL successful) {
@@ -496,9 +532,9 @@ long long lastMdtSync = 0;
 	
 	[RestClient getCollabroomsForIncident:incident offset:@0 limit:@0 completion:^(BOOL successful){
 		if(successful) {
-			NSLog([@"Succesfully refreshed Collabrooms for incident: " stringByAppendingString:incident.incidentname]);
+			NSLog(@"Succesfully refreshed Collabrooms for incident: %@", incident.incidentname);
 		}else{
-			NSLog([@"Failed to refresh Collabrooms for incident: " stringByAppendingString:incident.incidentname]);
+			NSLog(@"Failed to refresh Collabrooms for incident: %@", incident.incidentname);
 		}
 		[[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"collabroomFinishedLoading" object:nil]];
 	}];
@@ -729,6 +765,52 @@ long long lastMdtSync = 0;
 	return [_databaseManager getLastSimpleReportTimestampForIncidentId:incidentId];
 }
 
+
+#pragma mark Report on Conditions History/Store & Forward
+- (BOOL)addReportOnConditionsToHistory:(NSArray<ReportOnConditionData> *) payloadArray {
+	return [_databaseManager addReportOnConditionsToHistory:payloadArray];
+}
+
+- (BOOL)addReportOnConditionToHistory:(ReportOnConditionData *) payload {
+	return [_databaseManager addReportOnConditionToHistory: payload];
+}
+
+- (BOOL)addReportOnConditionsToStoreAndForward:(NSArray<ReportOnConditionData> *) payloadArray {
+	return [_databaseManager addReportOnConditionsToStoreAndForward:payloadArray];
+}
+
+- (BOOL)addReportOnConditionToStoreAndForward:(ReportOnConditionData *) payload {
+	BOOL success =  [_databaseManager addReportOnConditionToStoreAndForward: payload];
+	if(success) {
+		dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
+		dispatch_async(queue, ^{
+			[RestClient postReportOnConditions];
+		});
+	}
+	
+	return success;
+}
+
+- (void)deleteReportOnConditionFromStoreAndForward:(ReportOnConditionData *) payload {
+	return [_databaseManager deleteReportOnConditionFromStoreAndForward: payload];
+}
+
+- (NSMutableArray<ReportOnConditionData> *)getAllReportOnConditionsForIncidentId: (NSNumber *)incidentId {
+	return [_databaseManager getAllReportOnConditionsForIncidentId:incidentId since:@0];
+}
+
+- (NSMutableArray<ReportOnConditionData> *)getAllReportOnConditionsForIncidentId: (NSNumber *)incidentId since: (NSNumber *)timestamp {
+	return [_databaseManager getAllReportOnConditionsForIncidentId:incidentId since:timestamp];
+}
+
+- (NSMutableArray<ReportOnConditionData> *)getAllReportOnConditionsFromStoreAndForward {
+	return [_databaseManager getAllReportOnConditionsFromStoreAndForward];
+}
+
+- (NSNumber *)getLastReportOnConditionTimestampForIncidentId: (NSNumber *) incidentId {
+	return [_databaseManager getLastReportOnConditionTimestampForIncidentId:incidentId];
+}
+
 #pragma mark Weather Report History/Store & Forward
 - (BOOL)addWeatherReportToHistory:(WeatherReportPayload *) payload {
 	return [_databaseManager addWeatherReportToHistory: payload];
@@ -892,7 +974,7 @@ long long lastMdtSync = 0;
 //}
 
 - (NSNumber *)getSelectedCollabroomId {
-	return [NSNumber numberWithInt:[_userPreferences secretIntegerForKey:@"nics_SELECTED_COLLABROOM_ID"]];
+	return [NSNumber numberWithLong:[_userPreferences secretIntegerForKey:@"nics_SELECTED_COLLABROOM_ID"]];
 }
 
 - (NSString *)getSelectedCollabroomName {
@@ -932,6 +1014,8 @@ long long lastMdtSync = 0;
 	
 	_currentIncident = incident;
 }
+
+
 
 - (void)setCurrentIncident:(IncidentPayload *)incident collabRoomId:(NSNumber *)collabRoomId collabRoomName:(NSString *)collabRoomName {
 	[_userPreferences setSecretObject:incident.incidentid forKey:@"nics_INCIDENT_ID"];
@@ -984,6 +1068,18 @@ long long lastMdtSync = 0;
 	return _incidentsList;
 }
 
+- (NSArray<NSString*> *) getIncidentNamesList {
+	NSMutableArray<NSString*> *incidentNames = [NSMutableArray<NSString*> new];
+	
+	for(id key in _incidentsList)
+	{
+		IncidentPayload *incident = [_incidentsList objectForKey:key];
+		
+		[incidentNames addObject:[incident incidentname]];
+	}
+	return incidentNames;
+}
+
 - (NSMutableDictionary *)getCollabroomList {
 	return _collabRoomList;
 }
@@ -996,7 +1092,7 @@ long long lastMdtSync = 0;
 
 - (NSMutableArray *)getCollabroomPayloadArray{
 	
-	NSMutableArray *payloadArray = [[NSMutableArray alloc]init];
+	NSMutableArray *payloadArray = [NSMutableArray new];
 	
 	for(CollabroomPayload *payload in _collabRoomList){
 		[payloadArray addObject:[_collabRoomList objectForKey:payload]];
@@ -1174,7 +1270,7 @@ long long lastMdtSync = 0;
 	return [[NSUserDefaults standardUserDefaults] valueForKey:@"reportsUpdateFrequency"];
 }
 + (int)getMdtUpdateFrequencyFromSettings{
-	return [[NSUserDefaults standardUserDefaults] integerForKey:@"mdtUpdateFrequency"];
+	return (int) [[NSUserDefaults standardUserDefaults] integerForKey:@"mdtUpdateFrequency"];
 }
 + (NSNumber *)getWfsUpdateFrequencyFromSettings{
 	return [[NSUserDefaults standardUserDefaults] valueForKey:@"wfsUpdateFrequency"];
@@ -1197,7 +1293,13 @@ long long lastMdtSync = 0;
 	return _OverviewViewController;
 }
 
--(void)setIsIpad:(BOOL)setting{_isIpad = setting;}
--(BOOL)getIsIpad{return _isIpad;}
+- (void)setIsIpad:(BOOL)setting
+{
+	_isIpad = setting;
+}
+- (BOOL)getIsIpad
+{
+	return _isIpad;
+}
 
 @end

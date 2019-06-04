@@ -74,6 +74,7 @@ UIStoryboard *currentStoryboard;
 
 -(void)refreshResourceRequests{
     [_dataManager requestSimpleReportsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings]intValue] immediate:YES];
+	[_dataManager requestReportOnConditionsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings] intValue] immediate:YES];
 }
 -(void)ResourceRequestsPolledNothing{
     [self.refreshControl endRefreshing];

@@ -46,6 +46,7 @@
 #import "WeatherReportTable.h"
 #import "MarkupTable.h"
 #import "MDTTable.h"
+#import "ReportOnConditionTable.h"
 
 @interface DatabaseManager : NSObject
 
@@ -68,6 +69,9 @@
 
 @property SimpleReportTable *simpleReportReceiveTable;
 @property SimpleReportTable *simpleReportSendTable;
+
+@property ReportOnConditionTable *reportOnConditionReceiveTable;
+@property ReportOnConditionTable *reportOnConditionSendTable;
 
 @property WeatherReportTable *weatherReportReceiveTable;
 @property WeatherReportTable *weatherReportSendTable;
@@ -155,6 +159,24 @@
 - (NSMutableArray<SimpleReportPayload> *)getAllSimpleReportsFromStoreAndForward;
 
 - (NSNumber *)getLastSimpleReportTimestampForIncidentId: (NSNumber *) incidentId;
+
+
+#pragma mark Report On Condition History/Store & Forward
+- (BOOL)addReportOnConditionsToHistory:(NSArray<ReportOnConditionData*> *) payloadArray;
+- (BOOL)addReportOnConditionToHistory:(ReportOnConditionData *) payload;
+
+- (BOOL)addReportOnConditionsToStoreAndForward:(NSArray<ReportOnConditionData*> *) payloadArray;
+- (BOOL)addReportOnConditionToStoreAndForward:(ReportOnConditionData *) payload;
+
+- (void)deleteReportOnConditionFromStoreAndForward:(ReportOnConditionData *) payload;
+
+- (NSMutableArray<ReportOnConditionData> *)getAllReportOnConditionsForIncidentId: (NSNumber *)incidentId since: (NSNumber *) timestamp;
+- (NSMutableArray<ReportOnConditionData> *)getAllReportOnConditionsFromStoreAndForward;
+
+- (NSNumber *)getLastReportOnConditionTimestampForIncidentId: (NSNumber *) incidentId;
+- (ReportOnConditionData *)getLastReportOnConditionForIncidentId: (NSNumber *) incidentId;
+
+
 
 #pragma mark Weather Report History/Store & Forward
 - (BOOL)addWeatherReportsToHistory:(NSArray<WeatherReportPayload> *) payloadArray;

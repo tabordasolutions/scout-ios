@@ -93,6 +93,7 @@
 + (void) getDamageReportsForIncidentId:(NSNumber *)incidentId offset:(NSNumber *)offset limit:(NSNumber *)limit completion:(void (^)(BOOL successful)) completion;
 + (void) getResourceRequestsForIncidentId:(NSNumber *)incidentId offset:(NSNumber *)offset limit:(NSNumber *)limit completion:(void (^)(BOOL successful)) completion;
 + (void) getWeatherReportsForIncidentId:(NSNumber *)incidentId offset:(NSNumber *)offset limit:(NSNumber *)limit completion:(void (^)(BOOL successful)) completion;
++ (void) getReportOnConditionsForIncidentId:(NSNumber *)incidentId offset:(NSNumber *)offset limit:(NSNumber *)limit completion:(void (^)(BOOL successful)) completion;
 
 + (void) getMarkupHistoryForCollabroomId:(NSNumber *)collabRoomId completion:(void (^)(BOOL successful)) completion;
 + (void)postMapMarkupFeatures;
@@ -111,9 +112,12 @@
 + (void)postWeatherReports;
 + (void)postChatMessages;
 + (void)postMDTs:(MDTPayload *) payload;
++ (void)postReportOnConditions;
 
 + (void)setSendingSimpleReport:(BOOL)value;
 //+ (void)setBaseUrl:(NSString *)server;
 //+ (NSString*)getBaseUrl;
+
++ (NSDictionary*) getLocationBasedDataForLatitude:(double)lat andLongitude:(double)lon;
 
 @end

@@ -62,7 +62,7 @@ const int TAG_COLLABROOM_MENU = 40;
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(startCollabLoadingSpinner) name:@"collabroomStartedLoading" object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(stopCollabLoadingSpinner) name:@"collabroomFinishedLoading" object:nil];
 	[self SetPullTimersFromOptions];
-	[[MultipartPostQueue getInstance] addCahcedReportsToSendQueue];
+	[[MultipartPostQueue getInstance] addCachedReportsToSendQueue];
 	
 	[_dataManager.locationManager startUpdatingLocation];
 	[_dataManager setOverviewController:self];
@@ -77,16 +77,32 @@ const int TAG_COLLABROOM_MENU = 40;
 	
 	_incidentMenu.tag = TAG_INCIDENT_MENU;
 	
-	NSArray *options = [[[_dataManager getIncidentsList] allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+	NSMutableArray *incidentNameOptions = [NSMutableArray arrayWithArray:[[[_dataManager getIncidentsList] allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)]];
 	
-	for( NSString *title in options)  {
+	NSMutableArray *sortedIncidentNameOptions;
+	// Sorting the incidents by creation date
+	sortedIncidentNameOptions = [NSMutableArray arrayWithArray:[incidentNameOptions sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
+		IncidentPayload *incidentA = [[_dataManager incidentsList] objectForKey:(NSString*)a];
+		IncidentPayload *incidentB = [[_dataManager incidentsList] objectForKey:(NSString*)b];
+		
+		// Flip the order because we want to sort from newest to oldest (most recent date first)
+		return [[NSNumber numberWithLongLong:[incidentB created]] compare:[NSNumber numberWithLongLong:[incidentA created]]];
+	}]];
+	
+	// Adding "None" option to incidents list to allow the user to leave their selected incident
+	[sortedIncidentNameOptions insertObject:@"None" atIndex:0];
+
+	
+	for( NSString *title in sortedIncidentNameOptions)  {
 		[_incidentMenu addButtonWithTitle:title];
 	}
 	
 	[_incidentMenu addButtonWithTitle:NSLocalizedString(@"Cancel",nil)];
-	_incidentMenu.cancelButtonIndex = [options count];
+	_incidentMenu.cancelButtonIndex = [sortedIncidentNameOptions count];
 	
-		NSString *currentIncidentName = [_dataManager getActiveIncidentName];
+	
+	NSString *currentIncidentName = [_dataManager getActiveIncidentName];
+	
 	
 	// Make sure our current incident is in the list of incidents:
 	if(currentIncidentName != nil){
@@ -114,12 +130,16 @@ const int TAG_COLLABROOM_MENU = 40;
 		}
 	}
 	
+	// Reports button should always be visible
+	// (ROC Reports do not require an active incident)
+	[_ReportsButtonView setHidden:NO];
+
+	
 	if(_selectedIncident == nil) {
 		[_selectIncidentButton setTitle:NSLocalizedString(@"Select Incident",nil) forState:UIControlStateNormal];
 		[_selectRoomButton setHidden:TRUE];
 		[_ChatButtonView setHidden:TRUE];
 		[_GeneralMessageButtonView setHidden:TRUE];
-		[_ReportsButtonView setHidden:TRUE];
 	}else{
 		[_selectRoomButton setHidden:FALSE];
 		[_selectIncidentButton setTitle:_selectedIncident.incidentname forState:UIControlStateNormal];
@@ -127,12 +147,12 @@ const int TAG_COLLABROOM_MENU = 40;
 		NSNotification *IncidentSwitchedNotification = [NSNotification notificationWithName:@"IncidentSwitched" object:_selectedIncident.incidentname];
 		
 		[_dataManager requestSimpleReportsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings] intValue] immediate:YES];
+		[_dataManager requestReportOnConditionsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings] intValue] immediate:YES];
 		[_dataManager requestDamageReportsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings] intValue] immediate:YES];
 		[_dataManager requestFieldReportsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings] intValue] immediate:YES];
 		[_dataManager requestResourceRequestsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings] intValue] immediate:YES];
 		[_dataManager requestMdtRepeatedEvery:[DataManager getMdtUpdateFrequencyFromSettings] immediate:YES];
 		[_dataManager requestWfsUpdateRepeatedEvery:[[DataManager getWfsUpdateFrequencyFromSettings] intValue] immediate:YES];
-		//ROCTODO - Request ROCs from server
 	}
 	
 	if(_selectedCollabroom == nil){
@@ -153,7 +173,6 @@ const int TAG_COLLABROOM_MENU = 40;
 		[_selectRoomButton setHidden:FALSE];
 		[_ChatButtonView setHidden:FALSE];
 		[_GeneralMessageButtonView setHidden:FALSE];
-		[_ReportsButtonView setHidden:FALSE];
 	}
 	
 	// Disabled Title
@@ -165,8 +184,7 @@ const int TAG_COLLABROOM_MENU = 40;
 	
 	// Enable the following lines to access report types
 	//================================================================================
-	[_ReportsMenu addButtonWithTitle:NSLocalizedString(@"Report on Condition",nil)];//ROCTODO - make the button take you to the appropriate form
-	
+	[_ReportsMenu addButtonWithTitle:NSLocalizedString(@"Report on Condition",nil)];
 	//[_ReportsMenu addButtonWithTitle:NSLocalizedString(@"Damage Report",nil)];
 	//[_ReportsMenu addButtonWithTitle:NSLocalizedString(@"Resource Request",nil)];
 	//[_ReportsMenu addButtonWithTitle:NSLocalizedString(@"Field Report",nil)];
@@ -180,6 +198,7 @@ const int TAG_COLLABROOM_MENU = 40;
 //do not call immediate:yes heres
 -(void)SetPullTimersFromOptions{
 	[_dataManager requestChatMessagesRepeatedEvery:[[DataManager getChatUpdateFrequencyFromSettings] intValue] immediate:NO];
+	[_dataManager requestReportOnConditionsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings]intValue] immediate:NO];
 	[_dataManager requestSimpleReportsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings]intValue] immediate:NO];
 	[_dataManager requestDamageReportsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings]intValue] immediate:NO];
 	[_dataManager requestFieldReportsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings]intValue] immediate:NO];
@@ -261,24 +280,30 @@ const int TAG_COLLABROOM_MENU = 40;
 }
 
 // This is the delegate that handles the _ReportsMenu, _incidentMenu, and _collanroomMenu
--(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
 	NSString *replaceString = @"";
 	
 	// If the actionSheet is the incident menu
-	if(actionSheet.tag == TAG_INCIDENT_MENU) {
-		if(buttonIndex != _incidentMenu.cancelButtonIndex) {
-			
+	if(actionSheet.tag == TAG_INCIDENT_MENU)
+	{
+		// If the user pressed the "None" button, exit the current incident
+		if(buttonIndex == 0)
+		{
+			_selectedIncident = nil;
+		}
+		else if(buttonIndex != _incidentMenu.cancelButtonIndex)
+		{
 			_selectedIncident = [[_dataManager getIncidentsList] objectForKey:[actionSheet buttonTitleAtIndex:buttonIndex]];
-			
 			[_dataManager requestCollabroomsForIncident:_selectedIncident];
 			_selectedIncident.collabrooms = [_dataManager getCollabroomPayloadArray];
-			
 			[_dataManager setSelectedCollabRoomId:@-1 collabRoomName:@"N/A"];
 			_selectedCollabroom = nil;
 		}
 	}
 	// If the actionSheet is the reports menu
-	else if(actionSheet.tag == TAG_REPORTS_MENU){
+	else if(actionSheet.tag == TAG_REPORTS_MENU)
+	{
 		enum ReportTypesMenu reportType = buttonIndex;
 		
 		switch (buttonIndex) {
@@ -295,7 +320,8 @@ const int TAG_COLLABROOM_MENU = 40;
 		//[self performSegueWithIdentifier:@"segue_weather_report" sender:self];
 	}
 	// If the actionSheet is the collabroom menu
-	else if(actionSheet.tag == TAG_COLLABROOM_MENU){
+	else if(actionSheet.tag == TAG_COLLABROOM_MENU)
+	{
 		replaceString = [_selectedIncident.incidentname stringByAppendingString:@"-"];
 		if(buttonIndex != _collabroomMenu.cancelButtonIndex) {
 			//            _selectedCollabroom = [[_dataManager getCollabroomList] objectForKey:[[_dataManager getCollabroomNamesList] objectForKey:[replaceString stringByAppendingString:[actionSheet buttonTitleAtIndex:buttonIndex]]]];
@@ -304,38 +330,68 @@ const int TAG_COLLABROOM_MENU = 40;
 		}
 	}
 	
-	if(_selectedIncident != nil) {
+	// Reports button should never be hidden
+	[_ReportsButtonView setHidden:NO];
+	
+	if(_selectedIncident != nil)
+	{
+		//-----------------------------------
+		// Updating the DataMAnager
+		//-----------------------------------
 		[_dataManager setActiveIncident:_selectedIncident];
 		
+		//-----------------------------------
+		// Updating the UI View
+		//-----------------------------------
+		[_selectIncidentButton setTitle: _selectedIncident.incidentname forState:UIControlStateNormal];
 		[_roomContainerView setHidden:NO];
 		[_selectRoomButton setHidden:NO];
-		
 		[_GeneralMessageButtonView setHidden:NO];
-		[_ReportsButtonView setHidden:NO];
 		
-		[_selectIncidentButton setTitle: _selectedIncident.incidentname forState:UIControlStateNormal];
-	} else {
+		//-----------------------------------
+		// Requesting data for the incident
+		//-----------------------------------
+		[_dataManager requestSimpleReportsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings] intValue] immediate:YES];
+		[_dataManager requestReportOnConditionsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings] intValue] immediate:YES];
+		[_dataManager requestDamageReportsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings] intValue] immediate:YES];
+		[_dataManager requestFieldReportsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings] intValue] immediate:YES];
+		[_dataManager requestResourceRequestsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings] intValue] immediate:YES];
+		[_dataManager requestMdtRepeatedEvery:[DataManager getMdtUpdateFrequencyFromSettings] immediate:YES];
+		[_dataManager requestWfsUpdateRepeatedEvery:[[DataManager getWfsUpdateFrequencyFromSettings] intValue] immediate:YES];
+		[_dataManager requestWeatherReportsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings] intValue] immediate:YES];
+		
+	}
+	else
+	{
+		//-----------------------------------
+		// Updating the DataMAnager
+		//-----------------------------------
+		[_dataManager setActiveIncident:nil];
+		_selectedCollabroom = nil;
+		[_dataManager setSelectedCollabRoomId:@-1 collabRoomName:@"N/A"];
+
+		//-----------------------------------
+		// Updating the UI View
+		//-----------------------------------
 		[_selectIncidentButton setTitle: NSLocalizedString(@"Select Incident",nil) forState:UIControlStateNormal];
-		
+		[_ChatButtonView setHidden:TRUE];
+		[_GeneralMessageButtonView setHidden:TRUE];
 		//        [_roomContainerView setHidden:YES];
 		[_selectRoomButton setHidden:YES];
-		
 		[_GeneralMessageButtonView setHidden:YES];
-		[_ReportsButtonView setHidden:YES];
 	}
 	
-	if(_selectedCollabroom != nil) {
+	if(_selectedCollabroom != nil)
+	{
 		[_dataManager setSelectedCollabRoomId:_selectedCollabroom.collabRoomId collabRoomName:_selectedCollabroom.name];
-		
 		[_ChatButtonView setHidden:NO];
 		[_MapButtonView setHidden:NO];
-		
 		NSString* abreviatedCollabRoomName = [_selectedCollabroom.name stringByReplacingOccurrencesOfString:[_selectedIncident.incidentname stringByAppendingString:@"-"] withString:@""];
-		
 		[_selectRoomButton setTitle:abreviatedCollabRoomName forState:UIControlStateNormal];
-	} else {
+	}
+	else
+	{
 		[_selectRoomButton setTitle: NSLocalizedString(@"Select Room",nil) forState:UIControlStateNormal];
-		
 		[_ChatButtonView setHidden:YES];
 		//        [_MapButtonView setHidden:YES];
 	}
@@ -356,21 +412,11 @@ const int TAG_COLLABROOM_MENU = 40;
 }
 
 
-
-
-
-
-
-
-
-
-
-
 // This method is called when we receive a specific response code from the server
 // indicating the the user has logged in on a different device
 // Thus, we want to notify the user and allow them to re-log-in or close the application.
--(void) showDuplicateLoginWarning:(BOOL)fromFR{
-	
+-(void) showDuplicateLoginWarning:(BOOL)fromFR
+{
 	NSLog(@"USIDDEFECT, attempting to relogin with credentials: %@, %@",[_dataManager getUsername],[_dataManager getPassword]);
 	NSLog(@"USIDDEFECT, using the new method, the credentials are: %@, %@",_dataManager.curSessionUsername,_dataManager.curSessionPassword);
 	

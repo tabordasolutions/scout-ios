@@ -84,26 +84,40 @@ static NSNotificationCenter *notificationCenter;
 		// This should not be called until after the login is completed.
 		// I moved this code to an appropriate location so that it is called
 		// after the user logs in.
-		//    [self addCahcedReportsToSendQueue];
+		//    [self addCachedReportsToSendQueue];
 		
 		[self startCheckSessionIDValidityTimer];
 	}
 	return self;
 }
 
--(void) postReport: (ReportPayload*) reportPayload{
+-(void) postReport: (NSObject*)report
+{
 	
 	if(_postingStopped)
 		return;
 	
 	NSLog(@"USIDDEFECT, postReport, report being posted to server");
 	
-	if(reportPayload.formtypeid == [NSNumber numberWithLong:SR]){
-		NSLog(@"USIDDEFECT,      postReport report type is SR");
-		[self postSimpleReport:reportPayload];
-	}else if (reportPayload.formtypeid == [NSNumber numberWithLong:DR]){
-		NSLog(@"USIDDEFECT,      postReport report type is SR");
-		[self postDamageReports:reportPayload];
+	if([report isKindOfClass:[ReportPayload class]])
+	{
+		ReportPayload *reportPayload = (ReportPayload*) report;
+		
+		if(reportPayload.formtypeid == [NSNumber numberWithLong:SR])
+		{
+			NSLog(@"USIDDEFECT,      postReport report type is SR");
+			[self postSimpleReport:reportPayload];
+		}
+		else if (reportPayload.formtypeid == [NSNumber numberWithLong:DR])
+		{
+			NSLog(@"USIDDEFECT,      postReport report type is SR");
+			[self postDamageReports:reportPayload];
+		}
+	}
+	else if([report isKindOfClass:[ReportOnConditionData class]])
+	{
+		NSLog(@"USIDDEFECT,		postReport report type is ROC");
+		[self postReportOnCondition:((ReportOnConditionData*) report)];
 	}
 }
 
@@ -111,7 +125,7 @@ static NSNotificationCenter *notificationCenter;
 
 
 
--(void) postSimpleReport: (SimpleReportPayload*) payload{
+- (void) postSimpleReport: (SimpleReportPayload*) payload{
 	
 	// If the field report has no image associated with it:
 	NSLog(@"Full image path: %@",payload.messageData.fullpath);
@@ -294,64 +308,160 @@ static NSNotificationCenter *notificationCenter;
 	}];
 }
 
+- (void) postReportOnCondition: (ReportOnConditionData*) payload
+{
+	int userSessionId = [[dataManager getUserSessionId] intValue];
+	
+	NSMutableDictionary *rocPayload = [payload toServerPayload:userSessionId];
+	
+	
+	// If the ROC will create a new incident, the request url is different
+	NSString *url = @"";
+	
+	if(payload.isForNewIncident)
+	{
+		int orgId = [[dataManager.orgData orgId] intValue];
+		url = [NSString stringWithFormat:@"reports/%d/IncidentAndROC",orgId];
+	}
+	else
+	{
+		long incidentId = payload.incidentid;
+		int orgId = [[dataManager.orgData orgId] intValue];
+		url = [NSString stringWithFormat:@"reports/%ld/%d/ROC",incidentId,orgId];
+	}
 
--(void)addPayloadToSendQueue:(ReportPayload*) payload{
-	NSLog(@"USIDDEFECT, addPayloadToSendQueue");
+	NSInteger statusCode = -1;
 	
-	[sendQueue addObject:payload];
+	// Converting the Dictionary to json data
+	NSError *error = nil;
+	NSData *jsonPayloadData = [NSJSONSerialization dataWithJSONObject:rocPayload options:0 error:&error];
 	
-	if(sendQueue.count == 1){
-		[self postReport: payload];
+	if(jsonPayloadData != nil)
+	{
+		NSLog(@"PostReportOnCondition - posted payload.");
+		NSString *response = [RestClient synchronousPostToUrl:url postData:jsonPayloadData length:[jsonPayloadData length] statusCode:&statusCode];
+		NSLog(@"PostReportOnCondition - response: %@",response);
+
+		NSDictionary *responseDictionary = [ReportOnConditionData jsonDictionaryFromJsonString:response];
+		
+		
+		// Now that we've sent it, remove the payload from the store and forward queue
+		NSLog(@"PostReportOnCondition - Removing payload from store and forward table");
+		[dataManager deleteReportOnConditionFromStoreAndForward:payload];
+		
+		payload.sendStatus = SENT;
+		
+		if([ReportOnConditionData jsonGetInt:responseDictionary withName:@"status" defaultTo:-1] == 200)
+		{
+			NSLog(@"PostReportOnCondition - Got success message, payload added to history table");
+			// If the report successfully posted, add it to our history queue
+			[dataManager addReportOnConditionToHistory:payload];
+		}
+		
+		
+	}
+	else
+	{
+		NSLog(@"PostReportOnCondition - Failed to convert payload to json.");
+		// Remove the faulty payload from the store and forward table
+		[dataManager deleteReportOnConditionFromStoreAndForward:payload];
 	}
 }
 
-- (void) stopSendingReports {
+
+-(void)addPayloadToSendQueue:(NSObject*) payload{
+	NSLog(@"USIDDEFECT, addPayloadToSendQueue");
+	
+	if(payload == nil)
+		return;
+	
+	// If it's not a valid report type, don't add it to the queue
+	if(![payload isKindOfClass:[ReportPayload class]] && ![payload isKindOfClass:[ReportOnConditionData class]])
+	{
+		return;
+	}
+	
+	
+	[sendQueue addObject:payload];
+	
+	// If we have only a single report in our queue, send it
+	if(sendQueue.count >= 1)
+	{
+		[self postReport:payload];
+	}
+}
+
+- (void) stopSendingReports
+{
 	_postingStopped = true;
 }
 
-- (void) resumeSendingReports {
+- (void) resumeSendingReports
+{
 	_postingStopped = false;
 	NSLog(@"USIDDEFECT, Resume Sending Reports:");
 	[self sendRemainingReports];
 }
 
 // Sends the next report in the queue
-- (void) sendRemainingReports {
+- (void) sendRemainingReports
+{
 	NSLog(@"USIDDEFECT, sendRemainingReports called");
 	activeConnection = nil;
 	activeConnectionReceiveResponse = RESPONSE_NONE;
 	activeConnectionReceiveData = RESPONSE_NONE;
-	if(sendQueue.count >= 1){
+	if(sendQueue.count >= 1)
+	{
 		[self postReport: [sendQueue objectAtIndex:0]];
 	}
 }
 
 // We call this in didReceiveResponse and didReceiveData,
 // If we received an OK from both, we set the report's status to SENT
-- (void) checkIfMessageAccepted {
-	
+- (void) checkIfMessageAccepted
+{
 	if(activeConnectionReceiveData == RESPONSE_OK && activeConnectionReceiveResponse == RESPONSE_OK) {
 	
-		ReportPayload* reportPayload = [sendQueue objectAtIndex:0];
-		if(reportPayload != nil) {
+		
+		
+		
+		
+		
+		NSObject* report = [sendQueue objectAtIndex:0];
+		
+		if(report != nil)
+		{
+			[sendQueue removeObject:report];
 			
-			[sendQueue removeObject:reportPayload];
 			
-			if(reportPayload.formtypeid == [NSNumber numberWithLong:SR]) {
+			// Removing the report from whichever store and forward queue it came from:
+			if([report isKindOfClass:[ReportPayload class]])
+			{
+				ReportPayload *reportPayload = (ReportPayload*)report;
 				
-				[dataManager deleteSimpleReportFromStoreAndForward:(SimpleReportPayload*)reportPayload];
-				[reportPayload setStatus: [NSNumber numberWithInt:SENT]];
-				[dataManager addSimpleReportToStoreAndForward:(SimpleReportPayload*)reportPayload];
-				
-				[dataManager requestSimpleReportsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings] intValue] immediate:YES];
+				if(reportPayload.formtypeid == [NSNumber numberWithLong:SR])
+				{
+					[dataManager deleteSimpleReportFromStoreAndForward:(SimpleReportPayload*)reportPayload];
+					[reportPayload setStatus: [NSNumber numberWithInt:SENT]];
+					[dataManager addSimpleReportToStoreAndForward:(SimpleReportPayload*)reportPayload];
+					[dataManager requestSimpleReportsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings] intValue] immediate:YES];
+				}
+				else if (reportPayload.formtypeid == [NSNumber numberWithLong:DR])
+				{
+					[dataManager deleteDamageReportFromStoreAndForward:(DamageReportPayload*)reportPayload];
+					[reportPayload setStatus: [NSNumber numberWithInt:SENT]];
+					[dataManager addDamageReportToStoreAndForward:(DamageReportPayload*)reportPayload];
+					[dataManager requestDamageReportsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings] intValue] immediate:YES];
+				}
 			}
-			else if (reportPayload.formtypeid == [NSNumber numberWithLong:DR]){
+			else if([report isKindOfClass:[ReportOnConditionData class]])
+			{
+				ReportOnConditionData *rocData = (ReportOnConditionData*)report;
 				
-				[dataManager deleteDamageReportFromStoreAndForward:(DamageReportPayload*)reportPayload];
-				[reportPayload setStatus: [NSNumber numberWithInt:SENT]];
-				[dataManager addDamageReportToStoreAndForward:(DamageReportPayload*)reportPayload];
-				
-				[dataManager requestDamageReportsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings] intValue] immediate:YES];
+				[dataManager deleteReportOnConditionFromStoreAndForward:rocData];
+				rocData.sendStatus = SENT;
+				[dataManager addReportOnConditionToStoreAndForward:rocData];
+				[dataManager requestReportOnConditionsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings] intValue] immediate:YES];
 			}
 		}
 		NSLog(@"USIDDEFECT, success message received, sending remaining reports");
@@ -416,41 +526,68 @@ static NSNotificationCenter *notificationCenter;
 }
 
 - (void)connection:(NSURLConnection *)connection didSendBodyData:(NSInteger)bytesWritten totalBytesWritten:(NSInteger)totalBytesWritten
-totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite {
+totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite
+{
 	NSLog(@"USIDDEFECT, didSendBodyData called");
+
 	
-	ReportPayload* payload =[sendQueue objectAtIndex:0];
 	
-	double percentage = ((double)totalBytesWritten/(double)totalBytesExpectedToWrite) * 100.0;
 	
-	NSLog(@"%@", [[Enums formTypeEnumToStringFull:[payload.formtypeid intValue]] stringByAppendingString: [NSString stringWithFormat:@"%f", percentage]] );
+	// If this was a ReportPayload, update the upload progress
+	NSObject *report = [sendQueue objectAtIndex:0];
 	
-	[payload setProgress:[NSNumber numberWithDouble:percentage]];
-	
-	NSMutableDictionary *userInfo = [NSMutableDictionary new];
-	[userInfo setObject:[NSNumber numberWithDouble: percentage] forKey:@"progress"];
-	[userInfo setObject:payload.id forKey:@"id"];
-	
-	NSNotification *reportProgressNotification = [NSNotification notificationWithName: [[Enums formTypeEnumToStringAbbrev:[payload.formtypeid intValue]] stringByAppendingString:@"ReportProgressUpdateReceived"] object:nil userInfo:userInfo];
-	[notificationCenter postNotification:reportProgressNotification];
+	if([report isKindOfClass:[ReportPayload class]])
+	{
+		ReportPayload* payload = (ReportPayload*)report;
+		
+		double percentage = ((double)totalBytesWritten/(double)totalBytesExpectedToWrite) * 100.0;
+		
+		NSLog(@"%@", [[Enums formTypeEnumToStringFull:[payload.formtypeid intValue]] stringByAppendingString: [NSString stringWithFormat:@"%f", percentage]] );
+		
+		[payload setProgress:[NSNumber numberWithDouble:percentage]];
+		
+		NSMutableDictionary *userInfo = [NSMutableDictionary new];
+		[userInfo setObject:[NSNumber numberWithDouble: percentage] forKey:@"progress"];
+		[userInfo setObject:payload.id forKey:@"id"];
+		
+		NSNotification *reportProgressNotification = [NSNotification notificationWithName: [[Enums formTypeEnumToStringAbbrev:[payload.formtypeid intValue]] stringByAppendingString:@"ReportProgressUpdateReceived"] object:nil userInfo:userInfo];
+		[notificationCenter postNotification:reportProgressNotification];
+	}
+
 }
 
 
 //this system should get moved to some sort of queue to better manage multiple reports being sent at one time.
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-	
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
+{
 	NSLog(@"USIDDEFECT, didReceiveData called");
 	
 	NSString *response = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-	ReportPayload* reportPayload = [sendQueue objectAtIndex:0];
+	
+	// If this was a ReportPayload, update the upload progress
+	NSObject *report = [sendQueue objectAtIndex:0];
+	
+	// For debug, print the report type
+	NSString *debugReportType = @"none";
+	if([report isKindOfClass:[ReportPayload class]])
+	{
+		ReportPayload* payload = (ReportPayload*)report;
+		debugReportType = [NSString stringWithFormat:@"Report with form type id: %d", payload.formtypeid];
+	}
+	else if([report isKindOfClass:[ReportOnConditionData class]])
+	{
+		debugReportType = @"Report on Condition";
+	}
 	
 	
-	if(response) {
+	if(response)
+	{
 		NSLog(@"USIDDEFECT Received Response: %@",response);
 		activeConnectionReceiveData = RESPONSE_OK;
-	}else {
-		NSLog(@"%@", [[Enums formTypeEnumToStringFull:reportPayload.formtypeid] stringByAppendingString:@" Failed to send...\n"]);
-		
+	}
+	else
+	{
+		NSLog(@"MultipartPostQueue - didReceiveData - Form: %@ - Failed to send...", debugReportType);
 		activeConnectionReceiveData = RESPONSE_FAIL;
 	}
 	
@@ -467,24 +604,52 @@ totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite {
 }
 
 //Called when app is started to queue up any unsent reports that may have been canceled from app closing
--(void)addCahcedReportsToSendQueue{
-	NSLog(@"USIDDEFECT, addCahcedReportsToSendQueue");
-	NSLog(@"USIDDEFECT, addCahcedReportsToSendQueue: about to add all SRs");
+-(void)addCachedReportsToSendQueue
+{
+	NSLog(@"USIDDEFECT, addCachedReportsToSendQueue");
+
+	// Adding all Simple Reports
+	NSLog(@"USIDDEFECT, addCachedReportsToSendQueue: about to add all SRs");
 	NSMutableArray* Reports = [dataManager getAllSimpleReportsFromStoreAndForward];
-	NSLog(@"USIDDEFECT, addCahcedReportsToSendQueue: about to add all DRs");
-	[Reports addObjectsFromArray:[dataManager getAllDamageReportsFromStoreAndForward]];
 	
-	NSLog(@"USIDDEFECT, addCahcedReportsToSendQueue: about to iterate through reports");
-	for(ReportPayload *payload in Reports) {
-		NSLog(@"Checking payload...");
+	// Adding all Damage Reports
+	NSLog(@"USIDDEFECT, addCachedReportsToSendQueue: about to add all DRs");
+	[Reports addObjectsFromArray:[dataManager getAllDamageReportsFromStoreAndForward]];
+
+	// Adding all Report On Conditions
+	NSLog(@"USIDDEFECT, addCachedReportsToSendQueue: about to add all ROCs");
+	[Reports addObjectsFromArray:[dataManager getAllReportOnConditionsFromStoreAndForward]];
+	
+
+	NSLog(@"USIDDEFECT, addCachedReportsToSendQueue: about to iterate through reports");
+	
+	for(NSObject *payload in Reports)
+	{
 		if(payload == nil)
 			continue;
-		NSLog(@"payload is not nil");
-		if([payload.isDraft isEqual:@0] && [payload.status isEqualToNumber:@(WAITING_TO_SEND)]) {
-			NSLog(@"payload is waiting to send");
-			NSLog(@"USIDDEFECT, addCahcedReportsToSendQueue -> Payload is waiting to send, added to send queue");
-			[self addPayloadToSendQueue:payload];
-			NSLog(@"Finished adding payload to send");
+
+		if([payload isKindOfClass:[ReportPayload class]])
+		{
+			ReportPayload *reportPayload = (ReportPayload*) payload;
+			
+			if([reportPayload.isDraft isEqual:@0] && [reportPayload.status isEqualToNumber:@(WAITING_TO_SEND)])
+			{
+				NSLog(@"payload is waiting to send");
+				NSLog(@"USIDDEFECT, addCachedReportsToSendQueue -> Payload is waiting to send, added to send queue");
+				[self addPayloadToSendQueue:reportPayload];
+				NSLog(@"Finished adding payload to send");
+			}
+		}
+		else if([payload isKindOfClass:[ReportOnConditionData class]])
+		{
+			ReportOnConditionData *rocData = (ReportOnConditionData*)payload;
+			if(rocData.sendStatus == WAITING_TO_SEND)
+			{
+				NSLog(@"ROC payload is waiting to send");
+				NSLog(@"USIDDEFECT, addCachedReportsToSendQueue -> ROC Payload is waiting to send, added to send queue");
+				[self addPayloadToSendQueue:rocData];
+				NSLog(@"Finished adding ROC payload to send");
+			}
 		}
 	}
 	
@@ -590,7 +755,8 @@ NSMutableArray *invalidSessionsHandled;
 -(void) startCheckSessionIDValidityTimer {
 	if(_checkSessionIDValidityTimer != nil)
 		[_checkSessionIDValidityTimer invalidate];
-	_checkSessionIDValidityTimer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(checkSessionIDValidity:)
+	
+	_checkSessionIDValidityTimer = [NSTimer scheduledTimerWithTimeInterval:30.0 target:self selector:@selector(checkSessionIDValidity:)
 											userInfo:@{@"fromFR":@false} repeats:YES];
 }
 

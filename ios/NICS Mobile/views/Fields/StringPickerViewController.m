@@ -46,19 +46,18 @@
 @implementation StringPickerViewController
 
 
-// TODO TODO TODO
-// Once OK is clicked, update the contents of _textField
-// TODO TODO TODO
 
-
-- (id) initForTextField:(UITextField*)textField withOptions:(NSArray*)options andViewController:(UIViewController*)viewController
+- (id) initForTextField:(UITextField*)textField
+		  withOptions:(NSArray*)options
+	    viewController:(UIViewController*)viewController
+			withTitle:(NSString*)title
 {
 	self = [super init];
 	
+	_viewTitle = title;
 	_textField = textField;
 	_viewController = viewController;
 	_spinnerOptions = [NSMutableArray arrayWithArray:options];
-	
 	return self;
 }
 
@@ -67,8 +66,22 @@
 {
 	if(_selectedPickerString != nil)
 	{
+		// If the chosen string was already the selected string, do nothing:
+		if([[_textField text] isEqualToString:_selectedPickerString])
+		{
+			return;
+		}
+		
 		[_textField setText: _selectedPickerString];
+		
+		// Only send the action f
+		[_textField sendActionsForControlEvents:UIControlEventValueChanged];
+		[_textField sendActionsForControlEvents:UIControlEventEditingDidEnd];
 	}
+	// Remove the view's firstresponder
+	// (Otherwise, the view would scroll sporadically to whatever textfield
+	// they were editing before they clicked on the String Picker text view)
+	[[_viewController view] endEditing:true];
 }
 
 // Executed by the UIAlertAction Cancel button
@@ -80,9 +93,11 @@
 // Executed when the user taps on the text field to show the picker dialog
 - (void) showAlert
 {
-	// Creating the alertController for the picker dialog
-	UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Title" message:nil preferredStyle:UIAlertControllerStyleAlert];
+	// Defaulting the selected picker to be the first item:
+	_selectedPickerString = [_spinnerOptions objectAtIndex:0];
 	
+	// Creating the alertController for the picker dialog
+	UIAlertController *alertController = [UIAlertController alertControllerWithTitle:(_viewTitle != nil ? _viewTitle : @"") message:nil preferredStyle:UIAlertControllerStyleAlert];
 	
 	// Adding OK button
 	UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
@@ -192,6 +207,10 @@
 //--------------------------------------------------------------------------------------------------------------------------
 - (BOOL) textFieldShouldBeginEditing:(UITextField *)textField
 {
+	// Clearing the border color, if it's set (to clear the red error border)
+	textField.layer.borderColor = UIColor.clearColor.CGColor;
+	textField.layer.borderWidth = 0.0;
+	
 	[self showAlert];
 	return false;
 }

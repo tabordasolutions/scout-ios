@@ -41,6 +41,11 @@
 
 @end
 
+// Used by the shared delegate to differentiate the 3 UIActionSheets
+// (.tag is set after instantiation, then read in the clickedButtonAtIndex delegate)
+const int TAG_TABLET_INCIDENT_MENU = 50;
+
+
 NSNotificationCenter *notificationCenter;
 
 @implementation OverviewViewControllerTablet   
@@ -67,7 +72,7 @@ NSNotificationCenter *notificationCenter;
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(contractMapview) name:@"contractMapView" object:nil];
 	
 	[self SetPullTimersFromOptions];
-	[[MultipartPostQueue getInstance] addCahcedReportsToSendQueue];
+	[[MultipartPostQueue getInstance] addCachedReportsToSendQueue];
 	
 	
 	self.navigationItem.hidesBackButton = YES;
@@ -75,18 +80,37 @@ NSNotificationCenter *notificationCenter;
 	[_dataManager.locationManager startUpdatingLocation];
 	
 	_incidentMenu = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Select Incident", nil) delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
-	_incidentMenu.tag = 50;
+	_incidentMenu.tag = TAG_TABLET_INCIDENT_MENU;
 	
-	NSArray *options = [[[_dataManager getIncidentsList] allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+	// Building the list of incidents:
+	NSMutableArray *incidentNameOptions = [NSMutableArray arrayWithArray:[[[_dataManager getIncidentsList] allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)]];
 	
-	for( NSString *title in options)  {
+	NSMutableArray *sortedIncidentNameOptions;
+	// Sorting the incidents by creation date
+	sortedIncidentNameOptions = [NSMutableArray arrayWithArray:[incidentNameOptions sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
+		IncidentPayload *incidentA = [[_dataManager incidentsList] objectForKey:(NSString*)a];
+		IncidentPayload *incidentB = [[_dataManager incidentsList] objectForKey:(NSString*)b];
+		
+		// Flip the order because we want to sort from newest to oldest (most recent date first)
+		return [[NSNumber numberWithLongLong:[incidentB created]] compare:[NSNumber numberWithLongLong:[incidentA created]]];
+	}]];
+	
+	// Adding "None" option to incidents list to allow the user to leave their selected incident
+	[sortedIncidentNameOptions insertObject:@"None" atIndex:0];
+	
+	
+	
+	for( NSString *title in sortedIncidentNameOptions)
+	{
 		[_incidentMenu addButtonWithTitle:title];
 	}
 	
 	[_incidentMenu addButtonWithTitle:@"Cancel"];
-	_incidentMenu.cancelButtonIndex = [options count];
+	_incidentMenu.cancelButtonIndex = [sortedIncidentNameOptions count];
+	
 	
 	NSString *currentIncidentName = [_dataManager getActiveIncidentName];
+	
 	
 	// Make sure our current incident is in the list of incidents:
 	if(currentIncidentName != nil){
@@ -135,6 +159,7 @@ NSNotificationCenter *notificationCenter;
 		[notificationCenter postNotification:IncidentSwitchedNotification];
 		
 		[_dataManager requestSimpleReportsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings] intValue] immediate:YES];
+		[_dataManager requestReportOnConditionsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings] intValue] immediate:YES];
 		[_dataManager requestDamageReportsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings] intValue] immediate:YES];
 		[_dataManager requestFieldReportsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings] intValue] immediate:YES];
 		[_dataManager requestResourceRequestsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings] intValue] immediate:YES];
@@ -176,6 +201,7 @@ NSNotificationCenter *notificationCenter;
 -(void)SetPullTimersFromOptions{
 	[_dataManager requestChatMessagesRepeatedEvery:[[DataManager getChatUpdateFrequencyFromSettings] intValue] immediate:NO];
 	[_dataManager requestSimpleReportsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings] intValue] immediate:NO];
+	[_dataManager requestReportOnConditionsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings] intValue] immediate:YES];
 	[_dataManager requestDamageReportsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings] intValue] immediate:NO];
 	[_dataManager requestFieldReportsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings] intValue] immediate:NO];
 	[_dataManager requestResourceRequestsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings] intValue] immediate:NO];
@@ -237,30 +263,42 @@ NSNotificationCenter *notificationCenter;
 	}
 }
 
--(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+
+
+
+
+
+
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
 	NSString *replaceString = @"";
 	
-	if(actionSheet.tag == 50) {
-		if(buttonIndex != _incidentMenu.cancelButtonIndex) {
-			
+	if(actionSheet.tag == TAG_TABLET_INCIDENT_MENU)
+	{
+		// If the user pressed the "None" button, exit the current incident
+		if(buttonIndex == 0)
+		{
+			_selectedIncident = nil;
+		}
+		else if(buttonIndex != _incidentMenu.cancelButtonIndex)
+		{
 			_selectedIncident = [[_dataManager getIncidentsList] objectForKey:[actionSheet buttonTitleAtIndex:buttonIndex]];
-			
 			[_dataManager requestCollabroomsForIncident:_selectedIncident];
 			_selectedIncident.collabrooms = [_dataManager getCollabroomPayloadArray];
-			
 			[_dataManager setSelectedCollabRoomId:@-1 collabRoomName:@"N/A"];
 			_selectedCollabroom = nil;
-		}else{
+		}
+		else
+		{
 			replaceString = [_selectedIncident.incidentname stringByAppendingString:@"-"];
 		}
-	} else {
+	}
+	else
+	{
 		replaceString = [_selectedIncident.incidentname stringByAppendingString:@"-"];
-		if(buttonIndex != _collabroomMenu.cancelButtonIndex) {
-			
-			
+		if(buttonIndex != _collabroomMenu.cancelButtonIndex)
+		{
 			NSString* selectedRoom = [actionSheet buttonTitleAtIndex:buttonIndex];
-			
-			//            [replaceString stringByAppendingString:
 			
 			_selectedCollabroom = [[_dataManager getCollabroomList] objectForKey:[[_dataManager getCollabroomNamesList] objectForKey:selectedRoom]];
 			
@@ -272,10 +310,27 @@ NSNotificationCenter *notificationCenter;
 	NSNotification *IncidentSwitchedNotification = nil;
 	NSNotification *CollabRoomSwitchedNotification = nil;
 	
-	if(_selectedIncident != nil) {
+	if(_selectedIncident != nil)
+	{
+		//-----------------------------------
+		// Updating the DataMAnager
+		//-----------------------------------
 		[_dataManager setActiveIncident:_selectedIncident];
 		
+		//-----------------------------------
+		// Updating the UI View
+		//-----------------------------------
+		[_selectIncidentButton setTitle:_selectedIncident.incidentname forState:UIControlStateNormal];
+		[_selectRoomButton setHidden:NO];
+		[_collabroomDownArrowImage setHidden:NO];
+		[_IncidentCanvas setHidden:NO];
+		[_selectIncidentHelperLabel setHidden:YES];
+		
+		//-----------------------------------
+		// Requesting data for the incident
+		//-----------------------------------
 		[_dataManager requestSimpleReportsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings] intValue] immediate:YES];
+		[_dataManager requestReportOnConditionsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings] intValue] immediate:YES];
 		[_dataManager requestDamageReportsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings] intValue] immediate:YES];
 		[_dataManager requestFieldReportsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings] intValue] immediate:YES];
 		[_dataManager requestResourceRequestsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings] intValue] immediate:YES];
@@ -283,15 +338,35 @@ NSNotificationCenter *notificationCenter;
 		[_dataManager requestWfsUpdateRepeatedEvery:[[DataManager getWfsUpdateFrequencyFromSettings] intValue] immediate:YES];
 		[_dataManager requestWeatherReportsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings] intValue] immediate:YES];
 		
-		[_selectIncidentButton setTitle:_selectedIncident.incidentname forState:UIControlStateNormal];
+		//-----------------------------------
+		// Broadcasting a notification
+		//-----------------------------------
 		IncidentSwitchedNotification = [NSNotification notificationWithName:@"IncidentSwitched" object:_selectedIncident.incidentname];
+
+	}
+	else
+	{
+		//-----------------------------------
+		// Updating the DataMAnager
+		//-----------------------------------
+		[_dataManager setActiveIncident:nil];
+		_selectedCollabroom = nil;
+		[_dataManager setSelectedCollabRoomId:@-1 collabRoomName:@"N/A"];
 		
-	} else {
+		
+		//-----------------------------------
+		// Updating the UI View
+		//-----------------------------------
+		[_selectRoomButton setHidden:true];
+		[_collabroomDownArrowImage setHidden:TRUE];
+		[_selectIncidentHelperLabel setHidden:false];
+		
+		
 		[_selectIncidentButton setTitle:NSLocalizedString(@"Select Incident", nil) forState:UIControlStateNormal];
-		
 	}
 	
-	if(_selectedCollabroom != nil) {
+	if(_selectedCollabroom != nil)
+	{
 		[_dataManager setSelectedCollabRoomId:_selectedCollabroom.collabRoomId collabRoomName:_selectedCollabroom.name];
 		
 		[_dataManager requestChatMessagesRepeatedEvery:[[DataManager getChatUpdateFrequencyFromSettings] intValue] immediate:YES];
@@ -301,24 +376,18 @@ NSNotificationCenter *notificationCenter;
 		[_selectRoomButton setTitle:[_selectedCollabroom.name stringByReplacingOccurrencesOfString:replaceString withString:@""] forState:UIControlStateNormal];
 		CollabRoomSwitchedNotification = [NSNotification notificationWithName:@"CollabRoomSwitched" object:_selectedCollabroom.name ];
 		
-	} else {
+	}
+	else
+	{
 		[_selectRoomButton setTitle:NSLocalizedString(@"Select Room", nil) forState:UIControlStateNormal];
 	}
-	if(!_selectedIncident){
-		[_selectRoomButton setHidden:true];
-		[_collabroomDownArrowImage setHidden:TRUE];
-		[_selectIncidentHelperLabel setHidden:false];
-	}else{
-		[_selectRoomButton setHidden:false];
-		[_collabroomDownArrowImage setHidden:false];
-		[_IncidentCanvas setHidden:FALSE];
-		[_selectIncidentHelperLabel setHidden:true];
-	}
 	
-	if(IncidentSwitchedNotification!=nil){
+	if(IncidentSwitchedNotification!=nil)
+	{
 		[notificationCenter postNotification:IncidentSwitchedNotification];
 	}
-	if(CollabRoomSwitchedNotification!=nil){
+	if(CollabRoomSwitchedNotification!=nil)
+	{
 		[notificationCenter postNotification:CollabRoomSwitchedNotification];
 	}
 }

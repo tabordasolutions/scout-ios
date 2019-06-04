@@ -212,11 +212,14 @@
 		9D1D372B2007E18100A4FF53 /* SCOUT_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D1D372A2007E18100A4FF53 /* SCOUT_logo.png */; };
 		9D6CA661220E3BE3003B7546 /* ReportOnConditionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D6CA660220E3BE3003B7546 /* ReportOnConditionViewController.m */; };
 		9D6CA666220E3C27003B7546 /* ReportOnConditionActionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D6CA665220E3C27003B7546 /* ReportOnConditionActionViewController.m */; };
+		9D7D3E132266768000864117 /* ReportOnConditionTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D7D3E122266768000864117 /* ReportOnConditionTable.m */; };
+		9D7D3E192268EEC800864117 /* ReportOnConditionData.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D7D3E182268EEC800864117 /* ReportOnConditionData.m */; };
 		9DB52C2520053142003833B9 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DB52C2420053142003833B9 /* CoreMedia.framework */; };
 		9DB52C2720053149003833B9 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DB52C2620053149003833B9 /* CoreMotion.framework */; };
 		9DB52C2920053153003833B9 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DB52C2820053153003833B9 /* AVFoundation.framework */; };
 		9DB52C2B2005315A003833B9 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DB52C2A2005315A003833B9 /* SystemConfiguration.framework */; };
 		9DB52C2D20053160003833B9 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DB52C2C20053160003833B9 /* OpenGLES.framework */; };
+		9DE2A7BB226E563C00A0B12A /* DateTimePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DE2A7B9226E563900A0B12A /* DateTimePickerController.m */; };
 		9DF395C122527F6D00233379 /* TextFieldDropdownController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DF395C022527F6D00233379 /* TextFieldDropdownController.m */; };
 		9DF395C422527FD000233379 /* CheckBoxTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DF395C322527FD000233379 /* CheckBoxTableViewController.m */; };
 		9DF395C722527FEB00233379 /* StringPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DF395C622527FEB00233379 /* StringPickerViewController.m */; };
@@ -637,13 +640,19 @@
 		9D6CA65F220E3BC4003B7546 /* ReportOnConditionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReportOnConditionViewController.h; sourceTree = "<group>"; };
 		9D6CA660220E3BE3003B7546 /* ReportOnConditionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReportOnConditionViewController.m; sourceTree = "<group>"; };
 		9D6CA665220E3C27003B7546 /* ReportOnConditionActionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReportOnConditionActionViewController.m; sourceTree = "<group>"; };
+		9D7D3E122266768000864117 /* ReportOnConditionTable.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReportOnConditionTable.m; sourceTree = "<group>"; };
+		9D7D3E142266768C00864117 /* ReportOnConditionTable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReportOnConditionTable.h; sourceTree = "<group>"; };
+		9D7D3E172268EEAB00864117 /* ReportOnConditionData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReportOnConditionData.h; sourceTree = "<group>"; };
+		9D7D3E182268EEC800864117 /* ReportOnConditionData.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReportOnConditionData.m; sourceTree = "<group>"; };
 		9D8ED2C622270D12001AD307 /* ReportOnConditionActionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReportOnConditionActionViewController.h; sourceTree = "<group>"; };
+		9DA99D26226E5A4300D191A9 /* TextFieldDropdownController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextFieldDropdownController.h; sourceTree = "<group>"; };
 		9DB52C2420053142003833B9 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		9DB52C2620053149003833B9 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		9DB52C2820053153003833B9 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		9DB52C2A2005315A003833B9 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		9DB52C2C20053160003833B9 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
-		9DF395BF22527F5100233379 /* TextFieldDropdownController .h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TextFieldDropdownController .h"; sourceTree = "<group>"; };
+		9DE2A7B9226E563900A0B12A /* DateTimePickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DateTimePickerController.m; sourceTree = "<group>"; };
+		9DE2A7BA226E563B00A0B12A /* DateTimePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateTimePickerController.h; sourceTree = "<group>"; };
 		9DF395C022527F6D00233379 /* TextFieldDropdownController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TextFieldDropdownController.m; sourceTree = "<group>"; };
 		9DF395C222527FC300233379 /* CheckBoxTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CheckBoxTableViewController.h; sourceTree = "<group>"; };
 		9DF395C322527FD000233379 /* CheckBoxTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CheckBoxTableViewController.m; sourceTree = "<group>"; };
@@ -985,6 +994,8 @@
 				01C8BE7D1BFE404400FF99B0 /* Constants.m */,
 				01582D761C29E17600307C76 /* WeatherReportData.h */,
 				01582D771C29E17600307C76 /* WeatherReportData.m */,
+				9D7D3E172268EEAB00864117 /* ReportOnConditionData.h */,
+				9D7D3E182268EEC800864117 /* ReportOnConditionData.m */,
 			);
 			path = data;
 			sourceTree = "<group>";
@@ -1017,6 +1028,8 @@
 				3A3C9D8718DB441200EEBA17 /* ResourceRequestTable.h */,
 				3A3C9D8818DB441200EEBA17 /* ResourceRequestTable.m */,
 				3A3C9D8918DB441200EEBA17 /* SimpleReportTable.h */,
+				9D7D3E122266768000864117 /* ReportOnConditionTable.m */,
+				9D7D3E142266768C00864117 /* ReportOnConditionTable.h */,
 				3A3C9D8A18DB441200EEBA17 /* SimpleReportTable.m */,
 				01582D7B1C29E49300307C76 /* WeatherReportTable.h */,
 				01582D7C1C29E49300307C76 /* WeatherReportTable.m */,
@@ -1348,7 +1361,9 @@
 		9DF395BE22527ED000233379 /* Fields */ = {
 			isa = PBXGroup;
 			children = (
-				9DF395BF22527F5100233379 /* TextFieldDropdownController .h */,
+				9DA99D26226E5A4300D191A9 /* TextFieldDropdownController.h */,
+				9DE2A7BA226E563B00A0B12A /* DateTimePickerController.h */,
+				9DE2A7B9226E563900A0B12A /* DateTimePickerController.m */,
 				9DF395C022527F6D00233379 /* TextFieldDropdownController.m */,
 				9DF395C222527FC300233379 /* CheckBoxTableViewController.h */,
 				9DF395C322527FD000233379 /* CheckBoxTableViewController.m */,
@@ -1632,12 +1647,14 @@
 				3A3C9E4918DB441300EEBA17 /* MDTPayload.m in Sources */,
 				01C8BE7F1BFE404400FF99B0 /* Constants.m in Sources */,
 				55B249871F29A1220006DDEB /* GMUStyle.m in Sources */,
+				9DE2A7BB226E563C00A0B12A /* DateTimePickerController.m in Sources */,
 				3A3C9E5418DB441300EEBA17 /* Utils.m in Sources */,
 				552440211F5F3C3500523447 /* MarkupFirelineFeatures.m in Sources */,
 				3A70105E18E09F8900C3DC42 /* DamageReportListViewController.m in Sources */,
 				0131FD481C10945A0001349E /* MarkupReportSymbol.m in Sources */,
 				55B249881F29A1220006DDEB /* GQTPointQuadTree.m in Sources */,
 				5589E9C21F2F90D0003EA98F /* Markup.swift in Sources */,
+				9D7D3E132266768000864117 /* ReportOnConditionTable.m in Sources */,
 				3A3C9E5318DB441300EEBA17 /* UIImage+Resize.m in Sources */,
 				3A3C9E4618DB441300EEBA17 /* IncidentPayload.m in Sources */,
 				01661BBF1BA8B75100CE6453 /* OpenAMAuthenticationData.m in Sources */,
@@ -1718,6 +1735,7 @@
 				3A3C9E6218DB441300EEBA17 /* FieldReportListViewController.m in Sources */,
 				01582D831C29E84500307C76 /* WeatherReportMessage.m in Sources */,
 				3A70106418E0A1EB00C3DC42 /* DamageReportMessage.m in Sources */,
+				9D7D3E192268EEC800864117 /* ReportOnConditionData.m in Sources */,
 				9D6CA666220E3C27003B7546 /* ReportOnConditionActionViewController.m in Sources */,
 				3A3C9E4318DB441300EEBA17 /* ReportPayload.m in Sources */,
 				5528E7101F299473003EC8F7 /* AppDelegate.m in Sources */,
