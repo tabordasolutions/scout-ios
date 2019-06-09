@@ -56,6 +56,10 @@
 // false - shows the blank form for creating a new ROC
 + (void) setViewControllerViewingMode:(bool)mode;
 
+// Called by viewDidLoad to set up the ROC
+- (void) setupView;
+// A method to call setupView on the class singleton instance
++ (void) setupInstanceView;
 //=============================================================================
 // Info
 //=============================================================================
@@ -76,6 +80,8 @@
 // Whether or not the request for location-based weather data was successful
 @property bool successfullyGotAllWeatherData;
 
+// The last ROC that was submitted for this incident
+@property ReportOnConditionData *lastRocData;
 
 
 //=============================================================================
@@ -336,6 +342,18 @@
 // Helper methods that set up fields
 //=============================================================================
 
+
+// Enters the incident's information into the form and
+- (void) setupFormForIncident:(IncidentPayload*)incident;
+
+
+// sets all of the incident-related fields as read-only
+// (except for incident name,
+// as this method is called while editing incident name, so interfering with that
+// kicks the user out of editing the field, so we don't want to do that)
+- (void) makeIncidentFieldsReadOnly;
+
+
 - (void) makeStringPickerTextField:(UITextField *)textField
 				   withOptions:(NSArray*)options
 					andTitle:(NSString*)title;
@@ -481,9 +499,6 @@
 - (IBAction)submitReportButtonPressed:(UIButton *)button;
 
 // TODO - implement this:
-- (void)submitTabletReportButtonPressed;
-
-// TODO - implement this:
 - (IBAction)cancelButtonPressed:(UIButton *)button;
 // TODO - implement this:
 - (void)cancelTabletButtonPressed;
@@ -495,6 +510,11 @@
 // Is responsible for toggling the visibility of the appropriate section
 // and collapsing all other sections
 - (void) toggleCollapsibleSection:(UIGestureRecognizer*)sender;
+
+// Hides all textfield dropdown lists
+// doesn't hide the dropdown list of textField
+- (void) hideAllDropdownListsExcept:(UITextField*)textField;
+
 // Collapses all report sections
 - (void) collapseAllSections;
 

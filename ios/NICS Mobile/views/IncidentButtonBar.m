@@ -70,6 +70,9 @@ static MapMarkupViewController *mapMarkupView;
 static IncidentCanvasUIViewController *incidentCanvasController;
 static UIView *incidentCanvas;
 
+static ReportOnConditionActionViewController *reportOnConditionActionViewController;
+static ReportOnConditionViewController *reportOnConditionViewController;
+
 static UIButton *SaveDraftButton;
 static UIButton *AddButton;
 static UIButton *CancelButton;
@@ -113,6 +116,7 @@ static UIButton *FilterButton;
 }
 
 + (void)SetEditButtonsVisible:(BOOL)visible {
+	
 	[SaveDraftButton setHidden:visible];
 	[CancelButton setHidden:visible];
 	[SubmitButton setHidden:visible];
@@ -138,22 +142,22 @@ static UIButton *FilterButton;
 }
 
 + (void)SubmitButtonPressed:(NSString*)currentReport{
-    
-    [SaveDraftButton setHidden:TRUE];
-    [CancelButton setHidden:TRUE];
-    [SubmitButton setHidden:TRUE];
-    
-    if([currentReport isEqualToString:@"GeneralMessage"]){
-        [generalMessageDetailView submitTabletReportButtonPressed];
-    }else if([currentReport isEqualToString:@"DamageReport"]){
-        [damageReportDetailview submitTabletReportButtonPressed];
-    }else if([currentReport isEqualToString:@"ResourceRequest"]){
-        [resourceRequestDetailview submitTabletReportButtonPressed];
-    }else if([currentReport isEqualToString:@"FieldReport"]){
-        [fieldReportDetailview submitTabletReportButtonPressed];
-    }else if([currentReport isEqualToString:@"WeatherReport"]){
-        [weatherReportDetailview submitTabletReportButtonPressed];
-    }
+	
+	[SaveDraftButton setHidden:TRUE];
+	[CancelButton setHidden:TRUE];
+	[SubmitButton setHidden:TRUE];
+
+	if([currentReport isEqualToString:@"GeneralMessage"]){
+	   [generalMessageDetailView submitTabletReportButtonPressed];
+	}else if([currentReport isEqualToString:@"DamageReport"]){
+	   [damageReportDetailview submitTabletReportButtonPressed];
+	}else if([currentReport isEqualToString:@"ResourceRequest"]){
+	   [resourceRequestDetailview submitTabletReportButtonPressed];
+	}else if([currentReport isEqualToString:@"FieldReport"]){
+	   [fieldReportDetailview submitTabletReportButtonPressed];
+	}else if([currentReport isEqualToString:@"WeatherReport"]){
+	   [weatherReportDetailview submitTabletReportButtonPressed];
+	}
 }
 
 + (void)FilterButtonPressed:(NSString*)currentReport{
@@ -178,20 +182,21 @@ static UIButton *FilterButton;
 +(LoginViewController*)GetLoginView{return loginViewController;}
 
 +(void)ClearAllViews{
-    tabletOverviewViewController = nil;
-    chatController = nil;
-    generalMessageListview = nil;
-    generalMessageDetailView = nil;
-    damageReportListview = nil;
-    damageReportDetailview = nil;
-    resourceRequestListview = nil;
-    resourceRequestDetailview = nil;
-    fieldReportListview = nil;
-    fieldReportDetailview = nil;
-    weatherReportListview = nil;
-    weatherReportDetailview = nil;
-    mapMarkupView = nil;
-    incidentCanvasController = nil;
+	tabletOverviewViewController = nil;
+	chatController = nil;
+	generalMessageListview = nil;
+	generalMessageDetailView = nil;
+	damageReportListview = nil;
+	damageReportDetailview = nil;
+	resourceRequestListview = nil;
+	resourceRequestDetailview = nil;
+	fieldReportListview = nil;
+	fieldReportDetailview = nil;
+	weatherReportListview = nil;
+	weatherReportDetailview = nil;
+	mapMarkupView = nil;
+	incidentCanvasController = nil;
+	reportOnConditionActionViewController = nil;
 }
 
 +(void)SetOverview:(OverviewViewControllerTablet*)overview{tabletOverviewViewController = overview;}
@@ -280,6 +285,23 @@ static UIButton *FilterButton;
         mapMarkupView =[[UIStoryboard storyboardWithName:@"Main_iPad_Prototype" bundle:nil] instantiateViewControllerWithIdentifier:@"MapViewID"];
     }
     return mapMarkupView;
+}
+
++(ReportOnConditionActionViewController*) GetReportOnConditionActionView{
+	if(reportOnConditionActionViewController == nil){
+		reportOnConditionActionViewController = [[UIStoryboard storyboardWithName:@"Main_iPad_Prototype" bundle:nil] instantiateViewControllerWithIdentifier:@"ReportOnConditionActionSceneID"];
+	}
+	
+	return reportOnConditionActionViewController;
+}
+
++(ReportOnConditionViewController*) GetReportOnConditionView{
+	// Don't reuse the instance, always make a new one
+	//if(reportOnConditionViewController == nil){
+		reportOnConditionViewController = [[UIStoryboard storyboardWithName:@"Main_iPad_Prototype" bundle:nil] instantiateViewControllerWithIdentifier:@"ReportOnConditionSceneID"];
+	//}
+	
+	return reportOnConditionViewController;
 }
 
 + (void) SetAddButton:(UIButton*)button{AddButton = button;}

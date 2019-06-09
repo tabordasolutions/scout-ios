@@ -1705,6 +1705,9 @@
                         <outlet property="IncidentCanvas" destination="5yp-J7-uBT" id="rPa-ah-Q0c"/>
                         <outlet property="SaveDraftButton" destination="j9G-Ym-pSp" id="tFh-1e-l9z"/>
                         <outlet property="SubmitButton" destination="bTS-oD-MjR" id="kLs-2M-HdB"/>
+                        <outlet property="chatButton" destination="83r-r2-e97" id="44p-EL-cK2"/>
+                        <outlet property="fieldReportButton" destination="f4F-ED-ies" id="dLe-mv-N46"/>
+                        <outlet property="reportButton" destination="V5p-32-NZS" id="hyF-Aj-cW4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AfP-K6-VWi" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2478,20 +2481,20 @@
                         <viewControllerLayoutGuide type="bottom" id="PVX-Xk-Vb5"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="86o-J4-NcM">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="3900"/>
+                        <rect key="frame" x="0.0" y="0.0" width="580" height="3900"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wmq-YZ-QHR">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="3840"/>
+                                <rect key="frame" x="0.0" y="0.0" width="580" height="3840"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="oEi-lb-Ohg">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="3764"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="580" height="3764"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="330-kq-AmG" userLabel="ROCFormInfoSectionView">
-                                                <rect key="frame" x="0.0" y="0.0" width="375" height="160"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="580" height="160"/>
                                                 <subviews>
                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Incident Name:" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Yd-CK-oUR" userLabel="IncidentNameLabel">
-                                                        <rect key="frame" x="5" y="0.0" width="365" height="34"/>
+                                                        <rect key="frame" x="5" y="0.0" width="570" height="34"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="34" id="xem-Nb-zl1"/>
                                                         </constraints>
@@ -2501,7 +2504,7 @@
                                                         <dataDetectorType key="dataDetectorTypes" lookupSuggestion="YES"/>
                                                     </textView>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bfM-oF-tvc" userLabel="IncidentNameField">
-                                                        <rect key="frame" x="5" y="29" width="365" height="40"/>
+                                                        <rect key="frame" x="5" y="29" width="570" height="40"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="40" id="Oyq-NJ-WU0"/>
                                                         </constraints>
@@ -2509,7 +2512,7 @@
                                                         <textInputTraits key="textInputTraits"/>
                                                     </textField>
                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Report Type:" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ONr-dT-ujz" userLabel="ROCFormTypeLabel">
-                                                        <rect key="frame" x="5" y="74" width="365" height="34"/>
+                                                        <rect key="frame" x="5" y="74" width="570" height="34"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="34" id="0Ws-tm-M9j"/>
                                                         </constraints>
@@ -2519,7 +2522,7 @@
                                                         <dataDetectorType key="dataDetectorTypes" lookupSuggestion="YES"/>
                                                     </textView>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="she-Af-HrK" userLabel="ROCFormTypeField">
-                                                        <rect key="frame" x="5" y="103" width="365" height="40"/>
+                                                        <rect key="frame" x="5" y="103" width="570" height="40"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="40" id="1dy-Cz-7Mh"/>
                                                         </constraints>
@@ -2545,10 +2548,10 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D2E-RF-NIP" userLabel="IncidentInfoHeaderView">
-                                                <rect key="frame" x="0.0" y="160" width="375" height="50"/>
+                                                <rect key="frame" x="0.0" y="160" width="580" height="50"/>
                                                 <subviews>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="down_arrow_transparent" translatesAutoresizingMaskIntoConstraints="NO" id="UnG-9w-uGS" userLabel="IncidentInfoHeaderArrow">
-                                                        <rect key="frame" x="318" y="4" width="48" height="41"/>
+                                                        <rect key="frame" x="523" y="4" width="48" height="41"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="48" id="sSE-0E-yhU"/>
                                                             <constraint firstAttribute="width" secondItem="UnG-9w-uGS" secondAttribute="height" multiplier="48:41" id="tqW-iM-GMA"/>
@@ -2562,7 +2565,7 @@
                                                         <textInputTraits key="textInputTraits"/>
                                                     </textField>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="red_explamation_point" translatesAutoresizingMaskIntoConstraints="NO" id="7E5-Jc-fZQ" userLabel="IncidentInfoHeaderErrorView">
-                                                        <rect key="frame" x="288" y="12" width="25" height="25"/>
+                                                        <rect key="frame" x="493" y="12" width="25" height="25"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="7E5-Jc-fZQ" secondAttribute="height" id="cX7-gd-nYC"/>
                                                         </constraints>
@@ -2583,10 +2586,10 @@
                                                 </connections>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DxW-GH-3JP" userLabel="IncidentInfoSectionView">
-                                                <rect key="frame" x="0.0" y="210" width="375" height="600"/>
+                                                <rect key="frame" x="0.0" y="210" width="580" height="600"/>
                                                 <subviews>
                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Incident Number:" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Xv-5l-yEU" userLabel="IncidentNumberLabel">
-                                                        <rect key="frame" x="5" y="0.0" width="365" height="34"/>
+                                                        <rect key="frame" x="5" y="0.0" width="570" height="34"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="34" id="hsW-d6-DTP"/>
                                                         </constraints>
@@ -2596,7 +2599,7 @@
                                                         <dataDetectorType key="dataDetectorTypes" lookupSuggestion="YES"/>
                                                     </textView>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="P3U-pJ-jKY" userLabel="IncidentNumberField">
-                                                        <rect key="frame" x="5" y="29" width="365" height="40"/>
+                                                        <rect key="frame" x="5" y="29" width="570" height="40"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="40" id="dAD-6V-8aw"/>
                                                         </constraints>
@@ -2604,7 +2607,7 @@
                                                         <textInputTraits key="textInputTraits"/>
                                                     </textField>
                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Incident Type:" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4oS-GT-vUc" userLabel="IncidentTypeLabel">
-                                                        <rect key="frame" x="5" y="74" width="365" height="34"/>
+                                                        <rect key="frame" x="5" y="74" width="570" height="34"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="34" id="PlA-vE-IBS"/>
                                                         </constraints>
@@ -2614,14 +2617,14 @@
                                                         <dataDetectorType key="dataDetectorTypes" lookupSuggestion="YES"/>
                                                     </textView>
                                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="PCh-zd-9HR" userLabel="IncidentTypeTable">
-                                                        <rect key="frame" x="5" y="103" width="365" height="200"/>
+                                                        <rect key="frame" x="5" y="103" width="570" height="200"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="200" id="7vn-dM-3RH"/>
                                                         </constraints>
                                                     </tableView>
                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Location:" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Jq-rw-iAI" userLabel="LocationLabel">
-                                                        <rect key="frame" x="5" y="308" width="365" height="34"/>
+                                                        <rect key="frame" x="5" y="308" width="570" height="34"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="34" id="lpy-qu-wJw"/>
                                                         </constraints>
@@ -2631,7 +2634,7 @@
                                                         <dataDetectorType key="dataDetectorTypes" lookupSuggestion="YES"/>
                                                     </textView>
                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Latitude:" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eST-ZK-xL6" userLabel="LatitudeLabel">
-                                                        <rect key="frame" x="10" y="337" width="360" height="34"/>
+                                                        <rect key="frame" x="10" y="337" width="565" height="34"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="34" id="XPv-AK-xzc"/>
                                                         </constraints>
@@ -2641,7 +2644,7 @@
                                                         <dataDetectorType key="dataDetectorTypes" lookupSuggestion="YES"/>
                                                     </textView>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9jj-EG-VaU" userLabel="LatitudeDegField">
-                                                        <rect key="frame" x="10" y="366" width="160" height="30"/>
+                                                        <rect key="frame" x="10" y="366" width="365" height="30"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="30" id="3Qw-H6-Mgx"/>
                                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="K3S-d4-fef"/>
@@ -2651,7 +2654,7 @@
                                                         <textInputTraits key="textInputTraits"/>
                                                     </textField>
                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="°" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5YG-xe-NDm" userLabel="LatitudeDegSym">
-                                                        <rect key="frame" x="170" y="366" width="20" height="30"/>
+                                                        <rect key="frame" x="375" y="366" width="20" height="30"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="20" id="L1F-qa-uMf"/>
                                                         </constraints>
@@ -2661,7 +2664,7 @@
                                                         <dataDetectorType key="dataDetectorTypes" lookupSuggestion="YES"/>
                                                     </textView>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="byR-SB-0cQ" userLabel="LatitudeMinField">
-                                                        <rect key="frame" x="190" y="366" width="160" height="30"/>
+                                                        <rect key="frame" x="395" y="366" width="160" height="30"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="160" id="TIP-Fe-RZg"/>
                                                         </constraints>
@@ -2670,7 +2673,7 @@
                                                         <textInputTraits key="textInputTraits"/>
                                                     </textField>
                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="m" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hDy-6l-YqK" userLabel="LatitudeMinSym">
-                                                        <rect key="frame" x="350" y="366" width="20" height="30"/>
+                                                        <rect key="frame" x="555" y="366" width="20" height="30"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="20" id="y9p-no-i4e"/>
                                                         </constraints>
@@ -2680,7 +2683,7 @@
                                                         <dataDetectorType key="dataDetectorTypes" lookupSuggestion="YES"/>
                                                     </textView>
                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Longitude:" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mH7-Ww-Nk6" userLabel="LongitudeLabel">
-                                                        <rect key="frame" x="10" y="396" width="360" height="34"/>
+                                                        <rect key="frame" x="10" y="396" width="565" height="34"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="34" id="wD4-sM-5ST"/>
                                                         </constraints>
@@ -2690,7 +2693,7 @@
                                                         <dataDetectorType key="dataDetectorTypes" lookupSuggestion="YES"/>
                                                     </textView>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="URW-WN-ZbO" userLabel="LongitudeDegField">
-                                                        <rect key="frame" x="10" y="425" width="160" height="30"/>
+                                                        <rect key="frame" x="10" y="425" width="365" height="30"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="DPl-sr-tbD"/>
                                                             <constraint firstAttribute="height" constant="30" id="lxO-vD-S76"/>
@@ -2700,7 +2703,7 @@
                                                         <textInputTraits key="textInputTraits"/>
                                                     </textField>
                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="°" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f7b-UA-vYh" userLabel="LongitudeDegSym">
-                                                        <rect key="frame" x="170" y="425" width="20" height="30"/>
+                                                        <rect key="frame" x="375" y="425" width="20" height="30"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="20" id="RYv-hM-0S5"/>
                                                         </constraints>
@@ -2710,7 +2713,7 @@
                                                         <dataDetectorType key="dataDetectorTypes" lookupSuggestion="YES"/>
                                                     </textView>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Keu-AF-7KV" userLabel="LongitudeMinField">
-                                                        <rect key="frame" x="190" y="425" width="160" height="30"/>
+                                                        <rect key="frame" x="395" y="425" width="160" height="30"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="160" id="ifi-ks-1rt"/>
                                                         </constraints>
@@ -2719,7 +2722,7 @@
                                                         <textInputTraits key="textInputTraits"/>
                                                     </textField>
                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="m" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OMC-dQ-9Tg" userLabel="LongitudeMinSym">
-                                                        <rect key="frame" x="350" y="425" width="20" height="30"/>
+                                                        <rect key="frame" x="555" y="425" width="20" height="30"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="20" id="9Mh-ag-3bk"/>
                                                         </constraints>
@@ -2729,7 +2732,7 @@
                                                         <dataDetectorType key="dataDetectorTypes" lookupSuggestion="YES"/>
                                                     </textView>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EXH-Gz-Ycg" userLabel="LocateButton">
-                                                        <rect key="frame" x="326" y="465" width="34" height="34"/>
+                                                        <rect key="frame" x="531" y="465" width="34" height="34"/>
                                                         <color key="backgroundColor" red="0.45098039220000002" green="0.45098039220000002" blue="0.45098039220000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="EXH-Gz-Ycg" secondAttribute="height" multiplier="1:1" id="8ma-Tl-TaG"/>
@@ -2744,7 +2747,7 @@
                                                         </connections>
                                                     </button>
                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="State / Province / Region:" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4fB-Kg-wht" userLabel="StateLabel">
-                                                        <rect key="frame" x="5" y="504" width="365" height="34"/>
+                                                        <rect key="frame" x="5" y="504" width="570" height="34"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="34" id="x5y-ra-WLn"/>
                                                         </constraints>
@@ -2754,7 +2757,7 @@
                                                         <dataDetectorType key="dataDetectorTypes" lookupSuggestion="YES"/>
                                                     </textView>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="e4a-p6-ID3" userLabel="StateField">
-                                                        <rect key="frame" x="5" y="533" width="365" height="40"/>
+                                                        <rect key="frame" x="5" y="533" width="570" height="40"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="40" id="nEV-5Z-y8j"/>
                                                         </constraints>
@@ -2821,10 +2824,10 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="k8N-Jj-eED" userLabel="ROCInfoHeaderView">
-                                                <rect key="frame" x="0.0" y="810" width="375" height="50"/>
+                                                <rect key="frame" x="0.0" y="810" width="580" height="50"/>
                                                 <subviews>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="down_arrow_transparent" translatesAutoresizingMaskIntoConstraints="NO" id="3Ii-Ay-dbp" userLabel="ROCInfoHeaderArrow">
-                                                        <rect key="frame" x="318" y="4" width="48" height="41"/>
+                                                        <rect key="frame" x="523" y="4" width="48" height="41"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="3Ii-Ay-dbp" secondAttribute="height" multiplier="48:41" id="KLe-mX-dak"/>
                                                             <constraint firstAttribute="width" constant="48" id="SF4-1x-GcL"/>
@@ -2838,7 +2841,7 @@
                                                         <textInputTraits key="textInputTraits"/>
                                                     </textField>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="red_explamation_point" translatesAutoresizingMaskIntoConstraints="NO" id="WhH-vh-2XX" userLabel="ROCInfoHeaderErrorView">
-                                                        <rect key="frame" x="288" y="12" width="25" height="25"/>
+                                                        <rect key="frame" x="493" y="12" width="25" height="25"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="WhH-vh-2XX" secondAttribute="height" id="Htl-w8-Ufs"/>
                                                         </constraints>
@@ -2857,10 +2860,10 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="avP-gs-BFe" userLabel="ROCInfoSectionView">
-                                                <rect key="frame" x="0.0" y="860" width="375" height="610"/>
+                                                <rect key="frame" x="0.0" y="860" width="580" height="610"/>
                                                 <subviews>
                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Initial County:" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1vF-6S-ftE" userLabel="IncidentCountyLabel">
-                                                        <rect key="frame" x="5" y="0.0" width="365" height="34"/>
+                                                        <rect key="frame" x="5" y="0.0" width="570" height="34"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="34" id="x7f-qg-VAJ"/>
                                                         </constraints>
@@ -2870,7 +2873,7 @@
                                                         <dataDetectorType key="dataDetectorTypes" lookupSuggestion="YES"/>
                                                     </textView>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="f6R-mB-xfb" userLabel="IncidentCountyField">
-                                                        <rect key="frame" x="5" y="29" width="365" height="40"/>
+                                                        <rect key="frame" x="5" y="29" width="570" height="40"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="40" id="CBI-s0-VMs"/>
                                                         </constraints>
@@ -2878,7 +2881,7 @@
                                                         <textInputTraits key="textInputTraits"/>
                                                     </textField>
                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Additional Counties:" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="My3-VO-RrT" userLabel="AdditionalCountiesLabel">
-                                                        <rect key="frame" x="5" y="74" width="365" height="34"/>
+                                                        <rect key="frame" x="5" y="74" width="570" height="34"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="34" id="1bt-8A-vc6"/>
                                                         </constraints>
@@ -2888,7 +2891,7 @@
                                                         <dataDetectorType key="dataDetectorTypes" lookupSuggestion="YES"/>
                                                     </textView>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tZB-oh-3F2" userLabel="AdditionalCountiesField">
-                                                        <rect key="frame" x="5" y="103" width="365" height="40"/>
+                                                        <rect key="frame" x="5" y="103" width="570" height="40"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="40" id="9FE-0n-ItE"/>
                                                         </constraints>
@@ -2896,7 +2899,7 @@
                                                         <textInputTraits key="textInputTraits"/>
                                                     </textField>
                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Location:" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QIT-Kw-FXU" userLabel="GeneralLocationLabel">
-                                                        <rect key="frame" x="5" y="148" width="365" height="34"/>
+                                                        <rect key="frame" x="5" y="148" width="570" height="34"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="34" id="kMi-mX-fhb"/>
                                                         </constraints>
@@ -2906,7 +2909,7 @@
                                                         <dataDetectorType key="dataDetectorTypes" lookupSuggestion="YES"/>
                                                     </textView>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mIa-wV-aOc" userLabel="GeneralLocationField">
-                                                        <rect key="frame" x="5" y="177" width="365" height="40"/>
+                                                        <rect key="frame" x="5" y="177" width="570" height="40"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="40" id="4sc-mr-UAT"/>
                                                         </constraints>
@@ -2914,7 +2917,7 @@
                                                         <textInputTraits key="textInputTraits"/>
                                                     </textField>
                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="DPA:" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iqx-Va-roW" userLabel="DPALabel">
-                                                        <rect key="frame" x="5" y="222" width="365" height="34"/>
+                                                        <rect key="frame" x="5" y="222" width="570" height="34"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="34" id="Slw-Qc-yRX"/>
                                                         </constraints>
@@ -2924,7 +2927,7 @@
                                                         <dataDetectorType key="dataDetectorTypes" lookupSuggestion="YES"/>
                                                     </textView>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9tK-rq-LqP" userLabel="DPAField">
-                                                        <rect key="frame" x="5" y="251" width="365" height="40"/>
+                                                        <rect key="frame" x="5" y="251" width="570" height="40"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="40" id="cFM-oS-kHf"/>
                                                         </constraints>
@@ -2932,7 +2935,7 @@
                                                         <textInputTraits key="textInputTraits"/>
                                                     </textField>
                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Ownership:" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mrt-HP-OuL" userLabel="OwnershipLabel">
-                                                        <rect key="frame" x="5" y="296" width="365" height="34"/>
+                                                        <rect key="frame" x="5" y="296" width="570" height="34"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="34" id="FGj-Oc-c3h"/>
                                                         </constraints>
@@ -2942,7 +2945,7 @@
                                                         <dataDetectorType key="dataDetectorTypes" lookupSuggestion="YES"/>
                                                     </textView>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8Rh-Ha-J1p" userLabel="OwnershipField">
-                                                        <rect key="frame" x="5" y="325" width="365" height="40"/>
+                                                        <rect key="frame" x="5" y="325" width="570" height="40"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="40" id="9VK-RQ-YOL"/>
                                                         </constraints>
@@ -2950,7 +2953,7 @@
                                                         <textInputTraits key="textInputTraits"/>
                                                     </textField>
                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Jurisdiction:" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TiF-ky-2Kh" userLabel="JurisdictionLabel">
-                                                        <rect key="frame" x="5" y="370" width="365" height="34"/>
+                                                        <rect key="frame" x="5" y="370" width="570" height="34"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="34" id="dLw-IV-h51"/>
                                                         </constraints>
@@ -2960,7 +2963,7 @@
                                                         <dataDetectorType key="dataDetectorTypes" lookupSuggestion="YES"/>
                                                     </textView>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1WJ-B4-nqB" userLabel="JurisdictionField">
-                                                        <rect key="frame" x="5" y="399" width="365" height="40"/>
+                                                        <rect key="frame" x="5" y="399" width="570" height="40"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="40" id="geO-Iv-VHX"/>
                                                         </constraints>
@@ -2968,7 +2971,7 @@
                                                         <textInputTraits key="textInputTraits"/>
                                                     </textField>
                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Date:" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J3J-He-fVs" userLabel="DateLabel">
-                                                        <rect key="frame" x="5" y="444" width="365" height="34"/>
+                                                        <rect key="frame" x="5" y="444" width="570" height="34"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="34" id="MlU-rY-YhA"/>
                                                         </constraints>
@@ -2978,7 +2981,7 @@
                                                         <dataDetectorType key="dataDetectorTypes" lookupSuggestion="YES"/>
                                                     </textView>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7dV-6v-u4q" userLabel="DateField">
-                                                        <rect key="frame" x="5" y="473" width="365" height="40"/>
+                                                        <rect key="frame" x="5" y="473" width="570" height="40"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="40" id="VSW-wy-VD7"/>
                                                         </constraints>
@@ -2986,7 +2989,7 @@
                                                         <textInputTraits key="textInputTraits"/>
                                                     </textField>
                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Time:" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ime-q1-y3Y" userLabel="TimeLabel">
-                                                        <rect key="frame" x="5" y="518" width="365" height="34"/>
+                                                        <rect key="frame" x="5" y="518" width="570" height="34"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="34" id="eGb-Z3-cVd"/>
                                                         </constraints>
@@ -2996,7 +2999,7 @@
                                                         <dataDetectorType key="dataDetectorTypes" lookupSuggestion="YES"/>
                                                     </textView>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bnH-zy-FcS" userLabel="TimeField">
-                                                        <rect key="frame" x="5" y="547" width="365" height="40"/>
+                                                        <rect key="frame" x="5" y="547" width="570" height="40"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="40" id="e8r-ex-BDR"/>
                                                         </constraints>
@@ -3061,10 +3064,10 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0yG-St-wgX" userLabel="VegetationFireHeaderView">
-                                                <rect key="frame" x="0.0" y="1470" width="375" height="50"/>
+                                                <rect key="frame" x="0.0" y="1470" width="580" height="50"/>
                                                 <subviews>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="down_arrow_transparent" translatesAutoresizingMaskIntoConstraints="NO" id="ysM-NO-knO" userLabel="VegetationFireHeaderArrow">
-                                                        <rect key="frame" x="318" y="4" width="48" height="41"/>
+                                                        <rect key="frame" x="523" y="4" width="48" height="41"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="48" id="05L-kT-u8a"/>
                                                             <constraint firstAttribute="width" secondItem="ysM-NO-knO" secondAttribute="height" multiplier="48:41" id="QEo-d5-KRK"/>
@@ -3078,7 +3081,7 @@
                                                         <textInputTraits key="textInputTraits"/>
                                                     </textField>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="red_explamation_point" translatesAutoresizingMaskIntoConstraints="NO" id="MKf-H2-rmi" userLabel="VegetationFireHeaderErrorView">
-                                                        <rect key="frame" x="288" y="12" width="25" height="25"/>
+                                                        <rect key="frame" x="493" y="12" width="25" height="25"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="MKf-H2-rmi" secondAttribute="height" id="BcM-so-p5c"/>
                                                         </constraints>
@@ -3097,10 +3100,10 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gN8-gr-N1m" userLabel="VegetationFireSectionView">
-                                                <rect key="frame" x="0.0" y="1520" width="375" height="480"/>
+                                                <rect key="frame" x="0.0" y="1520" width="580" height="480"/>
                                                 <subviews>
                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Acreage:" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hhy-eA-ek2" userLabel="AcreageLabel">
-                                                        <rect key="frame" x="5" y="0.0" width="365" height="34"/>
+                                                        <rect key="frame" x="5" y="0.0" width="570" height="34"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="34" id="OCC-hr-4ER"/>
                                                         </constraints>
@@ -3110,7 +3113,7 @@
                                                         <dataDetectorType key="dataDetectorTypes" lookupSuggestion="YES"/>
                                                     </textView>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="SoJ-cl-VAb" userLabel="AcreageField">
-                                                        <rect key="frame" x="5" y="29" width="365" height="40"/>
+                                                        <rect key="frame" x="5" y="29" width="570" height="40"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="40" id="ebv-Kf-gxi"/>
                                                         </constraints>
@@ -3118,7 +3121,7 @@
                                                         <textInputTraits key="textInputTraits"/>
                                                     </textField>
                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Rate of Spread:" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="joz-rD-udP" userLabel="SpreadRateLabel">
-                                                        <rect key="frame" x="5" y="74" width="365" height="34"/>
+                                                        <rect key="frame" x="5" y="74" width="570" height="34"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="34" id="NI8-MQ-gvh"/>
                                                         </constraints>
@@ -3128,7 +3131,7 @@
                                                         <dataDetectorType key="dataDetectorTypes" lookupSuggestion="YES"/>
                                                     </textView>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="J0d-fb-hHf" userLabel="SpreadRateField">
-                                                        <rect key="frame" x="5" y="103" width="365" height="40"/>
+                                                        <rect key="frame" x="5" y="103" width="570" height="40"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="40" id="J4y-SR-bih"/>
                                                         </constraints>
@@ -3136,13 +3139,13 @@
                                                         <textInputTraits key="textInputTraits"/>
                                                     </textField>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="bz6-Sa-1vL">
-                                                        <rect key="frame" x="5" y="143" width="365" height="248"/>
+                                                        <rect key="frame" x="5" y="143" width="570" height="248"/>
                                                         <subviews>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oci-2i-4h6" userLabel="FuelTypesView">
-                                                                <rect key="frame" x="0.0" y="0.0" width="365" height="179"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="570" height="179"/>
                                                                 <subviews>
                                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Fuel Types:" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R6V-f6-Fnk" userLabel="FuelTypesLabel">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="365" height="34"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="570" height="34"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="34" id="JAE-1s-PhM"/>
                                                                         </constraints>
@@ -3272,10 +3275,10 @@
                                                                 </constraints>
                                                             </view>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tuw-0L-Y9W" userLabel="OtherFuelTypeView">
-                                                                <rect key="frame" x="0.0" y="179" width="365" height="69"/>
+                                                                <rect key="frame" x="0.0" y="179" width="570" height="69"/>
                                                                 <subviews>
                                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Other Fuel Type:" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="02A-tH-eOM" userLabel="OtherFuelTypeLabel">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="365" height="34"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="570" height="34"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="34" id="Smu-EC-TP2"/>
                                                                         </constraints>
@@ -3285,7 +3288,7 @@
                                                                         <dataDetectorType key="dataDetectorTypes" lookupSuggestion="YES"/>
                                                                     </textView>
                                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="JR5-2T-j89" userLabel="OtherFuelTypeField">
-                                                                        <rect key="frame" x="0.0" y="29" width="365" height="40"/>
+                                                                        <rect key="frame" x="0.0" y="29" width="570" height="40"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="40" id="9MM-hF-TcW"/>
                                                                         </constraints>
@@ -3311,7 +3314,7 @@
                                                         </constraints>
                                                     </stackView>
                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Percent Contained:" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8rc-MU-WiF" userLabel="PercentContainedLabel">
-                                                        <rect key="frame" x="5" y="391" width="365" height="34"/>
+                                                        <rect key="frame" x="5" y="391" width="570" height="34"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="34" id="qNQ-nd-eWB"/>
                                                         </constraints>
@@ -3321,7 +3324,7 @@
                                                         <dataDetectorType key="dataDetectorTypes" lookupSuggestion="YES"/>
                                                     </textView>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MIU-LB-0Pq" userLabel="PercentContainedField">
-                                                        <rect key="frame" x="5" y="420" width="325" height="40"/>
+                                                        <rect key="frame" x="5" y="420" width="530" height="40"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="40" id="1go-h2-JbG"/>
                                                         </constraints>
@@ -3329,7 +3332,7 @@
                                                         <textInputTraits key="textInputTraits"/>
                                                     </textField>
                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="%" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sNQ-Re-nn4" userLabel="PercentContainedUnit">
-                                                        <rect key="frame" x="330" y="420" width="40" height="40"/>
+                                                        <rect key="frame" x="535" y="420" width="40" height="40"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="40" id="sYD-9O-IYd"/>
                                                         </constraints>
@@ -3369,10 +3372,10 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BKU-Nc-4Ri" userLabel="WeatherHeaderView">
-                                                <rect key="frame" x="0.0" y="2000" width="375" height="50"/>
+                                                <rect key="frame" x="0.0" y="2000" width="580" height="50"/>
                                                 <subviews>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="down_arrow_transparent" translatesAutoresizingMaskIntoConstraints="NO" id="BDa-n2-QHD" userLabel="WeatherHeaderArrow">
-                                                        <rect key="frame" x="318" y="4" width="48" height="41"/>
+                                                        <rect key="frame" x="523" y="4" width="48" height="41"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="48" id="Qrw-MJ-RX8"/>
                                                             <constraint firstAttribute="width" secondItem="BDa-n2-QHD" secondAttribute="height" multiplier="48:41" id="cc4-kG-Ov6"/>
@@ -3386,7 +3389,7 @@
                                                         <textInputTraits key="textInputTraits"/>
                                                     </textField>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="red_explamation_point" translatesAutoresizingMaskIntoConstraints="NO" id="YQQ-dd-PyQ" userLabel="WeatherHeaderErrorView">
-                                                        <rect key="frame" x="288" y="12" width="25" height="25"/>
+                                                        <rect key="frame" x="493" y="12" width="25" height="25"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="YQQ-dd-PyQ" secondAttribute="height" id="tOo-Yq-J1N"/>
                                                         </constraints>
@@ -3405,10 +3408,10 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tsE-HS-gBE" userLabel="WeatherSectionView">
-                                                <rect key="frame" x="0.0" y="2050" width="375" height="390"/>
+                                                <rect key="frame" x="0.0" y="2050" width="580" height="390"/>
                                                 <subviews>
                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Temperature:" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hmp-9E-LSg" userLabel="TemperatureLabel">
-                                                        <rect key="frame" x="5" y="0.0" width="365" height="34"/>
+                                                        <rect key="frame" x="5" y="0.0" width="570" height="34"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="34" id="BC2-Fm-qML"/>
                                                         </constraints>
@@ -3418,7 +3421,7 @@
                                                         <dataDetectorType key="dataDetectorTypes" lookupSuggestion="YES"/>
                                                     </textView>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mG6-s3-3TB" userLabel="TemperatureField">
-                                                        <rect key="frame" x="5" y="29" width="325" height="40"/>
+                                                        <rect key="frame" x="5" y="29" width="530" height="40"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="40" id="qna-Bv-C0G"/>
                                                         </constraints>
@@ -3426,7 +3429,7 @@
                                                         <textInputTraits key="textInputTraits"/>
                                                     </textField>
                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="°F" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8ZE-St-iFA" userLabel="TemperatureUnit">
-                                                        <rect key="frame" x="330" y="29" width="40" height="40"/>
+                                                        <rect key="frame" x="535" y="29" width="40" height="40"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="40" id="3KW-CE-I64"/>
                                                         </constraints>
@@ -3436,7 +3439,7 @@
                                                         <dataDetectorType key="dataDetectorTypes" lookupSuggestion="YES"/>
                                                     </textView>
                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Relative Humidity:" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2y2-2j-Ezt" userLabel="HumidityLabel">
-                                                        <rect key="frame" x="5" y="74" width="365" height="34"/>
+                                                        <rect key="frame" x="5" y="74" width="570" height="34"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="34" id="3dM-kg-Gwk"/>
                                                         </constraints>
@@ -3446,7 +3449,7 @@
                                                         <dataDetectorType key="dataDetectorTypes" lookupSuggestion="YES"/>
                                                     </textView>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="laq-wO-p6z" userLabel="HumidityField">
-                                                        <rect key="frame" x="5" y="103" width="325" height="40"/>
+                                                        <rect key="frame" x="5" y="103" width="530" height="40"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="40" id="Uap-Fo-8lu"/>
                                                         </constraints>
@@ -3454,7 +3457,7 @@
                                                         <textInputTraits key="textInputTraits"/>
                                                     </textField>
                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="%" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fgo-M2-WPc" userLabel="HumidityUnit">
-                                                        <rect key="frame" x="330" y="103" width="40" height="40"/>
+                                                        <rect key="frame" x="535" y="103" width="40" height="40"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="40" id="Mmu-pD-rEK"/>
                                                         </constraints>
@@ -3464,7 +3467,7 @@
                                                         <dataDetectorType key="dataDetectorTypes" lookupSuggestion="YES"/>
                                                     </textView>
                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Wind Speed:" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f1k-RN-Occ" userLabel="WindSpeedLabel">
-                                                        <rect key="frame" x="5" y="148" width="365" height="34"/>
+                                                        <rect key="frame" x="5" y="148" width="570" height="34"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="34" id="0wa-BZ-44a"/>
                                                         </constraints>
@@ -3474,7 +3477,7 @@
                                                         <dataDetectorType key="dataDetectorTypes" lookupSuggestion="YES"/>
                                                     </textView>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LGq-Ta-rl8" userLabel="WindSpeedField">
-                                                        <rect key="frame" x="5" y="177" width="325" height="40"/>
+                                                        <rect key="frame" x="5" y="177" width="530" height="40"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="40" id="KjI-cD-68H"/>
                                                         </constraints>
@@ -3482,7 +3485,7 @@
                                                         <textInputTraits key="textInputTraits"/>
                                                     </textField>
                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="mph" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="txA-rL-Bu5" userLabel="WindSpeedUnit">
-                                                        <rect key="frame" x="330" y="177" width="40" height="40"/>
+                                                        <rect key="frame" x="535" y="177" width="40" height="40"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="40" id="MXU-1p-B8q"/>
                                                         </constraints>
@@ -3492,7 +3495,7 @@
                                                         <dataDetectorType key="dataDetectorTypes" lookupSuggestion="YES"/>
                                                     </textView>
                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Wind Direction:" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SdI-pF-VdV" userLabel="WindDirLabel">
-                                                        <rect key="frame" x="5" y="222" width="365" height="34"/>
+                                                        <rect key="frame" x="5" y="222" width="570" height="34"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="34" id="v2Z-MJ-jD1"/>
                                                         </constraints>
@@ -3502,7 +3505,7 @@
                                                         <dataDetectorType key="dataDetectorTypes" lookupSuggestion="YES"/>
                                                     </textView>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Xof-iv-wGV" userLabel="WindDirField">
-                                                        <rect key="frame" x="5" y="251" width="365" height="40"/>
+                                                        <rect key="frame" x="5" y="251" width="570" height="40"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="40" id="pgb-b4-g5a"/>
                                                         </constraints>
@@ -3510,7 +3513,7 @@
                                                         <textInputTraits key="textInputTraits"/>
                                                     </textField>
                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Gusts:" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WfW-Gg-nAV" userLabel="GustsLabel">
-                                                        <rect key="frame" x="5" y="296" width="365" height="34"/>
+                                                        <rect key="frame" x="5" y="296" width="570" height="34"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="34" id="HZP-mK-NBG"/>
                                                         </constraints>
@@ -3520,7 +3523,7 @@
                                                         <dataDetectorType key="dataDetectorTypes" lookupSuggestion="YES"/>
                                                     </textView>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LJ2-Rb-aEl" userLabel="GustsField">
-                                                        <rect key="frame" x="5" y="325" width="325" height="40"/>
+                                                        <rect key="frame" x="5" y="325" width="530" height="40"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="40" id="Kbk-uB-xSG"/>
                                                         </constraints>
@@ -3528,7 +3531,7 @@
                                                         <textInputTraits key="textInputTraits"/>
                                                     </textField>
                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="mph" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bQX-6H-gCG" userLabel="GustsUnit">
-                                                        <rect key="frame" x="330" y="325" width="40" height="40"/>
+                                                        <rect key="frame" x="535" y="325" width="40" height="40"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="40" id="Tb2-6g-EbN"/>
                                                         </constraints>
@@ -3587,10 +3590,10 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="k31-PX-pq1" userLabel="ThreatsEvacsHeaderView">
-                                                <rect key="frame" x="0.0" y="2440" width="375" height="50"/>
+                                                <rect key="frame" x="0.0" y="2440" width="580" height="50"/>
                                                 <subviews>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="down_arrow_transparent" translatesAutoresizingMaskIntoConstraints="NO" id="HZ6-qc-xPO" userLabel="ThreatsEvacsHeaderArrow">
-                                                        <rect key="frame" x="318" y="4" width="48" height="41"/>
+                                                        <rect key="frame" x="523" y="4" width="48" height="41"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="HZ6-qc-xPO" secondAttribute="height" multiplier="48:41" id="2BC-ry-5zx"/>
                                                             <constraint firstAttribute="width" constant="48" id="nDY-7M-k4o"/>
@@ -3604,7 +3607,7 @@
                                                         <textInputTraits key="textInputTraits"/>
                                                     </textField>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="red_explamation_point" translatesAutoresizingMaskIntoConstraints="NO" id="D1e-Ff-dKA" userLabel="ThreatsEvacsHeaderErrorView">
-                                                        <rect key="frame" x="288" y="12" width="25" height="25"/>
+                                                        <rect key="frame" x="493" y="12" width="25" height="25"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="D1e-Ff-dKA" secondAttribute="height" id="3NI-i4-Phn"/>
                                                         </constraints>
@@ -3623,10 +3626,10 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wu0-cU-EuB" userLabel="ThreatsEvacsSectionView">
-                                                <rect key="frame" x="0.0" y="2490" width="375" height="408"/>
+                                                <rect key="frame" x="0.0" y="2490" width="580" height="408"/>
                                                 <subviews>
                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Evacuations:" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rld-zJ-1Me" userLabel="EvacsLabel">
-                                                        <rect key="frame" x="5" y="0.0" width="365" height="34"/>
+                                                        <rect key="frame" x="5" y="0.0" width="570" height="34"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="34" id="bdA-KR-i6B"/>
                                                         </constraints>
@@ -3636,7 +3639,7 @@
                                                         <dataDetectorType key="dataDetectorTypes" lookupSuggestion="YES"/>
                                                     </textView>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Yb7-0o-Fct" userLabel="EvacsField">
-                                                        <rect key="frame" x="5" y="29" width="365" height="40"/>
+                                                        <rect key="frame" x="5" y="29" width="570" height="40"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="40" id="QWw-5Q-05o"/>
                                                         </constraints>
@@ -3644,13 +3647,13 @@
                                                         <textInputTraits key="textInputTraits"/>
                                                     </textField>
                                                     <stackView autoresizesSubviews="NO" contentMode="scaleAspectFill" preservesSuperviewLayoutMargins="YES" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="iad-hH-2iv" userLabel="EvacsStackView">
-                                                        <rect key="frame" x="5" y="74" width="365" height="18"/>
+                                                        <rect key="frame" x="5" y="74" width="570" height="18"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="18" id="Cyp-Mb-Bs2"/>
                                                         </constraints>
                                                     </stackView>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MgF-TS-GSc" userLabel="EvacsAddButton">
-                                                        <rect key="frame" x="336" y="97" width="34" height="34"/>
+                                                        <rect key="frame" x="541" y="97" width="34" height="34"/>
                                                         <color key="backgroundColor" red="0.45098039220000002" green="0.45098039220000002" blue="0.45098039220000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="34" id="2Me-qf-CIv"/>
@@ -3665,7 +3668,7 @@
                                                         </connections>
                                                     </button>
                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Structures Threat:" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NpM-69-jcT" userLabel="StructThreatsLabel">
-                                                        <rect key="frame" x="5" y="131" width="365" height="34"/>
+                                                        <rect key="frame" x="5" y="131" width="570" height="34"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="34" id="HYr-B9-SZ1"/>
                                                         </constraints>
@@ -3675,7 +3678,7 @@
                                                         <dataDetectorType key="dataDetectorTypes" lookupSuggestion="YES"/>
                                                     </textView>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="OFv-9D-9eI" userLabel="StructThreatsField">
-                                                        <rect key="frame" x="5" y="160" width="365" height="40"/>
+                                                        <rect key="frame" x="5" y="160" width="570" height="40"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="40" id="2Dd-pO-D16"/>
                                                         </constraints>
@@ -3683,13 +3686,13 @@
                                                         <textInputTraits key="textInputTraits"/>
                                                     </textField>
                                                     <stackView autoresizesSubviews="NO" contentMode="scaleAspectFill" preservesSuperviewLayoutMargins="YES" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="6Sd-cL-ttK" userLabel="StructThreatsStackView">
-                                                        <rect key="frame" x="5" y="205" width="365" height="18"/>
+                                                        <rect key="frame" x="5" y="205" width="570" height="18"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="18" id="rOL-uZ-Hzy"/>
                                                         </constraints>
                                                     </stackView>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OVd-G1-kRA" userLabel="StructThreatsAddButton">
-                                                        <rect key="frame" x="336" y="228" width="34" height="34"/>
+                                                        <rect key="frame" x="541" y="228" width="34" height="34"/>
                                                         <color key="backgroundColor" red="0.45098039220000002" green="0.45098039220000002" blue="0.45098039220000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="OVd-G1-kRA" secondAttribute="height" multiplier="1:1" id="LJm-J9-VJq"/>
@@ -3704,7 +3707,7 @@
                                                         </connections>
                                                     </button>
                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Infrastructure Threat:" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9dd-cI-wDK" userLabel="InfraThreatsLabel">
-                                                        <rect key="frame" x="5" y="267" width="365" height="34"/>
+                                                        <rect key="frame" x="5" y="267" width="570" height="34"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="34" id="OfP-Ud-f3N"/>
                                                         </constraints>
@@ -3714,7 +3717,7 @@
                                                         <dataDetectorType key="dataDetectorTypes" lookupSuggestion="YES"/>
                                                     </textView>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dSy-QT-Vtc" userLabel="InfraThreatsField">
-                                                        <rect key="frame" x="5" y="296" width="365" height="40"/>
+                                                        <rect key="frame" x="5" y="296" width="570" height="40"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="40" id="jle-wj-gbu"/>
                                                         </constraints>
@@ -3722,13 +3725,13 @@
                                                         <textInputTraits key="textInputTraits"/>
                                                     </textField>
                                                     <stackView autoresizesSubviews="NO" contentMode="scaleAspectFill" preservesSuperviewLayoutMargins="YES" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="9ED-ea-ipe" userLabel="InfraThreatsStackView">
-                                                        <rect key="frame" x="5" y="341" width="365" height="18"/>
+                                                        <rect key="frame" x="5" y="341" width="570" height="18"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="18" id="2vX-Qq-LTC"/>
                                                         </constraints>
                                                     </stackView>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZDO-Nb-SRC" userLabel="InfraThreatsAddButton">
-                                                        <rect key="frame" x="336" y="364" width="34" height="34"/>
+                                                        <rect key="frame" x="541" y="364" width="34" height="34"/>
                                                         <color key="backgroundColor" red="0.45098039220000002" green="0.45098039220000002" blue="0.45098039220000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="34" id="Eps-MC-RCK"/>
@@ -3782,10 +3785,10 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dJp-ld-PAb" userLabel="ResourcesHeaderView">
-                                                <rect key="frame" x="0.0" y="2898" width="375" height="50"/>
+                                                <rect key="frame" x="0.0" y="2898" width="580" height="50"/>
                                                 <subviews>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="down_arrow_transparent" translatesAutoresizingMaskIntoConstraints="NO" id="ZEM-Ji-afT" userLabel="ResourcesHeaderArrow">
-                                                        <rect key="frame" x="318" y="4" width="48" height="41"/>
+                                                        <rect key="frame" x="523" y="4" width="48" height="41"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="ZEM-Ji-afT" secondAttribute="height" multiplier="48:41" id="cFK-Fu-ft7"/>
                                                             <constraint firstAttribute="width" constant="48" id="iB3-bc-3LY"/>
@@ -3799,7 +3802,7 @@
                                                         <textInputTraits key="textInputTraits"/>
                                                     </textField>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="red_explamation_point" translatesAutoresizingMaskIntoConstraints="NO" id="MdD-1i-Oov" userLabel="ResourcesHeaderErrorView">
-                                                        <rect key="frame" x="288" y="12" width="25" height="25"/>
+                                                        <rect key="frame" x="493" y="12" width="25" height="25"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="MdD-1i-Oov" secondAttribute="height" id="EAN-5N-mnL"/>
                                                         </constraints>
@@ -3818,10 +3821,10 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ngr-cc-VJh" userLabel="ResourcesSectionView">
-                                                <rect key="frame" x="0.0" y="2948" width="375" height="538"/>
+                                                <rect key="frame" x="0.0" y="2948" width="580" height="538"/>
                                                 <subviews>
                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="CAL FIRE Incident:" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T6N-9w-L8N" userLabel="CalFireIncidentLabel">
-                                                        <rect key="frame" x="5" y="0.0" width="365" height="34"/>
+                                                        <rect key="frame" x="5" y="0.0" width="570" height="34"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="34" id="y3A-fG-R8J"/>
                                                         </constraints>
@@ -3831,7 +3834,7 @@
                                                         <dataDetectorType key="dataDetectorTypes" lookupSuggestion="YES"/>
                                                     </textView>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VP1-DR-r6c" userLabel="CalFireIncidentField">
-                                                        <rect key="frame" x="5" y="29" width="365" height="40"/>
+                                                        <rect key="frame" x="5" y="29" width="570" height="40"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="40" id="O7q-SU-Y9b"/>
                                                         </constraints>
@@ -3839,7 +3842,7 @@
                                                         <textInputTraits key="textInputTraits"/>
                                                     </textField>
                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Resources Assigned:" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NYE-GN-GR1" userLabel="ResourcesLabel">
-                                                        <rect key="frame" x="5" y="74" width="365" height="34"/>
+                                                        <rect key="frame" x="5" y="74" width="570" height="34"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="34" id="wBS-U1-bVu"/>
                                                         </constraints>
@@ -3849,10 +3852,10 @@
                                                         <dataDetectorType key="dataDetectorTypes" lookupSuggestion="YES"/>
                                                     </textView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="03z-AM-F2I">
-                                                        <rect key="frame" x="20" y="108" width="355" height="420"/>
+                                                        <rect key="frame" x="20" y="108" width="560" height="420"/>
                                                         <subviews>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OLz-uq-6wn" userLabel="CalFireResourcesNoneView">
-                                                                <rect key="frame" x="0.0" y="0.0" width="355" height="30"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="560" height="30"/>
                                                                 <subviews>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s4A-wh-S1U" userLabel="CalFireResourcesNoneButton">
                                                                         <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
@@ -3863,7 +3866,7 @@
                                                                         <state key="normal" backgroundImage="checkbox"/>
                                                                     </button>
                                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="center" scrollEnabled="NO" editable="NO" text="No CAL FIRE resources assigned" adjustsFontForContentSizeCategory="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NzU-ze-2TM" userLabel="CalFireResourcesNoneLabel">
-                                                                        <rect key="frame" x="30" y="0.5" width="325" height="29.5"/>
+                                                                        <rect key="frame" x="30" y="0.5" width="530" height="29.5"/>
                                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences" textContentType="name"/>
@@ -4055,7 +4058,7 @@
                                                                 </constraints>
                                                             </view>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kw5-RE-8qG" userLabel="CalFireResourcesContinuedView">
-                                                                <rect key="frame" x="0.0" y="210" width="355" height="30"/>
+                                                                <rect key="frame" x="0.0" y="210" width="362" height="30"/>
                                                                 <subviews>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rJv-lZ-qMt" userLabel="CalFireResourcesContinuedButton">
                                                                         <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
@@ -4066,7 +4069,7 @@
                                                                         <state key="normal" backgroundImage="checkbox"/>
                                                                     </button>
                                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="center" scrollEnabled="NO" editable="NO" text="Continued commitment of CAL FIRE air and ground resources" adjustsFontForContentSizeCategory="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WeX-W5-sso" userLabel="CalFireResourcesContinuedLabel">
-                                                                        <rect key="frame" x="30" y="-6" width="325" height="42.5"/>
+                                                                        <rect key="frame" x="30" y="0.5" width="332" height="29.5"/>
                                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences" textContentType="name"/>
@@ -4283,10 +4286,10 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ehn-3W-ZSb" userLabel="OtherInfoHeaderView">
-                                                <rect key="frame" x="0.0" y="3486" width="375" height="50"/>
+                                                <rect key="frame" x="0.0" y="3486" width="580" height="50"/>
                                                 <subviews>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="down_arrow_transparent" translatesAutoresizingMaskIntoConstraints="NO" id="TF6-ZT-zBW" userLabel="OtherInfoHeaderArrow">
-                                                        <rect key="frame" x="318" y="4" width="48" height="41"/>
+                                                        <rect key="frame" x="523" y="4" width="48" height="41"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="48" id="BB3-Pn-bAS"/>
                                                             <constraint firstAttribute="width" secondItem="TF6-ZT-zBW" secondAttribute="height" multiplier="48:41" id="Nf9-NU-nwx"/>
@@ -4300,7 +4303,7 @@
                                                         <textInputTraits key="textInputTraits"/>
                                                     </textField>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="red_explamation_point" translatesAutoresizingMaskIntoConstraints="NO" id="9Qo-e9-6HG" userLabel="OtherInfoHeaderErrorView">
-                                                        <rect key="frame" x="288" y="12" width="25" height="25"/>
+                                                        <rect key="frame" x="493" y="12" width="25" height="25"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="9Qo-e9-6HG" secondAttribute="height" id="ZvD-Dr-tna"/>
                                                         </constraints>
@@ -4319,10 +4322,10 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yFX-ry-vPB" userLabel="OtherInfoSectionView">
-                                                <rect key="frame" x="0.0" y="3536" width="375" height="96"/>
+                                                <rect key="frame" x="0.0" y="3536" width="580" height="96"/>
                                                 <subviews>
                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Other Significant Info:" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RkW-QR-x1a" userLabel="OtherInfoLabel">
-                                                        <rect key="frame" x="5" y="0.0" width="365" height="34"/>
+                                                        <rect key="frame" x="5" y="0.0" width="570" height="34"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="34" id="39P-xv-bli"/>
                                                         </constraints>
@@ -4332,13 +4335,13 @@
                                                         <dataDetectorType key="dataDetectorTypes" lookupSuggestion="YES"/>
                                                     </textView>
                                                     <stackView autoresizesSubviews="NO" contentMode="scaleAspectFill" preservesSuperviewLayoutMargins="YES" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="2tc-Pd-mO7" userLabel="OtherInfoStackView">
-                                                        <rect key="frame" x="5" y="29" width="365" height="18"/>
+                                                        <rect key="frame" x="5" y="29" width="570" height="18"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="18" id="IjV-oV-8pq"/>
                                                         </constraints>
                                                     </stackView>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T4Z-ro-e93" userLabel="OtherInfoAddButton">
-                                                        <rect key="frame" x="336" y="52" width="34" height="34"/>
+                                                        <rect key="frame" x="541" y="52" width="34" height="34"/>
                                                         <color key="backgroundColor" red="0.45098039220000002" green="0.45098039220000002" blue="0.45098039220000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="T4Z-ro-e93" secondAttribute="height" multiplier="1:1" id="Qot-dK-iAK"/>
@@ -4367,10 +4370,10 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HrE-MB-0Gs" userLabel="EmailHeaderView">
-                                                <rect key="frame" x="0.0" y="3632" width="375" height="50"/>
+                                                <rect key="frame" x="0.0" y="3632" width="580" height="50"/>
                                                 <subviews>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="down_arrow_transparent" translatesAutoresizingMaskIntoConstraints="NO" id="zEc-4c-YcW" userLabel="EmailHeaderArrow">
-                                                        <rect key="frame" x="318" y="4" width="48" height="41"/>
+                                                        <rect key="frame" x="523" y="4" width="48" height="41"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="48" id="Dqa-M1-RyS"/>
                                                             <constraint firstAttribute="width" secondItem="zEc-4c-YcW" secondAttribute="height" multiplier="48:41" id="GNu-8c-QwC"/>
@@ -4384,7 +4387,7 @@
                                                         <textInputTraits key="textInputTraits"/>
                                                     </textField>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="red_explamation_point" translatesAutoresizingMaskIntoConstraints="NO" id="2Vh-t1-HFC" userLabel="EmailHeaderErrorView">
-                                                        <rect key="frame" x="288" y="12" width="25" height="25"/>
+                                                        <rect key="frame" x="493" y="12" width="25" height="25"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="2Vh-t1-HFC" secondAttribute="height" id="GQ0-BG-8UE"/>
                                                         </constraints>
@@ -4406,10 +4409,10 @@
                                                 </connections>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sKI-LG-aJc" userLabel="EmailSectionView">
-                                                <rect key="frame" x="0.0" y="3682" width="375" height="82"/>
+                                                <rect key="frame" x="0.0" y="3682" width="580" height="82"/>
                                                 <subviews>
                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Recipient Email:" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pOV-Mh-i7y" userLabel="EmailLabel">
-                                                        <rect key="frame" x="5" y="0.0" width="365" height="34"/>
+                                                        <rect key="frame" x="5" y="0.0" width="570" height="34"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="34" id="gLz-Gw-hid"/>
                                                         </constraints>
@@ -4419,7 +4422,7 @@
                                                         <dataDetectorType key="dataDetectorTypes" lookupSuggestion="YES"/>
                                                     </textView>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CjF-7d-Fi6" userLabel="EmailField">
-                                                        <rect key="frame" x="5" y="29" width="365" height="40"/>
+                                                        <rect key="frame" x="5" y="29" width="570" height="40"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="40" id="a1X-Fr-cLs"/>
                                                         </constraints>
@@ -4467,10 +4470,10 @@
                                 </constraints>
                             </scrollView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="p9S-Z8-Dq9" userLabel="Button View">
-                                <rect key="frame" x="0.0" y="3840" width="375" height="60"/>
+                                <rect key="frame" x="0.0" y="3840" width="580" height="60"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleAspectFit" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="v9H-w9-4uw">
-                                        <rect key="frame" x="27.5" y="7.5" width="320" height="45"/>
+                                        <rect key="frame" x="130" y="7.5" width="320" height="45"/>
                                         <subviews>
                                             <button opaque="NO" tag="10" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xui-3b-fyK">
                                                 <rect key="frame" x="0.0" y="0.0" width="150" height="45"/>
@@ -4526,7 +4529,7 @@
                     <navigationItem key="navigationItem" title="Report on Condition" id="L6H-pl-2O0">
                         <barButtonItem key="backBarButtonItem" title="Back" id="j04-Yn-5Wd"/>
                     </navigationItem>
-                    <size key="freeformSize" width="375" height="3900"/>
+                    <size key="freeformSize" width="580" height="3900"/>
                     <connections>
                         <outlet property="buttonView" destination="p9S-Z8-Dq9" id="Glh-fo-P9j"/>
                         <outlet property="calFireIncidentTextField" destination="VP1-DR-r6c" id="cQt-RQ-RBQ"/>

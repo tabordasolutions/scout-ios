@@ -255,7 +255,7 @@
 	return true;
 }
 
-- (void)textField:(UITextField*)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(nonnull NSString *)string
+- (BOOL)textField:(UITextField*)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(nonnull NSString *)string
 {
 	// Buidling the final string that the textField will contain.
 	NSString *finalString = [[textField text] stringByReplacingCharactersInRange:range withString:string];
@@ -266,6 +266,8 @@
 	
 	// Filter the available options:
 	[self filterOptionsForText:finalString];
+	
+	return true;
 }
 //--------------------------------------------------------------------------------------------------------------------------
 

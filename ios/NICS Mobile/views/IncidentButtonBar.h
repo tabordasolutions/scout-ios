@@ -48,6 +48,8 @@
 #import "ChatContainerBasicViewController.h"
 #import "MapMarkupViewController.h"
 #import "OverviewViewControllerTablet.h"
+#import "ReportOnConditionActionViewController.h"
+#import "ReportOnConditionViewController.h"
 
 @class SimpleReportListViewController;
 @class SimpleReportDetailViewController;
@@ -61,6 +63,8 @@
 @class OverviewViewControllerTablet;
 @class WeatherReportDetailViewController;
 @class WeatherReportListViewController;
+@class ReportOnConditionViewController;
+@class ReportOnConditionActionViewController;
 
 @interface IncidentButtonBar : NSObject
 
@@ -99,6 +103,9 @@
 +(WeatherReportDetailViewController*) GetWeatherReportDetailView;
 +(ChatContainerBasicViewController*) GetChatController;
 +(MapMarkupViewController*) GetMapMarkupController;
++(ReportOnConditionActionViewController*) GetReportOnConditionActionView;
++(ReportOnConditionViewController*) GetReportOnConditionView;
+
 
 + (void)SetAddButton:(UIButton*)button;
 + (UIButton*)GetAddButton;

@@ -33,7 +33,6 @@
 //  SCOUT Mobile
 //
 
-
 #import <UIKit/UIKit.h>
 #import "AssetsLibrary/AssetsLibrary.h"
 #import "DataManager.h"

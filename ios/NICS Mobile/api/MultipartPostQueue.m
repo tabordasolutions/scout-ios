@@ -314,6 +314,13 @@ static NSNotificationCenter *notificationCenter;
 	
 	NSMutableDictionary *rocPayload = [payload toServerPayload:userSessionId];
 	
+	// If it has already been sent, we shouldn't process it again...
+	// remove it from the sendqueue
+	if(payload.sendStatus == SENT)
+	{
+		[sendQueue removeObject:payload];
+		[dataManager deleteReportOnConditionFromStoreAndForward:payload];
+	}
 	
 	// If the ROC will create a new incident, the request url is different
 	NSString *url = @"";
@@ -326,8 +333,7 @@ static NSNotificationCenter *notificationCenter;
 	else
 	{
 		long incidentId = payload.incidentid;
-		int orgId = [[dataManager.orgData orgId] intValue];
-		url = [NSString stringWithFormat:@"reports/%ld/%d/ROC",incidentId,orgId];
+		url = [NSString stringWithFormat:@"reports/%ld/ROC",incidentId];
 	}
 
 	NSInteger statusCode = -1;
@@ -349,6 +355,9 @@ static NSNotificationCenter *notificationCenter;
 		NSLog(@"PostReportOnCondition - Removing payload from store and forward table");
 		[dataManager deleteReportOnConditionFromStoreAndForward:payload];
 		
+		// Remove it from the sendqueue
+		[sendQueue removeObject:payload];
+		
 		payload.sendStatus = SENT;
 		
 		if([ReportOnConditionData jsonGetInt:responseDictionary withName:@"status" defaultTo:-1] == 200)
@@ -358,13 +367,15 @@ static NSNotificationCenter *notificationCenter;
 			[dataManager addReportOnConditionToHistory:payload];
 		}
 		
-		
 	}
 	else
 	{
 		NSLog(@"PostReportOnCondition - Failed to convert payload to json.");
 		// Remove the faulty payload from the store and forward table
 		[dataManager deleteReportOnConditionFromStoreAndForward:payload];
+		
+		// Remove it from the sendqueue
+		[sendQueue removeObject:payload];
 	}
 }
 
@@ -380,7 +391,6 @@ static NSNotificationCenter *notificationCenter;
 	{
 		return;
 	}
-	
 	
 	[sendQueue addObject:payload];
 	
@@ -645,6 +655,15 @@ totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite
 			ReportOnConditionData *rocData = (ReportOnConditionData*)payload;
 			if(rocData.sendStatus == WAITING_TO_SEND)
 			{
+				// Remove the payload from the store and forward table
+				[dataManager deleteReportOnConditionFromStoreAndForward:rocData];
+				
+				// set the send status as having been sent
+				rocData.sendStatus = SENT;
+				
+				// and re-add it to the store and forward table again with the updated send status
+				//[dataManager addReportOnConditionToStoreAndForward:rocData];
+				
 				NSLog(@"ROC payload is waiting to send");
 				NSLog(@"USIDDEFECT, addCachedReportsToSendQueue -> ROC Payload is waiting to send, added to send queue");
 				[self addPayloadToSendQueue:rocData];
@@ -693,7 +712,8 @@ totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite
 		if(responseDictionary == nil)
 		{
 			NSLog(@"WARNING: Failed to convert validate Session response to JSON");
-			sessionInvalid = true;
+			// We don't want to treat a server error as a positive ack of invalid session
+			//sessionInvalid = true;
 		}
 		else
 		{

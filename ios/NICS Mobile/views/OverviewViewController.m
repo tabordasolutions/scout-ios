@@ -41,7 +41,6 @@
 // Used by the shared delegate to differentiate the 3 UIActionSheets
 // (.tag is set after instantiation, then read in the clickedButtonAtIndex delegate)
 const int TAG_REPORTS_MENU = 60;
-const int TAG_INCIDENT_MENU = 50;
 const int TAG_COLLABROOM_MENU = 40;
 
 @implementation OverviewViewController
@@ -73,33 +72,7 @@ const int TAG_COLLABROOM_MENU = 40;
 	_roomContainerView.layer.borderColor = [UIColor whiteColor].CGColor;
 	_roomContainerView.layer.borderWidth = 2.0f;
 	
-	_incidentMenu = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Select Incident",nil) delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
-	
-	_incidentMenu.tag = TAG_INCIDENT_MENU;
-	
-	NSMutableArray *incidentNameOptions = [NSMutableArray arrayWithArray:[[[_dataManager getIncidentsList] allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)]];
-	
-	NSMutableArray *sortedIncidentNameOptions;
-	// Sorting the incidents by creation date
-	sortedIncidentNameOptions = [NSMutableArray arrayWithArray:[incidentNameOptions sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
-		IncidentPayload *incidentA = [[_dataManager incidentsList] objectForKey:(NSString*)a];
-		IncidentPayload *incidentB = [[_dataManager incidentsList] objectForKey:(NSString*)b];
-		
-		// Flip the order because we want to sort from newest to oldest (most recent date first)
-		return [[NSNumber numberWithLongLong:[incidentB created]] compare:[NSNumber numberWithLongLong:[incidentA created]]];
-	}]];
-	
-	// Adding "None" option to incidents list to allow the user to leave their selected incident
-	[sortedIncidentNameOptions insertObject:@"None" atIndex:0];
 
-	
-	for( NSString *title in sortedIncidentNameOptions)  {
-		[_incidentMenu addButtonWithTitle:title];
-	}
-	
-	[_incidentMenu addButtonWithTitle:NSLocalizedString(@"Cancel",nil)];
-	_incidentMenu.cancelButtonIndex = [sortedIncidentNameOptions count];
-	
 	
 	NSString *currentIncidentName = [_dataManager getActiveIncidentName];
 	
@@ -109,9 +82,9 @@ const int TAG_COLLABROOM_MENU = 40;
 		_selectedIncident = [[_dataManager getIncidentsList] objectForKey:currentIncidentName];
 		if(_selectedIncident == nil)
 		{
-			[_dataManager setActiveIncident:nil];
 			currentIncidentName = nil;
 		}
+		[_dataManager setActiveIncident:_selectedIncident];
 	}
 	
 	if(currentIncidentName != nil){
@@ -209,9 +182,76 @@ const int TAG_COLLABROOM_MENU = 40;
 	//    [_dataManager requestActiveAssignmentRepeatedEvery:30];
 }
 
-- (IBAction)selectIncidentButtonPressed:(UIButton *)button {
-	[_incidentMenu showInView:self.parentViewController.view];
+- (IBAction)selectIncidentButtonPressed:(UIButton *)button
+{
+	// Create a new incident menu to clear the old one
+	NSDictionary *allIncidents = _dataManager.incidentsList;
+	NSArray *allIncidentNames = [allIncidents allKeys];
+	
+	
+	// Creating tuples of the incident names and their creation dates...
+	NSMutableArray *incidentNamesAndCreationDates = [NSMutableArray new];
+	
+	for(NSString *incidentName in allIncidentNames)
+	{
+		IncidentPayload *incident = [allIncidents objectForKey:incidentName];
+		
+		if(incident == nil)
+			continue;
+		[incidentNamesAndCreationDates addObject:@[incidentName, [NSNumber numberWithLongLong:incident.created]]];
+	}
+	
+	
+	// Sorting the incident names by creation date:
+	[incidentNamesAndCreationDates sortUsingComparator:^NSComparisonResult(id elementA, id elementB) {
+		NSNumber *creationDateA = ((NSArray*)elementA)[1];
+		NSNumber *creationDateB = ((NSArray*)elementB)[1];
+		return [creationDateB compare:creationDateA];
+	}];
+	
+	
+	UIAlertController *incidentNameAlertController = [UIAlertController alertControllerWithTitle:@"Select Incident" message:nil preferredStyle:UIAlertControllerStyleAlert];
+	
+	// Adding a "None" button at index 0
+	[incidentNameAlertController addAction:[UIAlertAction actionWithTitle:@"None" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+		// do something
+		NSLog(@"Selected \"None\"");
+		[self joinIncident:nil];
+	}]];
+	
+	
+	// Adding all incident names to the view
+	
+	// FIXME - For now, only pull the top 20 (the dialog slows down with too many elements)
+	int namesToBringIn = 50;
+	
+	for(NSArray *array in incidentNamesAndCreationDates)
+	{
+		if(namesToBringIn <= 0)
+			break;
+		[incidentNameAlertController addAction:[UIAlertAction actionWithTitle:array[0] style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+			// do something
+			NSLog(@"Selected incident with name: \"%@\"",array[0]);
+			[self joinIncident:array[0]];
+		}]];
+		
+		namesToBringIn--;
+		
+		NSLog(@"Added incident to list: %@",array[0]);
+	}
+	
+	
+	//adding a cancel button
+	[incidentNameAlertController addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+		[self dismissViewControllerAnimated:YES completion:nil];
+	}]];
+	
+	
+	
+	[self presentViewController:incidentNameAlertController animated:YES completion:nil];
 }
+
+
 
 - (IBAction)selectRoomButtonPressed:(UIButton *)button {
 	NSMutableDictionary *collabrooms = [NSMutableDictionary new];
@@ -272,71 +312,27 @@ const int TAG_COLLABROOM_MENU = 40;
 }
 
 //fix for ghosting effect on ios7
-- (void)willPresentActionSheet:(UIActionSheet *)actionSheet {
+- (void)willPresentActionSheet:(UIActionSheet *)actionSheet
+{
 	actionSheet.backgroundColor = [UIColor blackColor];
-	for (UIView *subview in actionSheet.subviews) {
+	for (UIView *subview in actionSheet.subviews)
+	{
 		subview.backgroundColor = [UIColor blackColor];
 	}
 }
 
-// This is the delegate that handles the _ReportsMenu, _incidentMenu, and _collanroomMenu
--(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+
+
+
+- (void) updateUIForSelectedIncidentAndCollabroom
 {
-	NSString *replaceString = @"";
-	
-	// If the actionSheet is the incident menu
-	if(actionSheet.tag == TAG_INCIDENT_MENU)
-	{
-		// If the user pressed the "None" button, exit the current incident
-		if(buttonIndex == 0)
-		{
-			_selectedIncident = nil;
-		}
-		else if(buttonIndex != _incidentMenu.cancelButtonIndex)
-		{
-			_selectedIncident = [[_dataManager getIncidentsList] objectForKey:[actionSheet buttonTitleAtIndex:buttonIndex]];
-			[_dataManager requestCollabroomsForIncident:_selectedIncident];
-			_selectedIncident.collabrooms = [_dataManager getCollabroomPayloadArray];
-			[_dataManager setSelectedCollabRoomId:@-1 collabRoomName:@"N/A"];
-			_selectedCollabroom = nil;
-		}
-	}
-	// If the actionSheet is the reports menu
-	else if(actionSheet.tag == TAG_REPORTS_MENU)
-	{
-		enum ReportTypesMenu reportType = buttonIndex;
-		
-		switch (buttonIndex) {
-			case 0:
-				[self performSegueWithIdentifier:@"segue_roc_action" sender:self];
-				break;
-			default:
-				break;
-		}
-		// Unused segues:
-		//[self performSegueWithIdentifier:@"segue_damage_report" sender:self];
-		//[self performSegueWithIdentifier:@"segue_resource_request" sender:self];
-		//[self performSegueWithIdentifier:@"segue_field_report" sender:self];
-		//[self performSegueWithIdentifier:@"segue_weather_report" sender:self];
-	}
-	// If the actionSheet is the collabroom menu
-	else if(actionSheet.tag == TAG_COLLABROOM_MENU)
-	{
-		replaceString = [_selectedIncident.incidentname stringByAppendingString:@"-"];
-		if(buttonIndex != _collabroomMenu.cancelButtonIndex) {
-			//            _selectedCollabroom = [[_dataManager getCollabroomList] objectForKey:[[_dataManager getCollabroomNamesList] objectForKey:[replaceString stringByAppendingString:[actionSheet buttonTitleAtIndex:buttonIndex]]]];
-			NSString* selectedRoom = [actionSheet buttonTitleAtIndex:buttonIndex];
-			_selectedCollabroom = [[_dataManager getCollabroomList] objectForKey:[[_dataManager getCollabroomNamesList] objectForKey:selectedRoom]];
-		}
-	}
-	
 	// Reports button should never be hidden
 	[_ReportsButtonView setHidden:NO];
 	
 	if(_selectedIncident != nil)
 	{
 		//-----------------------------------
-		// Updating the DataMAnager
+		// Updating the DataManager
 		//-----------------------------------
 		[_dataManager setActiveIncident:_selectedIncident];
 		
@@ -364,12 +360,12 @@ const int TAG_COLLABROOM_MENU = 40;
 	else
 	{
 		//-----------------------------------
-		// Updating the DataMAnager
+		// Updating the DataManager
 		//-----------------------------------
 		[_dataManager setActiveIncident:nil];
 		_selectedCollabroom = nil;
 		[_dataManager setSelectedCollabRoomId:@-1 collabRoomName:@"N/A"];
-
+		
 		//-----------------------------------
 		// Updating the UI View
 		//-----------------------------------
@@ -395,6 +391,70 @@ const int TAG_COLLABROOM_MENU = 40;
 		[_ChatButtonView setHidden:YES];
 		//        [_MapButtonView setHidden:YES];
 	}
+}
+
+
+- (void) joinIncident:(NSString *)selectedIncidentName
+{
+	// If incidentname is nil, leave the current incident
+	if(selectedIncidentName == nil)
+	{
+		_selectedIncident = nil;
+		// Pull the latest incidents from the server
+		[RestClient getAllIncidentsForUserId:[_dataManager getUserId]];
+	}
+	// otherwise, join the incident for that name
+	else
+	{
+		_selectedIncident = [_dataManager.incidentsList objectForKey:selectedIncidentName];
+		
+		// Update the list of collabrooms, and leave the current collabroom
+		[_dataManager requestCollabroomsForIncident:_selectedIncident];
+		_selectedIncident.collabrooms = [_dataManager getCollabroomPayloadArray];
+		[_dataManager setSelectedCollabRoomId:@-1 collabRoomName:@"N/A"];
+		_selectedCollabroom = nil;
+	}
+	
+	[self updateUIForSelectedIncidentAndCollabroom];
+}
+
+
+
+// This is the delegate that handles the _ReportsMenu, _incidentMenu, and _collabroomMenu
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+	NSString *replaceString = @"";
+	
+	// If the actionSheet is the reports menu
+	/*else*/ if(actionSheet.tag == TAG_REPORTS_MENU)
+	{
+		enum ReportTypesMenu reportType = buttonIndex;
+		
+		switch (buttonIndex) {
+			case 0:
+				[self performSegueWithIdentifier:@"segue_roc_action" sender:self];
+				break;
+			default:
+				break;
+		}
+		// Unused segues:
+		//[self performSegueWithIdentifier:@"segue_damage_report" sender:self];
+		//[self performSegueWithIdentifier:@"segue_resource_request" sender:self];
+		//[self performSegueWithIdentifier:@"segue_field_report" sender:self];
+		//[self performSegueWithIdentifier:@"segue_weather_report" sender:self];
+	}
+	// If the actionSheet is the collabroom menu
+	else if(actionSheet.tag == TAG_COLLABROOM_MENU)
+	{
+		replaceString = [_selectedIncident.incidentname stringByAppendingString:@"-"];
+		if(buttonIndex != _collabroomMenu.cancelButtonIndex) {
+			//            _selectedCollabroom = [[_dataManager getCollabroomList] objectForKey:[[_dataManager getCollabroomNamesList] objectForKey:[replaceString stringByAppendingString:[actionSheet buttonTitleAtIndex:buttonIndex]]]];
+			NSString* selectedRoom = [actionSheet buttonTitleAtIndex:buttonIndex];
+			_selectedCollabroom = [[_dataManager getCollabroomList] objectForKey:[[_dataManager getCollabroomNamesList] objectForKey:selectedRoom]];
+		}
+	}
+	
+	[self updateUIForSelectedIncidentAndCollabroom];
 }
 
 -(void)startCollabLoadingSpinner{

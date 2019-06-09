@@ -123,6 +123,10 @@
 
 - (void) requestWfsUpdate;
 
+
+- (void) requestLatestReportOnConditionForIncident:(NSString*)incidentName;
+
+
 #pragma mark Chat Message History/Store & Forward
 - (BOOL)addChatMessageToHistory:(ChatPayload *) payload;
 - (BOOL)addChatMessagesToHistory:(NSArray<ChatPayload> *) payloadArray;
@@ -213,6 +217,8 @@
 - (BOOL)addReportOnConditionToStoreAndForward:(ReportOnConditionData *) payload;
 
 - (void)deleteReportOnConditionFromStoreAndForward:(ReportOnConditionData *) payload;
+
+- (ReportOnConditionData*) getLastReportOnConditionForIncidentId:(NSNumber *)incidentId;
 
 - (NSMutableArray<ReportOnConditionData> *)getAllReportOnConditionsForIncidentId: (NSNumber *)incidentId;
 

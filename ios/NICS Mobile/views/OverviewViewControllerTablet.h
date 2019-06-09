@@ -46,9 +46,15 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *AddButton;
 
-
 @property (weak, nonatomic) IBOutlet UIView *RoomCanvas;
 @property (weak, nonatomic) IBOutlet UIView *IncidentCanvas;
+
+
+// TODO - figure out how to link these so we can disable these buttons
+//@property (weak, nonatomic) IBOutlet UIView *IncidentCanvasChatButton;
+//@property (weak, nonatomic) IBOutlet UIView *IncidentCanvasFieldReportButton;
+
+
 @property (weak, nonatomic) IBOutlet UILabel *selectIncidentHelperLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *collabroomDownArrowImage;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *collabroomsLoadingIndicator;
@@ -58,7 +64,6 @@
 @property NSTimer *checkSessionIDValidityTimer;
 
 
-@property UIActionSheet *incidentMenu;
 @property UIActionSheet *collabroomMenu;
 
 @property IncidentPayload *selectedIncident;

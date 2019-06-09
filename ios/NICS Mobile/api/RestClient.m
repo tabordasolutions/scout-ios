@@ -307,7 +307,9 @@ static MultipartPostQueue* mMultipartPostQueue;
 	
 	if(message != nil && statusCode == 200) {
 		NSMutableDictionary *incidentsList = [NSMutableDictionary new];
+		
 		for(IncidentPayload *payload in message.incidents) {
+
 			[incidentsList setObject:payload forKey:payload.incidentname];
 		}
 		dataManager.incidentsList = incidentsList;
@@ -438,9 +440,12 @@ static MultipartPostQueue* mMultipartPostQueue;
 			// Converting json to an NSDictionary
 			NSMutableDictionary *serverPayload = [ReportOnConditionData jsonDictionaryFromJsonString:jsonString];
 			
+			NSLog(@"ROC - getROCsForIncident - Converted ROC json string to dictionary: %@",serverPayload);
+			
 			// Instead of checking the error value, check the return value
 			if(serverPayload != nil && [serverPayload isKindOfClass:[NSDictionary class]])
 			{
+				NSLog(@"ROC - getROCsForIncident - dictionary is not nil, and is a dictionary.");
 				// Confirming the message is okay:
 				if([[ReportOnConditionData jsonGetString:serverPayload withName:@"message"] isEqualToString:@"ok"])
 				{
@@ -480,8 +485,21 @@ static MultipartPostQueue* mMultipartPostQueue;
 	{
 		if(data.sendStatus == WAITING_TO_SEND)
 		{
-			NSLog(@"ROC - Got an ROC payload message from store and forward table, adding it to send queue. (Incident: %@, creationDate: %@",data.incidentname, data.datecreated);
+			NSLog(@"ROC - RestClient - postReportOnConditions - removing payload from store & forward.");
+			// Remove the payload from the store and forward table
+			[dataManager deleteReportOnConditionFromStoreAndForward:data];
 			
+			NSLog(@"ROC - RestClient - postReportOnConditions - updating the send status.");
+			// set the send status as having been sent
+			data.sendStatus = SENT;
+			
+			NSLog(@"ROC - RestClient - postReportOnConditions - adding back to sotre & forward with updated send status.");
+			// and re-add it to the store and forward table again with the updated send status
+			[dataManager addReportOnConditionToStoreAndForward:data];
+			
+			NSLog(@"ROC - RestClient - postReportOnConditions - Got an ROC payload message from store and forward table, adding it to send queue. (Incident: %@, creationDate: %@",data.incidentname, data.datecreated);
+			
+			data.sendStatus = WAITING_TO_SEND;
 			[mMultipartPostQueue addPayloadToSendQueue:data];
 			// Why are we only adding one to the send queue before breaking?
 			// I just followed the algorithm that SimpleReports use

@@ -56,7 +56,7 @@
 
 @property long incidentid;
 @property NSString *incidentname;
-// TODO - add incidentnumber field
+@property NSString *incidentnumber;
 @property NSDate *datecreated;
 
 @property NSString *reportType;
@@ -321,6 +321,10 @@
 // Returns nil if it encountered an error
 + (NSMutableDictionary*) jsonDictionaryFromJsonString:(NSString*)str;
 
+// Safely removes all null values in a json string
+// The default JSON parser replaces null values with the string "null"
+// Instead, we want null values to be replaced by the empty string ""
++ (NSString*) jsonSafelyRemoveNullValuesFromJsonString:(NSString*)str;
 
 
 @end

@@ -41,10 +41,6 @@
 
 @end
 
-// Used by the shared delegate to differentiate the 3 UIActionSheets
-// (.tag is set after instantiation, then read in the clickedButtonAtIndex delegate)
-const int TAG_TABLET_INCIDENT_MENU = 50;
-
 
 NSNotificationCenter *notificationCenter;
 
@@ -61,6 +57,9 @@ NSNotificationCenter *notificationCenter;
 	_dataManager = [DataManager getInstance];
 	[IncidentButtonBar SetOverview:self];
 	[_dataManager setOverviewController:self];
+	
+	
+	
 	notificationCenter = [NSNotificationCenter defaultCenter];
 	_mapViewOriginalWidth = 580;
 	_chatViewOriginalWidth = 444;
@@ -79,36 +78,6 @@ NSNotificationCenter *notificationCenter;
 	
 	[_dataManager.locationManager startUpdatingLocation];
 	
-	_incidentMenu = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Select Incident", nil) delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
-	_incidentMenu.tag = TAG_TABLET_INCIDENT_MENU;
-	
-	// Building the list of incidents:
-	NSMutableArray *incidentNameOptions = [NSMutableArray arrayWithArray:[[[_dataManager getIncidentsList] allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)]];
-	
-	NSMutableArray *sortedIncidentNameOptions;
-	// Sorting the incidents by creation date
-	sortedIncidentNameOptions = [NSMutableArray arrayWithArray:[incidentNameOptions sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
-		IncidentPayload *incidentA = [[_dataManager incidentsList] objectForKey:(NSString*)a];
-		IncidentPayload *incidentB = [[_dataManager incidentsList] objectForKey:(NSString*)b];
-		
-		// Flip the order because we want to sort from newest to oldest (most recent date first)
-		return [[NSNumber numberWithLongLong:[incidentB created]] compare:[NSNumber numberWithLongLong:[incidentA created]]];
-	}]];
-	
-	// Adding "None" option to incidents list to allow the user to leave their selected incident
-	[sortedIncidentNameOptions insertObject:@"None" atIndex:0];
-	
-	
-	
-	for( NSString *title in sortedIncidentNameOptions)
-	{
-		[_incidentMenu addButtonWithTitle:title];
-	}
-	
-	[_incidentMenu addButtonWithTitle:@"Cancel"];
-	_incidentMenu.cancelButtonIndex = [sortedIncidentNameOptions count];
-	
-	
 	NSString *currentIncidentName = [_dataManager getActiveIncidentName];
 	
 	
@@ -117,9 +86,9 @@ NSNotificationCenter *notificationCenter;
 		_selectedIncident = [[_dataManager getIncidentsList] objectForKey:currentIncidentName];
 		if(_selectedIncident == nil)
 		{
-			[_dataManager setActiveIncident:nil];
 			currentIncidentName = nil;
 		}
+		[_dataManager setActiveIncident:_selectedIncident];
 	}
 	
 	if(currentIncidentName != nil){
@@ -142,14 +111,18 @@ NSNotificationCenter *notificationCenter;
 		}
 	}
 	
-	if(_selectedIncident == nil) {
-		[_IncidentCanvas setHidden:TRUE];
+	[_IncidentCanvas setHidden:FALSE];
+	[IncidentCanvasUIViewController updateViewForInIncident:(_selectedIncident != nil) InRoom:(_selectedCollabroom != nil)];
+	
+	if(_selectedIncident == nil)
+	{
 		[_selectIncidentButton setTitle:NSLocalizedString(@"Select Incident", nil) forState:UIControlStateNormal];
 		[_selectRoomButton setHidden:TRUE];
 		[_collabroomDownArrowImage setHidden:TRUE];
 		[_selectIncidentHelperLabel setHidden:false];
-	}else{
-		[_IncidentCanvas setHidden:FALSE];
+	}
+	else
+	{
 		[_selectRoomButton setHidden:FALSE];
 		[_collabroomDownArrowImage setHidden:FALSE];
 		[_selectIncidentHelperLabel setHidden:true];
@@ -168,19 +141,17 @@ NSNotificationCenter *notificationCenter;
 		[_dataManager requestWeatherReportsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings] intValue] immediate:YES];
 	}
 	
-	if(_selectedCollabroom == nil){
-		//        [_RoomCanvas setHidden:TRUE];
+	if(_selectedCollabroom == nil)
+	{
 		[_selectRoomButton setTitle:NSLocalizedString(@"Select Room", nil) forState:UIControlStateNormal];
-	}else{
-		
+	}
+	else
+	{
 		[_dataManager setSelectedCollabRoomId:_selectedCollabroom.collabRoomId collabRoomName:_selectedCollabroom.name];
-		
 		NSString* incidentNameReplace = [_selectedIncident.incidentname stringByAppendingString:@"-"];
 		[_selectRoomButton setTitle:[_selectedCollabroom.name stringByReplacingOccurrencesOfString:incidentNameReplace withString:@""] forState:UIControlStateNormal];
-		
 		NSNotification *IncidentSwitchedNotification = [NSNotification notificationWithName:@"CollabRoomSwitched" object:_selectedIncident.incidentname];
 		[notificationCenter postNotification:IncidentSwitchedNotification];
-		
 		[_dataManager requestChatMessagesRepeatedEvery:[[DataManager getChatUpdateFrequencyFromSettings] intValue] immediate:YES];
 		[_dataManager requestMarkupFeaturesRepeatedEvery:[[DataManager getMapUpdateFrequencyFromSettings] intValue] immediate:YES];
 	}
@@ -211,9 +182,78 @@ NSNotificationCenter *notificationCenter;
 	[_dataManager requestWeatherReportsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings] intValue] immediate:NO];
 }
 
-- (IBAction)selectIncidentButtonPressed:(UIButton *)button {
-	[_incidentMenu showInView:self.parentViewController.view];
+
+// This method shows the dialog for the user to select an incident
+- (IBAction)selectIncidentButtonPressed:(UIButton *)button
+{
+	// Create a new incident menu to clear the old one
+	NSDictionary *allIncidents = _dataManager.incidentsList;
+	NSArray *allIncidentNames = [allIncidents allKeys];
+	
+	
+	// Creating tuples of the incident names and their creation dates...
+	NSMutableArray *incidentNamesAndCreationDates = [NSMutableArray new];
+	
+	for(NSString *incidentName in allIncidentNames)
+	{
+		IncidentPayload *incident = [allIncidents objectForKey:incidentName];
+		
+		if(incident == nil)
+			continue;
+		[incidentNamesAndCreationDates addObject:@[incidentName, [NSNumber numberWithLongLong:incident.created]]];
+	}
+	
+	
+	// Sorting the incident names by creation date:
+	[incidentNamesAndCreationDates sortUsingComparator:^NSComparisonResult(id elementA, id elementB) {
+		NSNumber *creationDateA = ((NSArray*)elementA)[1];
+		NSNumber *creationDateB = ((NSArray*)elementB)[1];
+		return [creationDateB compare:creationDateA];
+	}];
+	
+	
+	UIAlertController *incidentNameAlertController = [UIAlertController alertControllerWithTitle:@"Select Incident" message:nil preferredStyle:UIAlertControllerStyleAlert];
+	
+	// Adding a "None" button at index 0
+	[incidentNameAlertController addAction:[UIAlertAction actionWithTitle:@"None" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+		// do something
+		NSLog(@"Selected \"None\"");
+		[self joinIncident:nil];
+	}]];
+	
+	
+	// Adding all incident names to the view
+	
+	// FIXME - For now, only pull the top 20 (the dialog slows down with too many elements)
+	int namesToBringIn = 50;
+	
+	for(NSArray *array in incidentNamesAndCreationDates)
+	{
+		if(namesToBringIn <= 0)
+			break;
+		[incidentNameAlertController addAction:[UIAlertAction actionWithTitle:array[0] style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+			// do something
+			NSLog(@"Selected incident with name: \"%@\"",array[0]);
+			[self joinIncident:array[0]];
+		}]];
+		
+		namesToBringIn--;
+		
+		NSLog(@"Added incident to list: %@",array[0]);
+	}
+	
+	
+	//adding a cancel button
+	[incidentNameAlertController addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+		[self dismissViewControllerAnimated:YES completion:nil];
+	}]];
+	
+	
+	
+	[self presentViewController:incidentNameAlertController animated:YES completion:nil];
 }
+
+
 
 - (IBAction)selectRoomButtonPressed:(UIButton *)button {
 	
@@ -266,49 +306,18 @@ NSNotificationCenter *notificationCenter;
 
 
 
-
-
-
-
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+- (void) updateUIForSelectedIncidentAndCollabroom
+{
+	// Replace occurances of the incident name in the collabroom name
 	NSString *replaceString = @"";
 	
-	if(actionSheet.tag == TAG_TABLET_INCIDENT_MENU)
-	{
-		// If the user pressed the "None" button, exit the current incident
-		if(buttonIndex == 0)
-		{
-			_selectedIncident = nil;
-		}
-		else if(buttonIndex != _incidentMenu.cancelButtonIndex)
-		{
-			_selectedIncident = [[_dataManager getIncidentsList] objectForKey:[actionSheet buttonTitleAtIndex:buttonIndex]];
-			[_dataManager requestCollabroomsForIncident:_selectedIncident];
-			_selectedIncident.collabrooms = [_dataManager getCollabroomPayloadArray];
-			[_dataManager setSelectedCollabRoomId:@-1 collabRoomName:@"N/A"];
-			_selectedCollabroom = nil;
-		}
-		else
-		{
-			replaceString = [_selectedIncident.incidentname stringByAppendingString:@"-"];
-		}
-	}
-	else
-	{
-		replaceString = [_selectedIncident.incidentname stringByAppendingString:@"-"];
-		if(buttonIndex != _collabroomMenu.cancelButtonIndex)
-		{
-			NSString* selectedRoom = [actionSheet buttonTitleAtIndex:buttonIndex];
-			
-			_selectedCollabroom = [[_dataManager getCollabroomList] objectForKey:[[_dataManager getCollabroomNamesList] objectForKey:selectedRoom]];
-			
-			[_selectRoomButton setHidden:false];
-			[_collabroomDownArrowImage setHidden:FALSE];
-		}
-	}
-	
+
 	NSNotification *IncidentSwitchedNotification = nil;
 	NSNotification *CollabRoomSwitchedNotification = nil;
+	
+	[_IncidentCanvas setHidden:FALSE];
+	[IncidentCanvasUIViewController updateViewForInIncident:(_selectedIncident != nil) InRoom:(_selectedCollabroom != nil)];
+	
 	
 	if(_selectedIncident != nil)
 	{
@@ -323,7 +332,6 @@ NSNotificationCenter *notificationCenter;
 		[_selectIncidentButton setTitle:_selectedIncident.incidentname forState:UIControlStateNormal];
 		[_selectRoomButton setHidden:NO];
 		[_collabroomDownArrowImage setHidden:NO];
-		[_IncidentCanvas setHidden:NO];
 		[_selectIncidentHelperLabel setHidden:YES];
 		
 		//-----------------------------------
@@ -342,17 +350,16 @@ NSNotificationCenter *notificationCenter;
 		// Broadcasting a notification
 		//-----------------------------------
 		IncidentSwitchedNotification = [NSNotification notificationWithName:@"IncidentSwitched" object:_selectedIncident.incidentname];
-
+		
 	}
 	else
 	{
 		//-----------------------------------
-		// Updating the DataMAnager
+		// Updating the DataManager
 		//-----------------------------------
 		[_dataManager setActiveIncident:nil];
 		_selectedCollabroom = nil;
 		[_dataManager setSelectedCollabRoomId:@-1 collabRoomName:@"N/A"];
-		
 		
 		//-----------------------------------
 		// Updating the UI View
@@ -361,21 +368,19 @@ NSNotificationCenter *notificationCenter;
 		[_collabroomDownArrowImage setHidden:TRUE];
 		[_selectIncidentHelperLabel setHidden:false];
 		
-		
 		[_selectIncidentButton setTitle:NSLocalizedString(@"Select Incident", nil) forState:UIControlStateNormal];
 	}
 	
 	if(_selectedCollabroom != nil)
 	{
+		replaceString = [_selectedIncident.incidentname stringByAppendingString:@"-"];
 		[_dataManager setSelectedCollabRoomId:_selectedCollabroom.collabRoomId collabRoomName:_selectedCollabroom.name];
-		
 		[_dataManager requestChatMessagesRepeatedEvery:[[DataManager getChatUpdateFrequencyFromSettings] intValue] immediate:YES];
 		[_dataManager requestMarkupFeaturesRepeatedEvery:[[DataManager getMapUpdateFrequencyFromSettings] intValue] immediate:YES];
 		
 		//  [_selectRoomButton setTitle:_selectedCollabroom.name forState:UIControlStateNormal];
 		[_selectRoomButton setTitle:[_selectedCollabroom.name stringByReplacingOccurrencesOfString:replaceString withString:@""] forState:UIControlStateNormal];
 		CollabRoomSwitchedNotification = [NSNotification notificationWithName:@"CollabRoomSwitched" object:_selectedCollabroom.name ];
-		
 	}
 	else
 	{
@@ -390,6 +395,49 @@ NSNotificationCenter *notificationCenter;
 	{
 		[notificationCenter postNotification:CollabRoomSwitchedNotification];
 	}
+}
+
+
+
+- (void) joinIncident:(NSString *)selectedIncidentName
+{
+	// If incidentname is nil, leave the current incident
+	if(selectedIncidentName == nil)
+	{
+		_selectedIncident = nil;
+		// Pull the latest incidents from the server
+		[RestClient getAllIncidentsForUserId:[_dataManager getUserId]];
+	}
+	// otherwise, join the incident for that name
+	else
+	{
+		_selectedIncident = [_dataManager.incidentsList objectForKey:selectedIncidentName];
+		
+		// Update the list of collabrooms, and leave the current collabroom
+		[_dataManager requestCollabroomsForIncident:_selectedIncident];
+		_selectedIncident.collabrooms = [_dataManager getCollabroomPayloadArray];
+		[_dataManager setSelectedCollabRoomId:@-1 collabRoomName:@"N/A"];
+		_selectedCollabroom = nil;
+	}
+	
+	[self updateUIForSelectedIncidentAndCollabroom];
+}
+
+
+// Called when a user selects a collabroom from the UI
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+	if(buttonIndex != _collabroomMenu.cancelButtonIndex)
+	{
+		NSString* selectedRoom = [actionSheet buttonTitleAtIndex:buttonIndex];
+		
+		_selectedCollabroom = [[_dataManager getCollabroomList] objectForKey:[[_dataManager getCollabroomNamesList] objectForKey:selectedRoom]];
+		
+		[_selectRoomButton setHidden:false];
+		[_collabroomDownArrowImage setHidden:FALSE];
+	}
+	
+	[self updateUIForSelectedIncidentAndCollabroom];
 }
 
 - (IBAction)nicsHelpButtonPressed:(id)sender {

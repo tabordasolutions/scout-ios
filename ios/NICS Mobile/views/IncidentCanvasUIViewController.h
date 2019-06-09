@@ -39,12 +39,18 @@
 
 //indexes here need to line up with the button order in the pop up _ReportsMenu in the .m
 enum ReportTypesMenu : NSUInteger {
-    DamageReport = 0,
+	ReportOnCondition = 0,
+	Cancel = 1
+//    DamageReport = 0,
 //    ResourceRequest = 1,
 //    FieldReport = 2,
-    WeatherReport = 1,
-    Cancel = 2
+//    WeatherReport = 1,
 };
+
+@property (weak, nonatomic) IBOutlet UIButton *chatButton;
+@property (weak, nonatomic) IBOutlet UIButton *fieldReportButton;
+@property (weak, nonatomic) IBOutlet UIButton *reportButton;
+
 
 @property (weak, nonatomic) IBOutlet UIView *IncidentCanvas;
 @property (weak, nonatomic) IBOutlet UIButton *AddButton;
@@ -55,6 +61,13 @@ enum ReportTypesMenu : NSUInteger {
 
 @property UIActionSheet *ReportsMenu;
 
+
+
+// This method is called from OverviewViewControllerTablet
+// It is responsible for showing / hiding UI fields depending on if
+// the user is in an incident, or is in a room
++ (void) updateViewForInIncident:(bool)inIncident InRoom:(bool)inRoom;
+
 - (IBAction)SetCanvasToGeneralMessage:(id)sender;
 - (IBAction)ReportsButtonPressed:(id)sender;
 - (IBAction)AddButtonPressed:(id)sender;
@@ -63,6 +76,13 @@ enum ReportTypesMenu : NSUInteger {
 - (IBAction)SubmitButtonPressed:(id)sender;
 - (IBAction)ChatButtonPressed:(id)sender;
 - (IBAction)FilterButtonPressed:(id)sender;
+
++ (void) goToReportOnConditionAction;
++ (void) goToViewReportOnCondition;
++ (void) goToCreateReportOnCondition;
+- (void) SetCanvasToReportOnConditionAction;
+- (void) SetCanvasToReportOnCondition;
+
 
 - (void)SetCanvasToGeneralMessageFromButtonBar;
 
@@ -77,5 +97,6 @@ enum ReportTypesMenu : NSUInteger {
 
 - (void)SetCanvasToWeatherReport;
 - (void)SetCanvasToWeatherReportFromButtonBar;
+
 
 @end

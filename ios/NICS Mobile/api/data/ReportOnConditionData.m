@@ -73,7 +73,7 @@
 		//================================================
 		// Incident Info Fields
 		//================================================
-		// TODO - what should incidentNumber be pased from?
+		rocData.incidentTypes = [self getIncidentTypesArrayFromJson:[self jsonGetDictionary:rocPayload withName:@"incidentnumber"]];
 		
 		rocData.incidentTypes = [self getIncidentTypesArrayFromJson:[self jsonGetDictionary:rocPayload withName:@"incidentTypes"]];
 		
@@ -266,9 +266,7 @@
 		//================================================
 		// Incident Info Fields
 		//================================================
-		// TODO - what should incidentnumber be parsed from?
-		//[ReportOnConditionData jsonSetString:rocPayload withName:@"incidentNumber" asString:_incidentNumber];
-		
+		[ReportOnConditionData jsonSetString:rocPayload withName:@"incidentnumber" asString:_incidentnumber];
 		
 		NSObject *incidentType = [ReportOnConditionData createIncidentTypePayload:self];
 		if([incidentType isKindOfClass:[NSDictionary class]])
@@ -358,7 +356,7 @@
 		//[ReportOnConditionData jsonSetString:rocPayload withName:@"otherThreatsAndEvacuations" asString:_otherThreatsAndEvacs];
 		NSMutableDictionary *otherInfo = [NSMutableDictionary new];
 		[ReportOnConditionData jsonSetArray:otherInfo withName:@"otherThreatsAndEvacuations" asArray:_otherThreatsAndEvacuationsInProgress];
-		[ReportOnConditionData jsonSetDictionary:rocPayload withName:@"otherThreatsAndEvacuationsInProgress" asDictionary:resourcesAssigned];
+		[ReportOnConditionData jsonSetDictionary:rocPayload withName:@"otherThreatsAndEvacuationsInProgress" asDictionary:otherInfo];
 		
 		//================================================
 		// Email Fields
@@ -512,6 +510,7 @@
 	// Actual ROC data
 	[ReportOnConditionData jsonSetLong:dict withName:@"incidentid" asLong:_incidentid];
 	[ReportOnConditionData jsonSetString:dict withName:@"incidentname" asString:_incidentname];
+	[ReportOnConditionData jsonSetString:dict withName:@"incidentnumber" asString:_incidentnumber];
 	[ReportOnConditionData jsonSetString:dict withName:@"datecreated" asString:[dateFormatter stringFromDate:_datecreated]];
 	
 	[ReportOnConditionData jsonSetString:dict withName:@"reportType" asString:_reportType];
@@ -573,6 +572,7 @@
 	// Actual ROC data
 	rocData.incidentid = [ReportOnConditionData jsonGetLong:dict withName:@"incidentid" defaultTo:-1];
 	rocData.incidentname = [ReportOnConditionData jsonGetString:dict withName:@"incidentname" defaultTo:@""];
+	rocData.incidentnumber = [ReportOnConditionData jsonGetString:dict withName:@"incidentnumber" defaultTo:@""];
 	rocData.datecreated = [dateFormatter dateFromString:[ReportOnConditionData jsonGetString:dict withName:@"startDate" defaultTo:@"1970-01-01T01:23:45.678Z"]];
 	rocData.reportType = [ReportOnConditionData jsonGetString:dict withName:@"reportType" defaultTo:@""];
 	rocData.county = [ReportOnConditionData jsonGetString:dict withName:@"county" defaultTo:@""];
@@ -1251,9 +1251,13 @@
 	if(dict == nil)
 		return nil;
 	
-	NSError *error;
+	NSError *error = nil;
 	NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dict options:0 error:&error];
 	
+	if(error != nil)
+	{
+		NSLog(@"ROC - Encountered error converting dictionary to json string. Error: \"%@\"",error);
+	}
 	
 	if(jsonData == nil)
 	{
@@ -1272,6 +1276,41 @@
 	
 	return jsonString;
 }
+
+// Safely removes all null values in a json string
+// The default JSON parser replaces null values with the string "null"
+// Instead, we want null values to be replaced by the empty string ""
++ (NSString*) jsonSafelyRemoveNullValuesFromJsonString:(NSString*)str
+{
+	NSString *result = nil;
+
+	// Replacing all instances of "null" with empty quotes.
+	// JSONSerialization cnoverts null json values to the string "<null>", and we don't want that.
+	
+	// I will be using the following strategy:
+	// Because the payload values may contain json strings themselves...
+	// those json-encoded strings may have the value null with escaped characters
+	// i.e., the payload string may be:
+	// {"status":null}
+	// OR the payload string may be:
+	// {"message": "{\"status\":null}"
+	//
+	// To properly replace null while maintainig valid json...
+	// I must replace escaped ones first by replacing:
+	// \":null
+	// WITH:
+	// \":\"\"
+	result = [str stringByReplacingOccurrencesOfString:@"\\\":null" withString:@"\\\":\\\"\\\""];
+	
+	// then, I can handle non-escaped ones by replacing:
+	// null
+	// WITH:
+	// ""
+	result = [result stringByReplacingOccurrencesOfString:@"null" withString:@"\"\""];
+	
+	return result;
+}
+
 // Converts a NSString* containing a jsonString to a NSMutableDictionary
 // Returns nil if it encountered an error
 + (NSMutableDictionary*) jsonDictionaryFromJsonString:(NSString*)str
@@ -1281,15 +1320,19 @@
 		NSLog(@"ROC - Unable to get NSDictionary from string %@. String not found in dictionary.",str);
 		return nil;
 	}
-	
-	// Replacing all instances of "null" with empty quotes.
-	// JSONSerialization cnoverts null json values to the string "<null>", and we don't want that.
-	str = [str stringByReplacingOccurrencesOfString:@"null" withString:@"\"\""];
+
+	str = [ReportOnConditionData jsonSafelyRemoveNullValuesFromJsonString:str];
 	
 	// Converting the string to an NSDictionary
 	NSData *jsonStringData = [str dataUsingEncoding:NSUTF8StringEncoding];
-	NSError *error;
+	NSError *error = nil;
 	NSMutableDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:jsonStringData options:0 error:&error];
+	
+	if(error != nil)
+	{
+		NSLog(@"ROC - Encountered error converting json string to dictionary. Error: \"%@\"",error);
+	}
+
 	
 	// Instead of checking the error value, check the return value
 	if(dictionary == nil || ![dictionary isKindOfClass:[NSDictionary class]])

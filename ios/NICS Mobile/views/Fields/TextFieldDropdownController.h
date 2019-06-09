@@ -71,7 +71,7 @@
 - (void)textFieldDidBeginEditing:(nonnull UITextField *)textField;
 - (void) textFieldDidEndEditing:(nonnull UITextField *)textField;
 - (BOOL) textFieldShouldClear:(nonnull UITextField *)textField;
-- (void)textField:(nonnull UITextField*)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(nonnull NSString *)string;
+- (BOOL)textField:(nonnull UITextField*)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(nonnull NSString *)string;
 //--------------------------------------------------------------------------------------------------------------------------
 // UITableView DataSource Methods
 //--------------------------------------------------------------------------------------------------------------------------

@@ -61,7 +61,6 @@
 
 
 @property DataManager *dataManager;
-@property UIActionSheet *incidentMenu;
 @property UIActionSheet *collabroomMenu;
 @property UIActionSheet *ReportsMenu;
 

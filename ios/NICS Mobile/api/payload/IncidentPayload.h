@@ -36,6 +36,7 @@
 
 #import "JSONModel.h"
 #import "CollabroomPayload.h"
+#import "IncidentTypePayload.h"
 
 @protocol IncidentPayload
 
@@ -54,5 +55,6 @@
 @property NSNumber* lat;
 @property NSNumber* lon;
 @property NSMutableArray<CollabroomPayload>* collabrooms;
+@property NSMutableArray<IncidentTypePayload>* incidentTypes;
 
 @end

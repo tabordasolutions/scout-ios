@@ -480,6 +480,22 @@ long long lastMdtSync = 0;
 }
 
 
+- (void) requestLatestReportOnConditionForIncident:(NSString*)incidentName {
+	
+	// Get the incident ID associated with this inident name:
+	IncidentPayload *incident = [_incidentsList objectForKey:incidentName];
+	
+	if(incident == nil)
+		return;
+	
+	[RestClient getReportOnConditionsForIncidentId:incident.incidentid offset:@0 limit:@0 completion:^(BOOL successful) {
+		if(successful) {
+			NSLog(@"Refreshed Report on Conditions for Incident: \"%@\"",incidentName);
+		}
+	}];
+}
+
+
 
 -(void) requestDamageReports {
 	NSLog(@"Requesting damage reports update...");
@@ -795,6 +811,32 @@ long long lastMdtSync = 0;
 	return [_databaseManager deleteReportOnConditionFromStoreAndForward: payload];
 }
 
+
+- (ReportOnConditionData*) getLastReportOnConditionForIncidentId:(NSNumber *)incidentId {
+
+	NSArray<ReportOnConditionData*> *incidentRocs = [self getAllReportOnConditionsForIncidentId:incidentId];
+	NSLog(@"DataManager - getLastROCForIncidentId:%@, got %luu ROCs for incident.", incidentId, [incidentRocs count]);
+	
+	ReportOnConditionData *latestIncidentROC = nil;
+	
+	// Go through all ROCs from the incident, returning the one with the latest timestamp
+	if(incidentRocs != nil && [incidentRocs count] > 0)
+	{
+		latestIncidentROC = [incidentRocs objectAtIndex:0];
+		
+		for(ReportOnConditionData *roc in incidentRocs)
+		{
+			if([roc datecreated] > [latestIncidentROC datecreated])
+			{
+				latestIncidentROC = roc;
+			}
+		}
+	}
+	
+	return latestIncidentROC;
+}
+
+
 - (NSMutableArray<ReportOnConditionData> *)getAllReportOnConditionsForIncidentId: (NSNumber *)incidentId {
 	return [_databaseManager getAllReportOnConditionsForIncidentId:incidentId since:@0];
 }
@@ -1011,6 +1053,8 @@ long long lastMdtSync = 0;
 	[_userPreferences setSecretObject:incident.incidentname forKey:@"nics_INCIDENT_NAME"];
 	[_userPreferences setSecretObject:incident.lat forKey:@"nics_INCIDENT_LATITUDE"];
 	[_userPreferences setSecretObject:incident.lon forKey:@"nics_INCIDENT_LONGITUDE"];
+	
+	[self requestReportOnConditions];
 	
 	_currentIncident = incident;
 }

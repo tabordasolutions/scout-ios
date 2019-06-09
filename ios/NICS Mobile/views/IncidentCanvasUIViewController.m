@@ -45,67 +45,150 @@
 @implementation IncidentCanvasUIViewController
 
 UIView *selectedIncidentController = nil;
+IncidentCanvasUIViewController *instance = nil;
 
 UIStoryboard *currentStoryboard;
 
 
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    
-     currentStoryboard = [UIStoryboard storyboardWithName:@"Main_iPad_Prototype" bundle:nil];
+- (void)viewDidLoad
+{
+	[super viewDidLoad];
+	currentStoryboard = [UIStoryboard storyboardWithName:@"Main_iPad_Prototype" bundle:nil];
+	_currentReport = nil;
+	instance = self;
 
-    _currentReport = nil;
-	
-	
 	// Enable this line to show "Feature Coming Soon" dialog
 	//========================================================================
-    //_ReportsMenu = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Feature Coming Soon",nil) delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
+	//_ReportsMenu = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Feature Coming Soon",nil) delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
 	//========================================================================
-	
-	
+
+
 	// Enable these lines to display Reports
 	//========================================================================
 	_ReportsMenu = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Select Report Type",nil) delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
-    [_ReportsMenu addButtonWithTitle:NSLocalizedString(@"Damage Report",nil)];
-    [_ReportsMenu addButtonWithTitle:NSLocalizedString(@"Resource Request",nil)];
-    [_ReportsMenu addButtonWithTitle:NSLocalizedString(@"Field Report",nil)];
-    [_ReportsMenu addButtonWithTitle:NSLocalizedString(@"Weather Report",nil)];
+	[_ReportsMenu addButtonWithTitle:NSLocalizedString(@"Report On Condition",nil)];
+	//[_ReportsMenu addButtonWithTitle:NSLocalizedString(@"Damage Report",nil)];
+	//[_ReportsMenu addButtonWithTitle:NSLocalizedString(@"Resource Request",nil)];
+	//[_ReportsMenu addButtonWithTitle:NSLocalizedString(@"Field Report",nil)];
+	//[_ReportsMenu addButtonWithTitle:NSLocalizedString(@"Weather Report",nil)];
 	//========================================================================
-	
+
 	[_ReportsMenu addButtonWithTitle:NSLocalizedString(@"Dismiss",nil)];
-    
-    [IncidentButtonBar SetIncidentCanvasController:self];
-    [IncidentButtonBar SetIncidentCanvas:_IncidentCanvas];
-    
-    [IncidentButtonBar SetAddButton:_AddButton];
-    [IncidentButtonBar SetSaveDraftButton:_SaveDraftButton];
-    [IncidentButtonBar SetCancelButton:_CancelButton];
-    [IncidentButtonBar SetSubmitButton:_SubmitButton];
-    [IncidentButtonBar SetFilterButton:_FilterButton];
-    
-    [[IncidentButtonBar GetAddButton] setHidden:TRUE];
-    [[IncidentButtonBar GetSaveDraftButton]setHidden:TRUE];
-    [[IncidentButtonBar GetCancelButton]setHidden:TRUE];
-    [[IncidentButtonBar GetSubmitButton]setHidden:TRUE];
-    [[IncidentButtonBar GetFilterButton]setHidden:TRUE];
-	
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(SetCanvasToReportDetailView:) name:@"GotoReportDetailView" object:nil];
-    
+
+	[IncidentButtonBar SetIncidentCanvasController:self];
+	[IncidentButtonBar SetIncidentCanvas:_IncidentCanvas];
+
+	[IncidentButtonBar SetAddButton:_AddButton];
+	[IncidentButtonBar SetSaveDraftButton:_SaveDraftButton];
+	[IncidentButtonBar SetCancelButton:_CancelButton];
+	[IncidentButtonBar SetSubmitButton:_SubmitButton];
+	[IncidentButtonBar SetFilterButton:_FilterButton];
+
+	[[IncidentButtonBar GetAddButton] setHidden:TRUE];
+	[[IncidentButtonBar GetSaveDraftButton]setHidden:TRUE];
+	[[IncidentButtonBar GetCancelButton]setHidden:TRUE];
+	[[IncidentButtonBar GetSubmitButton]setHidden:TRUE];
+	[[IncidentButtonBar GetFilterButton]setHidden:TRUE];
+
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(SetCanvasToReportDetailView:) name:@"GotoReportDetailView" object:nil];
+
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(SetCanvasToGeneralMessage:) name:@"IncidentSwitched" object:nil];
 }
+
+
+
+
+// This method is called from OverviewViewControllerTablet
+// It is responsible for showing / hiding UI fields depending on if
+// the user is in an incident, or is in a room
++ (void) updateViewForInIncident:(bool)inIncident InRoom:(bool)inRoom
+{
+	if(instance == nil)
+		return;
+	
+	
+	[instance.reportButton setEnabled:true];
+	
+	if(inIncident && inRoom)
+	{
+		[instance.chatButton setEnabled:true];
+		[instance.fieldReportButton setEnabled:true];
+	}
+	else
+	{
+		[instance.chatButton setEnabled:false];
+		[instance.fieldReportButton setEnabled:false];
+	}
+	
+	
+	
+	instance.chatButton.alpha = (instance.chatButton.enabled ? 1.0 : 0.5);
+	instance.fieldReportButton.alpha = (instance.fieldReportButton.enabled ? 1.0 : 0.5);
+	instance.reportButton.alpha = (instance.reportButton.enabled ? 1.0 : 0.5);
+}
+
++ (void) goToReportOnConditionAction
+{
+	[instance SetCanvasToReportOnConditionAction];
+}
+
++ (void) goToViewReportOnCondition
+{
+	[ReportOnConditionViewController setViewControllerViewingMode:true];
+	[instance SetCanvasToReportOnCondition];
+}
+
++ (void) goToCreateReportOnCondition
+{
+	[ReportOnConditionViewController setViewControllerViewingMode:false];
+	[instance SetCanvasToReportOnCondition];
+}
+
+- (void) SetCanvasToReportOnCondition
+{
+	_currentReport = @"ReportOnCondition";
+	
+	[[IncidentButtonBar GetReportOnConditionView] viewDidAppear:true];
+	[ReportOnConditionViewController setupInstanceView];
+	[self SetCanvas:[IncidentButtonBar GetReportOnConditionView].view];
+	
+	[[IncidentButtonBar GetAddButton] setHidden:TRUE];
+	[[IncidentButtonBar GetFilterButton] setHidden:TRUE];
+	[[IncidentButtonBar GetSaveDraftButton]setHidden:TRUE];
+	[[IncidentButtonBar GetCancelButton]setHidden:TRUE];
+	[[IncidentButtonBar GetSubmitButton]setHidden:TRUE];
+}
+
+- (void) SetCanvasToReportOnConditionAction
+{
+	_currentReport = @"ReportOnCondition";
+	
+	[[IncidentButtonBar GetReportOnConditionActionView] viewDidAppear:true];
+	[self SetCanvas:[IncidentButtonBar GetReportOnConditionActionView].view];
+	
+	[[IncidentButtonBar GetAddButton] setHidden:TRUE];
+	[[IncidentButtonBar GetFilterButton] setHidden:TRUE];
+	[[IncidentButtonBar GetSaveDraftButton]setHidden:TRUE];
+	[[IncidentButtonBar GetCancelButton]setHidden:TRUE];
+	[[IncidentButtonBar GetSubmitButton]setHidden:TRUE];
+}
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
--(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
 
     enum ReportTypesMenu reportType = buttonIndex;
     
     switch (reportType) {
+	    case ReportOnCondition:
+		    [self SetCanvasToReportOnConditionAction];
+		    break;
 //        case DamageReport:
 //            [self SetCanvasToDamageReport];
 //            break;
@@ -118,12 +201,10 @@ UIStoryboard *currentStoryboard;
 //        case WeatherReport:
 //            [self SetCanvasToWeatherReport];
 //            break;
-        case Cancel:
-            
-            break;
-            
-        default:
-            break;
+		case Cancel:
+			break;
+		default:
+			break;
     }
     
 }
@@ -144,6 +225,8 @@ UIStoryboard *currentStoryboard;
         [self.view setNeedsLayout];
     });
 }
+
+
 
 - (IBAction)SetCanvasToGeneralMessage:(id)sender {
 

@@ -38,7 +38,7 @@
 
 #import <Foundation/Foundation.h>
 #import "ReportOnConditionViewController.h"
-
+#import "IncidentCanvasUIViewController.h"
 
 
 const int ID_SECTION_INCIDENT_INFO = 0;
@@ -51,9 +51,9 @@ const int ID_SECTION_OTHER_INFO = 6;
 const int ID_SECTION_EMAIL = 7;
 
 
-
 const int ROC_NONE = 0;
 const int ROC_NON_FINAL = 1;
+
 
 const int ROC_NEW = 2;
 const int ROC_UPDATE = 3;
@@ -64,7 +64,7 @@ const int ROC_FINAL = 4;
 // true - loads the current incident's latest ROC and displays it
 // false - shows the blank form for creating a new ROC
 static bool viewingMode;
-
+static ReportOnConditionViewController *instance;
 
 @implementation ReportOnConditionViewController
 
@@ -76,6 +76,99 @@ static bool viewingMode;
 	viewingMode = mode;
 }
 
+// sets all of the incident-related fields as read-only
+// (except for incident name,
+// as this method is called while editing incident name, so interfering with that
+// kicks the user out of editing the field, so we don't want to do that)
+- (void) makeIncidentFieldsReadOnly
+{
+	// Don't lock incident name, for reasons stated above
+	//[_incidentNameTextField setEnabled:false];
+	[_incidentLocateButton setEnabled:false];
+	[_incidentLocateButton setHidden:true];
+	[_incidentNumberTextField setEnabled:false];
+	[_incidentLongitudeDegreesTextField setEnabled:false];
+	[_incidentLongitudeMinutesTextField setEnabled:false];
+	[_incidentLatitudeDegreesTextField setEnabled:false];
+	[_incidentLatitudeMinutesTextField setEnabled:false];
+	[_incidentStateField setEnabled:false];
+}
+
+// Enters the incident's information into the form and
+// sets all of the fields as read-only
+- (void) setupFormForIncident:(IncidentPayload*)incident
+{
+	if(incident == nil)
+		return;
+	
+	//------------------------------------------------------------------------------------------
+	// Incident Name
+	//------------------------------------------------------------------------------------------
+	NSLog(@"ROC - setupFormForIncident - set incident name as \"%@\"",[incident incidentname]);
+	[_incidentNameTextField setText:[incident incidentname]];
+	
+	//------------------------------------------------------------------------------------------
+	// Incident Types
+	//------------------------------------------------------------------------------------------
+	NSMutableArray<NSString*> *incidentTypes = [NSMutableArray<NSString*> new];
+	
+	for(IncidentTypePayload *incidentType in incident.incidentTypes)
+	{
+		if(incidentType.incidentTypeName != nil)
+		{
+			[incidentTypes addObject:incidentType.incidentTypeName];
+		}
+	}
+	[_incidentTypeViewController setSelectedOptions:incidentTypes];
+	
+	for(NSString *type in incidentTypes)
+	{
+		NSLog(@"ROC - setupFormForIncident - set incident type \"%@\"",type);
+	}
+
+	
+	//------------------------------------------------------------------------------------------
+	// Incident Location
+	//------------------------------------------------------------------------------------------
+	double latitude = [[incident lat] doubleValue];
+	double longitude = [[incident lon] doubleValue];
+	// Converting degrees to Degree Decimal-Minutes
+	int latDeg = [self getDegree:latitude];
+	double latMin = [self getMinutes:latitude];
+	int lonDeg = [self getDegree:longitude];
+	double lonMin = [self getMinutes:longitude];
+	// Insert the location we just computed into the UI text fields
+	[_incidentLatitudeDegreesTextField setText:[NSString stringWithFormat:@"%d", latDeg]];
+	[_incidentLatitudeMinutesTextField setText:[NSString stringWithFormat:@"%f", latMin]];
+	[_incidentLongitudeDegreesTextField setText:[NSString stringWithFormat:@"%d", lonDeg]];
+	[_incidentLongitudeMinutesTextField setText:[NSString stringWithFormat:@"%f", lonMin]];
+	
+	NSLog(@"ROC - setupFormForIncident - set lat/long as (%@, %@)",[incident lat], [incident lon]);
+	NSLog(@"ROC - setupFormForIncident - converted lat/long to: ( %d, %f) x ( %d, %f)",latDeg,latMin,lonDeg,lonMin);
+	
+	//------------------------------------------------------------------------------------------
+	// Incident State
+	//------------------------------------------------------------------------------------------
+	// TODO - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+	// TODO - incident state is not available to incident payload, but it might be embedded in the incident name:
+	// TODO - For example: "CA TAB Test incident", the first two characters are "CA"
+	// TODO - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+	// TODO - In the future, this should be added to incident payload,
+	// TODO - or removed from the ROC form if it is not required to create an incident
+	// TODO - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+	// Get the first three characters of the string:
+	NSString *incidentName = [incident incidentname];
+	NSString *incidentNamePrefix = [incidentName substringToIndex:2];
+
+	NSLog(@"ROC - setupFormForIncident - incident prefix is: \"%@\"",incidentNamePrefix);
+
+	if([incidentNamePrefix isEqualToString:@"CA "])
+	{
+		NSLog(@"ROC - setupFormForIncident - set state as \"CA\"");
+		[_incidentStateField setText:@"CA"];
+	}
+
+}
 
 
 // Called when the incident name field is changed
@@ -90,8 +183,12 @@ static bool viewingMode;
 	[self clearAllFormFields];
 	// hide all of the sections and collapse all sections
 	[self hideAllFormSections:true];
+	[self collapseAllSections];
+	[self hideAllDropdownListsExcept:_incidentNameTextField];
 	// clear the selected report type
 	[_reportTypeTextField setText:@""];
+	
+	_lastRocData = nil;
 	
 	//-----------------------------------------------------------
 	// Checking if the incidentName matches an existing incident
@@ -110,12 +207,31 @@ static bool viewingMode;
 	if(_currentIncidentPayload != nil)
 	{
 		_creatingNewIncident = false;
-		_lastIncidentReportType = ROC_NEW;
 		[_reportTypeLabelTextView setHidden:false];
 		[_reportTypeTextField setHidden:false];
 		
-		// TODO - pull incident info,
-		// TODO - populate incident info fields and make them read-only
+		// Instruct datamanager to pull the latest ROCs from the server for this incident
+		[_dataManager requestLatestReportOnConditionForIncident:_currentIncidentPayload.incidentname];
+		
+		// Pulling the incident's latest ROC:
+		_lastRocData = [_dataManager getLastReportOnConditionForIncidentId:[_currentIncidentPayload incidentid]];
+		
+		if(_lastRocData == nil)
+		{
+			_lastIncidentReportType = ROC_NONE;
+		}
+		else if([_lastRocData.reportType isEqualToString:@"NEW"])
+		{
+			_lastIncidentReportType = ROC_NEW;
+		}
+		else if([_lastRocData.reportType isEqualToString:@"UPDATE"])
+		{
+			_lastIncidentReportType = ROC_UPDATE;
+		}
+		else if([_lastRocData.reportType isEqualToString:@"FINAL"])
+		{
+			_lastIncidentReportType = ROC_FINAL;
+		}
 	}
 	// If the name is a valid incident name (e.g. not all whitespace)
 	else if(![self isStringEmpty:incidentName])
@@ -138,6 +254,32 @@ static bool viewingMode;
 		return;
 	}
 	
+	
+	//-----------------------------------------------------------
+	// If the incident exists, filling the UI fields for it
+	// and making them read-only
+	//-----------------------------------------------------------
+	
+	if(_currentIncidentPayload != nil)
+	{
+		[self setupFormForIncident:_currentIncidentPayload];
+		[self makeIncidentFieldsReadOnly];
+		// Leave incident name as editable
+	}
+	// Otherwise, leave the fields as editable
+	else
+	{
+		
+		[_incidentLocateButton setEnabled:true];
+		[_incidentLocateButton setHidden:false];
+		[_incidentNumberTextField setEnabled:true];
+		[_incidentNameTextField setEnabled:true];
+		[_incidentLongitudeDegreesTextField setEnabled:true];
+		[_incidentLongitudeMinutesTextField setEnabled:true];
+		[_incidentLatitudeDegreesTextField setEnabled:true];
+		[_incidentLatitudeMinutesTextField setEnabled:true];
+		[_incidentStateField setEnabled:true];
+	}
 
 	//-----------------------------------------------------------
 	// Setting the available report type options for report type:
@@ -928,6 +1070,8 @@ static bool viewingMode;
 	
 	// Show all of the sections:
 	[self hideAllFormSections:false];
+	[self collapseAllSections];
+	[self hideAllDropdownListsExcept:nil];
 	
 	//----------------------------------------------------------------------------
 	// Hiding weather info for UPDATE or FINAL forms
@@ -1215,6 +1359,7 @@ static bool viewingMode;
 	}
 	
 	[self collapseAllSections];
+	[self hideAllDropdownListsExcept:nil];
 	[self clearAllFormFields];
 	[self setupFormForReportType];
 
@@ -1254,18 +1399,52 @@ static bool viewingMode;
 	//----------------------------------------------------------------------------
 	[_emailTextField setText:[_dataManager getUsername]];
 	
+	//========================================================================
+	// If we're already in an incident, set up the ROC form for that incident:
+	//========================================================================
+	if(_currentIncidentPayload != nil)
+	{
+		[self setupFormForIncident:_currentIncidentPayload];
+	}
+	
 	//----------------------------------------------------------------------------
 	// If we have incident location, autopopulate location fields:
 	//----------------------------------------------------------------------------
-	
-	// TODO
+	[self incidentLocationChanged];
 	
 	//----------------------------------------------------------------------------
-	// If we have a previous ROC, autopopulate the form fields:
+	// If we have a previous ROC, autopopulate the fields that should carry over:
 	//----------------------------------------------------------------------------
 	
-	// TODO
-	
+	if(_lastRocData != nil)
+	{
+		// Additional Affected Counties
+		[_rocAdditionalCountiesTextField setText:_lastRocData.additionalAffectedCounties];
+		
+		// Fuel Type Checkboxes
+		if([_lastRocData.fuelTypes containsObject:@"Grass"])
+		{
+			[_vegFireFuelTypeGrassCheckbox setSelected:true];
+		}
+		if([_lastRocData.fuelTypes containsObject:@"Brush"])
+		{
+			[_vegFireFuelTypeBrushCheckbox setSelected:true];
+		}
+		if([_lastRocData.fuelTypes containsObject:@"Timber"])
+		{
+			[_vegFireFuelTypeTimberCheckbox setSelected:true];
+		}
+		if([_lastRocData.fuelTypes containsObject:@"Oak Woodland"])
+		{
+			[_vegFireFuelTypeOakWoodlandCheckbox setSelected:true];
+		}
+		if([_lastRocData.fuelTypes containsObject:@"Other"])
+		{
+			[_vegFireFuelTypeOtherCheckbox setSelected:true];
+			[_vegFireOtherFuelTypeTextField setText:_lastRocData.otherFuelTypes];
+			[_vegFireOtherFuelTypeView setHidden:false];
+		}
+	}
 }
 
 
@@ -1274,6 +1453,8 @@ static bool viewingMode;
 - (void) setFormToViewRocData:(ReportOnConditionData*)data
 {
 	NSLog(@"ROC - viewROC 1");
+	NSLog(@"ROC - about to set form to view the roc paylod: %@",[data toSqlJson]);
+	
 	_currentReportType = ROC_NONE;
 	
 	if([data.reportType isEqualToString:@"NEW"])
@@ -1299,20 +1480,6 @@ static bool viewingMode;
 	[self setupFormForReportType];
 	[self makeAllFieldsReadOnly];
 	
-	// Hiding the "add field" buttons
-	[_threatsEvacsAddButton setHidden:false];
-	[_threatsStructuresAddButton setHidden:false];
-	[_threatsInfrastructureAddButton setHidden:false];
-	[_otherInfoAddButton setHidden:false];
-	
-	[_threatsEvacsAddButton setEnabled:true];
-	[_threatsStructuresAddButton setEnabled:true];
-	[_threatsInfrastructureAddButton setEnabled:true];
-	
-	//[_threatsEvacsAddButton setHidden:true];
-	//[_threatsStructuresAddButton setHidden:true];
-	//[_threatsInfrastructureAddButton setHidden:true];
-	//[_otherInfoAddButton setHidden:true];
 	
 	//=============================================================================
 	// Section Variables
@@ -1326,10 +1493,7 @@ static bool viewingMode;
 	//---------------------------------------------------------------------------
 	// Incident Info Fields
 	//---------------------------------------------------------------------------
-	// TODO- add this once we add incident number to payload
-	//[_incidentNumberTextField setText:data.incidentnumber];
-
-
+	[_incidentNumberTextField setText:data.incidentnumber];
 	[_incidentTypeViewController setSelectedOptions:data.incidentTypes];
 	
 	int latDegrees = [self getDegree:data.latitude];
@@ -1379,10 +1543,8 @@ static bool viewingMode;
 	// If the data.fuel types contains the string, set the checkbox as selected:
 	for(int i = 0; i < [checkBoxButtons count]; i++)
 	{
-		if([data.fuelTypes containsObject:[checkBoxStrings objectAtIndex:i]])
-		{
-			[[checkBoxButtons objectAtIndex:i] setSelected:true];
-		}
+		bool isSelected = [data.fuelTypes containsObject:[checkBoxStrings objectAtIndex:i]];
+		[[checkBoxButtons objectAtIndex:i] setSelected:isSelected];
 	}
 	
 	NSLog(@"ROC - viewROC 3");
@@ -1488,8 +1650,12 @@ static bool viewingMode;
 		UIStackView *stackView = [stackViewsList objectAtIndex:i];
 		NSArray<NSString*> *stringValues = [stackViewValuesList objectAtIndex:i];
 		
+		// Only iterate through whichever we have fewer of, subviews or strings:
+		int a = (int) [[stackView arrangedSubviews] count];
+		int b = (int) [stringValues count];
+		int jIterations = a < b ? a : b;
 		
-		for(int j = 0; j < [[stackView arrangedSubviews] count]; j++)
+		for(int j = 0; j < jIterations; j++)
 		{
 			UIView *view = [[stackView arrangedSubviews] objectAtIndex:j];
 			// Get the string value that we want to set
@@ -1502,8 +1668,6 @@ static bool viewingMode;
 				if([subview isKindOfClass:[UITextField class]])
 				{
 					UITextField *textField = (UITextField*)subview;
-					
-					// TODO - disable the field,
 					// TODO - auto-resize the text
 					// or autoresize the height of the textfield to make it fit.
 					//[textField resize]
@@ -1530,6 +1694,9 @@ static bool viewingMode;
 	//---------------------------------------------------------------------------
 	// Resource Commitment Fields
 	//---------------------------------------------------------------------------
+	[_calFireIncidentTextField setText:data.calfireIncident];
+	
+	
 	NSArray<UIButton*> *resourceCheckBoxButtons = @[_calFireResourcesNoneCheckbox,
 									 _calFireResourcesAirCheckbox,
 									 _calFireResourcesGroundCheckbox,
@@ -1562,10 +1729,8 @@ static bool viewingMode;
 	
 	for(int i = 0; i < [resourceCheckBoxButtons count]; i++)
 	{
-		if([data.resourcesAssigned containsObject:[resourcesStrings objectAtIndex:i]])
-		{
-			[[resourceCheckBoxButtons objectAtIndex:i] setSelected:true];
-		}
+		bool isSelected = [data.resourcesAssigned containsObject:[resourcesStrings objectAtIndex:i]];
+		[[resourceCheckBoxButtons objectAtIndex:i] setSelected:isSelected];
 	}
 	
 	NSLog(@"ROC - viewROC 8");
@@ -1587,6 +1752,11 @@ static bool viewingMode;
 	
 	if(viewingMode == true)
 	{
+		// Before we do ANYTHING, we want to request ROCs from the server
+		// Without this call, the latest ROC from the incident might not be available to the user
+		[RestClient getReportOnConditionsForIncidentId:[_currentIncidentPayload incidentid] offset:@0 limit:@0 completion:^(BOOL successful) {}];
+		
+		
 		[_incidentNameTextField setHidden:false];
 		[_incidentNameLabelTextView setHidden:false];
 		[_reportTypeTextField setHidden:false];
@@ -1610,30 +1780,13 @@ static bool viewingMode;
 		}
 		else
 		{
-			// Retrieve all of ROCs from the incident
-			NSArray<ReportOnConditionData*> *incidentRocs = [_dataManager getAllReportOnConditionsForIncidentId:[_currentIncidentPayload incidentid]];
-			
-			NSLog(@"ROC - test - Got %d ROCs for incident.",[incidentRocs count]);
-			
-			if(incidentRocs != nil && [incidentRocs count] > 0)
-			{
-				// Get the latest ROC
-				latestIncidentROC = [incidentRocs objectAtIndex:0];
-				for(ReportOnConditionData *roc in incidentRocs)
-				{
-					if([roc datecreated] > [latestIncidentROC datecreated])
-					{
-						latestIncidentROC = roc;
-					}
-				}
-			}
+			latestIncidentROC = [_dataManager getLastReportOnConditionForIncidentId:[_currentIncidentPayload incidentid]];
 		}
 		
 		if(latestIncidentROC == nil)
 		{
 			error = true;
 			errorString = [NSString stringWithFormat:@"No ROC data found for incident: %@.", [_currentIncidentPayload incidentname]];
-			
 		}
 		
 		if(error == true)
@@ -1648,6 +1801,8 @@ static bool viewingMode;
 			
 			// Hiding all of the other sections and headers:
 			[self hideAllFormSections:true];
+			[self collapseAllSections];
+			[self hideAllDropdownListsExcept:nil];
 			return;
 		}
 		
@@ -1659,13 +1814,20 @@ static bool viewingMode;
 
 }
 
-- (void) viewDidLoad
+// A method to call setupView on the class singleton instance
++ (void) setupInstanceView
 {
-	[super viewDidLoad];
+	if(instance == nil)
+		return;
 	
-	
-	
+	[instance setupView];
+}
+
+// Called by viewDidLoad to set up the ROC
+- (void) setupView
+{
 	_creatingNewIncident = false;
+	_lastRocData = nil;
 	
 	// Allocating the array we're going to use to hold strong references to field delegates
 	// (This is so they aren't garbage collected, "field.delegate = delegate" is only a weak reference)
@@ -1689,6 +1851,8 @@ static bool viewingMode;
 	
 	// Hiding all sections and headers:
 	[self hideAllFormSections:true];
+	[self collapseAllSections];
+	[self hideAllDropdownListsExcept:nil];
 	[self hideAllErrors];
 	
 	//========================================================================
@@ -1705,19 +1869,19 @@ static bool viewingMode;
 		[_reportTypeLabelTextView setHidden:true];
 		return;
 	}
-
+	
 	
 	//========================================================================
 	// Setting the incidentName logic
 	//========================================================================
-
+	
 	// Adding the incident names as autocomplete entries for the text field
 	[self makeAutocompleteTextField:_incidentNameTextField withOptions:_allIncidentNames];
-
+	
 	[_incidentNameTextField addTarget:self action:@selector(incidentNameChanged) forControlEvents:UIControlEventEditingChanged];
 	[self makeTextFieldClearErrorWhenChanged:_incidentNameTextField];
 	[self makeTextFieldRequired:_incidentNameTextField required:true];
-
+	
 	
 	//========================================================================
 	// Setting the reportType logic
@@ -1725,6 +1889,31 @@ static bool viewingMode;
 	// reportTypeChanged finishes setting up the form
 	[_reportTypeTextField addTarget:self action:@selector(reportTypeChanged) forControlEvents:UIControlEventEditingDidEnd];
 	[self makeTextFieldRequired:_reportTypeTextField required:true];
+	
+	//========================================================================
+	// If we're already in an incident, set up the ROC form for that incident:
+	//========================================================================
+	if(_currentIncidentPayload != nil)
+	{
+		// First request the latest ROCs for the current incident
+		// We need this so we can safely determine what report types to make available
+		[RestClient getReportOnConditionsForIncidentId:[_currentIncidentPayload incidentid] offset:@0 limit:@0 completion:^(BOOL successful) {}];
+
+		
+		[self setupFormForIncident:_currentIncidentPayload];
+		[self makeIncidentFieldsReadOnly];
+		// and lock incidentname, too
+		[_incidentNameTextField setEnabled:false];
+		[self incidentNameChanged];
+	}
+
+}
+
+- (void) viewDidLoad
+{
+	[super viewDidLoad];
+	instance = self;
+	[self setupView];
 }
 
 
@@ -1740,11 +1929,6 @@ static bool viewingMode;
 	[_resourceCommitmentHeaderView setHidden:hidden];
 	[_otherInfoHeaderView setHidden:hidden];
 	[_emailHeaderView setHidden:hidden];
-
-	
-	// If we're ever toggling the visibility of the section headers
-	// Collapse and hide all of the section bodies by default
-	[self collapseAllSections];
 }
 
 
@@ -1811,11 +1995,17 @@ static bool viewingMode;
 		return;
 	}
 	
+	
+	// Also, hide the keyboard
+	[self.view endEditing:true];
+	
+	
 	// If the section is hidden, expand it
 	BOOL expand = [section isHidden];
 	
 	
 	[self collapseAllSections];
+	[self hideAllDropdownListsExcept:nil];
 	
 	if(expand)
 	{
@@ -1834,6 +2024,7 @@ static bool viewingMode;
 	[button setBackgroundImage:[UIImage imageNamed:@"checkbox_checked"] forState:UIControlStateSelected];
 	[button setBackgroundImage:[UIImage imageNamed:@"checkbox_checked"] forState:UIControlStateHighlighted];
 	[button setBackgroundImage:[UIImage imageNamed:@"checkbox_checked"] forState:(UIControlStateDisabled & UIControlStateSelected)];
+	[button setBackgroundImage:[UIImage imageNamed:@"checkbox"] forState:UIControlStateDisabled];
 	
 	[button setSelected:false];
 }
@@ -1856,6 +2047,8 @@ static bool viewingMode;
 	[button setBackgroundImage:[UIImage imageNamed:@"checkbox_checked"] forState:UIControlStateSelected];
 	[button setBackgroundImage:[UIImage imageNamed:@"checkbox_checked"] forState:UIControlStateHighlighted];
 	[button setBackgroundImage:[UIImage imageNamed:@"checkbox_checked"] forState:(UIControlStateDisabled & UIControlStateSelected)];
+	[button setBackgroundImage:[UIImage imageNamed:@"checkbox"] forState:UIControlStateDisabled];
+	
 	[button setSelected:false];
 	
 	// Hide the other fuel types box to start:
@@ -1899,8 +2092,7 @@ static bool viewingMode;
 	//[textField setValue:[UIColor colorWithWhite:0.3 alpha:1.0] forKeyPath:@"_placeholderLabel.textColor"];
 }
 
-
-// Collapses all sections
+// Collapses all report sections
 - (void) collapseAllSections
 {
 	// Collapsing the views
@@ -1913,18 +2105,7 @@ static bool viewingMode;
 	[_otherInfoContentView setHidden:true];
 	[_emailContentView setHidden:true];
 	
-	
-	// Hiding all tableviews
-	for(NSObject *obj in _delegatesArray)
-	{
-		if([obj class] == [TextFieldDropdownController class])
-		{
-			TextFieldDropdownController *textFieldController = (TextFieldDropdownController *)obj;
-			[textFieldController hideDropDownMenu];
-		}
-	}
-	
-	
+
 	// Setting the icon to be the collapsed icon
 	[_incidentInfoHeaderArrowImage setImage:[UIImage imageNamed:@"down_arrow_transparent"]];
 	[_rocIncidentInfoHeaderArrowImage setImage:[UIImage imageNamed:@"down_arrow_transparent"]];
@@ -1934,6 +2115,28 @@ static bool viewingMode;
 	[_resourceCommitmentHeaderArrowImage setImage:[UIImage imageNamed:@"down_arrow_transparent"]];
 	[_otherInfoHeaderArrowImage setImage:[UIImage imageNamed:@"down_arrow_transparent"]];
 	[_emailHeaderArrowImage setImage:[UIImage imageNamed:@"down_arrow_transparent"]];
+}
+
+
+// Hides all textfield dropdown lists
+// doesn't hide the dropdown list of textField
+- (void) hideAllDropdownListsExcept:(UITextField*)textField
+{
+	// Hiding all tableviews
+	for(NSObject *obj in _delegatesArray)
+	{
+		if([obj class] == [TextFieldDropdownController class])
+		{
+			TextFieldDropdownController *textFieldController = (TextFieldDropdownController *)obj;
+			
+			// Don't hide the dropdown menu of the textField
+			// whose dropdowncontroller we want to keep visible
+			if(textFieldController.textField == textField)
+				continue;
+			
+			[textFieldController hideDropDownMenu];
+		}
+	}
 }
 
 
@@ -3207,7 +3410,7 @@ static bool viewingMode;
 	// The incident name should be prefixed with the user's "org state" and "org prefix"
 	// i.e. Taborda's org state is "CA"
 	// Taborda's org prefix is "TAB"
-	// Therefore, incidents created by users in the Taborda org should be prefixed with "CA TAB"
+	// Therefore, incidents created by users in the Taborda org should be prefixed with "CA
 	if(data.isForNewIncident)
 	{
 		NSString *orgPrefix = @"";
@@ -3265,9 +3468,7 @@ static bool viewingMode;
 	data.latitude = latitude;
 	data.longitude = longitude;
 	data.incidentState = [_incidentStateField text];
-	
-	// TODO - incidentnumber
-	//data.incidentnumber = [_incidentNumber text];
+	data.incidentnumber = [_incidentNumberTextField text];
 	
 	//================================================
 	// ROC Incident Info Fields
@@ -3611,27 +3812,25 @@ static bool viewingMode;
 	// FIXME - END
 	//---------------------------------------------------------------
 
+	formRocData.sendStatus = WAITING_TO_SEND;
 	[_dataManager addReportOnConditionToStoreAndForward:formRocData];
 	[RestClient postReportOnConditions];
+	
+	// Take the user back to the previous screen
+	[self cancelButtonPressed:nil];
 }
 
-
-
-- (void)submitTabletReportButtonPressed
-{
-	// TODO - Do form validation, enable form error indicators
-	// TODO - Submit the form
-}
 
 - (IBAction)cancelButtonPressed:(UIButton *)button
 {
-	// TODO - Show confirmation dialog and take them back to the action view
-}
-
-
-- (void)cancelTabletButtonPressed
-{
-	// TODO - Show confirmation dialog and take them back to the action view
+	// If we're on iPad, take them back to the view scene
+	if([_dataManager isIpad])
+	{
+		[IncidentCanvasUIViewController goToReportOnConditionAction];
+		return;
+	}
+	
+	[self.navigationController popViewControllerAnimated:YES];
 }
 
 

@@ -220,6 +220,7 @@
 		9DB52C2B2005315A003833B9 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DB52C2A2005315A003833B9 /* SystemConfiguration.framework */; };
 		9DB52C2D20053160003833B9 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DB52C2C20053160003833B9 /* OpenGLES.framework */; };
 		9DE2A7BB226E563C00A0B12A /* DateTimePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DE2A7B9226E563900A0B12A /* DateTimePickerController.m */; };
+		9DE7241222A736C800D830CC /* IncidentTypePayload.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DE7241122A736C800D830CC /* IncidentTypePayload.m */; };
 		9DF395C122527F6D00233379 /* TextFieldDropdownController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DF395C022527F6D00233379 /* TextFieldDropdownController.m */; };
 		9DF395C422527FD000233379 /* CheckBoxTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DF395C322527FD000233379 /* CheckBoxTableViewController.m */; };
 		9DF395C722527FEB00233379 /* StringPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DF395C622527FEB00233379 /* StringPickerViewController.m */; };
@@ -653,6 +654,8 @@
 		9DB52C2C20053160003833B9 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		9DE2A7B9226E563900A0B12A /* DateTimePickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DateTimePickerController.m; sourceTree = "<group>"; };
 		9DE2A7BA226E563B00A0B12A /* DateTimePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateTimePickerController.h; sourceTree = "<group>"; };
+		9DE7241022A736C800D830CC /* IncidentTypePayload.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IncidentTypePayload.h; sourceTree = "<group>"; };
+		9DE7241122A736C800D830CC /* IncidentTypePayload.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IncidentTypePayload.m; sourceTree = "<group>"; };
 		9DF395C022527F6D00233379 /* TextFieldDropdownController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TextFieldDropdownController.m; sourceTree = "<group>"; };
 		9DF395C222527FC300233379 /* CheckBoxTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CheckBoxTableViewController.h; sourceTree = "<group>"; };
 		9DF395C322527FD000233379 /* CheckBoxTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CheckBoxTableViewController.m; sourceTree = "<group>"; };
@@ -1118,6 +1121,8 @@
 				013CD00E1BB1DD0A004824CE /* OrganizationPayload.m */,
 				011724491CEF77F6000D438E /* TrackingTokenPayload.h */,
 				0117244A1CEF77F6000D438E /* TrackingTokenPayload.m */,
+				9DE7241022A736C800D830CC /* IncidentTypePayload.h */,
+				9DE7241122A736C800D830CC /* IncidentTypePayload.m */,
 			);
 			path = payload;
 			sourceTree = "<group>";
@@ -1612,6 +1617,7 @@
 				3A3C9E2D18DB441200EEBA17 /* DataManager.m in Sources */,
 				55B2497C1F29A1220006DDEB /* GMUDefaultClusterRenderer.m in Sources */,
 				3A3C9E6518DB441300EEBA17 /* FormSpinner.m in Sources */,
+				9DE7241222A736C800D830CC /* IncidentTypePayload.m in Sources */,
 				01582D881C29E8A300307C76 /* WeatherReportPayload.m in Sources */,
 				55B249801F29A1220006DDEB /* GMUFeature.m in Sources */,
 				55B249761F29A1220006DDEB /* GMUNonHierarchicalDistanceBasedAlgorithm.m in Sources */,
