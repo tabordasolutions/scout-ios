@@ -34,7 +34,6 @@
 #import <Foundation/Foundation.h>
 #import "AssetsLibrary/AssetsLibrary.h"
 #import "SimpleReportPayload.h"
-#import "ReportOnConditionData.h"
 #import "ReportPayload.h"
 #import "RestClient.h"
 #import "Enums.h"
@@ -66,7 +65,6 @@
 - (void)postReport: (NSObject*) report;
 - (void)postSimpleReport: (SimpleReportPayload*) payload;
 -(void) postDamageReports: (DamageReportPayload*) payload;
-- (void) postReportOnCondition:(ReportOnConditionData*) payload;
 - (void) checkIfMessageAccepted;
 // Sends the next report in the queue
 - (void) sendRemainingReports;

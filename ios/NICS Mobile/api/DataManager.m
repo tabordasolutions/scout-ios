@@ -826,7 +826,7 @@ long long lastMdtSync = 0;
 		
 		for(ReportOnConditionData *roc in incidentRocs)
 		{
-			if([roc datecreated] > [latestIncidentROC datecreated])
+			if([[roc datecreated] compare:[latestIncidentROC datecreated]] == NSOrderedDescending)
 			{
 				latestIncidentROC = roc;
 			}

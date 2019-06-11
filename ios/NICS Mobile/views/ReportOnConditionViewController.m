@@ -178,6 +178,10 @@ static ReportOnConditionViewController *instance;
 // report type text field.
 - (void) incidentNameChanged
 {
+	// Make sure the report type fields start off as hidden:
+	[_reportTypeLabelTextView setHidden:true];
+	[_reportTypeTextField setHidden:true];
+
 	// If the incident name changes, we want to:
 	// clear the form
 	[self clearAllFormFields];
@@ -207,8 +211,6 @@ static ReportOnConditionViewController *instance;
 	if(_currentIncidentPayload != nil)
 	{
 		_creatingNewIncident = false;
-		[_reportTypeLabelTextView setHidden:false];
-		[_reportTypeTextField setHidden:false];
 		
 		// Instruct datamanager to pull the latest ROCs from the server for this incident
 		[_dataManager requestLatestReportOnConditionForIncident:_currentIncidentPayload.incidentname];
@@ -239,18 +241,12 @@ static ReportOnConditionViewController *instance;
 		_creatingNewIncident = true;
 		_currentIncidentPayload = nil;
 		_lastIncidentReportType = ROC_NONE;
-		[_reportTypeLabelTextView setHidden:false];
-		[_reportTypeTextField setHidden:false];
 	}
 	else
 	{
 		_creatingNewIncident = true;
 		_currentIncidentPayload = nil;
 		_lastIncidentReportType = ROC_NONE;
-		// Hide the report type field so the user is
-		// forced to type in a valid incident name before proceeding
-		[_reportTypeLabelTextView setHidden:false];
-		[_reportTypeTextField setHidden:false];
 		return;
 	}
 	
@@ -284,23 +280,36 @@ static ReportOnConditionViewController *instance;
 	//-----------------------------------------------------------
 	// Setting the available report type options for report type:
 	//-----------------------------------------------------------
+	
 	NSArray *reportTypesROCNone = @[@"NEW"];
 	NSArray *reportTypesROCNONFinal = @[@"UPDATE",@"FINAL"];
 	NSArray *reportTypes = nil;
+	
 	
 	if(_lastIncidentReportType == ROC_NONE)
 	{
 		reportTypes = reportTypesROCNone;
 	}
-	else if(_lastIncidentReportType == ROC_NEW)
+	else if(_lastIncidentReportType == ROC_NEW || _lastIncidentReportType == ROC_UPDATE)
 	{
 		reportTypes = reportTypesROCNONFinal;
 	}
 	else if(_lastIncidentReportType == ROC_FINAL)
 	{
-		// TODO - if on final, show text saying that we cannot create ROC after a final has been submitted
+		// If the incident has a FINAL ROC, no other ROCs can be created,
+		// so show an error message indicating that:
+		[_reportTypeLabelTextView setHidden:false];
+		NSString *errorMessage = [NSString stringWithFormat:@"Unable to create ROC.\nA FINAL ROC has already been submitted for this incident."];
+		[_reportTypeLabelTextView setText:errorMessage];
 		return;
 	}
+
+	
+	// Show the report type spinner and label
+	// Because the label may have been re-used for an error message, reassign the original text
+	[_reportTypeLabelTextView setText:@"Report Type:"];
+	[_reportTypeLabelTextView setHidden:false];
+	[_reportTypeTextField setHidden:false];
 	
 	// Set the fields for the report type spinner:
 	[self makeStringPickerTextField:_reportTypeTextField withOptions:reportTypes andTitle:@"Report type:"];
@@ -1900,10 +1909,11 @@ static ReportOnConditionViewController *instance;
 		[RestClient getReportOnConditionsForIncidentId:[_currentIncidentPayload incidentid] offset:@0 limit:@0 completion:^(BOOL successful) {}];
 
 		
-		[self setupFormForIncident:_currentIncidentPayload];
-		[self makeIncidentFieldsReadOnly];
+		[_incidentNameTextField setText:_currentIncidentPayload.incidentname];
 		// and lock incidentname, too
 		[_incidentNameTextField setEnabled:false];
+		
+		// Call the method that finishes setting up the rest of the form based on the incident name
 		[self incidentNameChanged];
 	}
 
@@ -2023,8 +2033,8 @@ static ReportOnConditionViewController *instance;
 	[button setBackgroundImage:[UIImage imageNamed:@"checkbox"] forState:UIControlStateNormal];
 	[button setBackgroundImage:[UIImage imageNamed:@"checkbox_checked"] forState:UIControlStateSelected];
 	[button setBackgroundImage:[UIImage imageNamed:@"checkbox_checked"] forState:UIControlStateHighlighted];
-	[button setBackgroundImage:[UIImage imageNamed:@"checkbox_checked"] forState:(UIControlStateDisabled & UIControlStateSelected)];
-	[button setBackgroundImage:[UIImage imageNamed:@"checkbox"] forState:UIControlStateDisabled];
+	[button setBackgroundImage:[UIImage imageNamed:@"checkbox_checked"] forState:(UIControlStateDisabled | UIControlStateSelected)];
+//	[button setBackgroundImage:[UIImage imageNamed:@"checkbox"] forState:UIControlStateDisabled];
 	
 	[button setSelected:false];
 }
@@ -2041,15 +2051,9 @@ static ReportOnConditionViewController *instance;
 
 - (void) makeOtherFuelTypeCheckbox:(UIButton*)button
 {
+	[self makeCheckbox:button];
+	
 	[button addTarget:self action:@selector(otherFuelTypeCheckboxTapped:) forControlEvents:UIControlEventTouchUpInside];
-	
-	[button setBackgroundImage:[UIImage imageNamed:@"checkbox"] forState:UIControlStateNormal];
-	[button setBackgroundImage:[UIImage imageNamed:@"checkbox_checked"] forState:UIControlStateSelected];
-	[button setBackgroundImage:[UIImage imageNamed:@"checkbox_checked"] forState:UIControlStateHighlighted];
-	[button setBackgroundImage:[UIImage imageNamed:@"checkbox_checked"] forState:(UIControlStateDisabled & UIControlStateSelected)];
-	[button setBackgroundImage:[UIImage imageNamed:@"checkbox"] forState:UIControlStateDisabled];
-	
-	[button setSelected:false];
 	
 	// Hide the other fuel types box to start:
 	[_vegFireOtherFuelTypeView setHidden:![button isSelected]];
@@ -2057,10 +2061,10 @@ static ReportOnConditionViewController *instance;
 
 - (void) otherFuelTypeCheckboxTapped:(id) obj
 {
-	[self checkBoxTapped:obj];
+	// checkBoxTapped is also called as a target
+	// so this method doesn't have to toggle whether the other fuel type checkbox is selected
 	
 	UIButton *checkbox = obj;
-	
 	// Toggle the visibility of the "other fuel type" field
 	[_vegFireOtherFuelTypeView setHidden:![checkbox isSelected]];
 	// Hide the other fuel type error:
@@ -3813,8 +3817,10 @@ static ReportOnConditionViewController *instance;
 	//---------------------------------------------------------------
 
 	formRocData.sendStatus = WAITING_TO_SEND;
+	
+	// Add the ROC to the store & forward table, NOTE: this dispatches
+	// the RestClient to push ROCs to the server, no additional calls are required here.
 	[_dataManager addReportOnConditionToStoreAndForward:formRocData];
-	[RestClient postReportOnConditions];
 	
 	// Take the user back to the previous screen
 	[self cancelButtonPressed:nil];

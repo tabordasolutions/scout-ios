@@ -477,35 +477,145 @@ static MultipartPostQueue* mMultipartPostQueue;
 	}
 }
 
+
++ (void) postReportOnCondition:(ReportOnConditionData*)rocData
+{
+	int userSessionId = [[dataManager getUserSessionId] intValue];
+	
+	NSMutableDictionary *rocPayload = [rocData toServerPayload:userSessionId];
+	
+	// If it has already been sent, we shouldn't process it again...
+	// remove it from the sendqueue
+	if(rocData.sendStatus == SENT)
+	{
+		[dataManager deleteReportOnConditionFromStoreAndForward:rocData];
+	}
+	
+	// If the ROC will create a new incident, the request url is different
+	NSString *url = @"";
+	
+	if(rocData.isForNewIncident)
+	{
+		int orgId = [[dataManager.orgData orgId] intValue];
+		url = [NSString stringWithFormat:@"reports/%d/IncidentAndROC",orgId];
+	}
+	else
+	{
+		long incidentId = rocData.incidentid;
+		url = [NSString stringWithFormat:@"reports/%ld/ROC",incidentId];
+	}
+	
+	NSInteger statusCode = -1;
+	
+	// Converting the Dictionary to json data
+	NSError *error = nil;
+	NSData *jsonPayloadData = [NSJSONSerialization dataWithJSONObject:rocPayload options:0 error:&error];
+	
+	if(jsonPayloadData != nil)
+	{
+		NSLog(@"PostReportOnCondition - posted payload.");
+		NSString *response = [RestClient synchronousPostToUrl:url postData:jsonPayloadData length:[jsonPayloadData length] statusCode:&statusCode];
+		NSLog(@"PostReportOnCondition - response: %@",response);
+		
+		NSDictionary *responseDictionary = [ReportOnConditionData jsonDictionaryFromJsonString:response];
+		
+		
+		
+		rocData.sendStatus = SENT;
+		
+		if([ReportOnConditionData jsonGetInt:responseDictionary withName:@"status" defaultTo:-1] == 200)
+		{
+			NSLog(@"PostReportOnCondition - Got success message, payload added to history table");
+			// If the report successfully posted, add it to our history queue
+			[dataManager addReportOnConditionToHistory:rocData];
+			
+			// If the report posted successfully, it may have created a new incident, so we need to refresh our list of incidents:
+			[RestClient getAllIncidentsForUserId:[dataManager getUserId]];
+		}
+	}
+	else
+	{
+		NSLog(@"PostReportOnCondition - Failed to convert payload to json.");
+	}
+	
+	// Now that we've sent it, remove the payload from the store and forward queue
+	NSLog(@"PostReportOnCondition - Removing payload from store and forward table");
+	// Whether we succeeded or not,
+	// either remove the sent report, or remove the faulty report from the store and forward table
+	[dataManager deleteReportOnConditionFromStoreAndForward:rocData];
+	
+	// Try to post another ROC
+	[self postReportOnConditions];
+}
+
 + (void)postReportOnConditions
 {
 	NSMutableArray<ReportOnConditionData>* rocs = [dataManager getAllReportOnConditionsFromStoreAndForward];
+	NSLog(@"=============================================================================");
+	NSLog(@"ROC - postReportOnConditions - got %lu payloads from store and forward, printing payloads...", [rocs count]);
+	NSLog(@"=============================================================================");
+
+	for(ReportOnConditionData *data in rocs)
+	{
+		NSString *sendStatus = @"UNKNOWN_SEND_STATUS";
+		
+		if(data.sendStatus == WAITING_TO_SEND)
+		{
+			sendStatus = @"WAITING_TO_SEND";
+		}
+		else if(data.sendStatus == SENT)
+		{
+			sendStatus = @"SENT";
+		}
+		
+		NSLog(@"ROC - postReportOnConditions - got payload from store and forward: %@, %f, %@", data.incidentname, [data.datecreated timeIntervalSince1970], sendStatus);
+	}
+	
+	NSLog(@"ROC - postReportOnConditions - finished printing all payloads.");
+	
 	
 	for(ReportOnConditionData *data in rocs)
 	{
 		if(data.sendStatus == WAITING_TO_SEND)
 		{
-			NSLog(@"ROC - RestClient - postReportOnConditions - removing payload from store & forward.");
 			// Remove the payload from the store and forward table
 			[dataManager deleteReportOnConditionFromStoreAndForward:data];
 			
-			NSLog(@"ROC - RestClient - postReportOnConditions - updating the send status.");
+			NSLog(@"ROC - RestClient - postReportOnConditions - updating the send status for payload \"%@\".",data.incidentname);
+
 			// set the send status as having been sent
 			data.sendStatus = SENT;
 			
-			NSLog(@"ROC - RestClient - postReportOnConditions - adding back to sotre & forward with updated send status.");
+			NSLog(@"ROC - RestClient - postReportOnConditions - adding payload for \"%@\" back to store & forward with updated send status.",data.incidentname);
+
 			// and re-add it to the store and forward table again with the updated send status
 			[dataManager addReportOnConditionToStoreAndForward:data];
 			
+			NSLog(@"ROC - RestClient - postReportOnCondition - about to post ROC for payload \"%@\".",data.incidentname);
+			[self postReportOnCondition:data];
+			
+			
+			/*NSLog(@"ROC - RestClient - postReportOnConditions - removing payload from store & forward.");
+			
+			
 			NSLog(@"ROC - RestClient - postReportOnConditions - Got an ROC payload message from store and forward table, adding it to send queue. (Incident: %@, creationDate: %@",data.incidentname, data.datecreated);
 			
-			data.sendStatus = WAITING_TO_SEND;
-			[mMultipartPostQueue addPayloadToSendQueue:data];
+			data.sendStatus = WAITING_TO_SEND;*/
+			
+			//[mMultipartPostQueue addPayloadToSendQueue:data];
 			// Why are we only adding one to the send queue before breaking?
 			// I just followed the algorithm that SimpleReports use
+			
+			// Only post 1 at a time, this method will be called again after we succeed or fail to post it
+			// ... which will send the rest of them.
 			break;
 		}
 	}
+	
+	NSLog(@"=============================================================================");
+	NSLog(@"ROC - RestClient - postReportOnCondition - finished method.");
+	NSLog(@"=============================================================================");
+
 }
 
 

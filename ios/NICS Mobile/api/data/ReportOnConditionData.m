@@ -573,7 +573,7 @@
 	rocData.incidentid = [ReportOnConditionData jsonGetLong:dict withName:@"incidentid" defaultTo:-1];
 	rocData.incidentname = [ReportOnConditionData jsonGetString:dict withName:@"incidentname" defaultTo:@""];
 	rocData.incidentnumber = [ReportOnConditionData jsonGetString:dict withName:@"incidentnumber" defaultTo:@""];
-	rocData.datecreated = [dateFormatter dateFromString:[ReportOnConditionData jsonGetString:dict withName:@"startDate" defaultTo:@"1970-01-01T01:23:45.678Z"]];
+	rocData.datecreated = [dateFormatter dateFromString:[ReportOnConditionData jsonGetString:dict withName:@"datecreated" defaultTo:@"1970-01-01T01:23:45.678Z"]];
 	rocData.reportType = [ReportOnConditionData jsonGetString:dict withName:@"reportType" defaultTo:@""];
 	rocData.county = [ReportOnConditionData jsonGetString:dict withName:@"county" defaultTo:@""];
 	rocData.additionalAffectedCounties = [ReportOnConditionData jsonGetString:dict withName:@"additionalAffectedCounties" defaultTo:@""];

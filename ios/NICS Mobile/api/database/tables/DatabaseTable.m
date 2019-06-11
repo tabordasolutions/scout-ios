@@ -137,8 +137,7 @@
 }
 
 
-- (void) deleteRowsByKey: (NSString *) key1 withValue: (id) value1 andKey:(NSString *) key2 withValue:(id) value2 {
-	
+- (void) deleteRowsByKey:(NSString *)key1 withValue:(id)value1 andKey:(NSString *)key2 withValue:(id)value2 {
 	NSString *deleteRowQuery = [NSString stringWithFormat:@"%@%@%@%@%@%@%@%@", @"delete from ", _tableName, @" where ", key1, @" =  ?", @" AND ", key2, @" = ?"];
 	
 	[_databaseQueue inTransaction:^(FMDatabase *db, BOOL *rollback) {

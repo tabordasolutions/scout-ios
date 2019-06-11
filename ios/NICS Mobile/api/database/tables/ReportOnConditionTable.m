@@ -78,8 +78,27 @@ static NSDictionary * tableColumnsDictionary;
 
 - (void) removeData:(ReportOnConditionData *) data
 {
-	NSNumber *createdTime = [NSNumber numberWithLong:[data.datecreated timeIntervalSince1970]];
-	[self deleteRowsByKey:@"incidentID" withValue:[NSNumber numberWithLong:data.incidentid] andKey:@"createdUTC" withValue:createdTime];
+	NSString *key1;
+	id value1;
+	// If incident id is -1, then the payload was a "NEW" ROC that created the incident
+	// Instead, query by incident name
+	if(data.incidentid == -1)
+	{
+		key1 = @"incidentName";
+		value1 = data.incidentname;
+	}
+	// otherwise, we have a valid incident id, just use that
+	else
+	{
+		key1 = @"incidentID";
+		value1 = [NSNumber numberWithLong:data.incidentid];
+	}
+	
+	NSString *key2 = @"createdUTC";
+	NSNumber *value2 = [NSNumber numberWithLong:[data.datecreated timeIntervalSince1970]];
+	
+	NSLog(@"ROC - ReportOnConditionTable - removeData - Deleting ROCs in table \"%@\" where \"%@\" = \"%@\" and \"%@\" = \"%@\"",[self tableName], key1, value1, key2, value2);
+	[self deleteRowsByKey:key1 withValue:value1 andKey:key2 withValue:value2];
 }
 
 - (BOOL) addDataArray:(NSArray *) dataArray
@@ -105,12 +124,14 @@ static NSDictionary * tableColumnsDictionary;
 }
 
 - (ReportOnConditionData *) getLastReportOnConditionForIncidentId: (NSNumber *)incidentId {
+	NSLog(@"ROC - ROCTable - getLastReportOnConditionForIncidentId");
 	NSDictionary* result = [[self selectRowsByKey:@"incidentID" value:incidentId orderedBy:[NSArray arrayWithObject:@"createdUTC"] isDescending:YES] firstObject];
 	
 	return [ReportOnConditionData fromSqlMapping:result];
 }
 
 - (NSMutableArray<ReportOnConditionData> *) getReportOnConditionsForIncidentId: (NSNumber *)incidentId since: (NSNumber *)timestamp {
+	NSLog(@"ROC - ROCTable - getReportOnConditionsForIncidentId");
 	NSDictionary *keys = [[NSDictionary alloc] initWithObjectsAndKeys:
 					  incidentId,     @"incidentID = ?",
 					  timestamp,      @"createdUTC >= ?",
@@ -131,6 +152,7 @@ static NSDictionary * tableColumnsDictionary;
 }
 
 - (NSMutableArray<ReportOnConditionData> *) getAllReportOnConditions {
+	NSLog(@"ROC - ROCTable - getAllReportOnConditions");
 	NSMutableArray *results = [self selectAllRowsAndOrderedBy:[NSArray arrayWithObject:@"createdUTC"] isDescending:YES];
 	
 	NSMutableArray<ReportOnConditionData> *parsedResults = [NSMutableArray<ReportOnConditionData> new];

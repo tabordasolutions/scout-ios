@@ -114,11 +114,6 @@ static NSNotificationCenter *notificationCenter;
 			[self postDamageReports:reportPayload];
 		}
 	}
-	else if([report isKindOfClass:[ReportOnConditionData class]])
-	{
-		NSLog(@"USIDDEFECT,		postReport report type is ROC");
-		[self postReportOnCondition:((ReportOnConditionData*) report)];
-	}
 }
 
 
@@ -308,78 +303,6 @@ static NSNotificationCenter *notificationCenter;
 	}];
 }
 
-- (void) postReportOnCondition: (ReportOnConditionData*) payload
-{
-	int userSessionId = [[dataManager getUserSessionId] intValue];
-	
-	NSMutableDictionary *rocPayload = [payload toServerPayload:userSessionId];
-	
-	// If it has already been sent, we shouldn't process it again...
-	// remove it from the sendqueue
-	if(payload.sendStatus == SENT)
-	{
-		[sendQueue removeObject:payload];
-		[dataManager deleteReportOnConditionFromStoreAndForward:payload];
-	}
-	
-	// If the ROC will create a new incident, the request url is different
-	NSString *url = @"";
-	
-	if(payload.isForNewIncident)
-	{
-		int orgId = [[dataManager.orgData orgId] intValue];
-		url = [NSString stringWithFormat:@"reports/%d/IncidentAndROC",orgId];
-	}
-	else
-	{
-		long incidentId = payload.incidentid;
-		url = [NSString stringWithFormat:@"reports/%ld/ROC",incidentId];
-	}
-
-	NSInteger statusCode = -1;
-	
-	// Converting the Dictionary to json data
-	NSError *error = nil;
-	NSData *jsonPayloadData = [NSJSONSerialization dataWithJSONObject:rocPayload options:0 error:&error];
-	
-	if(jsonPayloadData != nil)
-	{
-		NSLog(@"PostReportOnCondition - posted payload.");
-		NSString *response = [RestClient synchronousPostToUrl:url postData:jsonPayloadData length:[jsonPayloadData length] statusCode:&statusCode];
-		NSLog(@"PostReportOnCondition - response: %@",response);
-
-		NSDictionary *responseDictionary = [ReportOnConditionData jsonDictionaryFromJsonString:response];
-		
-		
-		// Now that we've sent it, remove the payload from the store and forward queue
-		NSLog(@"PostReportOnCondition - Removing payload from store and forward table");
-		[dataManager deleteReportOnConditionFromStoreAndForward:payload];
-		
-		// Remove it from the sendqueue
-		[sendQueue removeObject:payload];
-		
-		payload.sendStatus = SENT;
-		
-		if([ReportOnConditionData jsonGetInt:responseDictionary withName:@"status" defaultTo:-1] == 200)
-		{
-			NSLog(@"PostReportOnCondition - Got success message, payload added to history table");
-			// If the report successfully posted, add it to our history queue
-			[dataManager addReportOnConditionToHistory:payload];
-		}
-		
-	}
-	else
-	{
-		NSLog(@"PostReportOnCondition - Failed to convert payload to json.");
-		// Remove the faulty payload from the store and forward table
-		[dataManager deleteReportOnConditionFromStoreAndForward:payload];
-		
-		// Remove it from the sendqueue
-		[sendQueue removeObject:payload];
-	}
-}
-
-
 -(void)addPayloadToSendQueue:(NSObject*) payload{
 	NSLog(@"USIDDEFECT, addPayloadToSendQueue");
 	
@@ -387,7 +310,7 @@ static NSNotificationCenter *notificationCenter;
 		return;
 	
 	// If it's not a valid report type, don't add it to the queue
-	if(![payload isKindOfClass:[ReportPayload class]] && ![payload isKindOfClass:[ReportOnConditionData class]])
+	if(![payload isKindOfClass:[ReportPayload class]])
 	{
 		return;
 	}
@@ -430,13 +353,8 @@ static NSNotificationCenter *notificationCenter;
 // If we received an OK from both, we set the report's status to SENT
 - (void) checkIfMessageAccepted
 {
-	if(activeConnectionReceiveData == RESPONSE_OK && activeConnectionReceiveResponse == RESPONSE_OK) {
-	
-		
-		
-		
-		
-		
+	if(activeConnectionReceiveData == RESPONSE_OK && activeConnectionReceiveResponse == RESPONSE_OK)
+	{
 		NSObject* report = [sendQueue objectAtIndex:0];
 		
 		if(report != nil)
@@ -464,15 +382,6 @@ static NSNotificationCenter *notificationCenter;
 					[dataManager requestDamageReportsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings] intValue] immediate:YES];
 				}
 			}
-			else if([report isKindOfClass:[ReportOnConditionData class]])
-			{
-				ReportOnConditionData *rocData = (ReportOnConditionData*)report;
-				
-				[dataManager deleteReportOnConditionFromStoreAndForward:rocData];
-				rocData.sendStatus = SENT;
-				[dataManager addReportOnConditionToStoreAndForward:rocData];
-				[dataManager requestReportOnConditionsRepeatedEvery:[[DataManager getReportsUpdateFrequencyFromSettings] intValue] immediate:YES];
-			}
 		}
 		NSLog(@"USIDDEFECT, success message received, sending remaining reports");
 		// Send the next report
@@ -484,8 +393,6 @@ static NSNotificationCenter *notificationCenter;
 		// Resend the failed report
 		[self sendRemainingReports];
 	}
-	
-	
 
 	//TODO: if we want this to handle ending the connection, do it here
 	//activeConnection = nil;
@@ -584,11 +491,6 @@ totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite
 		ReportPayload* payload = (ReportPayload*)report;
 		debugReportType = [NSString stringWithFormat:@"Report with form type id: %d", payload.formtypeid];
 	}
-	else if([report isKindOfClass:[ReportOnConditionData class]])
-	{
-		debugReportType = @"Report on Condition";
-	}
-	
 	
 	if(response)
 	{
@@ -626,11 +528,6 @@ totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite
 	NSLog(@"USIDDEFECT, addCachedReportsToSendQueue: about to add all DRs");
 	[Reports addObjectsFromArray:[dataManager getAllDamageReportsFromStoreAndForward]];
 
-	// Adding all Report On Conditions
-	NSLog(@"USIDDEFECT, addCachedReportsToSendQueue: about to add all ROCs");
-	[Reports addObjectsFromArray:[dataManager getAllReportOnConditionsFromStoreAndForward]];
-	
-
 	NSLog(@"USIDDEFECT, addCachedReportsToSendQueue: about to iterate through reports");
 	
 	for(NSObject *payload in Reports)
@@ -648,26 +545,6 @@ totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite
 				NSLog(@"USIDDEFECT, addCachedReportsToSendQueue -> Payload is waiting to send, added to send queue");
 				[self addPayloadToSendQueue:reportPayload];
 				NSLog(@"Finished adding payload to send");
-			}
-		}
-		else if([payload isKindOfClass:[ReportOnConditionData class]])
-		{
-			ReportOnConditionData *rocData = (ReportOnConditionData*)payload;
-			if(rocData.sendStatus == WAITING_TO_SEND)
-			{
-				// Remove the payload from the store and forward table
-				[dataManager deleteReportOnConditionFromStoreAndForward:rocData];
-				
-				// set the send status as having been sent
-				rocData.sendStatus = SENT;
-				
-				// and re-add it to the store and forward table again with the updated send status
-				//[dataManager addReportOnConditionToStoreAndForward:rocData];
-				
-				NSLog(@"ROC payload is waiting to send");
-				NSLog(@"USIDDEFECT, addCachedReportsToSendQueue -> ROC Payload is waiting to send, added to send queue");
-				[self addPayloadToSendQueue:rocData];
-				NSLog(@"Finished adding ROC payload to send");
 			}
 		}
 	}
