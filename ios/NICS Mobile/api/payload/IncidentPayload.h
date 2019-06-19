@@ -52,6 +52,7 @@
 @property NSNumber *incidentid;
 @property NSNumber *usersessionid;
 @property NSString* incidentname;
+@property NSString<Optional>* incidentnumber;
 @property NSNumber* lat;
 @property NSNumber* lon;
 @property NSMutableArray<CollabroomPayload>* collabrooms;

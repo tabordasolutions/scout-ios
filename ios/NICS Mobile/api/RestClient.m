@@ -303,12 +303,17 @@ static MultipartPostQueue* mMultipartPostQueue;
 	NSString* json = [self synchronousGetFromUrl:[NSString stringWithFormat:@"%@%@%@%@", @"incidents/", [dataManager getActiveWorkspaceId], @"/?accessibleByUserId=", userId] statusCode:&statusCode];
 	NSError* error = nil;
 	
+	NSLog(@"Incidents - Got the following incident payload: \"%@\"",json);
+	
 	IncidentMessage *message = [[IncidentMessage alloc] initWithString:json error:&error];
 	
 	if(message != nil && statusCode == 200) {
 		NSMutableDictionary *incidentsList = [NSMutableDictionary new];
 		
 		for(IncidentPayload *payload in message.incidents) {
+			
+			if(payload.incidentnumber != nil)
+				NSLog(@"Incident - \"%@\" has number - \"%@\"",payload.incidentname,payload.incidentnumber);
 
 			[incidentsList setObject:payload forKey:payload.incidentname];
 		}
@@ -419,16 +424,37 @@ static MultipartPostQueue* mMultipartPostQueue;
 
 + (void) getReportOnConditionsForIncidentId:(NSNumber *)incidentId offset:(NSNumber *)offset limit:(NSNumber *)limit completion:(void (^)(BOOL successful)) completion
 {
+	NSLog(@"ROC - RestClient - getReportOnConditionsForIncidentId: %@",incidentId);
+	
+	if(incidentId == nil)
+	{
+		NSLog(@"Warning - RestClient - getReportOnConditionsForIncidentId called for nil incident ID.");
+		completion(NO);
+		return;
+	}
+	
+	
 	if(!receivingReportOnConditions && ![incidentId  isEqual: @-1])
 	{
+		NSLog(@"ROC - RestClient - not currently requesting ROCs, initiating a new request");
+		
 		receivingReportOnConditions = YES;
 		
 		dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0ul);
 		dispatch_async(queue, ^{
 			NSInteger statusCode = -1;
 			
+			// TODO - The following url should contain the parameter "fromDate=###" where ### is the timestamp of the last ROC we have cached on the app.
+			// Like this:
+			// NSString *url = [NSString stringWithFormat:@"reports/%@/ROC?sortOrder=desc&fromDate=%lld",incidentId,([[dataManager getLastReportOnConditionTimestampForIncidentId:incidentId] longLongValue])];
+
+			// This instructs the server to only respond with the latest ROCs
+			// HOWEVER, the server seems to use the column "seqtime" for that comparison, and that column is "0" for all ROCs, therefore
+			// passing any value > 0 returns no ROCs
+			// So we must use the following request URL to obtain all of the ROCs:
+			NSString *url = [NSString stringWithFormat:@"reports/%@/ROC?sortOrder=desc",incidentId];
+
 			
-			NSString *url = [NSString stringWithFormat:@"reports/%@/ROC?sortOrder=desc&fromDate=%lld",incidentId,([[dataManager getLastReportOnConditionTimestampForIncidentId:incidentId] longLongValue])];
 			
 			NSLog(@"About to request ROCs from URL: \"%@\"",url);
 			NSString* jsonString = [self synchronousGetFromUrl:url statusCode:&statusCode];
@@ -475,6 +501,7 @@ static MultipartPostQueue* mMultipartPostQueue;
 			completion(YES);
 		});
 	}
+	completion(NO);
 }
 
 

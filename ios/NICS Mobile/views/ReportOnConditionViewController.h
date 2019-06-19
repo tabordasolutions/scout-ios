@@ -60,6 +60,9 @@
 - (void) setupView;
 // A method to call setupView on the class singleton instance
 + (void) setupInstanceView;
+
+// Called when the user pulls the ROC form down while viewing an ROC to fetch the latest ROC from the incident
+- (void) refreshRequested:(UIRefreshControl*)refreshControl;
 //=============================================================================
 // Info
 //=============================================================================
@@ -83,6 +86,7 @@
 // The last ROC that was submitted for this incident
 @property ReportOnConditionData *lastRocData;
 
+@property IBOutlet UIScrollView *topmostScrollView;
 
 //=============================================================================
 // Section Headers / Views
@@ -444,6 +448,12 @@
 
 @property IBOutlet UIButton *submitButton;
 @property IBOutlet UIButton *cancelButton;
+// We modify the height of this constraint to make the button view section go away
+// and have the scroll view resize to fill the screen
+@property IBOutlet NSLayoutConstraint *rocButtonsViewHeightConstraint;
+
+
+- (void) setFormToViewRocForIncident:(IncidentPayload *)incident;
 
 
 
@@ -465,8 +475,6 @@
 
 
 
-// View holding the submit and cancel buttons
-@property IBOutlet UIView *buttonView;
 
 
 // Hides all error views

@@ -2564,7 +2564,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="3836"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="072-LU-uzY">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="072-LU-uzY">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="3776"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="NFb-Hs-YSv">
@@ -4598,7 +4598,7 @@
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="QPg-8E-FQU" firstAttribute="leading" secondItem="072-LU-uzY" secondAttribute="leading" id="31B-cO-RVQ"/>
-                            <constraint firstItem="072-LU-uzY" firstAttribute="bottom" secondItem="1NE-ae-9Iv" secondAttribute="bottom" constant="-60" id="56b-Af-JCy"/>
+                            <constraint firstItem="072-LU-uzY" firstAttribute="bottom" secondItem="QPg-8E-FQU" secondAttribute="top" id="56b-Af-JCy"/>
                             <constraint firstItem="072-LU-uzY" firstAttribute="trailing" secondItem="1NE-ae-9Iv" secondAttribute="trailing" id="6jJ-Ou-CDA"/>
                             <constraint firstItem="QPg-8E-FQU" firstAttribute="bottom" secondItem="1NE-ae-9Iv" secondAttribute="bottom" id="GTl-p5-C8T"/>
                             <constraint firstItem="072-LU-uzY" firstAttribute="leading" secondItem="1NE-ae-9Iv" secondAttribute="leading" id="O2A-Mk-BcS"/>
@@ -4611,7 +4611,6 @@
                     </navigationItem>
                     <size key="freeformSize" width="375" height="3900"/>
                     <connections>
-                        <outlet property="buttonView" destination="QPg-8E-FQU" id="ZvL-GN-Obd"/>
                         <outlet property="calFireIncidentTextField" destination="lus-t4-oT4" id="z4X-m6-jYr"/>
                         <outlet property="calFireResourcesAgencyRepAssignedCheckbox" destination="h7E-7V-eTR" id="gB1-Tt-Wvk"/>
                         <outlet property="calFireResourcesAgencyRepAssignedCheckboxView" destination="idJ-bz-2zt" id="rgb-LR-xhM"/>
@@ -4675,6 +4674,7 @@
                         <outlet property="resourceCommitmentHeaderErrorImage" destination="8bx-t3-nkB" id="Xm8-Bq-iqo"/>
                         <outlet property="resourceCommitmentHeaderView" destination="xJ4-MY-46o" id="ca2-ka-vWx"/>
                         <outlet property="rocAdditionalCountiesTextField" destination="gH6-OQ-ZB5" id="6n9-J9-1UH"/>
+                        <outlet property="rocButtonsViewHeightConstraint" destination="VF0-u0-kcO" id="ZO0-iH-I4h"/>
                         <outlet property="rocDPATextField" destination="0di-uO-AAK" id="fWw-7s-vPi"/>
                         <outlet property="rocIncidentInfoContentView" destination="IVh-w7-0dv" id="o5o-b1-4KQ"/>
                         <outlet property="rocIncidentInfoHeaderArrowImage" destination="JDE-UM-nLF" id="EAC-y8-4bF"/>
@@ -4706,6 +4706,7 @@
                         <outlet property="threatsStructuresInfoListStackView" destination="dJL-6e-xVa" id="zeU-kT-JVj"/>
                         <outlet property="threatsStructuresListHeightConstraint" destination="ucl-N7-krs" id="bVx-Gj-o0D"/>
                         <outlet property="threatsStructuresTextField" destination="NQY-uI-JgU" id="WUZ-JR-RIp"/>
+                        <outlet property="topmostScrollView" destination="072-LU-uzY" id="dzv-wU-NG7"/>
                         <outlet property="vegFireAcreageTextField" destination="InF-AE-GE3" id="5Rx-F2-SHD"/>
                         <outlet property="vegFireFuelTypeBrushCheckbox" destination="UX0-SI-UVc" id="4N4-Nw-8SU"/>
                         <outlet property="vegFireFuelTypeGrassCheckbox" destination="rgq-Ut-94D" id="pqf-3M-aU7"/>

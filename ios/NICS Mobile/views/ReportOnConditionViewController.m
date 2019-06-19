@@ -108,6 +108,19 @@ static ReportOnConditionViewController *instance;
 	[_incidentNameTextField setText:[incident incidentname]];
 	
 	//------------------------------------------------------------------------------------------
+	// Incident Number
+	//------------------------------------------------------------------------------------------
+	NSLog(@"ROC - setupFormForIncident - incident has number: \"%@\"",incident.incidentnumber);
+	if(incident.incidentnumber != nil)
+	{
+		[_incidentNumberTextField setText:[incident incidentnumber]];
+	}
+	else
+	{
+		[_incidentNumberTextField setText:@""];
+	}
+	
+	//------------------------------------------------------------------------------------------
 	// Incident Types
 	//------------------------------------------------------------------------------------------
 	NSMutableArray<NSString*> *incidentTypes = [NSMutableArray<NSString*> new];
@@ -1502,7 +1515,8 @@ static ReportOnConditionViewController *instance;
 	//---------------------------------------------------------------------------
 	// Incident Info Fields
 	//---------------------------------------------------------------------------
-	[_incidentNumberTextField setText:data.incidentnumber];
+	// Incident number comes from the incident payload
+	[_incidentNumberTextField setText:_currentIncidentPayload.incidentnumber];
 	[_incidentTypeViewController setSelectedOptions:data.incidentTypes];
 	
 	int latDegrees = [self getDegree:data.latitude];
@@ -1752,6 +1766,65 @@ static ReportOnConditionViewController *instance;
 
 }
 
+- (void) setFormToViewRocForIncident:(IncidentPayload *)incident
+{
+	[_incidentNameTextField setHidden:false];
+	[_incidentNameLabelTextView setHidden:false];
+	[_reportTypeTextField setHidden:false];
+	[_reportTypeLabelTextView setHidden:false];
+	
+	// Hide the submit and cancel buttons
+	[_cancelButton setHidden:true];
+	[_submitButton setHidden:true];
+	
+	
+	// Set the height of the button view to 0
+	// This completely hides the button view, so that the scroll view
+	// containing the actual ROC form
+	// expands to take up the whole screen
+	[_rocButtonsViewHeightConstraint setConstant:0];
+	
+	NSString *errorString = @"";
+	bool error = false;
+	_currentIncidentPayload = incident;
+	ReportOnConditionData *latestIncidentROC = nil;
+	
+	if(_currentIncidentPayload == nil)
+	{
+		error = true;
+		errorString = @"You must first join an incident to view ROC data.";
+	}
+	else
+	{
+		latestIncidentROC = [_dataManager getLastReportOnConditionForIncidentId:[incident incidentid]];
+	}
+	
+	if(latestIncidentROC == nil)
+	{
+		error = true;
+		errorString = [NSString stringWithFormat:@"No ROC data found for incident: %@.", [incident incidentname]];
+	}
+	
+	if(error == true)
+	{
+		// Set the error message in the incidentname label
+		[_incidentNameLabelTextView setText:errorString];
+		
+		// Hide the incidentname and report type fields:
+		[_incidentNameTextField setHidden:true];
+		[_reportTypeLabelTextView setHidden:true];
+		[_reportTypeTextField setHidden:true];
+		
+		// Hiding all of the other sections and headers:
+		[self hideAllFormSections:true];
+		[self collapseAllSections];
+		[self hideAllDropdownListsExcept:nil];
+		return;
+	}
+	
+	
+	[self setFormToViewRocData:latestIncidentROC];
+}
 
 - (void) viewDidAppear:(BOOL) animated
 {
@@ -1763,61 +1836,15 @@ static ReportOnConditionViewController *instance;
 	{
 		// Before we do ANYTHING, we want to request ROCs from the server
 		// Without this call, the latest ROC from the incident might not be available to the user
+		
+		// Verify that we have the current incident
+		// Note: we're reaching into [DataManager getInstance] just in case our datamanager instance is nil
+		// (this was happening randomly)
+		_currentIncidentPayload = [[DataManager getInstance] currentIncident];
+		NSLog(@"ROC - view ROC view ROC Getting ROCs for incident 1... incident payload: %@, incident number: %@",_currentIncidentPayload, [_currentIncidentPayload incidentid]);
 		[RestClient getReportOnConditionsForIncidentId:[_currentIncidentPayload incidentid] offset:@0 limit:@0 completion:^(BOOL successful) {}];
-		
-		
-		[_incidentNameTextField setHidden:false];
-		[_incidentNameLabelTextView setHidden:false];
-		[_reportTypeTextField setHidden:false];
-		[_reportTypeLabelTextView setHidden:false];
-
-		
-		// Hide the submit and cancel buttons
-		[_cancelButton setHidden:true];
-		[_submitButton setHidden:true];
-		
-		
-		NSString *errorString = @"";
-		bool error = false;
-		
-		ReportOnConditionData *latestIncidentROC = nil;
-		
-		if(_currentIncidentPayload == nil)
-		{
-			error = true;
-			errorString = @"You must first join an incident to view ROC data.";
-		}
-		else
-		{
-			latestIncidentROC = [_dataManager getLastReportOnConditionForIncidentId:[_currentIncidentPayload incidentid]];
-		}
-		
-		if(latestIncidentROC == nil)
-		{
-			error = true;
-			errorString = [NSString stringWithFormat:@"No ROC data found for incident: %@.", [_currentIncidentPayload incidentname]];
-		}
-		
-		if(error == true)
-		{
-			// Set the error message in the incidentname label
-			[_incidentNameLabelTextView setText:errorString];
-			
-			// Hide the incidentname and report type fields:
-			[_incidentNameTextField setHidden:true];
-			[_reportTypeLabelTextView setHidden:true];
-			[_reportTypeTextField setHidden:true];
-			
-			// Hiding all of the other sections and headers:
-			[self hideAllFormSections:true];
-			[self collapseAllSections];
-			[self hideAllDropdownListsExcept:nil];
-			return;
-		}
-		
-		
-		
-		[self setFormToViewRocData:latestIncidentROC];
+	
+		[self setFormToViewRocForIncident:_currentIncidentPayload];
 		return;
 	}
 
@@ -1830,6 +1857,43 @@ static ReportOnConditionViewController *instance;
 		return;
 	
 	[instance setupView];
+}
+
+// Called when the user pulls the ROC form down while viewing an ROC to fetch the latest ROC from the incident
+- (void) refreshRequested:(UIRefreshControl*)refreshControl
+{
+	refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"Refreshing data..." attributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+	
+	// Run this in the background:
+	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
+	{
+		[RestClient getReportOnConditionsForIncidentId:[_currentIncidentPayload incidentid] offset:@0 limit:@0 completion:^(BOOL successful)
+		{
+			// Sometimes the request finishes quickly, so wait for 1 second to clearly indicate to the user that their request to refresh data was processed
+			[NSThread sleepForTimeInterval:0.5];
+			
+			// Once the RestClient is finished retrieving ROCs, call this...
+			// Because this modifies UI elements, we need to run this code on the main queue:
+			dispatch_async(dispatch_get_main_queue(), ^
+			{
+				
+				// If RestClient was successful in retrieving ROCs:
+				if(successful)
+				{
+					// Update the refresh view with the current date / time
+					NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+					[formatter setDateFormat:@"MMM d, h:mm a"];
+					NSString *lastUpdate = [NSString stringWithFormat:@"Last updated on %@", [formatter stringFromDate:[NSDate date]]];
+					refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:lastUpdate attributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+				}
+				[refreshControl endRefreshing];
+				
+				
+				// Pull the latest ROC from the view
+				[self setFormToViewRocForIncident:[[DataManager getInstance] currentIncident]];
+			});
+		}];
+	});
 }
 
 // Called by viewDidLoad to set up the ROC
@@ -1849,6 +1913,16 @@ static ReportOnConditionViewController *instance;
 	_allIncidentNames = [_dataManager getIncidentNamesList];
 	_currentIncidentPayload = [_dataManager currentIncident];
 	_successfullyGotAllWeatherData = false;
+
+	//========================================================================
+	// Setting up the scroll view so that it refreshes when the user pulls down
+	//========================================================================
+	UIRefreshControl *refreshControl = [UIRefreshControl new];
+	[refreshControl addTarget:self action:@selector(refreshRequested:) forControlEvents:UIControlEventValueChanged];
+	[refreshControl setTintColor:[UIColor whiteColor]];
+	// Only add the refreshControl to the scroll view if we're in viewing mode.
+	// (Only allow the user to refresh in view mode)
+
 	
 	//========================================================================
 	// Hiding all of the form fields
@@ -1876,6 +1950,8 @@ static ReportOnConditionViewController *instance;
 		[_incidentNameLabelTextView setHidden:true];
 		[_reportTypeTextField setHidden:true];
 		[_reportTypeLabelTextView setHidden:true];
+		// Now we add the refreshcontrol to the scrollview
+		[_topmostScrollView addSubview:refreshControl];
 		return;
 	}
 	
@@ -1904,6 +1980,7 @@ static ReportOnConditionViewController *instance;
 	//========================================================================
 	if(_currentIncidentPayload != nil)
 	{
+		NSLog(@"ROC - view ROC Getting ROCs for incident 2... incident payload: %@, incident number: %@",_currentIncidentPayload, [_currentIncidentPayload incidentid]);
 		// First request the latest ROCs for the current incident
 		// We need this so we can safely determine what report types to make available
 		[RestClient getReportOnConditionsForIncidentId:[_currentIncidentPayload incidentid] offset:@0 limit:@0 completion:^(BOOL successful) {}];
@@ -2014,13 +2091,20 @@ static ReportOnConditionViewController *instance;
 	BOOL expand = [section isHidden];
 	
 	
-	[self collapseAllSections];
+	
+	
+	//[self collapseAllSections];
 	[self hideAllDropdownListsExcept:nil];
 	
 	if(expand)
 	{
 		[section setHidden:false];
 		[headerArrowImage setImage:[UIImage imageNamed:@"up_arrow_transparent"]];
+	}
+	else
+	{
+		[section setHidden:true];
+		[headerArrowImage setImage:[UIImage imageNamed:@"down_arrow_transparent"]];
 	}
 	
 }

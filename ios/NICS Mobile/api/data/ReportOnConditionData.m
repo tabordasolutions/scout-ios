@@ -73,8 +73,6 @@
 		//================================================
 		// Incident Info Fields
 		//================================================
-		rocData.incidentTypes = [self getIncidentTypesArrayFromJson:[self jsonGetDictionary:rocPayload withName:@"incidentnumber"]];
-		
 		rocData.incidentTypes = [self getIncidentTypesArrayFromJson:[self jsonGetDictionary:rocPayload withName:@"incidentTypes"]];
 		
 		rocData.latitude = [self jsonGetDouble:rocPayload withName:@"latitudeAtROCSubmission"];
@@ -266,7 +264,6 @@
 		//================================================
 		// Incident Info Fields
 		//================================================
-		[ReportOnConditionData jsonSetString:rocPayload withName:@"incidentnumber" asString:_incidentnumber];
 		
 		NSObject *incidentType = [ReportOnConditionData createIncidentTypePayload:self];
 		if([incidentType isKindOfClass:[NSDictionary class]])
@@ -380,6 +377,7 @@
 		NSDateFormatter *payloadDateFormatter = [NSDateFormatter new];
 		[payloadDateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
 		[ReportOnConditionData jsonSetString:messagePayload withName:@"datecreated" asString:[payloadDateFormatter stringFromDate:_datecreated]];
+		[ReportOnConditionData jsonSetInt:messagePayload withName:@"seqtime" asInt:(int) [_datecreated timeIntervalSince1970]];
 
 		// TODO - Should this be set?
 		// [ReportOnConditionData jsonSetInt:payload withName:@"workspaceid" asInt:1];
@@ -429,6 +427,8 @@
 		[ReportOnConditionData jsonSetString:incidentPayload withName:@"incidentname" asString:_incidentname];
 		[ReportOnConditionData jsonSetDouble:incidentPayload withName:@"lat" asDouble:_latitude];
 		[ReportOnConditionData jsonSetDouble:incidentPayload withName:@"lon" asDouble:_longitude];
+		[ReportOnConditionData jsonSetString:incidentPayload withName:@"incidentnumber" asString:_incidentnumber];
+		
 		[ReportOnConditionData jsonSetBool:incidentPayload withName:@"active" asBool:true];
 		[ReportOnConditionData jsonSetString:incidentPayload withName:@"folder" asString:@""];
 		[ReportOnConditionData jsonSetString:incidentPayload withName:@"description" asString:@""];
