@@ -303,18 +303,12 @@ static MultipartPostQueue* mMultipartPostQueue;
 	NSString* json = [self synchronousGetFromUrl:[NSString stringWithFormat:@"%@%@%@%@", @"incidents/", [dataManager getActiveWorkspaceId], @"/?accessibleByUserId=", userId] statusCode:&statusCode];
 	NSError* error = nil;
 	
-	NSLog(@"Incidents - Got the following incident payload: \"%@\"",json);
-	
 	IncidentMessage *message = [[IncidentMessage alloc] initWithString:json error:&error];
 	
 	if(message != nil && statusCode == 200) {
 		NSMutableDictionary *incidentsList = [NSMutableDictionary new];
 		
 		for(IncidentPayload *payload in message.incidents) {
-			
-			if(payload.incidentnumber != nil)
-				NSLog(@"Incident - \"%@\" has number - \"%@\"",payload.incidentname,payload.incidentnumber);
-
 			[incidentsList setObject:payload forKey:payload.incidentname];
 		}
 		dataManager.incidentsList = incidentsList;
