@@ -289,7 +289,9 @@ static UIButton *FilterButton;
 
 +(ReportOnConditionActionViewController*) GetReportOnConditionActionView{
 	if(reportOnConditionActionViewController == nil){
-		reportOnConditionActionViewController = [[UIStoryboard storyboardWithName:@"Main_iPad_Prototype" bundle:nil] instantiateViewControllerWithIdentifier:@"ReportOnConditionActionSceneID"];
+		// NOTE: This view controller is pulled from the iPhone storyboard and not the iPad storyboard
+		// I do this to reuse the iPhone view controller, rather than having a duplicate one defined in the iPad storyboard
+		reportOnConditionActionViewController = [[UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil] instantiateViewControllerWithIdentifier:@"ReportOnConditionActionSceneID"];
 	}
 	
 	return reportOnConditionActionViewController;
@@ -298,7 +300,9 @@ static UIButton *FilterButton;
 +(ReportOnConditionViewController*) GetReportOnConditionView{
 	// Don't reuse the instance, always make a new one
 	//if(reportOnConditionViewController == nil){
-		reportOnConditionViewController = [[UIStoryboard storyboardWithName:@"Main_iPad_Prototype" bundle:nil] instantiateViewControllerWithIdentifier:@"ReportOnConditionSceneID"];
+		// NOTE: This view controller is pulled from the iPhone storyboard and not the iPad storyboard
+		// I do this to reuse the iPhone view controller, rather than having a duplicate one defined in the iPad storyboard
+		reportOnConditionViewController = [[UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil] instantiateViewControllerWithIdentifier:@"ReportOnConditionSceneID"];
 	//}
 	
 	return reportOnConditionViewController;
