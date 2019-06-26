@@ -89,8 +89,10 @@ static ReportOnConditionViewController *instance;
 	[_incidentNumberTextField setEnabled:false];
 	[_incidentLongitudeDegreesTextField setEnabled:false];
 	[_incidentLongitudeMinutesTextField setEnabled:false];
+	[_incidentLongitudeMinutesFractionTextField setEnabled:false];
 	[_incidentLatitudeDegreesTextField setEnabled:false];
 	[_incidentLatitudeMinutesTextField setEnabled:false];
+	[_incidentLatitudeMinutesFractionTextField setEnabled:false];
 	[_incidentStateField setEnabled:false];
 }
 
@@ -145,19 +147,18 @@ static ReportOnConditionViewController *instance;
 	//------------------------------------------------------------------------------------------
 	double latitude = [[incident lat] doubleValue];
 	double longitude = [[incident lon] doubleValue];
-	// Converting degrees to Degree Decimal-Minutes
-	int latDeg = [self getDegree:latitude];
-	double latMin = [self getMinutes:latitude];
-	int lonDeg = [self getDegree:longitude];
-	double lonMin = [self getMinutes:longitude];
+	
 	// Insert the location we just computed into the UI text fields
-	[_incidentLatitudeDegreesTextField setText:[NSString stringWithFormat:@"%d", latDeg]];
-	[_incidentLatitudeMinutesTextField setText:[NSString stringWithFormat:@"%f", latMin]];
-	[_incidentLongitudeDegreesTextField setText:[NSString stringWithFormat:@"%d", lonDeg]];
-	[_incidentLongitudeMinutesTextField setText:[NSString stringWithFormat:@"%f", lonMin]];
+	[_incidentLatitudeDegreesTextField setText:[self getDegreeAsString:latitude]];
+	[_incidentLatitudeMinutesTextField setText:[self getMinutesIntegerAsString:latitude]];
+	[_incidentLatitudeMinutesFractionTextField setText:[self getMinutesFractionAsString:latitude]];
+	// NOTE - we multiply the value by -1 because the UI has a hardcoded "-" sign in front of it
+	// (all longitudes in california are in the -120 range, and the client doesn't want users to have to manually enter the "-" sign)
+	[_incidentLongitudeDegreesTextField setText:[self getDegreeAsString:-1 * longitude]];
+	[_incidentLongitudeMinutesTextField setText:[self getMinutesIntegerAsString:longitude]];
+	[_incidentLongitudeMinutesFractionTextField setText:[self getMinutesFractionAsString:longitude]];
 	
 	NSLog(@"ROC - setupFormForIncident - set lat/long as (%@, %@)",[incident lat], [incident lon]);
-	NSLog(@"ROC - setupFormForIncident - converted lat/long to: ( %d, %f) x ( %d, %f)",latDeg,latMin,lonDeg,lonMin);
 	
 	//------------------------------------------------------------------------------------------
 	// Incident State
@@ -285,8 +286,10 @@ static ReportOnConditionViewController *instance;
 		[_incidentNameTextField setEnabled:true];
 		[_incidentLongitudeDegreesTextField setEnabled:true];
 		[_incidentLongitudeMinutesTextField setEnabled:true];
+		[_incidentLongitudeMinutesFractionTextField setEnabled:true];
 		[_incidentLatitudeDegreesTextField setEnabled:true];
 		[_incidentLatitudeMinutesTextField setEnabled:true];
+		[_incidentLatitudeMinutesFractionTextField setEnabled:true];
 		[_incidentStateField setEnabled:true];
 	}
 
@@ -343,16 +346,93 @@ static ReportOnConditionViewController *instance;
 }
 
 // Converts "Decimal Degrees" to "Degree Decimal-Minutes"
-// This function returns the double "Decimal-Minutes" portion of "DDM"
-- (double) getMinutes:(double) degrees
+// This function returns the double "Decimal-Minutes" integer portion of "DDM"
+- (int) getMinutesInteger:(double) degrees
 {
-	return 60.0 * fabs(degrees - [self getDegree:degrees]);
+	return (int) floor(60.0 * fabs(degrees - [self getDegree:degrees]));
 }
+
+// Converts "Decimal Degrees" to "Degree Decimal-Minutes"
+// This function returns the double "Decimal-Minutes" fractional portion of "DDM"
+- (double) getMinutesFraction:(double) degrees
+{
+	return fmod(60.0 * fabs(degrees - [self getDegree:degrees]),1.0);
+}
+
 
 // Converts Degrees Decimal-Minutes into Decimal Degrees
 - (double) toDecimalDegrees:(int)degrees minutes:(double)minutes
 {
 	return degrees + (degrees >= 0 ? 1 : -1) * (minutes / 60.0);
+}
+
+
+
+// Converts "Decimal Degrees" to "Degree Decimal-Minutes"
+// returns the degree portion as a string
+- (NSString*) getDegreeAsString:(double) degrees
+{
+	return [NSString stringWithFormat:@"%d", [self getDegree:degrees]];
+}
+
+
+// Converts "Decimal Degrees" to "Degree Decimal-Minutes"
+// returns the whole number of the minutes portion as a string
+- (NSString*) getMinutesIntegerAsString:(double) degrees
+{
+	return [NSString stringWithFormat:@"%d", [self getMinutesInteger:degrees]];
+}
+
+
+// Converts "Decimal Degrees" to "Degree Decimal-Minutes"
+// returns the fraction of the minutes portion as a string
+- (NSString*) getMinutesFractionAsString:(double) degrees
+{
+	return [self stringGetFraction:[NSString stringWithFormat:@"%f", [self getMinutesFraction:degrees]]];
+}
+
+
+
+
+// Takes a string representing a fraction and returns only the portion to the right of the last decimal point
+// i.e.: takes the string: "0.12345" and returns "12345"
+- (NSString*) stringGetFraction:(NSString*)str
+{
+	if(str == nil)
+		return @"0";
+	
+	// Get the index of the decimal point, if it exists:
+	NSRange lastDecimalPointIndex = [str rangeOfString:@"." options:NSBackwardsSearch];
+	
+	
+	// If the decimal point was not found:
+	if(lastDecimalPointIndex.location == NSNotFound || (lastDecimalPointIndex.location + lastDecimalPointIndex.length > str.length))
+	{
+		// This means the string passed represents a whole number, making the fractional part = 0
+		// Return the fractional part of a whole number, which is always "0"
+		return @"0";
+	}
+	
+	// If the decimal point index is the last character in the string, that means we have a string like "123."
+	if(lastDecimalPointIndex.location == [str length] - 1)
+	{
+		// That makes the number a whole number (i.e. "2."), making the fractional part = 0
+		// Return the fractional part of a whole number, which is always "0"
+		return @"0";
+	}
+	
+	unsigned long start = lastDecimalPointIndex.location + 1;
+	unsigned long end = [str length];
+	
+	// We want to truncate to 4 decimal places
+	if(end > start + 4)
+	{
+		end = start + 4;
+	}
+	
+	// Return the substring to the right of the decimal point, but no more than 4 digits
+	// (we want to truncate to 4 digits
+	return [str substringWithRange:NSMakeRange(start, end - start)];
 }
 
 // Returns if a desired latlong is valid
@@ -488,26 +568,20 @@ static ReportOnConditionViewController *instance;
 	double latitude = _dataManager.currentLocation.coordinate.latitude;
 	double longitude = _dataManager.currentLocation.coordinate.longitude;
 	
-	// Converting degrees to Degree Decimal-Minutes
-	int latDeg = [self getDegree:latitude];
-	double latMin = [self getMinutes:latitude];
-	int lonDeg = [self getDegree:longitude];
-	double lonMin = [self getMinutes:longitude];
-	
 	// Insert the location we just computed into the UI text fields
-	[_incidentLatitudeDegreesTextField setText:[NSString stringWithFormat:@"%d", latDeg]];
-	[_incidentLatitudeMinutesTextField setText:[NSString stringWithFormat:@"%f", latMin]];
-	[_incidentLongitudeDegreesTextField setText:[NSString stringWithFormat:@"%d", lonDeg]];
-	[_incidentLongitudeMinutesTextField setText:[NSString stringWithFormat:@"%f", lonMin]];
+	[_incidentLatitudeDegreesTextField setText:[self getDegreeAsString:latitude]];
+	[_incidentLatitudeMinutesTextField setText:[self getMinutesIntegerAsString:latitude]];
+	[_incidentLatitudeMinutesFractionTextField setText:[self getMinutesFractionAsString:latitude]];
+	// NOTE - we multiply the value by -1 because the UI has a hardcoded "-" sign in front of it
+	// (all longitudes in california are in the -120 range, and the client doesn't want users to have to manually enter the "-" sign)
+	[_incidentLongitudeDegreesTextField setText:[self getDegreeAsString:-1 * longitude]];
+	[_incidentLongitudeMinutesTextField setText:[self getMinutesIntegerAsString:longitude]];
+	[_incidentLongitudeMinutesFractionTextField setText:[self getMinutesFractionAsString:longitude]];
 	
 	// Make the request to get location-based data for these coordinates
 	_successfullyGotAllWeatherData = false;
 	NSDictionary *locationData = [RestClient getLocationBasedDataForLatitude:latitude andLongitude:longitude];
 	[self setLocationBasedDataFields:locationData];
-	
-	// TODO - parse the response object and insert as many location-based data fields as we can
-	// TODO - make a request to datamanager to pull incident location details
-	// TODO - call a function in restclient that makes the get request and retrieves the data
 	
 	NSLog(@"ROC - Should be pulling Location-based data");
 }
@@ -524,9 +598,14 @@ static ReportOnConditionViewController *instance;
 		NSLog(@"ROC - incidentLocationChanged - latitude degrees is not a valid int.");
 		return;
 	}
-	if(![self isValidDouble:[_incidentLatitudeMinutesTextField text]])
+	if(![self isValidInt:[_incidentLatitudeMinutesTextField text]])
 	{
-		NSLog(@"ROC - incidentLocationChanged - latitude minutes is not a valid double.");
+		NSLog(@"ROC - incidentLocationChanged - latitude minutes is not a valid int.");
+		return;
+	}
+	if(![self isValidInt:[_incidentLatitudeMinutesFractionTextField text]])
+	{
+		NSLog(@"ROC - incidentLocationChanged - latitude minutes fraction is not a valid int.");
 		return;
 	}
 	if(![self isValidInt:[_incidentLongitudeDegreesTextField text]])
@@ -534,18 +613,30 @@ static ReportOnConditionViewController *instance;
 		NSLog(@"ROC - incidentLocationChanged - longitude degrees is not a valid int.");
 		return;
 	}
-	if(![self isValidDouble:[_incidentLongitudeMinutesTextField text]])
+	if(![self isValidInt:[_incidentLongitudeMinutesTextField text]])
 	{
-		NSLog(@"ROC - incidentLocationChanged - longitude minutes is not a valid double.");
+		NSLog(@"ROC - incidentLocationChanged - longitude minutes is not a valid int.");
+		return;
+	}
+	if(![self isValidInt:[_incidentLongitudeMinutesFractionTextField text]])
+	{
+		NSLog(@"ROC - incidentLocationChanged - longitude minutes fraction is not a valid int.");
 		return;
 	}
 
 	// Parse the location from the textfields
 	int latDeg = (int) [[_incidentLatitudeDegreesTextField text] doubleValue];
-	double latMin = [[_incidentLatitudeMinutesTextField text] doubleValue];
-	int lonDeg = (int) [[_incidentLongitudeDegreesTextField text] doubleValue];
-	double lonMin = [[_incidentLongitudeMinutesTextField text] doubleValue];
+	double latMinWhole = [[_incidentLatitudeMinutesTextField text] doubleValue];
+	double latMinFraction = [[NSString stringWithFormat:@"0.%@",[_incidentLatitudeMinutesFractionTextField text]] doubleValue];
+	double latMin = latMinWhole + latMinFraction;
 	
+	// NOTE - we multiply the value by -1 because the UI has a hardcoded "-" sign in front of it
+	// (all longitudes in california are in the -120 range, and the client doesn't want users to have to manually enter the "-" sign)
+	int lonDeg = -1 * (int) [[_incidentLongitudeDegreesTextField text] doubleValue];
+	double lonMinWhole = [[_incidentLongitudeMinutesTextField text] doubleValue];
+	double lonMinFraction = [[NSString stringWithFormat:@"0.%@",[_incidentLongitudeMinutesFractionTextField text]] doubleValue];
+	double lonMin = lonMinWhole + lonMinFraction;
+
 	// Verify that these are valid coordiantes
 	if(![self isValidLatLongLatDeg:latDeg LatMin:latMin LonDeg:lonDeg LonMin:lonMin])
 	{
@@ -783,8 +874,10 @@ static ReportOnConditionViewController *instance;
 
 	[_incidentLatitudeDegreesTextField setEnabled:false];
 	[_incidentLatitudeMinutesTextField setEnabled:false];
+	[_incidentLatitudeMinutesFractionTextField setEnabled:false];
 	[_incidentLongitudeDegreesTextField setEnabled:false];
 	[_incidentLongitudeMinutesTextField setEnabled:false];
+	[_incidentLongitudeMinutesFractionTextField setEnabled:false];
 	[_incidentLocateButton setEnabled:false];
 	[_incidentStateField setEnabled:false];
 	//---------------------------------------------------------------------------
@@ -793,6 +886,11 @@ static ReportOnConditionViewController *instance;
 	[_rocInitialCountyTextField setEnabled:false];
 	[_rocAdditionalCountiesTextField setEnabled:false];
 	[_rocLocationTextField setEnabled:false];
+	[_rocStreetTextField setEnabled:false];
+	[_rocCrossStreetTextField setEnabled:false];
+	[_rocNearestCommunityTextField setEnabled:false];
+	[_rocDistanceFromNearestCommunityTextField setEnabled:false];
+	[_rocDirectionFromNearestCommunityTextField setEnabled:false];
 	[_rocDPATextField setEnabled:false];
 	[_rocOwnershipTextField setEnabled:false];
 	[_rocJurisdictionTextField setEnabled:false];
@@ -952,8 +1050,10 @@ static ReportOnConditionViewController *instance;
 	// Marking required fields
 	[self makeTextFieldRequired:_incidentLatitudeDegreesTextField required:true];
 	[self makeTextFieldRequired:_incidentLatitudeMinutesTextField required:true];
+	[self makeTextFieldRequired:_incidentLatitudeMinutesFractionTextField required:true];
 	[self makeTextFieldRequired:_incidentLongitudeDegreesTextField required:true];
 	[self makeTextFieldRequired:_incidentLongitudeMinutesTextField required:true];
+	[self makeTextFieldRequired:_incidentLongitudeMinutesFractionTextField required:true];
 	[self makeTextFieldRequired:_incidentStateField required:true];
 	
 	
@@ -962,18 +1062,24 @@ static ReportOnConditionViewController *instance;
 						   forControlEvents:UIControlEventEditingDidEnd];
 	[_incidentLatitudeMinutesTextField addTarget:self action:@selector(incidentLocationChanged)
 						   forControlEvents:UIControlEventEditingDidEnd];
+	[_incidentLatitudeMinutesFractionTextField addTarget:self action:@selector(incidentLocationChanged)
+								  forControlEvents:UIControlEventEditingDidEnd];
 	[_incidentLongitudeDegreesTextField addTarget:self action:@selector(incidentLocationChanged)
 						   forControlEvents:UIControlEventEditingDidEnd];
 	[_incidentLongitudeMinutesTextField addTarget:self action:@selector(incidentLocationChanged)
-						   forControlEvents:UIControlEventEditingDidEnd];
+						    forControlEvents:UIControlEventEditingDidEnd];
+	[_incidentLongitudeMinutesFractionTextField addTarget:self action:@selector(incidentLocationChanged)
+						    forControlEvents:UIControlEventEditingDidEnd];
 
 	
 	// Setting fields to clear their errors when modified
 	[self makeTextFieldClearErrorWhenChanged:_incidentNumberTextField];
 	[self makeTextFieldClearErrorWhenChanged:_incidentLatitudeDegreesTextField];
 	[self makeTextFieldClearErrorWhenChanged:_incidentLatitudeMinutesTextField];
+	[self makeTextFieldClearErrorWhenChanged:_incidentLatitudeMinutesFractionTextField];
 	[self makeTextFieldClearErrorWhenChanged:_incidentLongitudeDegreesTextField];
 	[self makeTextFieldClearErrorWhenChanged:_incidentLongitudeMinutesTextField];
+	[self makeTextFieldClearErrorWhenChanged:_incidentLongitudeMinutesFractionTextField];
 	[self makeTextFieldClearErrorWhenChanged:_incidentStateField];
 	//---------------------------------------------------------------------------
 	// ROC Incident Info Fields
@@ -986,6 +1092,11 @@ static ReportOnConditionViewController *instance;
 	// Marking required fields
 	[self makeTextFieldRequired:_rocInitialCountyTextField required:true];
 	[self makeTextFieldRequired:_rocLocationTextField required:true];
+	[self makeTextFieldRequired:_rocStreetTextField required:true];
+	[self makeTextFieldRequired:_rocCrossStreetTextField required:true];
+	[self makeTextFieldRequired:_rocNearestCommunityTextField required:true];
+	[self makeTextFieldRequired:_rocDistanceFromNearestCommunityTextField required:true];
+	[self makeTextFieldRequired:_rocDirectionFromNearestCommunityTextField required:true];
 	[self makeTextFieldRequired:_rocDPATextField required:true];
 	[self makeTextFieldRequired:_rocOwnershipTextField required:true];
 	[self makeTextFieldRequired:_rocJurisdictionTextField required:true];
@@ -995,6 +1106,11 @@ static ReportOnConditionViewController *instance;
 	[self makeTextFieldClearErrorWhenChanged:_rocInitialCountyTextField];
 	[self makeTextFieldClearErrorWhenChanged:_rocAdditionalCountiesTextField];
 	[self makeTextFieldClearErrorWhenChanged:_rocLocationTextField];
+	[self makeTextFieldClearErrorWhenChanged:_rocStreetTextField];
+	[self makeTextFieldClearErrorWhenChanged:_rocCrossStreetTextField];
+	[self makeTextFieldClearErrorWhenChanged:_rocNearestCommunityTextField];
+	[self makeTextFieldClearErrorWhenChanged:_rocDistanceFromNearestCommunityTextField];
+	[self makeTextFieldClearErrorWhenChanged:_rocDirectionFromNearestCommunityTextField];
 	[self makeTextFieldClearErrorWhenChanged:_rocDPATextField];
 	[self makeTextFieldClearErrorWhenChanged:_rocOwnershipTextField];
 	[self makeTextFieldClearErrorWhenChanged:_rocJurisdictionTextField];
@@ -1277,8 +1393,10 @@ static ReportOnConditionViewController *instance;
 	
 	[_incidentLatitudeDegreesTextField setText:@""];
 	[_incidentLatitudeMinutesTextField setText:@""];
+	[_incidentLatitudeMinutesFractionTextField setText:@""];
 	[_incidentLongitudeDegreesTextField setText:@""];
 	[_incidentLongitudeMinutesTextField setText:@""];
+	[_incidentLongitudeMinutesFractionTextField setText:@""];
 	[_incidentStateField setText:@""];
 	//---------------------------------------------------------------------------
 	// ROC Incident Info Fields
@@ -1286,6 +1404,11 @@ static ReportOnConditionViewController *instance;
 	[_rocInitialCountyTextField setText:@""];
 	[_rocAdditionalCountiesTextField setText:@""];
 	[_rocLocationTextField setText:@""];
+	[_rocStreetTextField setText:@""];
+	[_rocCrossStreetTextField setText:@""];
+	[_rocNearestCommunityTextField setText:@""];
+	[_rocDistanceFromNearestCommunityTextField setText:@""];
+	[_rocDirectionFromNearestCommunityTextField setText:@""];
 	[_rocDPATextField setText:@""];
 	[_rocOwnershipTextField setText:@""];
 	[_rocJurisdictionTextField setText:@""];
@@ -1394,8 +1517,10 @@ static ReportOnConditionViewController *instance;
 	[_incidentNumberTextField setEnabled:_creatingNewIncident];
 	[_incidentLatitudeDegreesTextField setEnabled:_creatingNewIncident];
 	[_incidentLatitudeMinutesTextField setEnabled:_creatingNewIncident];
+	[_incidentLatitudeMinutesFractionTextField setEnabled:_creatingNewIncident];
 	[_incidentLongitudeDegreesTextField setEnabled:_creatingNewIncident];
 	[_incidentLongitudeMinutesTextField setEnabled:_creatingNewIncident];
+	[_incidentLongitudeMinutesFractionTextField setEnabled:_creatingNewIncident];
 	[_incidentStateField setEnabled:_creatingNewIncident];
 	
 	// Hide the incident locate button
@@ -1519,14 +1644,17 @@ static ReportOnConditionViewController *instance;
 	[_incidentNumberTextField setText:_currentIncidentPayload.incidentnumber];
 	[_incidentTypeViewController setSelectedOptions:data.incidentTypes];
 	
-	int latDegrees = [self getDegree:data.latitude];
-	double latMinutes = [self getMinutes:data.latitude];
-	int lonDegrees = [self getDegree:data.longitude];
-	double lonMinutes = [self getMinutes:data.longitude];
-	[_incidentLatitudeDegreesTextField setText:[NSString stringWithFormat:@"%d", latDegrees]];
-	[_incidentLatitudeMinutesTextField setText:[NSString stringWithFormat:@"%f", latMinutes]];
-	[_incidentLongitudeDegreesTextField setText:[NSString stringWithFormat:@"%d", lonDegrees]];
-	[_incidentLongitudeMinutesTextField setText:[NSString stringWithFormat:@"%f", lonMinutes]];
+	double latitude = data.latitude;
+	double longitude = data.longitude;
+	
+	[_incidentLatitudeDegreesTextField setText:[self getDegreeAsString:latitude]];
+	[_incidentLatitudeMinutesTextField setText:[self getMinutesIntegerAsString:latitude]];
+	[_incidentLatitudeMinutesFractionTextField setText:[self getMinutesFractionAsString:latitude]];
+	// NOTE - we multiply the value by -1 because the UI has a hardcoded "-" sign in front of it
+	// (all longitudes in california are in the -120 range, and the client doesn't want users to have to manually enter the "-" sign)
+	[_incidentLongitudeDegreesTextField setText:[self getDegreeAsString:-1 * longitude]];
+	[_incidentLongitudeMinutesTextField setText:[self getMinutesIntegerAsString:longitude]];
+	[_incidentLongitudeMinutesFractionTextField setText:[self getMinutesFractionAsString:longitude]];
 	
 	[_incidentLocateButton setHidden:true];
 	[_incidentStateField setText:data.incidentState];
@@ -1537,6 +1665,11 @@ static ReportOnConditionViewController *instance;
 	[_rocInitialCountyTextField setText:data.county];
 	[_rocAdditionalCountiesTextField setText:data.additionalAffectedCounties];
 	[_rocLocationTextField setText:data.location];
+	[_rocStreetTextField setText:data.street];
+	[_rocCrossStreetTextField setText:data.crossStreet];
+	[_rocNearestCommunityTextField setText:data.nearestCommunity];
+	[_rocDistanceFromNearestCommunityTextField setText:data.milesFromNearestCommunity];
+	[_rocDirectionFromNearestCommunityTextField setText:data.directionFromNearestCommonity];
 	[_rocDPATextField setText:data.dpa];
 	[_rocOwnershipTextField setText:data.ownership];
 	[_rocJurisdictionTextField setText:data.jurisdiction];
@@ -1611,9 +1744,7 @@ static ReportOnConditionViewController *instance;
 	
 	NSLog(@"ROC - viewROC 4");
 
-	
-	NSArray<NSString*> *stringArrays = @[data.evacuations, data.structureThreats, data.infrastructureThreats];
-	NSArray<UIStackView*> *stackViewsList = @[_threatsEvacsInfoListStackView,
+		NSArray<UIStackView*> *stackViewsList = @[_threatsEvacsInfoListStackView,
 									  _threatsStructuresInfoListStackView,
 									  _threatsInfrastructureInfoListStackView,
 									  _otherInfoListStackView];
@@ -2428,8 +2559,10 @@ static ReportOnConditionViewController *instance;
 	[self showViewError:_incidentTypeTableView];
 	[self showViewError:_incidentLatitudeDegreesTextField];
 	[self showViewError:_incidentLatitudeMinutesTextField];
+	[self showViewError:_incidentLatitudeMinutesFractionTextField];
 	[self showViewError:_incidentLongitudeDegreesTextField];
 	[self showViewError:_incidentLongitudeMinutesTextField];
+	[self showViewError:_incidentLongitudeMinutesFractionTextField];
 	[self showViewError:_incidentStateField];
 	//---------------------------------------------------------------------------
 	// ROC Incident Info Fields
@@ -2437,6 +2570,11 @@ static ReportOnConditionViewController *instance;
 	[self showViewError:_rocInitialCountyTextField];
 	[self showViewError:_rocAdditionalCountiesTextField];
 	[self showViewError:_rocLocationTextField];
+	[self showViewError:_rocStreetTextField];
+	[self showViewError:_rocCrossStreetTextField];
+	[self showViewError:_rocNearestCommunityTextField];
+	[self showViewError:_rocDistanceFromNearestCommunityTextField];
+	[self showViewError:_rocDirectionFromNearestCommunityTextField];
 	[self showViewError:_rocDPATextField];
 	[self showViewError:_rocOwnershipTextField];
 	[self showViewError:_rocJurisdictionTextField];
@@ -2565,8 +2703,10 @@ static ReportOnConditionViewController *instance;
 	[self clearViewError:_incidentTypeTableView];
 	[self clearViewError:_incidentLatitudeDegreesTextField];
 	[self clearViewError:_incidentLatitudeMinutesTextField];
+	[self clearViewError:_incidentLatitudeMinutesFractionTextField];
 	[self clearViewError:_incidentLongitudeDegreesTextField];
 	[self clearViewError:_incidentLongitudeMinutesTextField];
+	[self clearViewError:_incidentLongitudeMinutesFractionTextField];
 	[self clearViewError:_incidentStateField];
 	//---------------------------------------------------------------------------
 	// ROC Incident Info Fields
@@ -2574,6 +2714,11 @@ static ReportOnConditionViewController *instance;
 	[self clearViewError:_rocInitialCountyTextField];
 	[self clearViewError:_rocAdditionalCountiesTextField];
 	[self clearViewError:_rocLocationTextField];
+	[self clearViewError:_rocStreetTextField];
+	[self clearViewError:_rocCrossStreetTextField];
+	[self clearViewError:_rocNearestCommunityTextField];
+	[self clearViewError:_rocDistanceFromNearestCommunityTextField];
+	[self clearViewError:_rocDirectionFromNearestCommunityTextField];
 	[self clearViewError:_rocDPATextField];
 	[self clearViewError:_rocOwnershipTextField];
 	[self clearViewError:_rocJurisdictionTextField];
@@ -2811,7 +2956,9 @@ static ReportOnConditionViewController *instance;
 		//------------------
 		// Latitude Minutes:
 		//------------------
-		if(![self isValidDouble:[_incidentLatitudeMinutesTextField text]])
+		
+		// Whole portion
+		if(![self isValidInt:[_incidentLatitudeMinutesTextField text]])
 		{
 			[self showViewError:_incidentLatitudeMinutesTextField];
 			isIncidentInfoValid = false;
@@ -2819,7 +2966,8 @@ static ReportOnConditionViewController *instance;
 		}
 		else
 		{
-			double latMin = [[_incidentLatitudeMinutesTextField text] doubleValue];
+			int latMin = [[_incidentLatitudeMinutesTextField text] intValue];
+
 			if(latMin < 0 || latMin >= 60)
 			{
 				[self showViewError:_incidentLatitudeMinutesTextField];
@@ -2827,6 +2975,30 @@ static ReportOnConditionViewController *instance;
 				isFormValid = false;
 			}
 		}
+		
+		// Fraction portion
+		//------------------
+		// Latitude Minutes (fraction portion):
+		// Can be any positive integer (any integer with an added decimal on the left is a valid double)
+		// i.e. "12934142" with an added decimal becomes "0.12934142", which is valid
+		//------------------
+		if(![self isValidInt:[_incidentLatitudeMinutesFractionTextField text]])
+		{
+			[self showViewError:_incidentLatitudeMinutesFractionTextField];
+			isIncidentInfoValid = false;
+			isFormValid = false;
+		}
+		else
+		{
+			int latMinFraction = [[_incidentLatitudeMinutesFractionTextField text] intValue];
+			if(latMinFraction < 0)
+			{
+				[self showViewError:_incidentLatitudeMinutesFractionTextField];
+				isIncidentInfoValid = false;
+				isFormValid = false;
+			}
+		}
+		
 		//------------------
 		// Longitude Degrees:
 		//------------------
@@ -2849,7 +3021,9 @@ static ReportOnConditionViewController *instance;
 		//------------------
 		// Longitude Minutes:
 		//------------------
-		if(![self isValidDouble:[_incidentLongitudeMinutesTextField text]])
+		
+		// Whole portion
+		if(![self isValidInt:[_incidentLongitudeMinutesTextField text]])
 		{
 			[self showViewError:_incidentLongitudeMinutesTextField];
 			isIncidentInfoValid = false;
@@ -2857,7 +3031,8 @@ static ReportOnConditionViewController *instance;
 		}
 		else
 		{
-			double lonMin = [[_incidentLongitudeMinutesTextField text] doubleValue];
+			int lonMin = [[_incidentLongitudeMinutesTextField text] intValue];
+			
 			if(lonMin < 0 || lonMin >= 60)
 			{
 				[self showViewError:_incidentLongitudeMinutesTextField];
@@ -2866,6 +3041,28 @@ static ReportOnConditionViewController *instance;
 			}
 		}
 		
+		// Fraction portion
+		//------------------
+		// Longitude Minutes (fraction portion):
+		// Can be any positive integer (any integer with an added decimal on the left is a valid double)
+		// i.e. "12934142" with an added decimal becomes "0.12934142", which is valid
+		//------------------
+		if(![self isValidInt:[_incidentLongitudeMinutesFractionTextField text]])
+		{
+			[self showViewError:_incidentLongitudeMinutesFractionTextField];
+			isIncidentInfoValid = false;
+			isFormValid = false;
+		}
+		else
+		{
+			int lonMinFraction = [[_incidentLongitudeMinutesFractionTextField text] intValue];
+			if(lonMinFraction < 0)
+			{
+				[self showViewError:_incidentLongitudeMinutesFractionTextField];
+				isIncidentInfoValid = false;
+				isFormValid = false;
+			}
+		}
 		//--------------------------------
 		// _incidentStateField
 		// Must not be empty or blank
@@ -2918,6 +3115,61 @@ static ReportOnConditionViewController *instance;
 	if([self isStringEmpty:[_rocLocationTextField text]])
 	{
 		[self showViewError:_rocLocationTextField];
+		isRocIncidentInfoValid = false;
+		isFormValid = false;
+	}
+	
+	//--------------------------------
+	// _rocStreetTextField
+	// Must not be empty or blank
+	//--------------------------------
+	if([self isStringEmpty:[_rocStreetTextField text]])
+	{
+		[self showViewError:_rocStreetTextField];
+		isRocIncidentInfoValid = false;
+		isFormValid = false;
+	}
+	
+	//--------------------------------
+	// _rocCrossStreetTextField
+	// Must not be empty or blank
+	//--------------------------------
+	if([self isStringEmpty:[_rocCrossStreetTextField text]])
+	{
+		[self showViewError:_rocCrossStreetTextField];
+		isRocIncidentInfoValid = false;
+		isFormValid = false;
+	}
+	
+	//--------------------------------
+	// _rocNearestCommunityTextField
+	// Must not be empty or blank
+	//--------------------------------
+	if([self isStringEmpty:[_rocNearestCommunityTextField text]])
+	{
+		[self showViewError:_rocNearestCommunityTextField];
+		isRocIncidentInfoValid = false;
+		isFormValid = false;
+	}
+	
+	//--------------------------------
+	// _rocDistanceFromNearestCommunityTextField
+	// Must not be empty or blank
+	//--------------------------------
+	if([self isStringEmpty:[_rocDistanceFromNearestCommunityTextField text]])
+	{
+		[self showViewError:_rocDistanceFromNearestCommunityTextField];
+		isRocIncidentInfoValid = false;
+		isFormValid = false;
+	}
+	
+	//--------------------------------
+	// _rocDirectionFromNearestCommunityTextField
+	// Must not be empty or blank
+	//--------------------------------
+	if([self isStringEmpty:[_rocDirectionFromNearestCommunityTextField text]])
+	{
+		[self showViewError:_rocDirectionFromNearestCommunityTextField];
 		isRocIncidentInfoValid = false;
 		isFormValid = false;
 	}
@@ -3545,10 +3797,17 @@ static ReportOnConditionViewController *instance;
 	
 	// Parse the location from the textfields
 	int latDeg = (int) [[_incidentLatitudeDegreesTextField text] doubleValue];
-	double latMin = [[_incidentLatitudeMinutesTextField text] doubleValue];
-	int lonDeg = (int) [[_incidentLongitudeDegreesTextField text] doubleValue];
-	double lonMin = [[_incidentLongitudeMinutesTextField text] doubleValue];
+	double latMinWhole = [[_incidentLatitudeMinutesTextField text] doubleValue];
+	double latMinFraction = [[NSString stringWithFormat:@"0.%@",[_incidentLatitudeMinutesFractionTextField text]] doubleValue];
+	double latMin = latMinWhole + latMinFraction;
 	
+	// NOTE - we multiply the value by -1 because the UI has a hardcoded "-" sign in front of it
+	// (all longitudes in california are in the -120 range, and the client doesn't want users to have to manually enter the "-" sign)
+	int lonDeg = -1 * (int) [[_incidentLongitudeDegreesTextField text] doubleValue];
+	double lonMinWhole = [[_incidentLongitudeMinutesTextField text] doubleValue];
+	double lonMinFraction = [[NSString stringWithFormat:@"0.%@",[_incidentLongitudeMinutesFractionTextField text]] doubleValue];
+	double lonMin = lonMinWhole + lonMinFraction;
+		
 	// Convert them to Decimal Degrees
 	double latitude = [self toDecimalDegrees:latDeg minutes:latMin];
 	double longitude = [self toDecimalDegrees:lonDeg minutes:lonMin];
@@ -3564,6 +3823,11 @@ static ReportOnConditionViewController *instance;
 	data.county = [_rocInitialCountyTextField text];
 	data.additionalAffectedCounties = [_rocAdditionalCountiesTextField text];
 	data.location = [_rocLocationTextField text];
+	data.street = [_rocStreetTextField text];
+	data.crossStreet = [_rocCrossStreetTextField text];
+	data.nearestCommunity = [_rocNearestCommunityTextField text];
+	data.milesFromNearestCommunity = [_rocDistanceFromNearestCommunityTextField text];
+	data.directionFromNearestCommonity = [_rocDirectionFromNearestCommunityTextField text];
 	data.dpa = [_rocDPATextField text];
 	data.ownership = [_rocOwnershipTextField text];
 	data.jurisdiction = [_rocJurisdictionTextField text];
@@ -3762,144 +4026,6 @@ static ReportOnConditionViewController *instance;
 		return;
 	
 	ReportOnConditionData *formRocData = [self formToRocData];
-	
-	
-	//---------------------------------------------------------------
-	// FIXME - remove this section
-	// FIXME - This test code submits a test ROC payload
-	//---------------------------------------------------------------
-
-	/*NSString *testRocDataJsonString = @"{"
-	"\"incidentid\": -1,"
-	"\"incidentname\": \"CA TAB new incident from iOS\","
-	"\"datecreated\": \"2019-04-12T08:49:17.000Z\","
-	"\"reportType\": \"NEW\","
-	"\"county\": \"Placer\","
-	"\"additionalAffectedCounties\": \"Test\","
-	"\"incidentState\": \"\","
-	"\"startDate\": \"2019-04-13T07:00:00.000Z\","
-	"\"startTime\": \"2008-01-01T09:00:00.000Z\","
-	"\"location\": \"5827 St Francis Ct, Loomis, CA 95650, USA\","
-	"\"dpa\": \"Local\","
-	"\"ownership\": \"LRA\","
-	"\"jurisdiction\": \"LOCAL\","
-	"\"incidentTypes\": [\"Planned Event\",\"Fire (Wildland)\",\"Nuclear Accident\"],"
-	"\"acreage\": \"120 acres\","
-	"\"spreadRate\": \"\","
-	"\"fuelTypes\": [\"Grass\"],"
-	"\"otherFuelTypes\": \"\","
-	"\"percentContained\": \"60\","
-	"\"temperature\": \"52\","
-	"\"relHumidity\": \"75\","
-	"\"windSpeed\": \"23\","
-	"\"windDirection\": \"SSW\","
-	"\"windGusts\": \"\","
-	"\"evacuations\": \"No\","
-	"\"evacuationsInProgress\": [],"
-	"\"structureThreats\": \"No\","
-	"\"structureThreatsInProgress\": [],"
-	"\"infrastructureThreats\": \"No\","
-	"\"infrastructureThreatsInProgress\": [],"
-	"\"otherThreatsAndEvacuations\": \"\","
-	"\"otherThreatsAndEvacuationsInProgress\": [],"
-	"\"calfireIncident\": \"Yes\","
-	"\"resourcesAssigned\": [\"CAL FIRE Ground Resources Assigned\"],"
-	"\"email\": \"luis.gutierrez@tabordasolutions.com\","
-	"\"latitude\": 38.7840634951429,"
-	"\"longitude\": -121.19567871093749,"
-	"\"weatherDataAvailable\": \"\""
-	"}";
-	
-	// Replacing the form data with a test payload to send
-	formRocData = [ReportOnConditionData fromSqlJson:testRocDataJsonString];
-	
-	// Jam-packing the ROC with test data:
-	formRocData.additionalAffectedCounties = @"... these are additional affected counties";
-	formRocData.acreage = @"120 acres";
-	formRocData.spreadRate = @"Forward spread has been stopped";
-	[formRocData.fuelTypes addObject:@"Grass"];
-	[formRocData.fuelTypes addObject:@"Brush"];
-	[formRocData.fuelTypes addObject:@"Timber"];
-	[formRocData.fuelTypes addObject:@"Oak Woodland"];
-	[formRocData.fuelTypes addObject:@"Other"];
-	formRocData.otherFuelTypes = @"other fuel types...";
-	formRocData.percentContained = @"99.999";
-	
-	formRocData.evacuations = @"Yes";
-	[formRocData.evacuationsInProgress addObject:@"Evacuation orders in place"];
-	[formRocData.evacuationsInProgress addObject:@"Evacuation center has been established"];
-	
-	[formRocData.evacuationsInProgress addObject:@"Evacuation warnings have been lifted"];
-	[formRocData.evacuationsInProgress addObject:@"Evacuations orders remain in place"];
-	[formRocData.evacuationsInProgress addObject:@"Mandatory evacuations are currently underway"];
-	[formRocData.evacuationsInProgress addObject:@"other custom message..."];
-
-	formRocData.structureThreats = @"Mitigted";
-	[formRocData.structureThreatsInProgress addObject:@"Structures threatened"];
-	[formRocData.structureThreatsInProgress addObject:@"Continued threat to structures"];
-	[formRocData.structureThreatsInProgress addObject:@"Immediate structure threat, evacuations in place"];
-	[formRocData.structureThreatsInProgress addObject:@"Damage inspection is ongoing "];
-	[formRocData.structureThreatsInProgress addObject:@"Inspections are underway to identify damage to critical infrastructure and structures"];
-
-	formRocData.infrastructureThreats = @"Yes";
-	[formRocData.infrastructureThreatsInProgress addObject:@"Immediate structure threat, evacuations in place"];
-	[formRocData.infrastructureThreatsInProgress addObject:@"Damage inspection is ongoing "];
-	[formRocData.infrastructureThreatsInProgress addObject:@"Inspections are underway to identify damage to critical infrastructure and structures"];
-	[formRocData.infrastructureThreatsInProgress addObject:@"Major power transmission lines threatened"];
-	[formRocData.infrastructureThreatsInProgress addObject:@"Road closures in the area"];
-
-	formRocData.calfireIncident = @"Yes";
-	[formRocData.resourcesAssigned addObject:@"No CAL FIRE resources assigned"];
-	[formRocData.resourcesAssigned addObject:@"CAL FIRE air resources assigned"];
-	[formRocData.resourcesAssigned addObject:@"CAL FIRE ground resources assigned"];
-	[formRocData.resourcesAssigned addObject:@"CAL FIRE air and ground resources assigned"];
-	[formRocData.resourcesAssigned addObject:@"CAL FIRE air and ground resources augmented"];
-	[formRocData.resourcesAssigned addObject:@"CAL FIRE Agency Rep ordered"];
-	[formRocData.resourcesAssigned addObject:@"CAL FIRE Agency Rep assigned"];
-	[formRocData.resourcesAssigned addObject:@"Continued commitment of CAL FIRE air and ground resources"];
-	[formRocData.resourcesAssigned addObject:@"Significant augmentation of resources"];
-	[formRocData.resourcesAssigned addObject:@"Very Large Air Tanker (VLAT) on order"];
-	[formRocData.resourcesAssigned addObject:@"Very Large Air Tanker (VLAT) assigned"];
-	[formRocData.resourcesAssigned addObject:@"No divert on Air Tankers for life safety"];
-	[formRocData.resourcesAssigned addObject:@"Large Air Tanker (LAT) assigned"];
-	[formRocData.resourcesAssigned addObject:@"All CAL FIRE air and ground resources released"];
-	
-	// Other info:
-	[formRocData.otherThreatsAndEvacuationsInProgress addObject:@"Continued construction and improving control lines"];
-	[formRocData.otherThreatsAndEvacuationsInProgress addObject:@"Extensive mop up in oak woodlands"];
-	[formRocData.otherThreatsAndEvacuationsInProgress addObject:@"Crews are improving control lines"];
-	[formRocData.otherThreatsAndEvacuationsInProgress addObject:@"Ground resources continue to mop-up and strengthen control line"];
-	[formRocData.otherThreatsAndEvacuationsInProgress addObject:@"Suppression repair is under way"];
-	[formRocData.otherThreatsAndEvacuationsInProgress addObject:@"Fire is in remote location with difficult access"];
-	[formRocData.otherThreatsAndEvacuationsInProgress addObject:@"Access and terrain continue to hamper control efforts"];
-	[formRocData.otherThreatsAndEvacuationsInProgress addObject:@"Short range spotting causing erratic fire behavior"];
-	[formRocData.otherThreatsAndEvacuationsInProgress addObject:@"Medium range spotting observed"];
-	[formRocData.otherThreatsAndEvacuationsInProgress addObject:@"Long range spotting observed"];
-	[formRocData.otherThreatsAndEvacuationsInProgress addObject:@"Fire has spotted and is well established"];
-	[formRocData.otherThreatsAndEvacuationsInProgress addObject:@"Erratic winds record high temperatures and low humidity are influencing fuels resulting in extreme fire behavior"];
-	[formRocData.otherThreatsAndEvacuationsInProgress addObject:@"Red Flag warning in effect in area"];
-	[formRocData.otherThreatsAndEvacuationsInProgress addObject:@"Minimal fire behavior observed"];
-	[formRocData.otherThreatsAndEvacuationsInProgress addObject:@"CAL FIRE and USFS in unified command"];
-	[formRocData.otherThreatsAndEvacuationsInProgress addObject:@"CAL FIRE Type 1 Incident Management Team ordered"];
-	[formRocData.otherThreatsAndEvacuationsInProgress addObject:@"Incident Management Team ordered"];
-	[formRocData.otherThreatsAndEvacuationsInProgress addObject:@"FMAG application initiated"];
-	[formRocData.otherThreatsAndEvacuationsInProgress addObject:@"FMAG has been submitted"];
-	[formRocData.otherThreatsAndEvacuationsInProgress addObject:@"FMAG application approved"];
-	[formRocData.otherThreatsAndEvacuationsInProgress addObject:@"No updated 209 data at time of report"];
-	[formRocData.otherThreatsAndEvacuationsInProgress addObject:@"CAL FIRE Mission Tasking has been approved"];
-	[formRocData.otherThreatsAndEvacuationsInProgress addObject:@"... custom message in other significant info."];
-	
-	// NOTE - TO - SELF -
-	// Try posting this payload and see how many fields we can get to match:
-	
-	// Setting the incident payload:
-	formRocData.isForNewIncident = true;
-	formRocData.incidentname = @"CA TAB Test incident from iOS 4";
-	formRocData.datecreated = [NSDate date];*/
-	//---------------------------------------------------------------
-	// FIXME - END
-	//---------------------------------------------------------------
-
 	formRocData.sendStatus = WAITING_TO_SEND;
 	
 	// Add the ROC to the store & forward table, NOTE: this dispatches

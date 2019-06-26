@@ -65,6 +65,13 @@
 @property NSDate *startDate;
 @property NSDate *startTime;
 @property NSString *location;
+
+@property NSString *street;
+@property NSString *crossStreet;
+@property NSString *nearestCommunity;
+@property NSString *milesFromNearestCommunity;
+@property NSString *directionFromNearestCommonity;
+
 @property NSString *dpa;
 @property NSString *ownership;
 @property NSString *jurisdiction;

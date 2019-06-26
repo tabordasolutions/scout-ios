@@ -33,19 +33,11 @@
 //  SCOUT Mobile
 //
 
-
-//#import <UIKit/UIKit.h>
-//#import "AssetsLibrary/AssetsLibrary.h"
 #import "DataManager.h"
 #import "Fields/TextFieldDropdownController.h"
 #import "Fields/CheckBoxTableViewController.h"
 #import "Fields/StringPickerViewController.h"
 #import "Fields/DateTimePickerController.h"
-
-//#import "SimpleReportPayload.h"
-//#import "FormSpinner.h"
-//#import "Enums.h"
-//#import "IncidentButtonBar.h"
 
 
 @interface ReportOnConditionViewController : UIViewController <UISplitViewControllerDelegate, UITextFieldDelegate, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
@@ -149,8 +141,11 @@
 @property IBOutlet UITableView *incidentTypeTableView;
 @property IBOutlet UITextField *incidentLatitudeDegreesTextField;
 @property IBOutlet UITextField *incidentLatitudeMinutesTextField;
+@property IBOutlet UITextField *incidentLatitudeMinutesFractionTextField;
 @property IBOutlet UITextField *incidentLongitudeDegreesTextField;
 @property IBOutlet UITextField *incidentLongitudeMinutesTextField;
+@property IBOutlet UITextField *incidentLongitudeMinutesFractionTextField;
+
 @property IBOutlet UIButton *incidentLocateButton;
 @property IBOutlet UITextField *incidentStateField;
 //---------------------------------------------------------------------------
@@ -159,6 +154,11 @@
 @property IBOutlet UITextField *rocInitialCountyTextField;
 @property IBOutlet UITextField *rocAdditionalCountiesTextField;
 @property IBOutlet UITextField *rocLocationTextField;
+@property IBOutlet UITextField *rocStreetTextField;
+@property IBOutlet UITextField *rocCrossStreetTextField;
+@property IBOutlet UITextField *rocNearestCommunityTextField;
+@property IBOutlet UITextField *rocDistanceFromNearestCommunityTextField;
+@property IBOutlet UITextField *rocDirectionFromNearestCommunityTextField;
 @property IBOutlet UITextField *rocDPATextField;
 @property IBOutlet UITextField *rocOwnershipTextField;
 @property IBOutlet UITextField *rocJurisdictionTextField;
@@ -456,17 +456,6 @@
 - (void) setFormToViewRocForIncident:(IncidentPayload *)incident;
 
 
-
-// Converts Decimal Degrees to Degree Decimal-Minutes
-// This function returns the integer Degrees portion of DDM
-- (int) getDegree:(double) degrees;
-
-// Converts Decimal Degrees to Degree Decimal-Minutes
-// This function returns the double Decimal-Minutes portion of DDM
-- (double) getMinutes:(double) degrees;
-
-// Converts Degrees Decimal-Minutes into Decimal Degrees
-- (double) toDecimalDegrees:(int)degrees minutes:(double)minutes;
 
 
 // Returns if a desired latlong is valid

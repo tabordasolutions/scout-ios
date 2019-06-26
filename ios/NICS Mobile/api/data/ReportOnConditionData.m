@@ -89,7 +89,11 @@
 		rocData.county = [self jsonGetString:rocPayload withName:@"county"];
 		rocData.additionalAffectedCounties = [self jsonGetString:rocPayload withName:@"additionalAffectedCounties"];
 		rocData.location = [self jsonGetString:rocPayload withName:@"location"];
-		
+		rocData.street = [self jsonGetString:rocPayload withName:@"street"];
+		rocData.crossStreet = [self jsonGetString:rocPayload withName:@"crossStreet"];
+		rocData.nearestCommunity = [self jsonGetString:rocPayload withName:@"nearestCommunity"];
+		rocData.milesFromNearestCommunity = [self jsonGetString:rocPayload withName:@"milesFromNearestCommunity"];
+		rocData.directionFromNearestCommonity = [self jsonGetString:rocPayload withName:@"directionFromNearestCommunity"];
 		rocData.dpa = [self jsonGetString:rocPayload withName:@"dpa"];
 		// not a bug, the json schema reuses "sra" as the ownership field
 		rocData.ownership = [self jsonGetString:rocPayload withName:@"sra"];
@@ -286,6 +290,12 @@
 		[ReportOnConditionData jsonSetString:rocPayload withName:@"additionalAffectedCounties" asString:_additionalAffectedCounties];
 		[ReportOnConditionData jsonSetString:rocPayload withName:@"location" asString:_location];
 		
+		[ReportOnConditionData jsonSetString:rocPayload withName:@"street" asString:_street];
+		[ReportOnConditionData jsonSetString:rocPayload withName:@"crossStreet" asString:_crossStreet];
+		[ReportOnConditionData jsonSetString:rocPayload withName:@"nearestCommunity" asString:_nearestCommunity];
+		[ReportOnConditionData jsonSetString:rocPayload withName:@"milesFromNearestCommunity" asString:_milesFromNearestCommunity];
+		[ReportOnConditionData jsonSetString:rocPayload withName:@"directionFromNearestCommunity" asString:_directionFromNearestCommonity];
+
 		[ReportOnConditionData jsonSetString:rocPayload withName:@"dpa" asString:_dpa];
 		// not a bug, the json schema reuses "sra" as ownership field
 		[ReportOnConditionData jsonSetString:rocPayload withName:@"sra" asString:_ownership];
@@ -519,6 +529,11 @@
 	[ReportOnConditionData jsonSetString:dict withName:@"startDate" asString:[dateFormatter stringFromDate:_startDate]];
 	[ReportOnConditionData jsonSetString:dict withName:@"startTime" asString:[dateFormatter stringFromDate:_startTime]];
 	[ReportOnConditionData jsonSetString:dict withName:@"location" asString:_location];
+	[ReportOnConditionData jsonSetString:dict withName:@"street" asString:_street];
+	[ReportOnConditionData jsonSetString:dict withName:@"crossStreet" asString:_crossStreet];
+	[ReportOnConditionData jsonSetString:dict withName:@"nearestCommunity" asString:_nearestCommunity];
+	[ReportOnConditionData jsonSetString:dict withName:@"milesFromNearestCommunity" asString:_milesFromNearestCommunity];
+	[ReportOnConditionData jsonSetString:dict withName:@"directionFromNearestCommunity" asString:_directionFromNearestCommonity];
 	[ReportOnConditionData jsonSetString:dict withName:@"dpa" asString:_dpa];
 	[ReportOnConditionData jsonSetString:dict withName:@"ownership" asString:_ownership];
 	[ReportOnConditionData jsonSetString:dict withName:@"jurisdiction" asString:_jurisdiction];
@@ -580,6 +595,11 @@
 	rocData.startDate = [dateFormatter dateFromString:[ReportOnConditionData jsonGetString:dict withName:@"startDate" defaultTo:@"1970-01-01T01:23:45.678Z"]];
 	rocData.startTime =  [dateFormatter dateFromString:[ReportOnConditionData jsonGetString:dict withName:@"startTime" defaultTo:@"1970-01-01T01:23:45.678Z"]];
 	rocData.location = [ReportOnConditionData jsonGetString:dict withName:@"location" defaultTo:@""];
+	rocData.street = [ReportOnConditionData jsonGetString:dict withName:@"street" defaultTo:@""];
+	rocData.crossStreet = [ReportOnConditionData jsonGetString:dict withName:@"crossStreet" defaultTo:@""];
+	rocData.nearestCommunity = [ReportOnConditionData jsonGetString:dict withName:@"nearestCommunity" defaultTo:@""];
+	rocData.milesFromNearestCommunity = [ReportOnConditionData jsonGetString:dict withName:@"milesFromNearestCommunity" defaultTo:@""];
+	rocData.directionFromNearestCommonity = [ReportOnConditionData jsonGetString:dict withName:@"directionFromNearestCommunity" defaultTo:@""];
 	rocData.dpa = [ReportOnConditionData jsonGetString:dict withName:@"dpa" defaultTo:@""];
 	rocData.ownership = [ReportOnConditionData jsonGetString:dict withName:@"ownership" defaultTo:@""];
 	rocData.jurisdiction = [ReportOnConditionData jsonGetString:dict withName:@"jurisdiction" defaultTo:@""];
