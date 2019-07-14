@@ -183,7 +183,7 @@
 		5528E7101F299473003EC8F7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5528E70F1F299473003EC8F7 /* AppDelegate.m */; };
 		5528E7131F2994A6003EC8F7 /* OverviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5528E7111F2994A6003EC8F7 /* OverviewViewController.m */; };
 		5528E7141F2994A6003EC8F7 /* OverviewViewControllerTablet.m in Sources */ = {isa = PBXBuildFile; fileRef = 5528E7121F2994A6003EC8F7 /* OverviewViewControllerTablet.m */; };
-		5528E7161F299934003EC8F7 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5528E7151F299934003EC8F7 /* Settings.bundle */; };
+		5557B8DE22D8639C00719699 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5557B8DD22D8639B00719699 /* Settings.bundle */; };
 		557E037E1F797426005A32DB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 557E037D1F797425005A32DB /* Images.xcassets */; };
 		5589E9C21F2F90D0003EA98F /* Markup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5589E9C11F2F90D0003EA98F /* Markup.swift */; };
 		55B249751F29A1220006DDEB /* GMUGridBasedClusterAlgorithm.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B2493A1F29A1220006DDEB /* GMUGridBasedClusterAlgorithm.m */; };
@@ -571,8 +571,8 @@
 		5528E70F1F299473003EC8F7 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		5528E7111F2994A6003EC8F7 /* OverviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OverviewViewController.m; sourceTree = "<group>"; };
 		5528E7121F2994A6003EC8F7 /* OverviewViewControllerTablet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OverviewViewControllerTablet.m; sourceTree = "<group>"; };
-		5528E7151F299934003EC8F7 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		5528E7171F299DEB003EC8F7 /* libGoogle-Maps-iOS-Utils.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libGoogle-Maps-iOS-Utils.a"; path = "../../../Library/Developer/Xcode/DerivedData/NICS_Mobile-dzlbwtkvvfulvbayhtnfihfqpdyz/Build/Products/Debug-iphonesimulator/Google-Maps-iOS-Utils/libGoogle-Maps-iOS-Utils.a"; sourceTree = "<group>"; };
+		5557B8DD22D8639B00719699 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Settings.bundle; path = "../../scout-ios/Config File/ios/NICS Mobile/Settings.bundle"; sourceTree = "<group>"; };
 		557E037D1F797425005A32DB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "NICS Mobile/Images.xcassets"; sourceTree = "<group>"; };
 		5589E9C01F2F90CF003EA98F /* SCOUT Mobile-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SCOUT Mobile-Bridging-Header.h"; sourceTree = "<group>"; };
 		5589E9C11F2F90D0003EA98F /* Markup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Markup.swift; sourceTree = "<group>"; };
@@ -889,8 +889,8 @@
 		3A141AA918DB34AC00466AD3 /* NICS Mobile */ = {
 			isa = PBXGroup;
 			children = (
+				5557B8DD22D8639B00719699 /* Settings.bundle */,
 				55B248E11F29A0950006DDEB /* Google-Maps-iOS-Utils */,
-				5528E7151F299934003EC8F7 /* Settings.bundle */,
 				3A3C9D6B18DB441200EEBA17 /* api */,
 				3A141AB218DB34AC00466AD3 /* AppDelegate.h */,
 				5528E70F1F299473003EC8F7 /* AppDelegate.m */,
@@ -1478,7 +1478,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5528E7161F299934003EC8F7 /* Settings.bundle in Resources */,
+				5557B8DE22D8639C00719699 /* Settings.bundle in Resources */,
 				3A70106F18E0C82100C3DC42 /* damagereport_schema.json in Resources */,
 				019BAC6D1C21BD99007067EE /* ColorPicker.xib in Resources */,
 				3A141AAE18DB34AC00466AD3 /* InfoPlist.strings in Resources */,
@@ -1552,7 +1552,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SCOUT Mobile/Pods-SCOUT Mobile-frameworks.sh",
+				"${SRCROOT}/Pods/Target Support Files/Pods-SCOUT Mobile/Pods-SCOUT Mobile-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/CocoaSecurity/CocoaSecurity.framework",
 				"${BUILT_PRODUCTS_DIR}/CollapseClick/CollapseClick.framework",
 				"${BUILT_PRODUCTS_DIR}/FMDB/FMDB.framework",
@@ -1571,7 +1571,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SCOUT Mobile/Pods-SCOUT Mobile-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SCOUT Mobile/Pods-SCOUT Mobile-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		C8FCD4A163033E3C8E8A4C3C /* [CP] Copy Pods Resources */ = {
@@ -1580,7 +1580,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SCOUT Mobile/Pods-SCOUT Mobile-resources.sh",
+				"${SRCROOT}/Pods/Target Support Files/Pods-SCOUT Mobile/Pods-SCOUT Mobile-resources.sh",
 				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
@@ -1589,7 +1589,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SCOUT Mobile/Pods-SCOUT Mobile-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SCOUT Mobile/Pods-SCOUT Mobile-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */

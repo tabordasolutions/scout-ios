@@ -144,6 +144,7 @@
 	[[cell textLabel] setText:cellText];
 	[[cell textLabel] setTextColor:[UIColor whiteColor]];
 	[cell setBackgroundColor:[UIColor colorWithWhite:0.0 alpha:0.0]];
+    cell.tintColor = UIColor.whiteColor;
 	
 	// Getting whether or not the cell should be selected:
 	

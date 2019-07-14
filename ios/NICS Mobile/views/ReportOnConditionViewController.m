@@ -1074,6 +1074,7 @@ static ReportOnConditionViewController *instance;
 	
 	// Setting fields to clear their errors when modified
 	[self makeTextFieldClearErrorWhenChanged:_incidentNumberTextField];
+    [_incidentNumberTextField setPlaceholder:@"State Agency ID 6 digit incident number (e.g. CASCU001234)"];
 	[self makeTextFieldClearErrorWhenChanged:_incidentLatitudeDegreesTextField];
 	[self makeTextFieldClearErrorWhenChanged:_incidentLatitudeMinutesTextField];
 	[self makeTextFieldClearErrorWhenChanged:_incidentLatitudeMinutesFractionTextField];
@@ -1085,13 +1086,14 @@ static ReportOnConditionViewController *instance;
 	// ROC Incident Info Fields
 	//---------------------------------------------------------------------------
 	[self makeStringPickerTextField:_rocInitialCountyTextField withOptions:countiesArr andTitle:@"Initial County:"];
-	[self makeStringPickerTextField:_rocDPATextField withOptions:dpaOptionsArr andTitle:@"DPA:"];
+	[self makeStringPickerTextField:_rocDPATextField withOptions:dpaOptionsArr andTitle:@"DPA (Direct Protection Area):"];
 	[self makeStringPickerTextField:_rocOwnershipTextField withOptions:ownershipOptionsArr andTitle:@"Ownership:"];
 	[self makeDatePicker:_rocStartDateTextField];
 	[self makeTimePicker: _rocStartTimeTextField];
 	// Marking required fields
 	[self makeTextFieldRequired:_rocInitialCountyTextField required:true];
 	[self makeTextFieldRequired:_rocLocationTextField required:true];
+    [_rocLocationTextField setPlaceholder:@"Geo-referenced location based on lat/long"];
 	[self makeTextFieldRequired:_rocStreetTextField required:true];
 	[self makeTextFieldRequired:_rocCrossStreetTextField required:true];
 	[self makeTextFieldRequired:_rocNearestCommunityTextField required:true];
@@ -1100,6 +1102,9 @@ static ReportOnConditionViewController *instance;
 	[self makeTextFieldRequired:_rocDPATextField required:true];
 	[self makeTextFieldRequired:_rocOwnershipTextField required:true];
 	[self makeTextFieldRequired:_rocJurisdictionTextField required:true];
+    [_rocJurisdictionTextField setPlaceholder:@"For non-CAL FIRE incidents, enter name of responsible agency"];
+    UILabel *label = [_rocJurisdictionTextField valueForKey:@"_placeholderLabel"];
+    label.adjustsFontSizeToFitWidth = YES;
 	[self makeTextFieldRequired:_rocStartDateTextField required:true];
 	[self makeTextFieldRequired:_rocStartTimeTextField required:true];
 	// Setting fields to clear their errors when modified
