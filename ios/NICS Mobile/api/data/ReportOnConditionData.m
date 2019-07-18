@@ -124,10 +124,7 @@
 		rocData.relHumidity = [self jsonGetString:rocPayload withName:@"relHumidity"];
 		rocData.windSpeed = [self jsonGetString:rocPayload withName:@"windSpeed"];
 		rocData.windDirection = [self jsonGetString:rocPayload withName:@"windDirection"];
-
-		// FIXME - add this once windgusts are part of the payload
-		//rocData.windGusts = [self jsonGetString:rocPayload withName:@"windGusts"];
-		rocData.windGusts = @"";
+		rocData.windGusts = [self jsonGetString:rocPayload withName:@"windGusts"];
 		
 		//================================================
 		// Threats & Evacuations Fields
@@ -325,8 +322,7 @@
 		[ReportOnConditionData jsonSetString:rocPayload withName:@"windSpeed" asString:_windSpeed];
 		[ReportOnConditionData jsonSetString:rocPayload withName:@"windDirection" asString:_windDirection];
 
-		// TODO - Wind Gusts needs to be added to json schema
-		//[ReportOnConditionData jsonSetString:rocPayload withName:@"windGusts" asString:_windGusts];
+		[ReportOnConditionData jsonSetString:rocPayload withName:@"windGusts" asString:_windGusts];
 
 		//================================================
 		// Threats & Evacuations Fields

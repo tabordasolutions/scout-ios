@@ -554,8 +554,8 @@ static ReportOnConditionViewController *instance;
 			_successfullyGotAllWeatherData = false;
 		if(![self setFieldTextIfValid:_weatherWindDirectionTextField asValue:data[@"windDirection"]])
 			_successfullyGotAllWeatherData = false;
-		// TODO - Add this
-		//if(![self setFieldTextIfValid:_weatherGustsTextField asValue:locationData[@"windGusts"]];
+		if(![self setFieldTextIfValid:_weatherGustsTextField asValue:data[@"windGusts"]])
+           _successfullyGotAllWeatherData = false;
 	}
 }
 
