@@ -153,7 +153,7 @@
 		// Field removed from form
 		//rocData.otherThreatsAndEvacuations = [self jsonGetString:rocPayload withName:@"otherThreatsAndEvacuations"];
 		rocData.otherThreatsAndEvacuationsInProgress = [self parseStringArrayFromJson:[self jsonGetDictionary:rocPayload withName:@"otherThreatsAndEvacuationsInProgress"] withName:@"otherThreatsAndEvacuations"];
-		
+        rocData.otherSignificantInfo = [self parseStringArrayFromJson:[self jsonGetDictionary:rocPayload withName:@"otherSignificantInfo"] withName:@"otherSignificantInfo"];
 		//================================================
 		// Email Fields
 		//================================================
@@ -348,6 +348,7 @@
 		// Resource Commitment Fields
 		//================================================
 		[ReportOnConditionData jsonSetString:rocPayload withName:@"calfireIncident" asString:_calfireIncident];
+        
 		NSMutableDictionary *resourcesAssigned = [NSMutableDictionary new];
 		[ReportOnConditionData jsonSetArray:resourcesAssigned withName:@"resourcesAssigned" asArray:_resourcesAssigned];
 		[ReportOnConditionData jsonSetDictionary:rocPayload withName:@"resourcesAssigned" asDictionary:resourcesAssigned];
@@ -360,6 +361,8 @@
 		NSMutableDictionary *otherInfo = [NSMutableDictionary new];
 		[ReportOnConditionData jsonSetArray:otherInfo withName:@"otherThreatsAndEvacuations" asArray:_otherThreatsAndEvacuationsInProgress];
 		[ReportOnConditionData jsonSetDictionary:rocPayload withName:@"otherThreatsAndEvacuationsInProgress" asDictionary:otherInfo];
+        
+        [ReportOnConditionData jsonSetArray:rocPayload withName:@"otherSignificantInfo" asArray:_otherSignificantInfo];
 		
 		//================================================
 		// Email Fields
@@ -553,6 +556,7 @@
 	[ReportOnConditionData jsonSetArray:dict withName:@"infrastructureThreatsInProgress" asArray:_infrastructureThreatsInProgress];
 	[ReportOnConditionData jsonSetString:dict withName:@"otherThreatsAndEvacuations" asString:_otherThreatsAndEvacuations];
 	[ReportOnConditionData jsonSetArray:dict withName:@"otherThreatsAndEvacuationsInProgress" asArray:_otherThreatsAndEvacuationsInProgress];
+    [ReportOnConditionData jsonSetArray:dict withName:@"otherSignificantInfo" asArray:_otherSignificantInfo];
 	[ReportOnConditionData jsonSetString:dict withName:@"calfireIncident" asString:_calfireIncident];
 	[ReportOnConditionData jsonSetArray:dict withName:@"resourcesAssigned" asArray:_resourcesAssigned];
 	[ReportOnConditionData jsonSetString:dict withName:@"email" asString:_email];
@@ -619,6 +623,7 @@
 	rocData.infrastructureThreatsInProgress = [ReportOnConditionData jsonGetArray:dict withName:@"infrastructureThreatsInProgress" defaultTo:[NSMutableArray<NSString*> new]];
 	rocData.otherThreatsAndEvacuations = [ReportOnConditionData jsonGetString:dict withName:@"otherThreatsAndEvacuations" defaultTo:@""];
 	rocData.otherThreatsAndEvacuationsInProgress = [ReportOnConditionData jsonGetArray:dict withName:@"otherThreatsAndEvacuationsInProgress" defaultTo:[NSMutableArray<NSString*> new]];
+    rocData.otherSignificantInfo = [ReportOnConditionData jsonGetArray:dict withName:@"otherSignificantInfo" defaultTo:[NSMutableArray<NSString *> new]];
 	rocData.calfireIncident = [ReportOnConditionData jsonGetString:dict withName:@"calfireIncident" defaultTo:@""];
 	rocData.resourcesAssigned = [ReportOnConditionData jsonGetArray:dict withName:@"resourcesAssigned" defaultTo:[NSMutableArray<NSString*> new]];
 	rocData.email = [ReportOnConditionData jsonGetString:dict withName:@"email" defaultTo:@""];

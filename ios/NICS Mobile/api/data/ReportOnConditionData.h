@@ -108,6 +108,7 @@
 @property double latitude;
 @property double longitude;
 @property bool weatherDataAvailable;
+@property NSMutableArray<NSString *> *otherSignificantInfo;
 
 // Converts an NSDictionary payload to a ReportOnConditionData instance
 // This method is used to parse the response from the server and create the ReportOnConditionData object

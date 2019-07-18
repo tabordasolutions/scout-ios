@@ -1757,7 +1757,8 @@ static ReportOnConditionViewController *instance;
 	NSArray<NSArray<NSString*>*> *stackViewValuesList = @[data.evacuationsInProgress,
 											    data.structureThreatsInProgress,
 											    data.infrastructureThreatsInProgress,
-											    data.otherThreatsAndEvacuationsInProgress];
+											    data.otherThreatsAndEvacuationsInProgress,
+                                                data.otherSignificantInfo];
 	
 	
 	for(int i = 0; i < [stackViewsList count]; i++)
@@ -2372,12 +2373,6 @@ static ReportOnConditionViewController *instance;
 						  withDeleteSelector:(SEL)deleteSelector
 					  withAutocompleteOptions:(NSArray*)autocompleteOptions
 {
-	
-	
-	
-	
-	
-	
 	// Getting the stackview width:
 	float superviewWidth = [stackView bounds].size.width;
 	// Calculating the textview width
@@ -3957,7 +3952,7 @@ static ReportOnConditionViewController *instance;
 		
 		
 		// After building the array, assign it to the ROC data object:
-		[data setValue:resultValues forKey:[objectKeyNames objectAtIndex:i]];
+        data.otherSignificantInfo = resultValues;
 	}
 	
 	
