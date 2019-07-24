@@ -4142,6 +4142,44 @@ static ReportOnConditionViewController *instance;
 	[_delegatesArray addObject:viewController];
 }
 
+//=============================================================================
+// Info Buttons
+//=============================================================================
+- (IBAction)incidentNameInfoTapped:(id)sender {
+    [self presentViewController:[self infoAlert:@"Any changes to incident name will result in form resetting"] animated:true completion:nil];
+}
+
+- (IBAction)incidentNumberInfoTapped:(id)sender {
+    [self presentViewController:[self infoAlert:@"State Agency ID 6 digit incident number (e.g. CASCU001234)"] animated:true completion:nil];
+}
+
+- (IBAction)locationTargetInfoTapped:(id)sender {
+    [self presentViewController:[self infoAlert:@"Self Locate"] animated:true completion:nil];
+}
+
+- (IBAction)locationInfoTapped:(id)sender {
+    [self presentViewController:[self infoAlert:@"Geo-referenced location based on lat/long"] animated:true completion:nil];
+}
+
+- (IBAction)dpaInfoTapped:(id)sender {
+    [self presentViewController:[self infoAlert:@"Direct Protection Area"] animated:true completion:nil];
+}
+
+- (IBAction)jurisdictionInfoTapped:(id)sender {
+    [self presentViewController:[self infoAlert:@"For non-CAL FIRE incidents, enter name of responsible agency"] animated:true completion:nil];
+}
+
+- (IBAction)emailInfoTapped:(id)sender {
+    [self presentViewController:[self infoAlert:@"ROC emailed to form creator only"] animated:true completion:nil];
+
+}
+
+- (UIAlertController *)infoAlert:(NSString *)message {
+    UIAlertController *infoAlert = [UIAlertController alertControllerWithTitle:@"Info" message:message preferredStyle:UIAlertControllerStyleAlert];
+    [infoAlert addAction:[UIAlertAction actionWithTitle:@"Okay" style:UIAlertActionStyleDefault handler:nil]];
+    return infoAlert;
+}
+
 @end
 
 

@@ -515,6 +515,17 @@
 // Collapses all report sections
 - (void) collapseAllSections;
 
+//=============================================================================
+// Info Buttons
+//=============================================================================
+- (IBAction)incidentNameInfoTapped:(id)sender;
+- (IBAction)incidentNumberInfoTapped:(id)sender;
+- (IBAction)locationTargetInfoTapped:(id)sender;
+- (IBAction)locationInfoTapped:(id)sender;
+- (IBAction)dpaInfoTapped:(id)sender;
+- (IBAction)jurisdictionInfoTapped:(id)sender;
+- (IBAction)emailInfoTapped:(id)sender;
+
 
 @end
 

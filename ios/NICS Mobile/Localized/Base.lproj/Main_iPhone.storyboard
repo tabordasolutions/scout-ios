@@ -2554,11 +2554,11 @@
                         <viewControllerLayoutGuide type="bottom" id="Xfa-dm-gcm"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="1NE-ae-9Iv">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="3836"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="4237"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="072-LU-uzY">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="3776"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="4177"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="NFb-Hs-YSv">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="4114"/>
@@ -2577,7 +2577,7 @@
                                                         <dataDetectorType key="dataDetectorTypes" lookupSuggestion="YES"/>
                                                     </textView>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fQH-FW-g5x" userLabel="IncidentNameField">
-                                                        <rect key="frame" x="5" y="29" width="365" height="40"/>
+                                                        <rect key="frame" x="5" y="29" width="320" height="40"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="40" id="5cz-g8-Z9x"/>
                                                         </constraints>
@@ -2602,18 +2602,29 @@
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <textInputTraits key="textInputTraits"/>
                                                     </textField>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0ZR-xI-cxN">
+                                                        <rect key="frame" x="336" y="40" width="22" height="22"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="22" id="eAO-1L-HZc"/>
+                                                        </constraints>
+                                                        <connections>
+                                                            <action selector="incidentNameInfoTapped:" destination="hMB-e6-nC6" eventType="touchUpInside" id="xdZ-IF-DUN"/>
+                                                        </connections>
+                                                    </button>
                                                 </subviews>
                                                 <color key="backgroundColor" red="0.031287159770727158" green="0.042536132037639618" blue="0.055439211428165436" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstItem="fQH-FW-g5x" firstAttribute="top" secondItem="7Re-lh-sqD" secondAttribute="bottom" constant="-5" id="7OX-40-eOt"/>
-                                                    <constraint firstItem="fQH-FW-g5x" firstAttribute="trailing" secondItem="7Re-lh-sqD" secondAttribute="trailing" id="9rW-lj-6Z8"/>
+                                                    <constraint firstItem="fQH-FW-g5x" firstAttribute="trailing" secondItem="7Re-lh-sqD" secondAttribute="trailing" constant="-45" id="9rW-lj-6Z8"/>
                                                     <constraint firstItem="YgB-As-oa0" firstAttribute="leading" secondItem="7Re-lh-sqD" secondAttribute="leading" id="Hgb-nH-5sl"/>
                                                     <constraint firstItem="V44-Xs-lNl" firstAttribute="leading" secondItem="7Re-lh-sqD" secondAttribute="leading" id="L7m-Zc-gU7"/>
                                                     <constraint firstAttribute="trailing" secondItem="7Re-lh-sqD" secondAttribute="trailing" constant="5" id="NnF-81-3Om"/>
+                                                    <constraint firstAttribute="trailing" secondItem="0ZR-xI-cxN" secondAttribute="trailing" constant="17" id="cPn-TG-6tH"/>
                                                     <constraint firstItem="V44-Xs-lNl" firstAttribute="trailing" secondItem="7Re-lh-sqD" secondAttribute="trailing" id="ko3-ot-pRQ"/>
                                                     <constraint firstAttribute="height" constant="160" id="lf7-1N-dsN"/>
                                                     <constraint firstItem="YgB-As-oa0" firstAttribute="top" secondItem="fQH-FW-g5x" secondAttribute="bottom" constant="5" id="o32-nb-0bB"/>
                                                     <constraint firstItem="V44-Xs-lNl" firstAttribute="top" secondItem="YgB-As-oa0" secondAttribute="bottom" constant="-5" id="tnl-O7-oLl"/>
+                                                    <constraint firstItem="0ZR-xI-cxN" firstAttribute="top" secondItem="7Re-lh-sqD" secondAttribute="bottom" constant="6" id="uFL-IN-rKJ"/>
                                                     <constraint firstItem="fQH-FW-g5x" firstAttribute="leading" secondItem="7Re-lh-sqD" secondAttribute="leading" id="x6F-dm-FNW"/>
                                                     <constraint firstItem="YgB-As-oa0" firstAttribute="trailing" secondItem="7Re-lh-sqD" secondAttribute="trailing" id="x9q-xp-8UL"/>
                                                     <constraint firstItem="7Re-lh-sqD" firstAttribute="leading" secondItem="bYY-UC-lVJ" secondAttribute="leading" constant="5" id="y2d-dc-MZ0"/>
@@ -2671,8 +2682,8 @@
                                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences" textContentType="name"/>
                                                         <dataDetectorType key="dataDetectorTypes" lookupSuggestion="YES"/>
                                                     </textView>
-                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rWP-FD-VWc" userLabel="IncidentNumberField">
-                                                        <rect key="frame" x="5" y="29" width="365" height="40"/>
+                                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rWP-FD-VWc" userLabel="IncidentNumberField">
+                                                        <rect key="frame" x="5" y="29" width="320" height="40"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="40" id="ROM-Gh-Iip"/>
                                                         </constraints>
@@ -2886,11 +2897,11 @@
                                                         </constraints>
                                                     </view>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rbB-uf-ukP" userLabel="LocateButton">
-                                                        <rect key="frame" x="336" y="475" width="34" height="34"/>
+                                                        <rect key="frame" x="291" y="478" width="34" height="34"/>
                                                         <color key="backgroundColor" red="0.45098039220000002" green="0.45098039220000002" blue="0.45098039220000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="height" constant="34" id="3x9-Qx-NoD"/>
-                                                            <constraint firstAttribute="width" secondItem="rbB-uf-ukP" secondAttribute="height" multiplier="1:1" id="VkT-9d-K0F"/>
+                                                            <constraint firstAttribute="width" constant="34" id="haQ-IE-cso"/>
+                                                            <constraint firstAttribute="height" constant="34" id="xt3-Il-p7s"/>
                                                         </constraints>
                                                         <state key="normal" image="myloc">
                                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -2925,11 +2936,30 @@
                                                             <constraint firstAttribute="height" constant="200" id="zs1-4X-qWR"/>
                                                         </constraints>
                                                     </tableView>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ySv-DP-tDx">
+                                                        <rect key="frame" x="333" y="484" width="22" height="22"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="22" id="aVW-RZ-BDR"/>
+                                                        </constraints>
+                                                        <connections>
+                                                            <action selector="locationTargetInfoTapped:" destination="hMB-e6-nC6" eventType="touchUpInside" id="MEM-Sx-Puy"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Apg-G4-766">
+                                                        <rect key="frame" x="333" y="38" width="22" height="22"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="22" id="xF3-AN-4Z8"/>
+                                                        </constraints>
+                                                        <connections>
+                                                            <action selector="incidentNumberInfoTapped:" destination="hMB-e6-nC6" eventType="touchUpInside" id="o9q-df-D6Q"/>
+                                                        </connections>
+                                                    </button>
                                                 </subviews>
                                                 <color key="backgroundColor" red="0.046799458563327789" green="0.054785154759883881" blue="0.063118733465671539" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
-                                                    <constraint firstItem="rWP-FD-VWc" firstAttribute="trailing" secondItem="zhK-KO-V4F" secondAttribute="trailing" id="0RL-r7-tPP"/>
+                                                    <constraint firstItem="ySv-DP-tDx" firstAttribute="centerY" secondItem="rbB-uf-ukP" secondAttribute="centerY" id="1Ut-3x-od8"/>
                                                     <constraint firstItem="bIV-6c-J3x" firstAttribute="leading" secondItem="9Ay-DU-6kv" secondAttribute="leading" id="5k8-kb-jjd"/>
+                                                    <constraint firstItem="ySv-DP-tDx" firstAttribute="top" secondItem="67d-3P-GrY" secondAttribute="bottom" constant="19" id="66r-fn-mgd"/>
                                                     <constraint firstItem="Xhh-c5-9pu" firstAttribute="bottom" secondItem="MZJ-vX-fV4" secondAttribute="top" id="7Ld-1M-kol"/>
                                                     <constraint firstItem="Xhh-c5-9pu" firstAttribute="top" secondItem="9Ay-DU-6kv" secondAttribute="bottom" constant="-5" id="7P7-h3-7Sp"/>
                                                     <constraint firstItem="ES5-1c-18L" firstAttribute="leading" secondItem="9Ay-DU-6kv" secondAttribute="leading" constant="5" id="8YX-BB-uut"/>
@@ -2945,25 +2975,28 @@
                                                     <constraint firstItem="zhK-KO-V4F" firstAttribute="leading" secondItem="ZEn-c6-en1" secondAttribute="leading" constant="5" id="TAu-HX-9C1"/>
                                                     <constraint firstItem="Xhh-c5-9pu" firstAttribute="leading" secondItem="9Ay-DU-6kv" secondAttribute="leading" constant="5" id="Tvd-NF-SaU"/>
                                                     <constraint firstItem="rWP-FD-VWc" firstAttribute="top" secondItem="zhK-KO-V4F" secondAttribute="bottom" constant="-5" id="Uba-Ub-bfX"/>
-                                                    <constraint firstItem="bIV-6c-J3x" firstAttribute="top" secondItem="rbB-uf-ukP" secondAttribute="bottom" constant="5" id="Vjx-tj-wVC"/>
-                                                    <constraint firstItem="rbB-uf-ukP" firstAttribute="trailing" secondItem="67d-3P-GrY" secondAttribute="trailing" id="Ydt-8P-aEP"/>
+                                                    <constraint firstItem="bIV-6c-J3x" firstAttribute="top" secondItem="ySv-DP-tDx" secondAttribute="bottom" constant="8" symbolic="YES" id="WAW-f1-6LQ"/>
                                                     <constraint firstItem="6ri-SL-ZsV" firstAttribute="leading" secondItem="epc-93-J8C" secondAttribute="leading" id="YeC-Rk-G5z"/>
                                                     <constraint firstItem="bIV-6c-J3x" firstAttribute="trailing" secondItem="9Ay-DU-6kv" secondAttribute="trailing" id="alR-EP-2cT"/>
+                                                    <constraint firstItem="Apg-G4-766" firstAttribute="centerY" secondItem="rWP-FD-VWc" secondAttribute="centerY" id="bgZ-Mb-ZCu"/>
                                                     <constraint firstItem="9Ay-DU-6kv" firstAttribute="leading" secondItem="zhK-KO-V4F" secondAttribute="leading" id="dVA-tH-CUM"/>
                                                     <constraint firstAttribute="trailing" secondItem="zhK-KO-V4F" secondAttribute="trailing" constant="5" id="deD-pJ-JFm"/>
                                                     <constraint firstItem="6ri-SL-ZsV" firstAttribute="top" secondItem="epc-93-J8C" secondAttribute="bottom" constant="-5" id="e7a-NJ-ziz"/>
                                                     <constraint firstItem="Khi-Xq-h9a" firstAttribute="top" secondItem="bIV-6c-J3x" secondAttribute="bottom" constant="-5" id="gdd-DI-Z23"/>
+                                                    <constraint firstAttribute="trailing" secondItem="Apg-G4-766" secondAttribute="trailing" constant="20" id="gvH-ok-E88"/>
                                                     <constraint firstItem="Xhh-c5-9pu" firstAttribute="leading" secondItem="MZJ-vX-fV4" secondAttribute="leading" id="h5r-9A-GZf"/>
                                                     <constraint firstItem="Xhh-c5-9pu" firstAttribute="trailing" secondItem="MZJ-vX-fV4" secondAttribute="trailing" id="iXq-xl-FWc"/>
+                                                    <constraint firstAttribute="trailing" secondItem="ySv-DP-tDx" secondAttribute="trailing" constant="20" id="jrL-Bh-LoK"/>
                                                     <constraint firstAttribute="trailing" secondItem="6ri-SL-ZsV" secondAttribute="trailing" constant="5" id="kbE-4G-KhE"/>
                                                     <constraint firstItem="9Ay-DU-6kv" firstAttribute="top" secondItem="6ri-SL-ZsV" secondAttribute="bottom" constant="5" id="mAN-y0-VGm"/>
                                                     <constraint firstItem="6ri-SL-ZsV" firstAttribute="trailing" secondItem="epc-93-J8C" secondAttribute="trailing" id="mEm-ua-GvO"/>
                                                     <constraint firstItem="rWP-FD-VWc" firstAttribute="leading" secondItem="zhK-KO-V4F" secondAttribute="leading" id="mgz-Zp-lfJ"/>
-                                                    <constraint firstItem="rbB-uf-ukP" firstAttribute="top" secondItem="67d-3P-GrY" secondAttribute="bottom" constant="10" id="qB4-Kj-Ayt"/>
                                                     <constraint firstItem="epc-93-J8C" firstAttribute="top" secondItem="rWP-FD-VWc" secondAttribute="bottom" constant="5" id="rnJ-yg-Geg"/>
                                                     <constraint firstItem="9Ay-DU-6kv" firstAttribute="trailing" secondItem="zhK-KO-V4F" secondAttribute="trailing" id="sEo-s9-tkE"/>
+                                                    <constraint firstItem="ySv-DP-tDx" firstAttribute="leading" secondItem="rbB-uf-ukP" secondAttribute="trailing" constant="8" id="vBy-O2-T5N"/>
                                                     <constraint firstItem="ES5-1c-18L" firstAttribute="leading" secondItem="67d-3P-GrY" secondAttribute="leading" id="wf9-94-uzu"/>
                                                     <constraint firstItem="ES5-1c-18L" firstAttribute="bottom" secondItem="67d-3P-GrY" secondAttribute="top" id="xzW-Oi-87L"/>
+                                                    <constraint firstItem="Apg-G4-766" firstAttribute="leading" secondItem="rWP-FD-VWc" secondAttribute="trailing" constant="8" id="y3n-AW-cvb"/>
                                                     <constraint firstItem="Xhh-c5-9pu" firstAttribute="trailing" secondItem="9Ay-DU-6kv" secondAttribute="trailing" id="zEw-My-kNF"/>
                                                 </constraints>
                                             </view>
@@ -3053,7 +3086,7 @@
                                                         <dataDetectorType key="dataDetectorTypes" lookupSuggestion="YES"/>
                                                     </textView>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aAu-dD-Lrs" userLabel="GeneralLocationField">
-                                                        <rect key="frame" x="5" y="177" width="365" height="40"/>
+                                                        <rect key="frame" x="5" y="177" width="323" height="40"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="40" id="0iw-PQ-TnF"/>
                                                         </constraints>
@@ -3207,7 +3240,7 @@
                                                         <dataDetectorType key="dataDetectorTypes" lookupSuggestion="YES"/>
                                                     </textView>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="d4R-Vu-lSd" userLabel="JurisdictionField">
-                                                        <rect key="frame" x="5" y="769" width="365" height="40"/>
+                                                        <rect key="frame" x="5" y="769" width="315" height="40"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="40" id="Ez7-XX-Fnq"/>
                                                         </constraints>
@@ -3250,11 +3283,30 @@
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <textInputTraits key="textInputTraits"/>
                                                     </textField>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LPG-b5-6vN">
+                                                        <rect key="frame" x="336" y="186" width="22" height="22"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="22" id="bdK-nn-UVR"/>
+                                                        </constraints>
+                                                        <connections>
+                                                            <action selector="locationInfoTapped:" destination="hMB-e6-nC6" eventType="touchUpInside" id="DMX-Am-Jo0"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4cX-YT-83f">
+                                                        <rect key="frame" x="333" y="778" width="22" height="22"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="22" id="E5Q-zA-blm"/>
+                                                        </constraints>
+                                                        <connections>
+                                                            <action selector="jurisdictionInfoTapped:" destination="hMB-e6-nC6" eventType="touchUpInside" id="mWR-jA-EpA"/>
+                                                        </connections>
+                                                    </button>
                                                 </subviews>
                                                 <color key="backgroundColor" red="0.04679945856" green="0.054785154760000003" blue="0.063118733469999994" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstItem="rOT-uy-brE" firstAttribute="top" secondItem="d4R-Vu-lSd" secondAttribute="bottom" constant="5" id="0EU-aZ-a0M"/>
                                                     <constraint firstItem="pNQ-1X-cO6" firstAttribute="top" secondItem="bNv-l0-C84" secondAttribute="bottom" constant="5" id="0a2-Sn-9dj"/>
+                                                    <constraint firstItem="4cX-YT-83f" firstAttribute="centerY" secondItem="d4R-Vu-lSd" secondAttribute="centerY" id="0aJ-LY-43p"/>
                                                     <constraint firstAttribute="trailing" secondItem="Fm5-qa-WBc" secondAttribute="trailing" constant="5" id="0nI-hD-L0c"/>
                                                     <constraint firstItem="qco-fa-Dtq" firstAttribute="top" secondItem="BEY-WH-ym8" secondAttribute="bottom" constant="-5" id="21F-EP-Drn"/>
                                                     <constraint firstItem="rOT-uy-brE" firstAttribute="trailing" secondItem="BEY-WH-ym8" secondAttribute="trailing" id="21i-9e-x0L"/>
@@ -3279,6 +3331,7 @@
                                                     <constraint firstItem="SOX-yc-Z8N" firstAttribute="trailing" secondItem="IZv-dy-3Mt" secondAttribute="trailing" id="LVj-Hi-WmL"/>
                                                     <constraint firstItem="pNQ-1X-cO6" firstAttribute="top" secondItem="bNv-l0-C84" secondAttribute="bottom" constant="5" id="M3m-ot-ajQ"/>
                                                     <constraint firstItem="175-lx-cbn" firstAttribute="leading" secondItem="lT7-9d-Hb6" secondAttribute="leading" id="Mk3-EQ-CT8"/>
+                                                    <constraint firstItem="4cX-YT-83f" firstAttribute="leading" secondItem="d4R-Vu-lSd" secondAttribute="trailing" constant="13" id="Mrz-5E-m1r"/>
                                                     <constraint firstItem="pNQ-1X-cO6" firstAttribute="trailing" secondItem="rOT-uy-brE" secondAttribute="trailing" id="N2t-ij-aEQ"/>
                                                     <constraint firstItem="SOX-yc-Z8N" firstAttribute="trailing" secondItem="Fm5-qa-WBc" secondAttribute="trailing" id="Nli-Gr-n9E"/>
                                                     <constraint firstItem="avf-IV-QtZ" firstAttribute="trailing" secondItem="rOT-uy-brE" secondAttribute="trailing" id="O5E-bk-8g8"/>
@@ -3303,11 +3356,11 @@
                                                     <constraint firstItem="H8d-nl-cWq" firstAttribute="top" secondItem="Fm5-qa-WBc" secondAttribute="bottom" constant="-5" id="Zq2-SS-6Fy"/>
                                                     <constraint firstItem="lT7-9d-Hb6" firstAttribute="leading" secondItem="Ubr-DH-5NI" secondAttribute="leading" id="a38-60-iVu"/>
                                                     <constraint firstItem="skh-VX-zFa" firstAttribute="top" secondItem="H7o-uJ-g1r" secondAttribute="bottom" constant="-5" id="a5P-6w-fRg"/>
+                                                    <constraint firstAttribute="trailing" secondItem="LPG-b5-6vN" secondAttribute="trailing" constant="17" id="bj8-zk-iTS"/>
                                                     <constraint firstItem="SOX-yc-Z8N" firstAttribute="leading" secondItem="IZv-dy-3Mt" secondAttribute="leading" id="cDH-kl-wNR"/>
                                                     <constraint firstItem="Lvr-so-Q7g" firstAttribute="bottom" secondItem="lT7-9d-Hb6" secondAttribute="top" constant="-5" id="cX3-BF-o5m"/>
                                                     <constraint firstItem="jHa-WA-ufJ" firstAttribute="top" secondItem="aAu-dD-Lrs" secondAttribute="bottom" constant="5" id="dnq-FO-LJX"/>
                                                     <constraint firstItem="BEY-WH-ym8" firstAttribute="top" secondItem="avf-IV-QtZ" secondAttribute="bottom" constant="5" id="eVz-5I-76H"/>
-                                                    <constraint firstItem="d4R-Vu-lSd" firstAttribute="trailing" secondItem="pNQ-1X-cO6" secondAttribute="trailing" id="eeP-IK-C7o"/>
                                                     <constraint firstItem="BEY-WH-ym8" firstAttribute="top" secondItem="avf-IV-QtZ" secondAttribute="bottom" constant="5" id="evk-fR-WvB"/>
                                                     <constraint firstItem="SOX-yc-Z8N" firstAttribute="leading" secondItem="Fm5-qa-WBc" secondAttribute="leading" id="f7D-MR-Dhj"/>
                                                     <constraint firstItem="skh-VX-zFa" firstAttribute="trailing" secondItem="H7o-uJ-g1r" secondAttribute="trailing" id="fHL-WO-7MP"/>
@@ -3319,6 +3372,7 @@
                                                     <constraint firstItem="avf-IV-QtZ" firstAttribute="top" secondItem="rOT-uy-brE" secondAttribute="bottom" constant="-5" id="i4F-r8-gVD"/>
                                                     <constraint firstItem="gH6-OQ-ZB5" firstAttribute="leading" secondItem="SOX-yc-Z8N" secondAttribute="leading" id="iHa-Y0-Cj7"/>
                                                     <constraint firstItem="qco-fa-Dtq" firstAttribute="leading" secondItem="BEY-WH-ym8" secondAttribute="leading" id="idy-rw-bRE"/>
+                                                    <constraint firstItem="LPG-b5-6vN" firstAttribute="centerY" secondItem="aAu-dD-Lrs" secondAttribute="centerY" id="jAy-aj-FcD"/>
                                                     <constraint firstItem="bNv-l0-C84" firstAttribute="trailing" secondItem="NJk-U4-mQ1" secondAttribute="trailing" id="kA8-Kg-okX"/>
                                                     <constraint firstItem="NJk-U4-mQ1" firstAttribute="top" secondItem="0di-uO-AAK" secondAttribute="bottom" constant="5" id="lan-2j-HYz"/>
                                                     <constraint firstItem="gH6-OQ-ZB5" firstAttribute="trailing" secondItem="SOX-yc-Z8N" secondAttribute="trailing" id="lcJ-0r-6ni"/>
@@ -3326,11 +3380,12 @@
                                                     <constraint firstItem="H7o-uJ-g1r" firstAttribute="leading" secondItem="XZ0-kY-GW3" secondAttribute="leading" id="mlJ-5E-SE7"/>
                                                     <constraint firstItem="IZv-dy-3Mt" firstAttribute="top" secondItem="gH6-OQ-ZB5" secondAttribute="bottom" constant="5" id="nNA-Qh-o2J"/>
                                                     <constraint firstItem="Oed-Ao-SbG" firstAttribute="leading" secondItem="lT7-9d-Hb6" secondAttribute="leading" id="oxH-b8-u6p"/>
-                                                    <constraint firstItem="aAu-dD-Lrs" firstAttribute="trailing" secondItem="IZv-dy-3Mt" secondAttribute="trailing" id="rwJ-Tj-ybN"/>
+                                                    <constraint firstItem="aAu-dD-Lrs" firstAttribute="trailing" secondItem="IZv-dy-3Mt" secondAttribute="trailing" constant="-42" id="rwJ-Tj-ybN"/>
                                                     <constraint firstItem="gH6-OQ-ZB5" firstAttribute="top" secondItem="SOX-yc-Z8N" secondAttribute="bottom" constant="-5" id="tSl-fy-nCH"/>
                                                     <constraint firstItem="Ubr-DH-5NI" firstAttribute="top" secondItem="skh-VX-zFa" secondAttribute="bottom" constant="5" id="toD-pn-tNY"/>
                                                     <constraint firstItem="NJk-U4-mQ1" firstAttribute="trailing" secondItem="175-lx-cbn" secondAttribute="trailing" id="uXr-wj-Pif"/>
                                                     <constraint firstItem="jHa-WA-ufJ" firstAttribute="trailing" secondItem="IZv-dy-3Mt" secondAttribute="trailing" id="ua2-Br-jT2"/>
+                                                    <constraint firstAttribute="trailing" secondItem="4cX-YT-83f" secondAttribute="trailing" constant="20" id="ud5-ei-P6c"/>
                                                     <constraint firstAttribute="height" constant="960" id="vu0-0D-1q4"/>
                                                     <constraint firstItem="qco-fa-Dtq" firstAttribute="trailing" secondItem="BEY-WH-ym8" secondAttribute="trailing" id="wIG-sM-eY2"/>
                                                     <constraint firstItem="hOi-Oi-gbp" firstAttribute="trailing" secondItem="jHa-WA-ufJ" secondAttribute="trailing" id="xGJ-hW-F3B"/>
@@ -4100,7 +4155,7 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XKi-0R-Ihx" userLabel="ResourcesSectionView">
                                                 <rect key="frame" x="0.0" y="3298" width="375" height="538"/>
                                                 <subviews>
-                                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="CAL FIRE Incident:" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cgE-Jr-mjs" userLabel="CalFireIncidentLabel">
+                                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Is this a CAL FIRE Incident:" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cgE-Jr-mjs" userLabel="CalFireIncidentLabel">
                                                         <rect key="frame" x="5" y="0.0" width="365" height="34"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="34" id="u9k-do-fow"/>
@@ -4161,7 +4216,7 @@
                                                                 </constraints>
                                                             </view>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Epw-Wd-Iir" userLabel="CalFireResourcesAirView">
-                                                                <rect key="frame" x="0.0" y="30" width="209.5" height="30"/>
+                                                                <rect key="frame" x="0.0" y="30" width="210" height="30"/>
                                                                 <subviews>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hMT-Bk-c8v" userLabel="CalFireResourcesAirButton">
                                                                         <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
@@ -4172,7 +4227,7 @@
                                                                         <state key="normal" backgroundImage="checkbox"/>
                                                                     </button>
                                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="center" scrollEnabled="NO" editable="NO" text="CAL FIRE air resources assigned" adjustsFontForContentSizeCategory="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="waO-yw-o38" userLabel="CalFireResourcesAirLabel">
-                                                                        <rect key="frame" x="30" y="0.5" width="179.5" height="29.5"/>
+                                                                        <rect key="frame" x="30" y="0.5" width="180" height="29.5"/>
                                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences" textContentType="name"/>
@@ -4190,7 +4245,7 @@
                                                                 </constraints>
                                                             </view>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kxQ-cr-Cos" userLabel="CalFireResourcesGroundView">
-                                                                <rect key="frame" x="0.0" y="60" width="233.5" height="30"/>
+                                                                <rect key="frame" x="0.0" y="60" width="234" height="30"/>
                                                                 <subviews>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qOj-81-2ak" userLabel="CalFireResourcesGroundButton">
                                                                         <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
@@ -4201,7 +4256,7 @@
                                                                         <state key="normal" backgroundImage="checkbox"/>
                                                                     </button>
                                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="center" scrollEnabled="NO" editable="NO" text="CAL FIRE ground resources assigned" adjustsFontForContentSizeCategory="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xje-gt-Fei" userLabel="CalFireResourcesGroundLabel">
-                                                                        <rect key="frame" x="30" y="0.5" width="203.5" height="29.5"/>
+                                                                        <rect key="frame" x="30" y="0.5" width="204" height="29.5"/>
                                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences" textContentType="name"/>
@@ -4219,7 +4274,7 @@
                                                                 </constraints>
                                                             </view>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O2O-lD-igh" userLabel="CalFireResourcesAirAndGroundView">
-                                                                <rect key="frame" x="0.0" y="90" width="272.5" height="30"/>
+                                                                <rect key="frame" x="0.0" y="90" width="273" height="30"/>
                                                                 <subviews>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cTe-Pz-TVL" userLabel="CalFireResourcesAirAndGroundButton">
                                                                         <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
@@ -4230,7 +4285,7 @@
                                                                         <state key="normal" backgroundImage="checkbox"/>
                                                                     </button>
                                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="center" scrollEnabled="NO" editable="NO" text="CAL FIRE air and ground resources assigned" adjustsFontForContentSizeCategory="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fJU-yw-teB" userLabel="CalFireResourcesAirAndGroundLabel">
-                                                                        <rect key="frame" x="30" y="0.5" width="242.5" height="29.5"/>
+                                                                        <rect key="frame" x="30" y="0.5" width="243" height="29.5"/>
                                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences" textContentType="name"/>
@@ -4248,7 +4303,7 @@
                                                                 </constraints>
                                                             </view>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Je-MJ-AmA" userLabel="CalFireResourcesAirAndGroundAugmentedView">
-                                                                <rect key="frame" x="0.0" y="120" width="284.5" height="30"/>
+                                                                <rect key="frame" x="0.0" y="120" width="285" height="30"/>
                                                                 <subviews>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DMt-Rs-dag" userLabel="CalFireResourcesAirAndGroundAugmentedButton">
                                                                         <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
@@ -4259,7 +4314,7 @@
                                                                         <state key="normal" backgroundImage="checkbox"/>
                                                                     </button>
                                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="center" scrollEnabled="NO" editable="NO" text="CAL FIRE air and ground resources augmented" adjustsFontForContentSizeCategory="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MgW-gU-58t" userLabel="CalFireResourcesAirAndGroundAugmentedLabel">
-                                                                        <rect key="frame" x="30" y="0.5" width="254.5" height="29.5"/>
+                                                                        <rect key="frame" x="30" y="0.5" width="255" height="29.5"/>
                                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences" textContentType="name"/>
@@ -4364,7 +4419,7 @@
                                                                 </constraints>
                                                             </view>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Whx-Ge-sQc" userLabel="CalFireResourcesSignificantAugmentationView">
-                                                                <rect key="frame" x="0.0" y="240" width="239.5" height="30"/>
+                                                                <rect key="frame" x="0.0" y="240" width="240" height="30"/>
                                                                 <subviews>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wtC-cA-s8I" userLabel="CalFireResourcesSignificantAugmentationButton">
                                                                         <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
@@ -4375,7 +4430,7 @@
                                                                         <state key="normal" backgroundImage="checkbox"/>
                                                                     </button>
                                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="center" scrollEnabled="NO" editable="NO" text="Significant augmentation of resources" adjustsFontForContentSizeCategory="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HrJ-ER-0WF" userLabel="CalFireResourcesSignificantAugmentationLabel">
-                                                                        <rect key="frame" x="30" y="0.5" width="209.5" height="29.5"/>
+                                                                        <rect key="frame" x="30" y="0.5" width="210" height="29.5"/>
                                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences" textContentType="name"/>
@@ -4422,7 +4477,7 @@
                                                                 </constraints>
                                                             </view>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Oon-jw-dqg" userLabel="CalFireResourcesVlatAssignedView">
-                                                                <rect key="frame" x="0.0" y="300" width="241.5" height="30"/>
+                                                                <rect key="frame" x="0.0" y="300" width="242" height="30"/>
                                                                 <subviews>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I5G-zh-4Cc" userLabel="CalFireResourcesVlatAssignedButton">
                                                                         <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
@@ -4433,7 +4488,7 @@
                                                                         <state key="normal" backgroundImage="checkbox"/>
                                                                     </button>
                                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="center" scrollEnabled="NO" editable="NO" text="Very Large Air Tanker (VLAT) assigned" adjustsFontForContentSizeCategory="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R8l-VK-ebo" userLabel="CalFireResourcesVlatAssignedLabel">
-                                                                        <rect key="frame" x="30" y="0.5" width="211.5" height="29.5"/>
+                                                                        <rect key="frame" x="30" y="0.5" width="212" height="29.5"/>
                                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences" textContentType="name"/>
@@ -4451,7 +4506,7 @@
                                                                 </constraints>
                                                             </view>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ypS-Ey-dDE" userLabel="CalFireResourcesNoDivertView">
-                                                                <rect key="frame" x="0.0" y="330" width="238.5" height="30"/>
+                                                                <rect key="frame" x="0.0" y="330" width="239" height="30"/>
                                                                 <subviews>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gGQ-0Y-506" userLabel="CalFireResourcesNoDivertButton">
                                                                         <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
@@ -4462,7 +4517,7 @@
                                                                         <state key="normal" backgroundImage="checkbox"/>
                                                                     </button>
                                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="center" scrollEnabled="NO" editable="NO" text="No divert on Air Tankers for life safety" adjustsFontForContentSizeCategory="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g4d-mm-3Cp" userLabel="CalFireResourcesNoDivertLabel">
-                                                                        <rect key="frame" x="30" y="0.5" width="208.5" height="29.5"/>
+                                                                        <rect key="frame" x="30" y="0.5" width="209" height="29.5"/>
                                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences" textContentType="name"/>
@@ -4480,7 +4535,7 @@
                                                                 </constraints>
                                                             </view>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6dd-eg-KB4" userLabel="CalFireResourcesLatAssignedView">
-                                                                <rect key="frame" x="0.0" y="360" width="207.5" height="30"/>
+                                                                <rect key="frame" x="0.0" y="360" width="208" height="30"/>
                                                                 <subviews>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lKx-Qp-Pd5" userLabel="CalFireResourcesLatAssignedButton">
                                                                         <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
@@ -4491,7 +4546,7 @@
                                                                         <state key="normal" backgroundImage="checkbox"/>
                                                                     </button>
                                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="center" scrollEnabled="NO" editable="NO" text="Large Air Tanker (LAT) assigned" adjustsFontForContentSizeCategory="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CXf-Pg-xKs" userLabel="CalFireResourcesLatAssignedLabel">
-                                                                        <rect key="frame" x="30" y="0.5" width="177.5" height="29.5"/>
+                                                                        <rect key="frame" x="30" y="0.5" width="178" height="29.5"/>
                                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences" textContentType="name"/>
@@ -4509,7 +4564,7 @@
                                                                 </constraints>
                                                             </view>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iNc-pj-P1A" userLabel="CalFireResourcesAllReleasedView">
-                                                                <rect key="frame" x="0.0" y="390" width="286.5" height="30"/>
+                                                                <rect key="frame" x="0.0" y="390" width="287" height="30"/>
                                                                 <subviews>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OFM-f5-0V0" userLabel="CalFireResourcesAllReleasedButton">
                                                                         <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
@@ -4520,7 +4575,7 @@
                                                                         <state key="normal" backgroundImage="checkbox"/>
                                                                     </button>
                                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="center" scrollEnabled="NO" editable="NO" text="All CAL FIRE air and ground resources released" adjustsFontForContentSizeCategory="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nLe-NU-RrC" userLabel="CalFireResourcesAllReleasedLabel">
-                                                                        <rect key="frame" x="30" y="0.5" width="256.5" height="29.5"/>
+                                                                        <rect key="frame" x="30" y="0.5" width="257" height="29.5"/>
                                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences" textContentType="name"/>
@@ -4689,7 +4744,7 @@
                                                 <rect key="frame" x="0.0" y="4032" width="375" height="82"/>
                                                 <subviews>
                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Recipient Email:" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BGz-CI-0Dd" userLabel="EmailLabel">
-                                                        <rect key="frame" x="5" y="0.0" width="365" height="34"/>
+                                                        <rect key="frame" x="5" y="0.0" width="271" height="34"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="34" id="eIV-0Y-lfq"/>
                                                         </constraints>
@@ -4699,23 +4754,34 @@
                                                         <dataDetectorType key="dataDetectorTypes" lookupSuggestion="YES"/>
                                                     </textView>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WtU-sW-FGq" userLabel="EmailField">
-                                                        <rect key="frame" x="5" y="29" width="365" height="40"/>
+                                                        <rect key="frame" x="5" y="29" width="322" height="40"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="40" id="fjJ-RE-x7t"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <textInputTraits key="textInputTraits"/>
                                                     </textField>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ucN-BX-0vS">
+                                                        <rect key="frame" x="345" y="38" width="22" height="22"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="22" id="FPw-Qx-NDN"/>
+                                                        </constraints>
+                                                        <connections>
+                                                            <action selector="emailInfoTapped:" destination="hMB-e6-nC6" eventType="touchUpInside" id="8Fa-XR-jV9"/>
+                                                        </connections>
+                                                    </button>
                                                 </subviews>
                                                 <color key="backgroundColor" red="0.039335120469331741" green="0.042768277227878571" blue="0.05132795125246048" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstItem="BGz-CI-0Dd" firstAttribute="top" secondItem="RBd-8o-fF0" secondAttribute="top" id="0k2-sH-ykY"/>
                                                     <constraint firstItem="WtU-sW-FGq" firstAttribute="top" secondItem="BGz-CI-0Dd" secondAttribute="bottom" constant="-5" id="2lY-dw-DJs"/>
+                                                    <constraint firstItem="ucN-BX-0vS" firstAttribute="centerY" secondItem="WtU-sW-FGq" secondAttribute="centerY" id="4L4-ex-6Qx"/>
                                                     <constraint firstItem="BGz-CI-0Dd" firstAttribute="leading" secondItem="RBd-8o-fF0" secondAttribute="leading" constant="5" id="6p1-Sy-VTc"/>
-                                                    <constraint firstAttribute="trailing" secondItem="BGz-CI-0Dd" secondAttribute="trailing" constant="5" id="KTI-5Q-Vip"/>
                                                     <constraint firstItem="WtU-sW-FGq" firstAttribute="leading" secondItem="BGz-CI-0Dd" secondAttribute="leading" id="PpZ-Kl-o67"/>
-                                                    <constraint firstItem="WtU-sW-FGq" firstAttribute="trailing" secondItem="BGz-CI-0Dd" secondAttribute="trailing" id="S6r-G8-hi0"/>
+                                                    <constraint firstItem="ucN-BX-0vS" firstAttribute="leading" secondItem="WtU-sW-FGq" secondAttribute="trailing" constant="18" id="Vee-7c-UhI"/>
+                                                    <constraint firstAttribute="trailing" secondItem="ucN-BX-0vS" secondAttribute="trailing" constant="8" id="hOG-qK-e6D"/>
                                                     <constraint firstAttribute="height" constant="82" id="jHi-5U-NIV"/>
+                                                    <constraint firstAttribute="trailing" secondItem="BGz-CI-0Dd" secondAttribute="trailing" constant="99" id="rlg-XJ-Pfd"/>
                                                 </constraints>
                                             </view>
                                         </subviews>
@@ -4747,7 +4813,7 @@
                                 </constraints>
                             </scrollView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QPg-8E-FQU" userLabel="Button View">
-                                <rect key="frame" x="0.0" y="3776" width="375" height="60"/>
+                                <rect key="frame" x="0.0" y="4177" width="375" height="60"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleAspectFit" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="0po-IM-pgL">
                                         <rect key="frame" x="27.5" y="7.5" width="320" height="45"/>
@@ -4806,7 +4872,7 @@
                     <navigationItem key="navigationItem" title="Report on Condition" id="uzF-vn-ZEx">
                         <barButtonItem key="backBarButtonItem" title="Back" id="r3i-b8-ufI"/>
                     </navigationItem>
-                    <size key="freeformSize" width="375" height="3900"/>
+                    <size key="freeformSize" width="375" height="4301"/>
                     <connections>
                         <outlet property="calFireIncidentTextField" destination="lus-t4-oT4" id="z4X-m6-jYr"/>
                         <outlet property="calFireResourcesAgencyRepAssignedCheckbox" destination="h7E-7V-eTR" id="gB1-Tt-Wvk"/>
@@ -4942,7 +5008,7 @@
                 <tapGestureRecognizer id="lOy-t4-qJ4"/>
                 <tapGestureRecognizer id="G8v-q3-kcr"/>
             </objects>
-            <point key="canvasLocation" x="-863.20000000000005" y="2945.1274362818594"/>
+            <point key="canvasLocation" x="-863.20000000000005" y="2944.6776611694154"/>
         </scene>
         <!--Report on Condition Action-->
         <scene sceneID="Vgr-0O-r1g">
